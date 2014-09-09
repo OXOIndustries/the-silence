@@ -87,12 +87,12 @@ package classes.UIComponents
 		}
 		
 		// TITS VALUES
-		public static var gBackgroundColour:uint 			= 0x3D5174; // Stage colour, also used for menu button backgrounds
-		public static var gForegroundColour:uint			= 0x333E52; // Pane colour (background of left/right bar) -- this was also used for some fade-out colour transforms throughout various parts of the UI code
-		public static var gHighlightColour:uint				= 0x8D31B0; // Fancy schmancy highlights (the purple)
-		public static var gMovementButtonColour:uint		= 0x84449B;
-		public static var gPurpleGlowColour:uint			= 0x84449B; // The glow colour for button highlights was slightly different. Here for documentation purposes
-		public static var gPaleColour:uint					= 0x53677b;
+		public static var gBackgroundColour:uint 			= 0x636363;
+		public static var gForegroundColour:uint			= 0x383838;
+		public static var gHighlightColour:uint				= 0xA87728; // Fancy schmancy highlights (the purple)
+		public static var gMovementButtonColour:uint		= 0xA87728;
+		public static var gPurpleGlowColour:uint			= 0xA87728;
+		public static var gPaleColour:uint					= 0x862C2A;
 		
 		// VALUES I PULLED OUTTA MY ASS THAT SOMEBODY WHO CAN ACTUALLY DO UI DESIGN SHOULD PROBABLY LOOK AT
 		public static var gStatusGoodColour:uint			= 0x0CD71C;
@@ -101,19 +101,19 @@ package classes.UIComponents
 		
 		// RANDOM VALUES I STOLE FROM BAD SHIT I WROTE IN THE PAST etc
 		public static var gDebugPaneBackgroundColour:uint 	= 0xFF0000;
-		public static var gMainTextColour:uint   			= 0xFFFFFF;
-		public static var gUIBarTextColour:uint  			= 0xFFFFFF;
-		public static var gStatusBarTextColour:uint 		= 0xFFFFFF;
+		public static var gMainTextColour:uint   			= 0xD1D1D1;
+		public static var gUIBarTextColour:uint  			= 0xD1D1D1;
+		public static var gStatusBarTextColour:uint 		= 0xD1D1D1;
 		
 		// Specialist font/tweaked colours for certain UI elements
-		public static var gBlueBindColour:uint				= 0x6699FF;
+		public static var gBlueBindColour:uint				= 0x862C2A;
 		
 		// Map room colour settings
 		// I'm going to tie a bunch of flags to colour the underlying room "block" based on these values
-		public static var gPCLocationRoomColour:uint		= 0x8D31B0;
+		public static var gPCLocationRoomColour:uint		= 0x862C2A;
 		public static var gFallbackRoomColour:uint			= 0x000000; // Obvious colour to highlight rooms without flags.
-		public static var gIndoorRoomFlagColour:uint 		= 0x333E52;
-		public static var gOutdoorRoomFlagColour:uint		= 0x77797A;
+		public static var gIndoorRoomFlagColour:uint 		= 0x383838;
+		public static var gOutdoorRoomFlagColour:uint		= 0xD1D1D1;
 		
 		// Font Faces
 		

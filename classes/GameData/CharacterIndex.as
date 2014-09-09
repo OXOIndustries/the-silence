@@ -10,6 +10,7 @@ package classes.GameData
 		public static var Chars:Object;
 		
 		public static var PlayerGroup:Object;
+		public static var EnemyGroup:Object;
 		
 		{
 			Chars = new Object();
@@ -20,23 +21,11 @@ package classes.GameData
 		
 		public static function init(justUpdate:Boolean = false):void 
 		{
-			trace("initializeNPCs Called, just doing cleanup?", justUpdate)
-			//if (!justUpdate || (justUpdate && chars["CELISE"] == undefined))
-			//{
-				//chars["CELISE"] = new classes.Characters.Celise();
-			//}
+			trace("initializeNPCs Called, just doing cleanup?", justUpdate);
 			
-			// Check all characters have version information set
-			for (var prop in CharacterIndex.Chars)
+			if (!justUpdate || (justUpdate && Chars["PC"] == undefined))
 			{
-				if (CharacterIndex.Chars[prop].version == 0)
-				{
-					throw new Error("Character class '" + prop + "' has no version information set!");
-				}
-				else
-				{
-					trace("Creature '" + prop + "' Game Version " + CharacterIndex.Chars[prop].version);
-				}
+				Chars["PC"] = new PlayerCharacter();
 			}
 		}
 		

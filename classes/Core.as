@@ -155,7 +155,7 @@
 			minutes = 0;
 			days = 0;
 
-			version = "0.02.51";
+			version = "0.00.01";
 
 			//temporary nonsense variables.
 			temp = 0;

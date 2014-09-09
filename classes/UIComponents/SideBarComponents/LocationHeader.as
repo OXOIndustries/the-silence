@@ -101,7 +101,7 @@ package classes.UIComponents.SideBarComponents
 			_roomText.defaultTextFormat = UIStyleSettings.gLocationBlockRoomFormatter;
 			_roomText.embedFonts = true;
 			_roomText.antiAliasType = AntiAliasType.ADVANCED;
-			_roomText.text = "WELCOME\nTO TITS";
+			_roomText.text = "";
 			_roomText.multiline = true;
 			_roomText.wordWrap = false;
 			_roomText.mouseEnabled = false;
@@ -118,7 +118,7 @@ package classes.UIComponents.SideBarComponents
 			_planetText.defaultTextFormat = UIStyleSettings.gLocationBlockPlanetSystemFormatter;
 			_planetText.embedFonts = true;
 			_planetText.antiAliasType = AntiAliasType.ADVANCED;
-			_planetText.text = "AN EROTIC FLASH GAME";
+			_planetText.text = "";
 			_planetText.multiline = false;
 			_planetText.wordWrap = false;
 			_planetText.mouseEnabled = false;
@@ -134,7 +134,7 @@ package classes.UIComponents.SideBarComponents
 			_systemText.defaultTextFormat = UIStyleSettings.gLocationBlockPlanetSystemFormatter;
 			_systemText.embedFonts = true;
 			_systemText.antiAliasType = AntiAliasType.ADVANCED;
-			_systemText.text = "BY FENOXO";
+			_systemText.text = "";
 			_systemText.multiline = false;
 			_systemText.wordWrap = false;
 			_systemText.mouseEnabled = false;

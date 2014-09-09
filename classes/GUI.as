@@ -46,6 +46,7 @@
 	import classes.UIComponents.StatBar;
 	import classes.Engine.Combat.InCombat;
 	import classes.GameData.ContentIndex;
+	import classes.GameData.CharacterIndex;
 
 	//Build the bottom drawer
 	public class GUI extends MovieClip
@@ -458,16 +459,6 @@
 			{
 				throw new Error("Couldn't find module \"" + module + "\"");
 			}
-			
-			// Update some button states
-			if ((classes.kGAMECLASS.pc as PlayerCharacter).levelUpAvailable())
-			{
-				this.levelUpButton.Activate();
-			}
-			else
-			{
-				this.levelUpButton.Deactivate();
-			}
 		}
 		
 		/**
@@ -481,7 +472,7 @@
 			
 			var buttons:Array = (_availableModules["MainMenu"] as MainMenuModule).mainMenuButtons;
 			
-			if (kGAMECLASS.pc.short.length > 0) this.mainMenuButton.Glow();
+			if (CharacterIndex.pc.short.length > 0) this.mainMenuButton.Glow();
 			this.resetMenuButtons();
 			
 			_buttonTray.buttonPageNext.Deactivate();

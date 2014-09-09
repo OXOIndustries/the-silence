@@ -18,10 +18,10 @@ package classes.UIComponents.ContentModules
 	public class MainMenuModule extends ContentModule
 	{	
 		// Embed assets purely used for this module.
-		[Embed(source = "../../../assets/modules/mainmenu/tits_logo2.png", mimeType = "image/png")]
+		[Embed(source = "../../../assets/modules/mainmenu/logo.png", mimeType = "image/png")]
 		private static var Tits_Logo:Class;
 		
-		[Embed(source = "../../../assets/modules/mainmenu/warning.svg", mimeType = "image/svg")]
+		[Embed(source = "../../../assets/modules/mainmenu/warning.png", mimeType = "image/png")]
 		private static var Warning_BG:Class;
 		
 		// Display elements
@@ -40,7 +40,7 @@ package classes.UIComponents.ContentModules
 		}
 		
 		private var _titsLogo:DisplayObject;
-		private var _warningBackground:Sprite;
+		private var _warningBackground:DisplayObject;
 		private var _warningText:TextField;
 		private var _creditText:TextField;
 		private var _websiteText:TextField;
@@ -74,7 +74,7 @@ package classes.UIComponents.ContentModules
 		{
 			_titsLogo = new MainMenuModule.Tits_Logo();
 			_titsLogo.x = 168;
-			_titsLogo.y = 142;
+			_titsLogo.y = 42;
 			this.addChild(_titsLogo);
 			
 			_warningBackground = new MainMenuModule.Warning_BG();
@@ -101,7 +101,7 @@ package classes.UIComponents.ContentModules
 			_creditText.y = 305;
 			_creditText.height = 77;
 			_creditText.width = 780;
-			_creditText.htmlText = "Created by Fenoxo, Text Parser written by Fake-Name, UI Code by Gedan.\nEdited by Zeikfried, Prisoner416, and many more.\n<b>Game Version: " + (this.root as Core).version + "</b>";
+			_creditText.htmlText = "A TiTS Mini-adventure.\nCreated by Savin & Gedan, Inspired by Fenoxo.\n<b>Game Version: " + (this.root as Core).version + "</b>";
 			
 			
 			// Fuck with this to test hyperlink shit
@@ -135,10 +135,10 @@ package classes.UIComponents.ContentModules
 			_warningText.defaultTextFormat = UIStyleSettings.gMainMenuTextFormatter;
 			_warningText.mouseEnabled = false;
 			_warningText.mouseWheelEnabled = false;
-			this._warningBackground.addChild(_warningText);
+			this.addChild(_warningText);
 			
-			_warningText.x = 95;
-			_warningText.y = 10;
+			_warningText.x = 95 + _warningBackground.x;
+			_warningText.y = 10 + _warningBackground.y;
 			_warningText.height = 75;
 			_warningText.width = 655;
 			_warningText.htmlText = "This is an adult game meant to be played by adults. Do not play this game\nif you are under the age of 18, and certainly don't\nplay this if exotic and strange fetishes disgust you. <b>You've been warned!</b>";
