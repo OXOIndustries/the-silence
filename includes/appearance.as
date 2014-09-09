@@ -1,23 +1,5 @@
 ﻿import classes.Creature;
-function pcAppearance(e:MouseEvent = null):void 
-{
-	if (!userInterface.appearanceButton.isActive)
-	{
-		return;
-	}
-	else if (userInterface.showingPCAppearance)
-	{
-		userInterface.showPrimaryOutput();
-		userInterface.showingPCAppearance = false;
-	}
-	else
-	{
-		userInterface.showSecondaryOutput();
-		userInterface.appearanceButton.Glow();
-		appearance(pc);
-		userInterface.showingPCAppearance = true;
-	}
-}
+
 
 function appearance(target:Creature):void {
 	clearOutput2();

@@ -3,7 +3,7 @@
 	import classes.GameData.GameOptions;
 	import classes.kGAMECLASS;
 	import flash.utils.getDefinitionByName
-	import classes.Resources.Busts.*;
+	
 	/**
 	 * ...
 	 * @author Gedan

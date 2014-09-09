@@ -82,24 +82,27 @@ package classes.UIComponents.SideBarComponents
 		private function BuildStatBlock():void
 		{
 			_levelBar = new StatBar(StatBar.MODE_SMALL);
+			_barContainer.addChild(_levelBar);
 			_levelBar.disableBar();
 			_levelBar.caption = "LEVEL";
 			_levelBar.value = "1";
 			_levelBar.y = 4;
-			_barContainer.addChild(_levelBar);
+			
 			
 			_xpBar = new StatBar(StatBar.MODE_SMALL);
+			_barContainer.addChild(_xpBar);
 			_xpBar.caption = "XP";
 			_xpBar.value = "50 / 1000";
 			_xpBar.y = Math.floor(_levelBar.y + 30);
-			_barContainer.addChild(_xpBar);
+			
 			
 			_creditsBar = new StatBar(StatBar.MODE_SMALL);
+			_barContainer.addChild(_creditsBar);
 			_creditsBar.disableBar();
 			_creditsBar.caption = "CREDITS";
 			_creditsBar.value = "9001";
 			_creditsBar.y = Math.floor(_xpBar.y + 30);
-			_barContainer.addChild(_creditsBar);
+			
 		}
 		
 		public function removeGlows():void

@@ -98,6 +98,7 @@ package classes.UIComponents.SideBarComponents
 		private function barFactory(masksText:String, valueText:String, prevBarY:int = 0, inverse:Boolean = false):StatBar
 		{
 			var bar:StatBar = new StatBar(StatBar.MODE_BIG);
+			_barContainer.addChild(bar);
 			
 			if (inverse)
 			{
@@ -107,7 +108,7 @@ package classes.UIComponents.SideBarComponents
 			bar.caption = masksText;
 			bar.value = valueText;
 			bar.y = Math.floor(prevBarY + 3);
-			_barContainer.addChild(bar);
+			
 			return bar;
 		}
 		

@@ -1,6 +1,6 @@
 package classes 
 {
-	import classes.TiTS;
+	import classes.Core;
 	
-	public var kGAMECLASS:TiTS;
+	public var kGAMECLASS:Core;
 }

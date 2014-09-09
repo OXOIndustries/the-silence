@@ -54,28 +54,28 @@ package classes.UIComponents.SideBarComponents
 		private function BuildInfoBars():void
 		{
 			_levelDisplay = new StatBar(StatBar.MODE_SMALL);
+			this.addChild(_levelDisplay);
 			_levelDisplay.x = 10;
 			_levelDisplay.y = _statBlock.y + _statBlock.height;
 			_levelDisplay.disableBar();
 			_levelDisplay.caption = "LEVEL";
 			_levelDisplay.value = "5";
-			this.addChild(_levelDisplay);
 			
 			_raceDisplay = new StatBar(StatBar.MODE_SMALL);
+			this.addChild(_raceDisplay);
 			_raceDisplay.x = 10;
 			_raceDisplay.y = _levelDisplay.y + 30; // Carefully calculated magic number to sort padding (bars are 20y + 6 pad)
 			_raceDisplay.disableBar();
 			_raceDisplay.caption = "RACE";
 			_raceDisplay.value = "Galotian";
-			this.addChild(_raceDisplay);
 			
 			_sexDisplay = new StatBar(StatBar.MODE_SMALL);
+			this.addChild(_sexDisplay);
 			_sexDisplay.x = 10;
 			_sexDisplay.y = _raceDisplay.y + 30;
 			_sexDisplay.disableBar();
 			_sexDisplay.caption = "SEX";
 			_sexDisplay.value = "Unknown";
-			this.addChild(_sexDisplay);
 		}
 		
 		public function removeGlows():void

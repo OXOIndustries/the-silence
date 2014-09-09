@@ -56,7 +56,7 @@
 			
 			for (i = 0; i < MiniMap.ICON_NAMES.length; i++)
 			{
-				var classType:Class = getDefinitionByName(String(MiniMap.ICON_NAMES[i])) as Class;
+				var classType:Class = MapIcons[MiniMap.ICON_NAMES[i]];
 				_icons[i] = new classType();
 				_icons[i].name = String(MiniMap.ICON_NAMES[i]);
 				this.addChild(_icons[i]);

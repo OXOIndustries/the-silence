@@ -1,8 +1,5 @@
 ﻿package classes.DataManager 
 {
-	import classes.Items.Apparel.TSTArmor;
-	import classes.Items.Miscellaneous.PHAccess;
-	import classes.Items.Protection.DBGShield;
 	import classes.kGAMECLASS;
 	import classes.ShipClass;
 	import flash.display.Shader;
@@ -14,13 +11,16 @@
 	import classes.DataManager.Errors.VersionUpgraderError;
 	import flash.utils.ByteArray;
 	import flash.utils.getQualifiedClassName;
-	import classes.Characters.PlayerCharacter;
+	import classes.GameData.Characters.PlayerCharacter;
 	import classes.Creature;
 	import classes.GameData.CodexManager;
 	import classes.GameData.StatTracking;
 	
 	import classes.Engine.Interfaces.clearOutput2;
 	import classes.Engine.Interfaces.output2;
+	import classes.Engine.canSaveAtCurrentLocation;
+	
+	import classes.GameData.CharacterIndex;
 	
 	/**
 	 * Data Manager to handle the processing of player data files.
@@ -29,8 +29,8 @@
 	public class DataManager 
 	{
 		// Define the current version of save games.
-		private static const LATEST_SAVE_VERSION:int = 15;
-		private static const MINIMUM_SAVE_VERSION:int = 6;
+		private static const LATEST_SAVE_VERSION:int = 1;
+		private static const MINIMUM_SAVE_VERSION:int = 1;
 		
 		private var _autoSaveEnabled:Boolean = false;
 		private var _lastManualDataSlot:int = -1;
@@ -41,26 +41,6 @@
 		{
 			// This is some bullshit workaround to ensure classes are compiled into the packages so they'll be available later -- This is stupid and bullshit, but there needs to be an *explict* reference to a class somewhere in the code
 			// For it to actually be compiled.
-			
-			var sv1:SaveVersionUpgrader1;
-			var sv2:SaveVersionUpgrader2;
-			var sv3:SaveVersionUpgrader3;
-			var sv4:SaveVersionUpgrader4;
-			var sv5:SaveVersionUpgrader5;
-			var sv6:SaveVersionUpgrader6;
-			var sv7:SaveVersionUpgrader7;
-			var sv8:SaveVersionUpgrader8;
-			var sv9:SaveVersionUpgrader9;
-			var sv10:SaveVersionUpgrader10;
-			var sv11:SaveVersionUpgrader11;
-			var sv12:SaveVersionUpgrader12;
-			var sv13:SaveVersionUpgrader13;
-			var sv14:SaveVersionUpgrader14;
-			
-			// I'm putting this fucking thing here for the same reason.
-			var dbgShield:DBGShield;
-			var tstArmor:TSTArmor;
-			var phAccess:PHAccess;
 		}
 		
 		/**
@@ -150,10 +130,10 @@
 			
 			displayMessage += "You can ";
 			
-			if (kGAMECLASS.canSaveAtCurrentLocation) displayMessage += "<b>save</b> or ";
+			if (canSaveAtCurrentLocation()) displayMessage += "<b>save</b> or ";
 			displayMessage += "<b>load</b> your data here.";
 			
-			if (!kGAMECLASS.canSaveAtCurrentLocation) displayMessage += "\n\nYou must be at a safe place to save your game.</b>";
+			if (!canSaveAtCurrentLocation()) displayMessage += "\n\nYou must be at a safe place to save your game.</b>";
 			
 			output2(displayMessage);
 			
@@ -162,7 +142,7 @@
 			
 			kGAMECLASS.userInterface.clearGhostMenu();
 			kGAMECLASS.addGhostButton(0, "Load", this.loadGameMenu);
-			if (kGAMECLASS.canSaveAtCurrentLocation) kGAMECLASS.addGhostButton(1, "Save", this.saveGameMenu);
+			if (canSaveAtCurrentLocation()) kGAMECLASS.addGhostButton(1, "Save", this.saveGameMenu);
 			
 			kGAMECLASS.addGhostButton(14, "Back", dataRouter);
 		}
@@ -445,8 +425,8 @@
 			{
 				kGAMECLASS.userInterface.hideNPCStats();
 				kGAMECLASS.userInterface.showPCStats();
-				kGAMECLASS.updatePCStats();
-				kGAMECLASS.output2("Game loaded from 'TiTs_" + slotNumber + "'!");
+				kGAMECLASS.updateUI();
+				output2("Game loaded from 'TiTs_" + slotNumber + "'!");
 				kGAMECLASS.userInterface.clearGhostMenu();
 				kGAMECLASS.addGhostButton(0, "Next", this.executeGame);
 			}
@@ -458,7 +438,7 @@
 					this.loadBaseData(saveBackup, ph);
 				}
 				
-				kGAMECLASS.output2("Error: Could not load game data.");
+				output2("Error: Could not load game data.");
 				kGAMECLASS.userInterface.clearGhostMenu();
 				kGAMECLASS.addGhostButton(14, "Back", this.showDataMenu);
 			}
@@ -532,7 +512,7 @@
 				return failure;
 			}
 			
-			kGAMECLASS.initializeNPCs(true); // Creates any "missing" NPCs from the save
+			CharacterIndex.init(false);
 			
 			kGAMECLASS.flags = new Dictionary();
 			
@@ -583,8 +563,6 @@
 				StatTracking.loadStorageObject(cloneObject(obj.statTracking));
 			}
 			
-			//Update room placement:
-			kGAMECLASS.variableRoomUpdateCheck();
 			// Returns the backup
 			return false;
 		}
@@ -640,34 +618,19 @@
 			// If the text input was being displayed, hide it
 			kGAMECLASS.removeInput();
 			
-			// If the PC has previously had the Level Up availability message, ensure the level up button is available for use.
-			if ((kGAMECLASS.pc as PlayerCharacter).levelUpAvailable()) kGAMECLASS.userInterface.levelUpButton.Activate();
-			
 			kGAMECLASS.userInterface.dataButton.Deactivate();
 			kGAMECLASS.userInterface.showPrimaryOutput();
 			
 			// Trigger an attempt to update display font size
 			kGAMECLASS.refreshFontSize();
 			
-			if (kGAMECLASS.currentLocation == "CREATION")
-			{
-				kGAMECLASS.currentLocation = "TAVROS HANGAR";
-				kGAMECLASS.shipLocation = "TAVROS HANGAR";
-				kGAMECLASS.pc.HP(kGAMECLASS.pc.HPMax());
-				kGAMECLASS.pc.shields(kGAMECLASS.pc.shieldsMax());
-				kGAMECLASS.pc.energy(kGAMECLASS.pc.energyMax());
-				kGAMECLASS.userInterface.hideMinimap();
-				kGAMECLASS.setClass(kGAMECLASS.pc.characterClass);
-				kGAMECLASS.updatePCStats();
-				return;
-			}
-			else if (kGAMECLASS.currentLocation != "")
+			if (kGAMECLASS.currentLocation != "")
 			{
 				kGAMECLASS.userInterface.setMapData(kGAMECLASS.mapper.generateMap(kGAMECLASS.currentLocation));
 				kGAMECLASS.userInterface.showMinimap();
 			}
 						
-			kGAMECLASS.mainGameMenu();
+			kGAMECLASS.rootMenu();
 		}
 		
 		private function doAutoSave():void

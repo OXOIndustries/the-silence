@@ -91,12 +91,12 @@ package classes.UIComponents.SideBarComponents
 		private function barFactory(barText:String, value:int, max:int, prevBarY:int = 0):StatBar
 		{
 			var bar = new StatBar(StatBar.MODE_SMALL);
-			bar.y = Math.floor(prevBarY + 4);
-			bar.masks.labels.text = barText;
-			bar.bar.width = (value / max) * 180;
-			bar.background.x = -1 * ( 1 - value / max) * 180;
-			bar.values.text = value;
 			_barContainer.addChild(bar);
+			
+			bar.y = Math.floor(prevBarY + 4);
+			bar.caption = barText;
+			bar.value = value;
+			
 			return bar;
 		}
 		

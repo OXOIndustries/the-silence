@@ -1,6 +1,6 @@
 ﻿package classes
 {
-	import classes.Characters.PlayerCharacter;
+	import classes.GameData.Characters.PlayerCharacter;
 	import classes.DataManager.Errors.VersionUpgraderError;
 	import classes.DataManager.Serialization.ItemSaveable;
 	import flash.utils.describeType;

@@ -2,15 +2,9 @@
 import flash.events.Event;
 
 
-function creationRouter(e:Event = null):void {
-	if(chars["PC"].short.length >= 1) {
-		this.userInterface.warningText.htmlText = "<b>Are you sure you want to create a new character?</b>";
-		this.userInterface.confirmNewCharacter();
-	}
-	else 
-	{
-		startCharacterCreation();
-	}
+function creationRouter(e:Event = null):void 
+{
+
 }
 
 function startCharacterCreation(e:Event = null):void 

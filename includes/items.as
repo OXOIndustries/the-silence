@@ -3,7 +3,7 @@ import classes.Creature;
 import classes.ItemSlotClass;
 import classes.StorageClass;
 import classes.StringUtil;
-import classes.TiTS;
+import classes.Core;
 
 function useItem(item:ItemSlotClass):void {
 	if (item.isUsable == false)
@@ -356,7 +356,7 @@ function generalInventoryMenu():void
 				var tarSlot:int = x + adjustment;
 				if (tarSlot >= 14) tarSlot++;
 
-				(this as TiTS).addItemButton(tarSlot, pc.inventory[x], useItem, pc.inventory[x]);
+				(this as Core).addItemButton(tarSlot, pc.inventory[x], useItem, pc.inventory[x]);
 				
 			}
 		}
@@ -378,7 +378,7 @@ function combatInventoryMenu():void
 	
 	for (var i:int = 0; i < pc.inventory.length; i++)
 	{
-		(this as TiTS).addItemButton((i < 14) ? i : i + 1, pc.inventory[i], combatUseItem, pc.inventory[i]);
+		(this as Core).addItemButton((i < 14) ? i : i + 1, pc.inventory[i], combatUseItem, pc.inventory[i]);
 	}
 	
 	addButton(14, "Back", combatMainMenu);

@@ -180,45 +180,6 @@
 		function(inThis:*):Function {
 			return function():void { inThis.prevOutputPage(); };
 		}(this));
-		
-	import classes.Cheats;
-	
-	inputManager.AddBindableControl(
-		"Give ZilRations",
-		"Give the player a bunch of zil rations",
-		function():void {
-			Cheats.GiveZilRations();
-		},
-		true);
-		
-	inputManager.AddBindableControl(
-		"Room Transport",
-		"Move to a specific room name",
-		function():void {
-			Cheats.RoomTeleport();
-		},
-		true);
-		
-	inputManager.AddBindableControl(
-		"Scene Execute",
-		"Execute a target scene by function name.",
-		function():void {
-			Cheats.SceneExecute();
-		},
-		true);
-		
-	inputManager.AddBindableControl(
-		"XP to Level",
-		"Grant XP to reach the next level.",
-		function():void {
-			Cheats.XPToLevel();
-		},
-		true);
-		
-	inputManager.BindCheatSequence("Give ZilRations", 38, 40, 37, 39);
-	inputManager.BindCheatSequence("Room Transport", "idclev");
-	inputManager.BindCheatSequence("Scene Execute", "impulse");
-	inputManager.BindCheatSequence("XP to Level", "motherlode");
 	
 	// Insert the default bindings
 	inputManager.BindKeyToControl(49, "Button 1");             // case 49: pressButton(0);

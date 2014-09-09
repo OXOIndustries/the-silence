@@ -1,7 +1,6 @@
 package classes 
 {
-	import classes.Characters.PlayerCharacter;
-	import classes.Items.Miscellaneous.ZilRation;
+	import classes.GameData.Characters.PlayerCharacter;
 	import classes.Resources.StatusIcons;
 	
 	/**
@@ -20,34 +19,6 @@ package classes
 		{
 			kGAMECLASS.clearOutput();
 			kGAMECLASS.output("Cheat Activated!\n");
-		}
-		
-		public static function GiveZilRations():void
-		{
-			if (kGAMECLASS.pc.short == "uncreated" || kGAMECLASS.pc.short.length == 0)
-			{
-				return;
-			}
-			
-			Cheats.OutputStuff();
-			
-			var lootArray:Array = new Array();
-			var loot:ZilRation = new ZilRation();
-			loot.quantity = 5;
-			lootArray.push(loot);
-			kGAMECLASS.itemCollect(lootArray);
-		}
-		
-		public static function XPToLevel():void
-		{
-			if (kGAMECLASS.pc.short == "uncreated" || kGAMECLASS.pc.short.length == 0)
-			{
-				return;
-			}
-			
-			Cheats.OutputStuff();
-			kGAMECLASS.output("\n\nGiving XP to next level!");
-			(kGAMECLASS.pc as PlayerCharacter).XPRaw = (kGAMECLASS.pc as PlayerCharacter).XPMax();
 		}
 		
 		public static function RoomTeleport():void
@@ -134,13 +105,13 @@ package classes
 			
 			var room:String = kGAMECLASS.userInterface.textInput.text;
 			kGAMECLASS.removeInput();
-			kGAMECLASS.move(room);
+			//kGAMECLASS.move(room);
 		}
 		
 		public static function BackOutFromTeleport():void
 		{
 			kGAMECLASS.removeInput();
-			kGAMECLASS.mainGameMenu();
+			//kGAMECLASS.mainGameMenu();
 		}
 	}
 }

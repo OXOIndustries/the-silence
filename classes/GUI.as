@@ -1,6 +1,6 @@
 ﻿package classes
 {
-	import classes.Characters.PlayerCharacter;
+	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.CodexManager;
 	import classes.RoomClass;
 	import classes.UIComponents.ButtonTooltips;
@@ -8,7 +8,6 @@
 	import classes.UIComponents.ContentModule;
 	import classes.UIComponents.ContentModuleComponents.MainMenuButton;
 	import classes.UIComponents.ContentModules.GameTextModule;
-	import classes.UIComponents.ContentModules.LevelUpPerksModule;
 	import classes.UIComponents.ContentModules.MainMenuModule;
 	import classes.UIComponents.ContentModules.OptionsModule;
 	import classes.UIComponents.LeftSideBar;
@@ -44,9 +43,9 @@
 	import classes.GameData.TooltipManager;
 	import classes.UIComponents.UIStyleSettings;
 	import classes.UIComponents.ContentModules.CodexModule;
-	import classes.UIComponents.ContentModuleComponents.LevelUpStatBar;
-	import classes.UIComponents.ContentModules.LevelUpStatsModule;
 	import classes.UIComponents.StatBar;
+	import classes.Engine.Combat.InCombat;
+	import classes.GameData.ContentIndex;
 
 	//Build the bottom drawer
 	public class GUI extends MovieClip
@@ -71,7 +70,7 @@
 		var textPage:int;
 
 		//Lazy man state checking
-		var showingPCAppearance:Boolean;
+		public var showingPCAppearance:Boolean;
 
 		//temporary nonsense variables.
 		var temp:int;
@@ -143,7 +142,6 @@
 			this.ConfigurePrimaryOutput();
 			this.ConfigureSecondaryOutput();
 			this.ConfigureCodex();
-			this.ConfigureLevelUp();
 			this.ConfigureOptions();
 			
 			this.setupRightSidebar();
@@ -191,12 +189,6 @@
 			this.ConfigureLeftBarListeners();
 		}
 		
-		public function toggleBarTweens():void
-		{
-			this._rightSideBar.tweenIn();
-			this._leftSideBar.tweenIn();
-		}
-		
 		/**
 		 * Configure the tooltip element and prepare it for use.
 		 */
@@ -237,10 +229,10 @@
 		private function ConfigureLeftBarListeners():void
 		{
 			this._leftSideBar.menuButton.addEventListener(MouseEvent.CLICK, mainMenuToggle);
-			this._leftSideBar.appearanceButton.addEventListener(MouseEvent.CLICK, titsClassPtr.pcAppearance);
+			this._leftSideBar.appearanceButton.addEventListener(MouseEvent.CLICK, ContentIndex.appearance.pcAppearance);
 			this._leftSideBar.dataButton.addEventListener(MouseEvent.CLICK, titsClassPtr.dataManager.dataRouter);
-			this._leftSideBar.levelUpButton.addEventListener(MouseEvent.CLICK, titsClassPtr.levelUpHandler);
-			this._leftSideBar.perksButton.addEventListener(MouseEvent.CLICK, titsClassPtr.showPerkListHandler);
+			//this._leftSideBar.levelUpButton.addEventListener(MouseEvent.CLICK, titsClassPtr.levelUpHandler);
+			//this._leftSideBar.perksButton.addEventListener(MouseEvent.CLICK, titsClassPtr.showPerkListHandler);
 		}
 		
 		private function mainMenuToggle(e:Event = null):void
@@ -307,7 +299,7 @@
 			
 			(buttons[3] as MainMenuButton).buttonName = "Yes";
 			(buttons[3] as MainMenuButton).visible = false;
-			(buttons[3] as MainMenuButton).func = titsClassPtr.startCharacterCreation;
+			(buttons[3] as MainMenuButton).func = ContentIndex.creation.StartCreation;
 			
 			(buttons[4] as MainMenuButton).visible = false;
 		}
@@ -329,7 +321,7 @@
 			mainMenuModule.warningText.htmlText = "This is an adult game meant to be played by adults. Do not play this game\nif you are under the age of 18, and certainly don't\nplay this if exotic and strange fetishes disgust you. <b>You've been warned!</b>";
 			
 			(buttons[0] as MainMenuButton).buttonName = "New Game";
-			(buttons[0] as MainMenuButton).func = titsClassPtr.creationRouter;
+			(buttons[0] as MainMenuButton).func = titsClassPtr.CharacterCreation;
 			
 			(buttons[3] as MainMenuButton).visible = false;
 			
@@ -396,27 +388,6 @@
 			
 			titsClassPtr.addChild(pCodex);
 			pCodex.visible = false;
-		}
-		
-		private function ConfigureLevelUp():void
-		{
-			var pLevelUp:LevelUpStatsModule = new LevelUpStatsModule();
-			titsClassPtr.addChild(pLevelUp);
-			_availableModules[pLevelUp.moduleName] = pLevelUp;
-			
-			pLevelUp.x = 200;
-			pLevelUp.y = 0;
-			
-			pLevelUp.visible = false;
-			
-			var pPerkUp:LevelUpPerksModule = new LevelUpPerksModule();
-			titsClassPtr.addChild(pPerkUp);
-			_availableModules[pPerkUp.moduleName] = pPerkUp;
-			
-			pPerkUp.x = 200;
-			pPerkUp.y = 0;
-			
-			pPerkUp.visible = false;
 		}
 		
 		private function ConfigureOptions():void
@@ -568,18 +539,6 @@
 			(_currentModule as CodexModule).update();
 		}
 		
-		public function showLevelUpStats(character:PlayerCharacter):void
-		{
-			this.showModule("LevelUpStats");
-			(_currentModule as LevelUpStatsModule).setCreatureData(character);
-		}
-		
-		public function showLevelUpPerks(character:PlayerCharacter):void
-		{
-			this.showModule("LevelUpPerks");
-			(_currentModule as LevelUpPerksModule).setCreatureData(character);
-		}
-		
 		// Once this is all working, a lot of this should be refactored so that code external to GUI
 		// doesn't directly access properties of UI elements.
 		// f.ex rather than getting the players shield bar, then setting a value, engine code will
@@ -704,8 +663,8 @@
 		{
 			var btnArray:Array = _buttonTray.buttons;
 			
-			if (btnArray[0].buttonName == "Next" || btnArray[0].buttonName == "Leave" || btnArray[0].buttonName == "Back") PressButton(0, kGAMECLASS.inCombat());
-			else if (btnArray[14].buttonName == "Next" || btnArray[14].buttonName == "Leave" || btnArray[14].buttonName == "Back") PressButton(14, kGAMECLASS.inCombat());
+			if (btnArray[0].buttonName == "Next" || btnArray[0].buttonName == "Leave" || btnArray[0].buttonName == "Back") PressButton(0, InCombat());
+			else if (btnArray[14].buttonName == "Next" || btnArray[14].buttonName == "Leave" || btnArray[14].buttonName == "Back") PressButton(14, InCombat());
 		}
 		
 		/**
