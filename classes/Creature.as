@@ -65,6 +65,7 @@
 		public var a: String = "a ";
 		public var long: String = "You scrawny, yo.";
 		public var capitalA: String = "A ";
+		public var currentLocation:String = "";
 
 		//Is a creature a 'pluralize' encounter - mob, etc. 
 		public var plural: Boolean = false;
