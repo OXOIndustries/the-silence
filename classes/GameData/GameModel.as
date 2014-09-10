@@ -1,5 +1,6 @@
 package classes.GameData 
 {
+	import classes.Creature;
 	import flash.utils.Dictionary;
 	/**
 	 * GameModel stores all of the current state of the game, and is accessible to all other classes at-will.
@@ -18,11 +19,29 @@ package classes.GameData
 		public var shipLocation:String = "";
 		public var inSceneBlockSaving:Boolean = false;
 		
+		public var inCombat:Boolean = false;
+		public var inSpaceCombat:Boolean = false;
+		
 		public var flags = new Dictionary();
 		
 		public function get characters():Object
 		{
 			return CharacterIndex.Chars;
+		}
+		
+		public function get logan():Creature
+		{
+			return CharacterIndex.Chars["LOGAN"];
+		}
+		
+		public function get enemyParty():Array
+		{
+			return CharacterIndex.EnemyGroup;
+		}
+		
+		public function get playerParty():Array
+		{
+			return CharacterIndex.PlayerGroup;
 		}
 		
 		public function set characters(v:Object):void

@@ -1,9 +1,12 @@
 package classes.GameData.Content 
 {
+	import classes.Creature;
 	import classes.Engine.Interfaces.*;
 	import classes.GameData.ContentIndex;
 	import classes.GUI;
 	import classes.kGAMECLASS;
+	import flash.utils.Dictionary;
+	import classes.GameData.GameState;
 	
 	public class BaseContent 
 	{
@@ -60,6 +63,26 @@ package classes.GameData.Content
 		protected function set debug(v:Boolean):void
 		{
 			kGAMECLASS.gameOptions.debugMode = v;
+		}
+		
+		protected function get flags():Dictionary
+		{
+			return GameState.flags;
+		}
+		
+		protected function get logan():Creature
+		{
+			return GameState.logan;
+		}
+		
+		protected function get inSpaceCombat():Boolean
+		{
+			return GameState.inSpaceCombat;
+		}
+		
+		protected function get inCombat():Boolean
+		{
+			return GameState.inCombat;
 		}
 	}
 

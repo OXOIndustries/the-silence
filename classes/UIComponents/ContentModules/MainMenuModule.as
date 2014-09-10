@@ -101,7 +101,7 @@ package classes.UIComponents.ContentModules
 			_creditText.y = 305;
 			_creditText.height = 77;
 			_creditText.width = 780;
-			_creditText.htmlText = "A TiTS Mini-adventure.\nCreated by Savin & Gedan, Inspired by Fenoxo.\n<b>Game Version: " + (this.root as Core).version + "</b>";
+			_creditText.htmlText = "A TiTS mini-adventure.\nCreated by Savin & Gedan, Inspired by Fenoxo.\nWrites: Savin, Code: Gedan, Busts: Echo3Dx\n<b>Game Version: " + (this.root as Core).version + "</b>";
 			
 			
 			// Fuck with this to test hyperlink shit

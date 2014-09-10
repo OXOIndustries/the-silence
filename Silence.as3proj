@@ -8,10 +8,10 @@
     <movie fps="30" />
     <movie width="1200" />
     <movie height="800" />
-    <movie version="14" />
-    <movie minorVersion="0" />
+    <movie version="11" />
+    <movie minorVersion="9" />
     <movie platform="Flash Player" />
-    <movie background="#FFFFFF" />
+    <movie background="#636363" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>

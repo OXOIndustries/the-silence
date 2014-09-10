@@ -2,7 +2,6 @@
 {
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.CodexManager;
-	import classes.RoomClass;
 	import classes.UIComponents.ButtonTooltips;
 	import classes.UIComponents.ButtonTray;
 	import classes.UIComponents.ContentModule;

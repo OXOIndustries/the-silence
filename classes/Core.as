@@ -30,30 +30,30 @@
 	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-	import classes.RoomClass;
+	import fl.transitions.easing.None;
 	
 	// Game content managers
 	import classes.GameData.TooltipManager;
 	import classes.GameData.CodexManager;
 	import classes.GameData.GameOptions;
-	
-	import fl.transitions.easing.None;
-
+	import classes.GameData.GameState;
 	import classes.InputManager;
-
-	// Items
-	import classes.GameData.Items.Miscellaneous.NoItem;
-
-	import classes.Parser.ParseEngine;
-
 	import classes.DataManager.DataManager;
+	import classes.Parser.ParseEngine;
 	import classes.GameData.StatTracking;
 	import classes.GUI;
 	import classes.Mapper;
-	import classes.StringUtil;
 	
-	import classes.UIComponents.StatBar;
+	// Game classes
+	import classes.GameData.Items.Miscellaneous.NoItem;
+	
+	// Game interface functions
+	import classes.Engine.Interfaces.clearMenu;
+	import classes.StringUtil;
 
+	// Manager child classes for ease of use
+	import classes.UIComponents.StatBar;
+	
 	//Build the bottom drawer
 	public class Core extends MovieClip
 	{
@@ -123,7 +123,7 @@
 			
 			// set up the user interface: ------------------------------------------------------------
 			this.userInterface = new GUI(this, stage);
-			this.clearMenu();
+			clearMenu();
 
 			this.addEventListener(Event.FRAME_CONSTRUCTED, finishInit);
 		}
@@ -173,12 +173,6 @@
 		// Proxy clearMenu calls so we can hook them for controlling save-enabled state
 		// Or alternatively, shim this shit so we don't have to differentiate between
 		// TiTs engine calls and UI calls. This shit is getting ridiculous.		
-		public function clearMenu(saveDisable:Boolean = true):void 
-		{
-			this.inSceneBlockSaving = saveDisable;
-			this.userInterface.clearMenu();
-		}
-		
 		public function clearGhostMenu():void
 		{
 			this.userInterface.clearGhostMenu();
@@ -206,7 +200,7 @@
 				if (evt.currentTarget.func != null) evt.currentTarget.func(evt.currentTarget.arg);
 			}
 			
-			if (chars["PC"] != undefined)
+			if (GameState.characters["PC"] != undefined)
 			{
 				updateUI();
 			}
@@ -261,31 +255,31 @@
 			
 			if (item.type == GLOBAL.RANGED_WEAPON)
 			{
-				compareItem = (chars["PC"] as Creature).rangedWeapon;
+				compareItem = (GameState.characters["PC"] as Creature).rangedWeapon;
 			}
 			else if (item.type == GLOBAL.MELEE_WEAPON)
 			{
-				compareItem = (chars["PC"] as Creature).meleeWeapon;
+				compareItem = (GameState.characters["PC"] as Creature).meleeWeapon;
 			}
 			else if (item.type == GLOBAL.ARMOR || item.type == GLOBAL.CLOTHING)
 			{
-				compareItem = (chars["PC"] as Creature).armor;
+				compareItem = (GameState.characters["PC"] as Creature).armor;
 			}
 			else if (item.type == GLOBAL.SHIELD)
 			{
-				compareItem = (chars["PC"] as Creature).shield;
+				compareItem = (GameState.characters["PC"] as Creature).shield;
 			}
 			else if (item.type == GLOBAL.LOWER_UNDERGARMENT)
 			{
-				compareItem = (chars["PC"] as Creature).lowerUndergarment;
+				compareItem = (GameState.characters["PC"] as Creature).lowerUndergarment;
 			}
 			else if (item.type == GLOBAL.UPPER_UNDERGARMENT)
 			{
-				compareItem = (chars["PC"] as Creature).upperUndergarment;
+				compareItem = (GameState.characters["PC"] as Creature).upperUndergarment;
 			}
 			else if (item.type == GLOBAL.ACCESSORY)
 			{
-				compareItem = (chars["PC"] as Creature).accessory;
+				compareItem = (GameState.characters["PC"] as Creature).accessory;
 			}
 			
 			if (compareItem == null)
@@ -307,31 +301,31 @@
 			
 			if (item.type == GLOBAL.RANGED_WEAPON)
 			{
-				compareItem = (chars["PC"] as Creature).rangedWeapon;
+				compareItem = (GameState.characters["PC"] as Creature).rangedWeapon;
 			}
 			else if (item.type == GLOBAL.MELEE_WEAPON)
 			{
-				compareItem = (chars["PC"] as Creature).meleeWeapon;
+				compareItem = (GameState.characters["PC"] as Creature).meleeWeapon;
 			}
 			else if (item.type == GLOBAL.ARMOR || item.type == GLOBAL.CLOTHING)
 			{
-				compareItem = (chars["PC"] as Creature).armor;
+				compareItem = (GameState.characters["PC"] as Creature).armor;
 			}
 			else if (item.type == GLOBAL.SHIELD)
 			{
-				compareItem = (chars["PC"] as Creature).shield;
+				compareItem = (GameState.characters["PC"] as Creature).shield;
 			}
 			else if (item.type == GLOBAL.LOWER_UNDERGARMENT)
 			{
-				compareItem = (chars["PC"] as Creature).lowerUndergarment;
+				compareItem = (GameState.characters["PC"] as Creature).lowerUndergarment;
 			}
 			else if (item.type == GLOBAL.UPPER_UNDERGARMENT)
 			{
-				compareItem = (chars["PC"] as Creature).upperUndergarment;
+				compareItem = (GameState.characters["PC"] as Creature).upperUndergarment;
 			}
 			else if (item.type == GLOBAL.ACCESSORY)
 			{
-				compareItem = (chars["PC"] as Creature).accessory;
+				compareItem = (GameState.characters["PC"] as Creature).accessory;
 			}
 			
 			if (compareItem == null)
@@ -558,29 +552,10 @@
 		function deglow():void 
 		{
 			this.userInterface.deglow()
-		}	
+		}			
 
-		public function timeText():String 
+		public function updateNPCStats():void 
 		{
-			var buffer:String = ""
-			
-			if (hours < 10)
-			{
-				buffer += "0";
-			}
-			
-			buffer += hours + ":";
-			
-			if (minutes < 10) 
-			{
-				buffer += "0";
-			}
-			
-			buffer += minutes;
-			return buffer;
-		}
-
-		public function updateNPCStats():void {
 
 		}
 		
@@ -596,7 +571,7 @@
 		
 		public function CharacterCreation():void
 		{
-			if (chars["PC"].short.length >= 1) 
+			if (GameState.characters["PC"].short.length >= 1) 
 			{
 				this.userInterface.warningText.htmlText = "<b>Are you sure you want to create a new character?</b>";
 				this.userInterface.confirmNewCharacter();
