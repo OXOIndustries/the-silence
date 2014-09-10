@@ -63,7 +63,6 @@
 		
 		include "../includes/CodexEntries.as";
 		include "../includes/ControlBindings.as";
-		include "../includes/rooms.as";
 		
 		/*
 		include "../includes/combat.as";
@@ -81,64 +80,19 @@
 		include "../includes/travelEvents.as";		
 		include "../includes/lightsOut.as";
 		*/
-			
-		public var chars:Object;
-		public var foes:Array;
-
-		// This needs to ideally be moved somewhere else, I'm just stopping the GUI code from being used to store game-data models
-		public var days:int;
-		public var hours:int;
-		public var minutes:int;
 
 		// Queued event system
 		public var eventBuffer:String;
 		public var eventQueue:Array;
+		public var gameOptions:GameOptions;
 
 		// Version string/value
 		public var version:String;
-
-		// Room data
-		public var rooms:Object;
-
-		public var temp:int;
-		public var items:Object;
-		
-		//Toggles
-		public var gameOptions:GameOptions;
-		
-		public function get silly():Boolean { return gameOptions.sillyMode; }
-		public function get easy():Boolean { return gameOptions.easyMode; }
-		public function get debug():Boolean { return gameOptions.debugMode; }
-		
-		public function set silly(v:Boolean):void { gameOptions.sillyMode = v; }
-		public function set easy(v:Boolean):void { gameOptions.easyMode = v; }
-		public function set debug(v:Boolean):void { gameOptions.debugMode = v; }
 		
 		public var inputManager:InputManager;
-
-		//Lazy man state checking
-		public var currentLocation:String;
-		public var shipLocation:String;
-		public var inSceneBlockSaving:Boolean;
-
 		public var parser:ParseEngine;
-
 		public var dataManager:DataManager;
 		public var userInterface:GUI;
-
-		public var shopkeep:Creature;
-		public var itemScreen:*;
-		public var lootScreen:*;
-		
-		public var useItemFunction;
-		public var itemUser:Creature;
-		public var itemTarget:Creature;
-
-		public var flags:Dictionary;
-
-		public var combatStage;
-
-		// LE MAP
 		public var mapper:Mapper;
 
 		// Hacky fix for some UI updating problems under Chrome
@@ -150,54 +104,14 @@
 			kGAMECLASS = this;
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
-			
-			hours = 0;
-			minutes = 0;
-			days = 0;
 
 			version = "0.00.01";
 
-			//temporary nonsense variables.
-			temp = 0;
-			combatStage = 0;
-
-			import classes.Creature;
-			import classes.ItemSlotClass;
-			import classes.ShipClass;
-
-			chars = new Object();
-			foes = new Array();
-			
-			//What inventory screen is up?
-			shopkeep = undefined;
-			itemScreen = undefined;
-			lootScreen = undefined;
-			
-			// lootList = new Array();
-			useItemFunction = undefined;
-			itemUser = undefined;
-			itemTarget = undefined;
-
-			this.inSceneBlockSaving = false;
-			
 			eventQueue = new Array();
 			eventBuffer = "";
-			
-			//Toggles
-			silly = false;
-			easy = false;
-			debug = false;
-
-			//Lazy man state checking
-			currentLocation = "SHIP HANGAR";
-			shipLocation = "SHIP HANGAR";
 
 			parser = new ParseEngine(this, TiTS_Settings);
-			flags = new Dictionary();
-
-			// Major class variable setup: ------------------------------------------------------------
-			initializeRooms();
-			mapper = new Mapper(this.rooms);
+			//mapper = new Mapper(this.rooms);
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, init);
 		}

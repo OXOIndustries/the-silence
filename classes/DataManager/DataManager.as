@@ -21,6 +21,7 @@
 	import classes.Engine.canSaveAtCurrentLocation;
 	
 	import classes.GameData.CharacterIndex;
+	import classes.GameData.GameState;
 	
 	/**
 	 * Data Manager to handle the processing of player data files.
@@ -79,7 +80,7 @@
 		
 		private function getSO(slotNumber:int):SharedObject
 		{
-			return SharedObject.getLocal("TiTs_" + slotNumber, "/");
+			return SharedObject.getLocal("mod0_" + slotNumber, "/the_silence");
 		}
 		
 		private function replaceDataWithBlob(so:SharedObject, blob:Object):void
@@ -292,38 +293,38 @@
 			// Base/Primary information
 			
 			// We're going to extract some things from the player object and dump it in here for "preview" views into the file
-			dataFile.saveName 		= kGAMECLASS.chars["PC"].short;
+			dataFile.saveName 		= GameState.characters["PC"].short;
 			dataFile.saveLocation 	= StringUtil.toTitleCase(kGAMECLASS.userInterface.planetText + ", " + kGAMECLASS.userInterface.systemText);
 			
 			if (kGAMECLASS.userInterface.currentPCNotes == null || kGAMECLASS.userInterface.currentPCNotes.length == 0 || kGAMECLASS.userInterface.currentPCNotes == "") dataFile.saveNotes = "No notes available.";
 			else dataFile.saveNotes = kGAMECLASS.userInterface.currentPCNotes;
 			
-			dataFile.playerGender 	= kGAMECLASS.chars["PC"].mfn("M", "F", "A");
+			dataFile.playerGender 	= GameState.characters["PC"].mfn("M", "F", "A");
 
 			// Game state
-			dataFile.playerLocation 	= kGAMECLASS.currentLocation;
-			dataFile.shipLocation 		= kGAMECLASS.shipLocation;
-			dataFile.daysPassed 		= kGAMECLASS.days;
-			dataFile.currentHours 		= kGAMECLASS.hours;
-			dataFile.currentMinutes 	= kGAMECLASS.minutes;
+			dataFile.playerLocation 	= GameState.currentLocation;
+			dataFile.shipLocation 		= GameState.shipLocation;
+			dataFile.daysPassed 		= GameState.days;
+			dataFile.currentHours 		= GameState.hours;
+			dataFile.currentMinutes 	= GameState.minutes;
 			
 			// Game data
 			dataFile.characters = new Object();
 			var gamePtr:* = kGAMECLASS;
 			var prop:String;
 			var i:int;
-			for (prop in kGAMECLASS.chars)
+			for (prop in GameState.characters)
 			{
-				if ((kGAMECLASS.chars[prop] as Creature).neverSerialize == false)
+				if ((GameState.characters[prop] as Creature).neverSerialize == false)
 				{
-					dataFile.characters[prop] = (kGAMECLASS.chars[prop] as Creature).getSaveObject();
+					dataFile.characters[prop] = (GameState.characters[prop] as Creature).getSaveObject();
 				}
 			}
 			
 			dataFile.flags = new Object();
-			for (prop in kGAMECLASS.flags)
+			for (prop in GameState.flags)
 			{
-				dataFile.flags[prop] = kGAMECLASS.flags[prop];
+				dataFile.flags[prop] = GameState.flags[prop];
 			}
 			
 			dataFile.gameOptions = kGAMECLASS.gameOptions.getSaveObject();
@@ -432,7 +433,7 @@
 			}
 			else
 			{
-				if (kGAMECLASS.chars["PC"] != undefined && kGAMECLASS.chars["PC"].short != "uncreated" && kGAMECLASS.chars["PC"].short.length > 0)
+				if (GameState.characters["PC"] != undefined && GameState.characters["PC"].short != "uncreated" && GameState.characters["PC"].short.length > 0)
 				{
 					var ph:Object = new Object();
 					this.loadBaseData(saveBackup, ph);
@@ -457,21 +458,21 @@
 			var i:int;
 			
 			// Watch this magic
-			if (kGAMECLASS.chars["PC"].short != "uncreated" && kGAMECLASS.chars["PC"].short.length > 0)
+			if (GameState.characters["PC"].short != "uncreated" && GameState.characters["PC"].short.length > 0)
 			{
 				this.saveBaseData(curGameObj); // Current game state backed up! Shocking!
 			}
 			
 			// Game state
-			kGAMECLASS.currentLocation = obj.playerLocation;
-			kGAMECLASS.shipLocation = obj.shipLocation;
-			kGAMECLASS.days = obj.daysPassed;
-			kGAMECLASS.hours = obj.currentHours;
-			kGAMECLASS.minutes = obj.currentMinutes;
+			GameState.currentLocation = obj.playerLocation;
+			GameState.shipLocation = obj.shipLocation;
+			GameState.days = obj.daysPassed;
+			GameState.hours = obj.currentHours;
+			GameState.minutes = obj.currentMinutes;
 			
 			// Game data
-			kGAMECLASS.chars = new Object();
-			var aRef:Object = kGAMECLASS.chars;
+			GameState.characters = new Object();
+			var aRef:Object = GameState.characters;
 			var failure:Boolean = false
 			
 			for (prop in obj.characters)
@@ -480,13 +481,13 @@
 				{
 					if (!obj.characters[prop].hasOwnProperty("classInstance"))
 					{
-						kGAMECLASS.chars[prop] = new (getDefinitionByName(getQualifiedClassName(obj.characters[prop])) as Class)();
-						kGAMECLASS.chars[prop].loadSaveObject(obj.characters[prop]);
+						GameState.characters[prop] = new (getDefinitionByName(getQualifiedClassName(obj.characters[prop])) as Class)();
+						GameState.characters[prop].loadSaveObject(obj.characters[prop]);
 					}
 					else
 					{
-						kGAMECLASS.chars[prop] = new (getDefinitionByName(obj.characters[prop].classInstance) as Class)();
-						kGAMECLASS.chars[prop].loadSaveObject(obj.characters[prop]);
+						GameState.characters[prop] = new (getDefinitionByName(obj.characters[prop].classInstance) as Class)();
+						GameState.characters[prop].loadSaveObject(obj.characters[prop]);
 					}
 				}
 				catch (e:ReferenceError)
@@ -514,11 +515,11 @@
 			
 			CharacterIndex.init(false);
 			
-			kGAMECLASS.flags = new Dictionary();
+			GameState.flags = new Dictionary();
 			
 			for (prop in obj.flags)
 			{
-				kGAMECLASS.flags[prop] = obj.flags[prop];
+				GameState.flags[prop] = obj.flags[prop];
 			}
 			
 			// Game settings
@@ -622,14 +623,7 @@
 			kGAMECLASS.userInterface.showPrimaryOutput();
 			
 			// Trigger an attempt to update display font size
-			kGAMECLASS.refreshFontSize();
-			
-			if (kGAMECLASS.currentLocation != "")
-			{
-				kGAMECLASS.userInterface.setMapData(kGAMECLASS.mapper.generateMap(kGAMECLASS.currentLocation));
-				kGAMECLASS.userInterface.showMinimap();
-			}
-						
+			kGAMECLASS.refreshFontSize();						
 			kGAMECLASS.rootMenu();
 		}
 		
