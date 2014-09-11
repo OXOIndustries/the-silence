@@ -9,12 +9,13 @@ package classes.GameData
 	{
 		public static var Chars:Object;
 		
-		public static var PlayerGroup:Object;
-		public static var EnemyGroup:Object;
+		public static var PlayerGroup:Array;
+		public static var EnemyGroup:Array;
 		
 		{
 			Chars = new Object();
-			PlayerGroup = new Object();
+			PlayerGroup = new Array();
+			EnemyGroup = new Array();
 			
 			CharacterIndex.init(false);
 		}
