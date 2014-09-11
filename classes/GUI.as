@@ -46,6 +46,7 @@
 	import classes.Engine.Combat.InCombat;
 	import classes.GameData.ContentIndex;
 	import classes.GameData.CharacterIndex;
+	import classes.GameData.GameState;
 
 	//Build the bottom drawer
 	public class GUI extends MovieClip
@@ -63,8 +64,8 @@
 		private var cacheSystem:String;
 		
 		//Used for output()
-		var outputBuffer:String;
-		var outputBuffer2:String;
+		public var outputBuffer:String;
+		public var outputBuffer2:String;
 		var outputCodexBuffer:String
 		var authorBuffer:Array;
 		var textPage:int;
@@ -173,8 +174,6 @@
 		{
 			this._leftSideBar = new LeftSideBar();
 			this.titsClassPtr.addChild(_leftSideBar);
-			
-			this._leftSideBar.generalInfoBlock.HideScene();
 			
 			this._leftSideBar.menuButton.Deactivate();
 			this._leftSideBar.dataButton.Deactivate();
@@ -577,8 +576,6 @@
 		public function set time(v:String):void { _leftSideBar.timeText.text = v; }
 		public function get days():String { return _leftSideBar.daysText.text; }
 		public function set days(v:String):void { _leftSideBar.daysText.text = v; }
-		public function get sceneBy():String { return _leftSideBar.sceneBy.text; }
-		public function set sceneBy(v:String):void { _leftSideBar.sceneBy.text = v; }
 		
 		public function get dataButton():SquareButton { return _leftSideBar.dataButton; }
 		public function get mainMenuButton():SquareButton { return _leftSideBar.menuButton; }
@@ -632,16 +629,6 @@
 		public function showLocation():void
 		{
 			this._leftSideBar.showLocation();
-		}
-		
-		public function author(name:String):void
-		{
-			_leftSideBar.generalInfoBlock.sceneAuthor = name;
-		}
-		
-		public function showSceneTag():void
-		{
-			_leftSideBar.generalInfoBlock.ShowScene();
 		}
 		
 		// Useful methods to paste over some issues throughout the codebase whilst mid-refactor
@@ -765,7 +752,6 @@
 			(_currentModule as GameTextModule).htmlText = "\n";
 			outputBuffer = "\n";
 			
-			author("Probably Fenoxo");
 			textPage = 4;
 			
 			bufferButtonUpdater();
@@ -880,13 +866,11 @@
 		{
 			if(tempText != "") {
 				textBuffer[textBuffer.length] = tempText;
-				authorBuffer[authorBuffer.length] = tempAuthor;
 				tempText = "";
 				tempAuthor = "";
 			}
 			else {
 				textBuffer[textBuffer.length] = this.primaryOutputModule.htmlText;
-				authorBuffer[authorBuffer.length] = sceneBy;
 			}
 			if(textBuffer.length > 4) {
 				textBuffer.splice(0,1);
@@ -916,7 +900,6 @@
 				if (textPage == 4)
 				{
 					tempText = this.primaryOutputModule.htmlText;
-					tempAuthor = sceneBy;
 				}
 				
 				textPage--;
@@ -929,12 +912,10 @@
 			if (textPage == 4)
 			{
 				this.primaryOutputModule.htmlText = tempText;
-				sceneBy = tempAuthor;
 			}
 			else
 			{
 				this.primaryOutputModule.htmlText = textBuffer[textPage];
-				sceneBy = authorBuffer[textPage];
 			}
 			
 			bufferButtonUpdater();
@@ -992,7 +973,7 @@
 		public function menuButtonsOn():void 
 		{
 			//trace("this.stagePtr = ", this.stagePtr);
-			if (!titsClassPtr.pc.hasStatusEffect("In Creation") && titsClassPtr.pc.short.length > 0) 
+			if (GameState.pc.hasStatusEffect("In Creation") && titsClassPtr.pc.short.length > 0) 
 			{
 				appearanceOn();
 			}
@@ -1016,7 +997,6 @@
 		
 		public function leftBarClear():void 
 		{
-			_leftSideBar.generalInfoBlock.HideScene();
 			_leftSideBar.roomText.visible = false;
 			_leftSideBar.planetText.visible = false;
 			_leftSideBar.systemText.visible = false;

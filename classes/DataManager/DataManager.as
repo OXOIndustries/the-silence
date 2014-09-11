@@ -16,8 +16,7 @@
 	import classes.GameData.CodexManager;
 	import classes.GameData.StatTracking;
 	
-	import classes.Engine.Interfaces.clearOutput2;
-	import classes.Engine.Interfaces.output2;
+	import classes.Engine.Interfaces.*;
 	import classes.Engine.canSaveAtCurrentLocation;
 	
 	import classes.GameData.CharacterIndex;
@@ -142,10 +141,10 @@
 			output2("\n\n<b>YOUR SAVE DATA STILL EXISTS.</b> Trying to load a slot that “<b>REQUIRES UPGRADE</b>” will perform an automatic upgrade of the save data whilst it is being loaded. Once done, you are free to continue playing the game as normal.");
 			
 			kGAMECLASS.userInterface.clearGhostMenu();
-			kGAMECLASS.addGhostButton(0, "Load", this.loadGameMenu);
-			if (canSaveAtCurrentLocation()) kGAMECLASS.addGhostButton(1, "Save", this.saveGameMenu);
+			addGhostButton(0, "Load", this.loadGameMenu);
+			if (canSaveAtCurrentLocation()) addGhostButton(1, "Save", this.saveGameMenu);
 			
-			kGAMECLASS.addGhostButton(14, "Back", dataRouter);
+			addGhostButton(14, "Back", dataRouter);
 		}
 		
 
@@ -154,7 +153,7 @@
 		 */
 		private function loadGameMenu():void
 		{
-			kGAMECLASS.clearOutput2();
+			clearOutput2();
 			kGAMECLASS.userInterface.dataButton.Glow();
 			
 			var displayMessage:String = "";
@@ -168,18 +167,17 @@
 				displayMessage += this.generateSavePreview(dataFile, slotNum);
 				if (this.slotCompatible(dataFile) == true)
 				{
-					kGAMECLASS.addGhostButton(slotNum - 1, "Slot " + slotNum, this.loadGameData, slotNum);
+					addGhostButton(slotNum - 1, "Slot " + slotNum, this.loadGameData, slotNum);
 				}
 				else
 				{
-					kGAMECLASS.addDisabledGhostButton(slotNum - 1, "Slot " + slotNum);
+					addDisabledGhostButton(slotNum - 1, "Slot " + slotNum);
 				}
 			}
 			
-			kGAMECLASS.output2(displayMessage);
-			kGAMECLASS.output2("\n");
-			kGAMECLASS.addGhostButton(14, "Back", this.showDataMenu);
-			
+			output2(displayMessage);
+			output2("\n");
+			addGhostButton(14, "Back", this.showDataMenu);
 		}
 		
 		/**
@@ -187,7 +185,7 @@
 		 */
 		private function saveGameMenu():void
 		{
-			kGAMECLASS.clearOutput2();
+			clearOutput2();
 			kGAMECLASS.userInterface.dataButton.Glow();
 			
 			var displayMessage:String = "";
@@ -199,11 +197,11 @@
 			{
 				var dataFile:SharedObject = this.getSO(slotNum);
 				displayMessage += this.generateSavePreview(dataFile, slotNum);
-				kGAMECLASS.addGhostButton(slotNum - 1, "Slot " + slotNum, this.saveGameData, slotNum);
+				addGhostButton(slotNum - 1, "Slot " + slotNum, this.saveGameData, slotNum);
 			}
 			
-			kGAMECLASS.output2(displayMessage);
-			kGAMECLASS.addGhostButton(14, "Back", this.showDataMenu);
+			output2(displayMessage);
+			addGhostButton(14, "Back", this.showDataMenu);
 		}
 		
 		/**
@@ -259,11 +257,11 @@
 				// Verification successful, do things
 				this.replaceDataWithBlob(dataFile, dataBlob);
 				dataFile.flush();
-				kGAMECLASS.clearOutput2();
+				clearOutput2();
 				kGAMECLASS.userInterface.dataButton.Glow();
-				kGAMECLASS.output2("Game saved to slot " + slotNumber + "!");
-				kGAMECLASS.userInterface.clearGhostMenu();
-				kGAMECLASS.addGhostButton(14, "Back", this.showDataMenu);
+				output2("Game saved to slot " + slotNumber + "!");
+				clearGhostMenu();
+				addGhostButton(14, "Back", this.showDataMenu);
 			}
 			else
 			{
@@ -272,11 +270,11 @@
 				this.replaceDataWithBlob(brokenFile, dataBlob);
 				brokenFile.flush();
 				
-				kGAMECLASS.clearOutput2();
+				clearOutput2();
 				kGAMECLASS.userInterface.dataButton.Glow();
-				kGAMECLASS.output2("Save data verification failed. Please send the files 'broken_save.sol' and 'TiTs_" + slotNumber + ".sol' to Fenoxo or file a bug report!");
-				kGAMECLASS.userInterface.clearGhostMenu();
-				kGAMECLASS.addGhostButton(14, "Back", this.showDataMenu);
+				output2("Save data verification failed. Please send the files 'broken_save.sol' and 'TiTs_" + slotNumber + ".sol' to Fenoxo or file a bug report!");
+				clearGhostMenu();
+				addGhostButton(14, "Back", this.showDataMenu);
 			}
 		}
 		
@@ -354,7 +352,7 @@
 		 */
 		private function loadGameData(slotNumber:int):void
 		{
-			kGAMECLASS.clearOutput2();
+			clearOutput2();
 			kGAMECLASS.userInterface.dataButton.Glow();
 			
 			// Save the "last active slot" for autosave purposes within the DataManager properties
@@ -380,7 +378,7 @@
 			// Check that the minVersion isn't above our latest version
 			if (dataFile.data.minVersion > DataManager.LATEST_SAVE_VERSION)
 			{
-				kGAMECLASS.output2("This save file requires a minimum save format version of " + DataManager.LATEST_SAVE_VERSION + " for correct support. Please use a newer version of the game!\n\n");
+				output2("This save file requires a minimum save format version of " + DataManager.LATEST_SAVE_VERSION + " for correct support. Please use a newer version of the game!\n\n");
 				dataErrors = true;
 			}
 			
@@ -429,7 +427,7 @@
 				kGAMECLASS.updateUI();
 				output2("Game loaded from 'TiTs_" + slotNumber + "'!");
 				kGAMECLASS.userInterface.clearGhostMenu();
-				kGAMECLASS.addGhostButton(0, "Next", this.executeGame);
+				addGhostButton(0, "Next", this.executeGame);
 			}
 			else
 			{
@@ -440,8 +438,8 @@
 				}
 				
 				output2("Error: Could not load game data.");
-				kGAMECLASS.userInterface.clearGhostMenu();
-				kGAMECLASS.addGhostButton(14, "Back", this.showDataMenu);
+				clearGhostMenu();
+				addGhostButton(14, "Back", this.showDataMenu);
 			}
 		}
 		
@@ -497,11 +495,11 @@
 					
 					if (failure == false)
 					{
-						kGAMECLASS.output2("Load error(s) detected: \n\n");
+						output2("Load error(s) detected: \n\n");
 					}
 					
-					kGAMECLASS.output2(e.message);
-					kGAMECLASS.output2("\n");
+					output2(e.message);
+					output2("\n");
 					
 					failure = true;
 				}
@@ -509,7 +507,7 @@
 			
 			if (failure == true)
 			{
-				kGAMECLASS.output2("\n\n");
+				output2("\n\n");
 				return failure;
 			}
 			
@@ -570,13 +568,13 @@
 		
 		private function printDataErrorMessage(property:String):void
 		{
-			kGAMECLASS.output2("Data property " + property + " was expected, but unset. This save is possibly corrupt!\n\n");
+			output2("Data property " + property + " was expected, but unset. This save is possibly corrupt!\n\n");
 			return;
 		}
 		
 		private function printThrownError(error:Error):void
 		{
-			kGAMECLASS.output2("<b>Processing failed: </b>" + error.message + "\n\n");
+			output2("<b>Processing failed: </b>" + error.message + "\n\n");
 			return;
 		}
 			

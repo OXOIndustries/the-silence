@@ -7,7 +7,7 @@ package classes.Engine.Interfaces
 	public function clearOutput()
 	{
 		import classes.kGAMECLASS;
-		kGAMECLASS.clearOutput();
+		kGAMECLASS.userInterface.clearOutput();
 	}
 
 }

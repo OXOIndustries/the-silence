@@ -43,5 +43,10 @@ package classes.GameData.Map
 				trace("Location is not a Ship or a Place thus cannot be added to a System.");
 			}
 		}
+		
+		public function GetLocation(name:String):BaseLocation
+		{
+			return ChildLocations[name];
+		}
 	}
 }

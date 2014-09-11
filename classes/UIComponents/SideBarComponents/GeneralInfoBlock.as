@@ -26,24 +26,7 @@ package classes.UIComponents.SideBarComponents
 		
 		public function get time():TextField { return _timeText; }
 		public function get days():TextField { return _daysText; }
-		public function get sceneBy():TextField { return _sceneText; }
-		public function get sceneByLabel():TextField { return _sceneLabel; }
-		
-		public function set sceneAuthor(v:String):void { _sceneText.text = v; this.ShowScene(); }
-		public function get sceneAuthor():String { return _sceneText.text; }
-		
-		public function HideScene():void
-		{
-			_sceneLabel.visible = false;
-			_sceneText.visible = false;
-		}
-		
-		public function ShowScene():void
-		{
-			_sceneLabel.visible = true;
-			_sceneText.visible = true;
-		}
-		
+
 		public function HideTime():void
 		{
 			_timeText.visible = false;
@@ -157,38 +140,6 @@ package classes.UIComponents.SideBarComponents
 			_daysText.mouseWheelEnabled = false;
 			this.addChild(_daysText);
 			_daysText.height = _daysLabel.textHeight + 1;
-			
-			// Scene Tag Display
-			_sceneLabel = new TextField();
-			_sceneLabel.x = 10;
-			_sceneLabel.y = _daysLabel.y + _daysLabel.height + 2;
-			_sceneLabel.width = 63;
-			_sceneLabel.defaultTextFormat = UIStyleSettings.gSceneByLabelFormatter;
-			_sceneLabel.embedFonts = true;
-			_sceneLabel.antiAliasType = AntiAliasType.ADVANCED;
-			_sceneLabel.multiline = false;
-			_sceneLabel.wordWrap = false;
-			_sceneLabel.text = "SCENE BY:";
-			_sceneLabel.mouseEnabled = false;
-			_sceneLabel.mouseWheelEnabled = false;
-			this.addChild(_sceneLabel);
-			_sceneLabel.height = _sceneLabel.textHeight + 3;
-			
-			_sceneText = new TextField();
-			_sceneText.x = 65;
-			_sceneText.y = _daysText.y + _daysText.height - 1;
-			_sceneText.width = 128;
-			_sceneText.defaultTextFormat = UIStyleSettings.gSceneByValueFormatter;
-			_sceneText.embedFonts = true;
-			_sceneText.antiAliasType = AntiAliasType.ADVANCED;
-			_sceneText.multiline = false;
-			_sceneText.wordWrap = false;
-			_sceneText.text = "Fenoxo Fenfen";
-			_sceneText.background = false;
-			_sceneText.mouseEnabled = false;
-			_sceneText.mouseWheelEnabled = false;
-			this.addChild(_sceneText);
-			_sceneText.height = _sceneText.textHeight + 1;
 		}
 	}
 

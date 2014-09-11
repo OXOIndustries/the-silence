@@ -16,7 +16,7 @@ package classes.GameData.Map.Data
 			SectorIndex = "Silence";
 			SectorName = "Sector 17-3B";
 			
-			AddSystem(SilenceSystem);
+			AddSystem(new SilenceSystem());
 		}	
 	}
 

@@ -39,9 +39,11 @@ package classes.GameData.Map
 		
 		public var InExit:String = "";
 		public var InCondition:Function;
+		public var InName:String = undefined;
 		
 		public var OutExit:String = "";
 		public var OutCondition:Function;
+		public var OutName:String = undefined;
 		
 		public var CanSaveInRoom:Boolean = true;
 		

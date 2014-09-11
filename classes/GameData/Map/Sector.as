@@ -29,6 +29,11 @@ package classes.GameData.Map
 			}
 		}
 		
+		public function GetSystem(name:String):System
+		{
+			return Systems[name];
+		}
+		
 	}
 
 }

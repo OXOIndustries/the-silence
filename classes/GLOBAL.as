@@ -634,15 +634,8 @@
 		public static const HAZARD:int								   = 10;
 		public static const NOFAP:int 								   = 11;
 		public static const AIRLOCK:int								   = 12;
-		
-		// Temp flag alias whilst the asset gets introduced
-		public static const LIFT:int = OBJECTIVE;
-
-		//PLOT FLAGS
-		public static const RECRUITED_CELISE:int                       = 0;
-		public static const CELISE_ONBOARD:int                         = 1;
-		public static const TIMES_CELISE_IN_BALLS:int                  = 2;
-		
+		public static const FAST_TRAVEL:int								= 13;
+		public static const ELEVATOR:int								= 14;
 
 		//ITEM TYPES
 		public static const PILL:int                                   = 0;
@@ -660,29 +653,6 @@
 		public static const ALL:int                                    = 12; //Used for pawn shops!
 		public static const GADGET:int 								   = 13;
 		public static const EXPLOSIVECONSUMABLE:int					   = 14;
-
-		//CHARACTERS
-		public static const CELISE:int                                 = 1;
-		public static const RIVAL:int                                  = 2;
-		public static const GEOFF:int                                  = 3;
-		public static const FLAHNE:int                                 = 4;
-		public static const ZILPACK:int                                = 5;
-		public static const ZIL:int                                    = 6;
-		public static const PENNY:int                                  = 7;
-		public static const BURT:int                                   = 8;
-		public static const ZILFEMALE:int 							   = 9;
-		public static const CSNAKE:int								   = 10;
-		public static const NALEEN:int								   = 11;
-		public static const VPITCHER:int							   = 12;
-		public static const ELDERVPITCHER:int						   = 13;
-		public static const SYRI:int 								   = 14;
-		public static const NALEEN_MALE:int  						   = 15;
-		public static const MACHINA:int 							   = 16;
-		public static const JADE:int 								   = 17;
-		public static const REAHA:int 								   = 18;
-		public static const KELLY:int 								   = 19;
-
-		public static var ITEMS:Object = {};
 		
 		/**
 		 * You have a couple of ways of querying the preference values to get useful information back out; it's why I've set the LIKES/DISLIKES values like I have.

@@ -2,7 +2,9 @@ package classes.GameData.Content
 {
 	import classes.Creature;
 	import classes.Engine.Interfaces.*;
+	import classes.Engine.mainGameMenu;
 	import classes.GameData.ContentIndex;
+	import classes.GameData.GameModel;
 	import classes.GUI;
 	import classes.kGAMECLASS;
 	import flash.utils.Dictionary;
@@ -28,6 +30,16 @@ package classes.GameData.Content
 		protected function clearOutput2():void
 		{
 			classes.Engine.Interfaces.clearOutput2();
+		}
+		
+		protected function clearMenu():void
+		{
+			classes.Engine.Interfaces.clearMenu();
+		}
+		
+		protected function addButton(slot:int, cap:String = "", func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null):void
+		{
+			classes.Engine.Interfaces.addButton(slot, cap, func, arg, ttHeader, ttBody);
 		}
 		
 		protected function get userInterface():GUI
@@ -83,6 +95,21 @@ package classes.GameData.Content
 		protected function get inCombat():Boolean
 		{
 			return GameState.inCombat;
+		}
+		
+		protected function get currentLocation():String
+		{
+			return GameState.currentLocation;
+		}
+		
+		protected function set currentLocation(v:String):void
+		{
+			GameState.currentLocation = v;
+		}
+		
+		protected function mainGameMenu():void
+		{
+			classes.Engine.mainGameMenu();
 		}
 	}
 

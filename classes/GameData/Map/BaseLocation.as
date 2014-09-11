@@ -1,6 +1,8 @@
 package classes.GameData.Map 
 {
 	import flash.geom.Point;
+	import classes.GLOBAL;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -36,6 +38,11 @@ package classes.GameData.Map
 			{
 				FastTravelRooms.push(room);
 			}
+		}
+		
+		public function GetRoom(name:String):Room
+		{
+			return Rooms[name];
 		}
 		
 	}

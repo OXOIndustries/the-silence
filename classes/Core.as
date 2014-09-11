@@ -37,6 +37,8 @@
 	import classes.GameData.CodexManager;
 	import classes.GameData.GameOptions;
 	import classes.GameData.GameState;
+	import classes.GameData.MapIndex;
+	
 	import classes.InputManager;
 	import classes.DataManager.DataManager;
 	import classes.Parser.ParseEngine;
@@ -48,7 +50,8 @@
 	import classes.GameData.Items.Miscellaneous.NoItem;
 	
 	// Game interface functions
-	import classes.Engine.Interfaces.clearMenu;
+	import classes.Engine.Interfaces.*;
+	import classes.Engine.Utility.*;
 	import classes.StringUtil;
 
 	// Manager child classes for ease of use
@@ -170,14 +173,44 @@
 			var tw:Tween = new Tween(whatTheFuck, "x", None.easeNone, start, end, 12, false); 
 		}
 		
-		// Proxy clearMenu calls so we can hook them for controlling save-enabled state
-		// Or alternatively, shim this shit so we don't have to differentiate between
-		// TiTs engine calls and UI calls. This shit is getting ridiculous.		
-		public function clearGhostMenu():void
+		public function mainGameMenu():void 
 		{
-			this.userInterface.clearGhostMenu();
+			GameState.flags["COMBAT MENU SEEN"] = undefined;
+			
+			//Display shit that happened during time passage.
+			if (processEventBuffer()) return;
+			
+			//Queued events can fire off too!
+			if (eventQueue.length > 0) 
+			{
+				//Do the most recent:
+				this.eventQueue[0]();
+				//Strip out the most recent:
+				this.eventQueue.splice(0,1);
+				return;
+			}
+			
+			//Set up all appropriate flags
+			//Display the room description
+			clearOutput();
+			
+			MapIndex.executeRoom(GameState.currentLocation);
 		}
 		
+		public function processEventBuffer():Boolean
+		{
+			if (eventBuffer.length > 0)
+			{
+				clearOutput();
+				output("<b>" + possessive(pc.short) + " log:</b>" + eventBuffer);
+				eventBuffer = "";
+				clearMenu();
+				addButton(0, "Next", mainGameMenu);
+				return true;
+			}
+			return false;
+		}
+
 		public function buttonClick(evt:MouseEvent):void 
 		{
 			toggleWTF();
@@ -218,34 +251,9 @@
 			
 		}
 		
-		public function showBust(... args):void
-		{
-			userInterface.showBust.apply(null, args);
-		}
-		
 		public function showName(name:String):void
 		{
 			userInterface.showName(name);
-		}
-		
-		public function addButton(slot:int, cap:String = "", func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null):void
-		{
-			userInterface.addButton(slot, cap, func, arg, ttHeader, ttBody);
-		}
-		
-		public function addGhostButton(slot:int, cap:String = "", func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null):void
-		{
-			userInterface.addGhostButton(slot, cap, func, arg, ttHeader, ttBody);
-		}
-		
-		public function addDisabledButton(slot:int, cap:String = "", ttHeader:String = null, ttBody:String = null):void
-		{
-			userInterface.addDisabledButton(slot, cap, ttHeader, ttBody);
-		}
-		
-		public function addDisabledGhostButton(slot:int, cap:String = "", ttHeader:String = null, ttBody:String = null):void
-		{
-			userInterface.addDisabledGhostButton(slot, cap, ttHeader, ttBody);
 		}
 		
 		public function addItemButton(slot:int, item:ItemSlotClass, func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null, seller:Creature = null, buyer:Creature = null):void
@@ -363,7 +371,7 @@
 		{
 			this.userInterface.showCodex();
 			this.codexHomeFunction();
-			this.clearGhostMenu();
+			clearGhostMenu();
 			addGhostButton(4, "Back", this.userInterface.showPrimaryOutput);
 		}
 		
@@ -431,25 +439,7 @@
 		{
 			this.userInterface.BufferPagePrevHandler();
 		}
-		
-		// Cheaty hooks for stuff
-		public function IsFunction(name:String):Boolean
-		{
-			if (this[name] != undefined) return true;
-			return false;
-		}
-		
-		public function ExecuteFunction(name:String):void
-		{
-			this[name]();
-		}
 	
-		function doParse(script:String, markdown=false):String 
-		{
-			return parser.recursiveParser(script, markdown);
-		}
-
-
 		/*
 		MOST of this should be broken up into simple shim-functions that call the real, relevant function in userInterface:GUI
 		I'm breaking it out into a separate class, and just manipulating those class variables for the moment
@@ -458,28 +448,6 @@
 		*/
 
 		//1: TEXT FUNCTIONS
-		public function output(words:String, markdown:Boolean = false):void 
-		{
-			this.userInterface.outputBuffer += doParse(words, markdown);
-			this.userInterface.output();
-		}
-
-		public function clearOutput():void 
-		{
-			this.userInterface.clearOutput();
-		}
-
-		public function output2(words:String, markdown:Boolean = false):void
-		{
-			this.userInterface.outputBuffer2 += doParse(words, markdown);
-			this.userInterface.output2();
-		}
-
-		public function clearOutput2():void
-		{
-			this.userInterface.clearOutput2();
-		}
-
 		public function outputCodex(words:String, markdown:Boolean = false):void
 		{
 			this.userInterface.outputCodexBuffer += doParse(words, markdown);
@@ -524,10 +492,6 @@
 			return(returnVar);
 		}
 
-		public function author(arg:String):void 
-		{
-			userInterface.author(arg);
-		}
 		function leftBarClear():void {
 			this.userInterface.leftBarClear();
 		}

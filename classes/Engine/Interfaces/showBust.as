@@ -4,10 +4,10 @@ package classes.Engine.Interfaces
 	 * ...
 	 * @author Gedan
 	 */
-	public function clearOutput2():void
+	public function showBust(... args):void
 	{
 		import classes.kGAMECLASS;
-		kGAMECLASS.userInterface.clearOutput2();
+		kGAMECLASS.userInterface.showBust.apply(null, args);
 	}
 
 }

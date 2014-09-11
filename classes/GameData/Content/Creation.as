@@ -79,7 +79,7 @@ package classes.GameData.Content
 			clearMenu();
 			addButton(0, "Kind", CreationIII, "kind", "Respond kindly", "Kind responses are diplomatic and truthful. Tell Chow you'll take the job, no questions asked. The man's given you good business before; keep it professional.");
 			addButton(1, "Mischievous", CreationIII, "misc", "Respond mischievously", "Mischievous responses are joking, cunning, and frequently involve bluffing. Tell Chow if he wants it so bad, he can come get it himself -- or give you a big, fat slice of the pie.");
-			addButton(2, "Hard", CreationIIII, "hard", "Respond agressively", "Hard responses are direct, forceful, and even threatening. Tell Chow to that you'll get the Platinum for yourself, unless he saves you some time and forwards the coordinates - and twice your normal take.");
+			addButton(2, "Hard", CreationIII, "hard", "Respond agressively", "Hard responses are direct, forceful, and even threatening. Tell Chow to that you'll get the Platinum for yourself, unless he saves you some time and forwards the coordinates - and twice your normal take.");
 		}
 
 		public function CreationIII(choice:String):void
@@ -97,7 +97,7 @@ package classes.GameData.Content
 				output("\n\n“<i>Likewise,</i>” the old man says, inclining his head to you. “<i>You and your crew always are so pleasant to work with. Very professional. We’ll be speaking again shortly, I’m sure.</i>”");
 				
 				output("\n\n“<i>Tell me that again when we have the platinum. Silence out.</i>” You press a key, and the video cuts off, leaving you in blinding darkness in the cabin.");
-				GameState.flags["CHOW_RESPONSE"] = "kind";
+				flags["CHOW_RESPONSE"] = "kind";
 			}
 			else if (choice == "misc")
 			{
@@ -112,7 +112,7 @@ package classes.GameData.Content
 				output("\n\nYou grin as the ship’s coordinates appear on screen. With a flick of your wrist, you send them to Logan’s console at Navigation. “<i>Always am, Chow. Guess I’m just a lucky girl. Thanks for the coordinates. We’ll call when we have the platinum.</i>”");
 				
 				output("\n\n“<i>See that you do,</i>” Chow says, his video snapping off. ");
-				GameState.flags["CHOW_RESPONSE"] = "misc";
+				flags["CHOW_RESPONSE"] = "misc";
 			}
 			else if (choice == "hard")
 			{
@@ -131,7 +131,7 @@ package classes.GameData.Content
 				output("\n\nThe coordinates appear on your screen, and you flick them over to Logan’s console at Navigation. “<i>Pleasure doing business, Chow.</i>”");
 				
 				output("\n\nHe grunts something you can’t quite hear and the video disconnects.");
-				GameState.flags["CHOW_RESPONSE"] = "hard";
+				flags["CHOW_RESPONSE"] = "hard";
 			}
 
 			output("\n\n“<i>Hmm. Looks like we’re in business, then,</i>” Logan says behind you, popping up from under the covers and stretching wide, giving you quite the view.");
@@ -151,7 +151,7 @@ package classes.GameData.Content
 				output("\n\n“<i>Wake up, everyone! Get your shit together, it’s time to earn your keep. Somebody go bang on Tarik’s door till he actually gets out. Gather in the conference room in 10 minutes. Captain out.</i>”");
 			}
 
-			GameState.currentLocation = "CaptainsQuarters"
+			currentLocation = "CaptainsQuarters"
 
 			clearMenu();
 			addButton(0, "Next", mainGameMenu);

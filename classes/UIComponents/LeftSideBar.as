@@ -43,7 +43,6 @@ package classes.UIComponents
 		
 		public function get timeText():TextField { return _genInfoBlock.time; }
 		public function get daysText():TextField { return _genInfoBlock.days; }
-		public function get sceneBy():TextField { return _genInfoBlock.sceneBy; }
 		
 		public function get menuButton():SquareButton { return _menuButtonBlock.menuButton; }
 		public function get dataButton():SquareButton { return _menuButtonBlock.dataButton; }

@@ -21,7 +21,7 @@ package classes.GameData.Map.Data.Ships
 			airlock.RoomIndex = "Airlock";
 			airlock.RoomName = "AIRLOCK";
 			airlock.ShortName = "Silence A.Lk";
-			airlock.EntryFunction = ContentIndex.theSilence.airlockRoomFunc;
+			airlock.EntryFunction = ContentIndex.theSilence.airlockRoomFunction;
 			airlock.MoveTime = 1;
 			airlock.AddFlag(GLOBAL.AIRLOCK);
 			airlock.AddFlag(GLOBAL.INDOOR);
@@ -147,7 +147,7 @@ package classes.GameData.Map.Data.Ships
 			bridgeElevator.RoomIndex = "BridgeElevator";
 			bridgeElevator.RoomName = "ELEVATOR:\nBRIDGE";
 			bridgeElevator.ElevatorRooms = ["BridgeElevator", "CrewDeckElevator", "EngineeringElevator"];
-			bridgeElevator.westExit = "Bridge";
+			bridgeElevator.WestExit = "Bridge";
 			bridgeElevator.EntryFunction = ContentIndex.theSilence.bridgeElevatorRoomFunction;
 			bridgeElevator.AddFlag(GLOBAL.ELEVATOR);
 			bridgeElevator.AddFlag(GLOBAL.INDOOR);

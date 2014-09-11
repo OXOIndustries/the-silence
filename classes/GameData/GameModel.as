@@ -18,6 +18,7 @@ package classes.GameData
 		public var currentLocation:String = "";
 		public var shipLocation:String = "";
 		public var inSceneBlockSaving:Boolean = false;
+		public var encountersDisabled:Boolean = false;
 		
 		public var inCombat:Boolean = false;
 		public var inSpaceCombat:Boolean = false;
@@ -27,6 +28,11 @@ package classes.GameData
 		public function get characters():Object
 		{
 			return CharacterIndex.Chars;
+		}
+		
+		public function get pc():Creature
+		{
+			return CharacterIndex.Chars["PC"];
 		}
 		
 		public function get logan():Creature
