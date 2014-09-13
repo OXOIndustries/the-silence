@@ -78,26 +78,16 @@ package classes.UIComponents
 			_locationHeader.x = 0;
 			_locationHeader.y = 0;
 			
-			// The enemy encounter stats block
-			_enemyEncounterBlock = new EnemyEncounterBlock();
-			this.addChild(_enemyEncounterBlock);
-			_enemyEncounterBlock.y = _locationHeader.y + _locationHeader.height + 8;
-			
-			// Minimap container block
-			_miniMapBlock = new MiniMapBlock();
-			this.addChild(_miniMapBlock);
-			_miniMapBlock.y = _locationHeader.y + _locationHeader.height + 8;
-			this.ShowMiniMap();
-			
 			// Time/day display shit
 			_genInfoBlock = new GeneralInfoBlock();
 			this.addChild(_genInfoBlock);
-			_genInfoBlock.y = _miniMapBlock.y + _miniMapBlock.height - 4;
+			//_genInfoBlock.y = _miniMapBlock.y + _miniMapBlock.height + 21;
+			_genInfoBlock.y = 581;
 			
 			// Menu button block
 			_menuButtonBlock = new SideBarButtonBlock();
 			this.addChild(_menuButtonBlock);
-			_menuButtonBlock.y = _genInfoBlock.y + _genInfoBlock.height - 13;
+			_menuButtonBlock.y = _genInfoBlock.y + _genInfoBlock.height - 17;
 			_menuButtonBlock.x = 10;
 		}
 		

@@ -395,7 +395,7 @@
 		
 		public function pressButton(arg:int = 0):void 
 		{
-			this.userInterface.PressButton(arg, false);
+			this.userInterface.PressButton(arg);
 			updateUI();
 		}
 
@@ -495,24 +495,7 @@
 		function leftBarClear():void {
 			this.userInterface.leftBarClear();
 		}
-		function hidePCStats():void {
-			this.userInterface.hidePCStats()
-		}
-		function showPCStats():void {
-			this.userInterface.showPCStats()
-		}
-		function showNPCStats():void {
-			this.userInterface.showNPCStats()
-		}
-		function hideNPCStats():void {
-			this.userInterface.hideNPCStats()
-		}
-		function showMinimap():void {
-			this.userInterface.showMinimap();
-		}
-		function hideMinimap():void {
-			this.userInterface.hideMinimap();
-		}
+
 		function deglow():void 
 		{
 			this.userInterface.deglow()

@@ -148,8 +148,6 @@
 			this.setupRightSidebar();
 			this.setupLeftSidebar();
 			this.ConfigureLeftBarTooltips();
-			
-			this.hidePCStats();
 
 			clearMenu();
 			
@@ -536,24 +534,6 @@
 		// Once all code uses that kind of UI value setting, we can work on inverting the process, and
 		// use data binding from UI element -> engine variable
 		
-		// Access methods to RSB items
-		public function get playerShields():StatBar { return _rightSideBar.shieldBar; }
-		public function get playerHP():StatBar { return _rightSideBar.hpBar; }
-		public function get playerLust():StatBar { return _rightSideBar.lustBar; }
-		public function get playerEnergy():StatBar { return _rightSideBar.energyBar; }
-		
-		public function get playerPhysique():StatBar { return _rightSideBar.physiqueBar; }
-		public function get playerReflexes():StatBar { return _rightSideBar.reflexesBar; }
-		public function get playerAim():StatBar { return _rightSideBar.aimBar; }
-		public function get playerIntelligence():StatBar { return _rightSideBar.intelligenceBar; }
-		public function get playerWillpower():StatBar { return _rightSideBar.willpowerBar; }
-		public function get playerLibido():StatBar { return _rightSideBar.libidoBar; }
-		
-		public function get playerLevel():StatBar { return _rightSideBar.levelBar; }
-		public function get playerXP():StatBar { return _rightSideBar.xpBar; }
-		public function get playerCredits():StatBar { return _rightSideBar.creditsBar; }
-		public function set playerStatusEffects(statusEffects:Array):void { _rightSideBar.statusEffects.updateDisplay(statusEffects); }
-		
 		// Access to LSB items
 		public function get roomText():String { return _leftSideBar.locationBlock.roomText.text; }
 		public function get planetText():String { return _leftSideBar.locationBlock.planetText.text; }
@@ -562,15 +542,6 @@
 		public function set roomText(v:String):void { _leftSideBar.locationBlock.roomText.text = v; }
 		public function set planetText(v:String):void { _leftSideBar.locationBlock.planetText.text = v; }
 		public function set systemText(v:String):void { _leftSideBar.locationBlock.systemText.text = v; }
-		
-		public function get monsterShield():StatBar { return _leftSideBar.encounterShield; }
-		public function get monsterHP():StatBar { return _leftSideBar.encounterHp; }
-		public function get monsterLust():StatBar { return _leftSideBar.encounterLust; }
-		public function get monsterEnergy():StatBar { return _leftSideBar.encounterEnergy; }
-		public function get monsterLevel():StatBar { return _leftSideBar.encounterLevel; }
-		public function get monsterRace():StatBar { return _leftSideBar.encounterRace; }
-		public function get monsterSex():StatBar { return _leftSideBar.encounterSex; }
-		public function set monsterStatusEffects(statusEffectsArray:Array):void { _leftSideBar.encounterStatusEffects.updateDisplay(statusEffectsArray); }
 		
 		public function get time():String { return _leftSideBar.timeText.text; }
 		public function set time(v:String):void { _leftSideBar.timeText.text = v; }
@@ -640,8 +611,8 @@
 		{
 			var btnArray:Array = _buttonTray.buttons;
 			
-			if (btnArray[0].buttonName == "Next" || btnArray[0].buttonName == "Leave" || btnArray[0].buttonName == "Back") PressButton(0, InCombat());
-			else if (btnArray[14].buttonName == "Next" || btnArray[14].buttonName == "Leave" || btnArray[14].buttonName == "Back") PressButton(14, InCombat());
+			if (btnArray[0].buttonName == "Next" || btnArray[0].buttonName == "Leave" || btnArray[0].buttonName == "Back") PressButton(0);
+			else if (btnArray[14].buttonName == "Next" || btnArray[14].buttonName == "Leave" || btnArray[14].buttonName == "Back") PressButton(14);
 		}
 		
 		/**
@@ -649,7 +620,7 @@
 		 * @param	arg		Button index to activate
 		 * @return			Successfully activated the button.
 		 */
-		public function PressButton(arg:int, inCombat:Boolean):Boolean
+		public function PressButton(arg:int):Boolean
 		{
 			if (arg < 0 || arg > 14) return false;
 			
@@ -658,8 +629,6 @@
 			var tarButton:MainButton = btnArray[arg];
 			
 			if (tarButton.func == null) return false;
-			
-			if (!inCombat) showBust("none");
 			
 			if (tarButton.arg == undefined) 
 			{
@@ -796,16 +765,6 @@
 		public function clearOutputCodex():void
 		{
 			outputCodexBuffer = "\n";
-		}
-		
-		public function getGuiPlayerNameText():String
-		{
-			return this._rightSideBar.nameText.text;
-		}
-		
-		public function setGuiPlayerNameText(inName:String):void
-		{
-			this._rightSideBar.nameText.text = inName;
 		}
 
 		//1. BUTTON STUFF
@@ -1018,24 +977,9 @@
 			_leftSideBar.generalInfoBlock.ShowTime();
 		}
 		
-		public function hidePCStats():void 
-		{
-			this._rightSideBar.hideItems();
-		}
-		
-		public function showPCStats():void 
-		{
-			this._rightSideBar.showItems();
-		}
-		
-		public function resetPCStats():void
-		{
-			this._rightSideBar.resetItems();
-		}
-		
 		public function showNPCStats():void 
 		{
-			_leftSideBar.ShowStats();
+			
 		}
 		
 		public function resetNPCStats():void
@@ -1045,47 +989,23 @@
 		
 		public function showMinimap():void
 		{
-			_leftSideBar.ShowMiniMap();
+			throw new Error("REWIRE!");
 		}
 		
 		public function hideNPCStats():void 
 		{
-			_leftSideBar.HideStats();
+			throw new Error("REWIRE!");
 		}
 		
 		public function hideMinimap():void
 		{
-			_leftSideBar.HideMiniMap();
+			throw new Error("REWIRE!");
 		}
 		
 		public function deglow():void 
 		{
 			_rightSideBar.removeGlows();
-			_leftSideBar.encounterBlock.removeGlows();
 		}	
-
-		public function showBust(... args):void 
-		{
-			var argS:String = "";
-			for (var i:int = 0; i < args.length; i++)
-			{
-				if (i > 0) argS += ", ";
-				argS += args[i];
-			}
-			//trace("showBust called with args: [" + argS + "]");
-			_leftSideBar.locationBlock.showBust(args);			
-		}
-		
-		public function bringLastBustToTop():void
-		{
-			_leftSideBar.locationBlock.bringLastBustToTop();
-		}
-		
-		public function hideBust():void
-		{
-			trace("hideBust called");
-			_leftSideBar.locationBlock.hideBust();
-		}
 
 		//2. DISPLAY STUFF
 		//EXAMPLE: setupStatBar(monsterSex,"SEX","Genderless");

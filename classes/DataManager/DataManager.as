@@ -422,8 +422,6 @@
 			// Do some output shit
 			if (!dataErrors)
 			{
-				kGAMECLASS.userInterface.hideNPCStats();
-				kGAMECLASS.userInterface.showPCStats();
 				kGAMECLASS.updateUI();
 				output2("Game loaded from 'TiTs_" + slotNumber + "'!");
 				kGAMECLASS.userInterface.clearGhostMenu();

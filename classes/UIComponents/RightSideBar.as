@@ -20,40 +20,11 @@ package classes.UIComponents
 	 */
 	public class RightSideBar extends Sprite
 	{
-		private var _doTween:Boolean;
-		
-		private var _nameText:TextField;
-		private var _nameTextUnderline:Sprite;
-		
-		private var _combatStatBlock:BigStatBlock;
-		private var _coreStatBlock:CoreStatsBlock;
-		private var _advancementBlock:AdvancementBlock;
-		private var _statusEffectDisplay:StatusEffectsBlock;
-		
 		// All of the individual bars are broken out here, because *this* class is where I'd likely configure
 		// bindUtils.bindProperty things back out into the game data classes. On load, the load code
 		// just sends the PC char to the UI, which passes it into RightSideBar, which configures the DataBinds
 		// And then there's no longer a need to manually update all the bars!
 		// The idea is UI gets seperated from game logic entirely. All UI cares about is values in Creatures.
-		public function get nameText():TextField { return this._nameText; }
-		
-		public function get shieldBar():StatBar { return _combatStatBlock.shieldBar; }
-		public function get hpBar():StatBar { return _combatStatBlock.hpBar; }
-		public function get lustBar():StatBar { return _combatStatBlock.lustBar; }
-		public function get energyBar():StatBar { return _combatStatBlock.energyBar; }
-		
-		public function get physiqueBar():StatBar { return _coreStatBlock.physiqueBar; }
-		public function get reflexesBar():StatBar { return _coreStatBlock.reflexesBar; }
-		public function get aimBar():StatBar { return _coreStatBlock.aimBar; }
-		public function get intelligenceBar():StatBar { return _coreStatBlock.intelligenceBar; }
-		public function get willpowerBar():StatBar { return _coreStatBlock.willpowerBar; }
-		public function get libidoBar():StatBar { return _coreStatBlock.libidoBar; }
-		
-		public function get levelBar():StatBar { return _advancementBlock.levelBar; }
-		public function get xpBar():StatBar { return _advancementBlock.xpBar; }
-		public function get creditsBar():StatBar { return _advancementBlock.creditsBar; }
-		
-		public function get statusEffects():StatusEffectsDisplay { return _statusEffectDisplay.statusDisplay; }
 		
 		/**
 		 * Config for lazy init.
@@ -74,23 +45,6 @@ package classes.UIComponents
 			this.removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			this.BuildBackground();
-			this.BuildCharacterHeader();
-			
-			_combatStatBlock = new BigStatBlock();
-			_combatStatBlock.y = _nameTextUnderline.y + _nameTextUnderline.height + 11; // These magic numbers equalise the padding between the last element in the bar, and the next block
-			this.addChild(_combatStatBlock);
-			
-			_coreStatBlock = new CoreStatsBlock();
-			_coreStatBlock.y = Math.floor(_combatStatBlock.y + (_combatStatBlock.height));
-			this.addChild(_coreStatBlock);
-			
-			_advancementBlock = new AdvancementBlock();
-			_advancementBlock.y = Math.floor(_coreStatBlock.y + (_coreStatBlock.height + 4));
-			this.addChild(_advancementBlock);
-			
-			_statusEffectDisplay = new StatusEffectsBlock();
-			_statusEffectDisplay.y = Math.floor(_advancementBlock.y + (_advancementBlock.height + 4));
-			this.addChild(_statusEffectDisplay);
 		}
 		
 		/**
@@ -112,64 +66,27 @@ package classes.UIComponents
 		 */
 		private function BuildCharacterHeader():void
 		{
-			// Header underline
-			_nameTextUnderline = new Sprite();
-			_nameTextUnderline.x = 10; // PEDANTARY ENGAGE
-			_nameTextUnderline.y = 32; // Originally 32.15 -- avoiding real numbers for pixel positioning, dithering etc
-			_nameTextUnderline.graphics.beginFill(UIStyleSettings.gHighlightColour, 1);
-			_nameTextUnderline.graphics.drawRect(0, 0, 190, 3);
-			_nameTextUnderline.graphics.endFill();
-			this.addChild(_nameTextUnderline);
-			
-			// Text field display
-			_nameText = new TextField();
-			_nameText.x = 6;
-			_nameText.y = 4;
-			_nameText.width = 190;
-			_nameText.height = 34;
-			_nameText.defaultTextFormat = UIStyleSettings.gNameHeaderFormatter;
-			_nameText.embedFonts = true;
-			_nameText.antiAliasType = AntiAliasType.ADVANCED;
-			_nameText.text = "";
-			_nameText.mouseEnabled = false;
-			_nameText.mouseWheelEnabled = false;
-			this.addChild(_nameText);
-			
-			// Inverted order from "common sense" ensures any text that cross the underline goes /over/ it
+
 		}
 		
 		public function hideItems():void
 		{
-			_nameText.visible = false;
-			_nameTextUnderline.visible = false;
-			_combatStatBlock.visible = false;
-			_coreStatBlock.visible = false;
-			_advancementBlock.visible = false;
-			_statusEffectDisplay.visible = false;
+
 		}
 		
 		public function showItems():void
 		{
-			_nameText.visible = true;
-			_nameTextUnderline.visible = true;
-			_combatStatBlock.visible = true;
-			_coreStatBlock.visible = true;
-			_advancementBlock.visible = true;
-			_statusEffectDisplay.visible = true;
+
 		}
 		
 		public function removeGlows():void
 		{
-			_combatStatBlock.removeGlows();
-			_coreStatBlock.removeGlows();
-			_advancementBlock.removeGlows();
+
 		}
 		
 		public function resetItems():void
 		{
-			_combatStatBlock.resetItems();
-			_coreStatBlock.resetItems();
-			_advancementBlock.resetItems();
+
 		}
 	}
 

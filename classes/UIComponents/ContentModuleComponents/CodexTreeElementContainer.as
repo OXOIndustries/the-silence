@@ -228,8 +228,6 @@ package classes.UIComponents.ContentModuleComponents
 		
 		private function linkHandler(e:TextEvent):void
 		{
-			kGAMECLASS.userInterface.showBust("none");
-			
 			if (_activeKey != e.text)
 			{
 				CodexManager.getEntryFunctor(e.text)();
