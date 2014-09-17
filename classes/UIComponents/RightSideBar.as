@@ -1,9 +1,6 @@
 package classes.UIComponents 
 {
 	import classes.UIComponents.StatBar;
-	import classes.UIComponents.SideBarComponents.AdvancementBlock;
-	import classes.UIComponents.SideBarComponents.BigStatBlock;
-	import classes.UIComponents.SideBarComponents.CoreStatsBlock;
 	import classes.UIComponents.SideBarComponents.StatusEffectsBlock;
 	import classes.UIComponents.StatusEffectComponents.StatusEffectsDisplay;
 	import flash.display.Sprite;

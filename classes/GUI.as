@@ -12,7 +12,6 @@
 	import classes.UIComponents.LeftSideBar;
 	import classes.UIComponents.MainButton;
 	import classes.UIComponents.RightSideBar;
-	import classes.UIComponents.SideBarComponents.BigStatBlock;
 	import classes.UIComponents.SquareButton;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
@@ -977,16 +976,6 @@
 			_leftSideBar.generalInfoBlock.ShowTime();
 		}
 		
-		public function showNPCStats():void 
-		{
-			
-		}
-		
-		public function resetNPCStats():void
-		{
-			_leftSideBar.encounterBlock.resetItems();
-		}
-		
 		public function showMinimap():void
 		{
 			throw new Error("REWIRE!");
@@ -1026,8 +1015,9 @@
 		// Set the current map data
 		public function setMapData(data:*):void
 		{
-			this._leftSideBar.miniMap.setMapData(data);
-			_leftSideBar.ShowMiniMap();
+			//this._leftSideBar.miniMap.setMapData(data);
+			//_leftSideBar.ShowMiniMap();
+			throw new Error("REWIRE!");
 		}
 		
 		public function DeGlowButtons():void

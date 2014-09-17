@@ -18,6 +18,7 @@
 	import classes.GameData.Items.Miscellaneous.EmptySlot;
 	import classes.Util.RandomInCollection;
 	import classes.Engine.Interfaces.output;
+	import classes.Resources.Busts.StaticRenders;
 
 	/**
 	 * I cannot yet implement "smart" detection of which characters (or furthermore, what *properties* of which characters)
@@ -60,6 +61,7 @@
 		}
 
 		//For enemies
+		public var bustT:Class = StaticRenders.MISSING;
 		public var short: String = "";
 		public var originalRace: String = "human";
 		public var a: String = "a ";

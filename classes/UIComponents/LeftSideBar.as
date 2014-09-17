@@ -1,12 +1,12 @@
 package classes.UIComponents 
 {
+	import classes.UIComponents.SideBarComponents.PartyBlock;
 	import classes.UIComponents.StatBar;
 	import classes.UIComponents.MiniMap.MiniMap;
 	import classes.UIComponents.SideBarComponents.LocationHeader;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
-	import classes.UIComponents.SideBarComponents.EnemyEncounterBlock;
 	import classes.UIComponents.SideBarComponents.MiniMapBlock;
 	import classes.UIComponents.SideBarComponents.GeneralInfoBlock;
 	import classes.UIComponents.SideBarComponents.SideBarButtonBlock;
@@ -21,25 +21,13 @@ package classes.UIComponents
 		private var _doTween:Boolean;
 		
 		private var _locationHeader:LocationHeader;
-		private var _enemyEncounterBlock:EnemyEncounterBlock;
-		private var _miniMapBlock:MiniMapBlock;
+		private var _playerParty:PartyBlock;
 		private var _genInfoBlock:GeneralInfoBlock;
 		private var _menuButtonBlock:SideBarButtonBlock;
 		
 		public function get roomText():TextField { return _locationHeader.roomText; }
 		public function get planetText():TextField { return _locationHeader.planetText; }
 		public function get systemText():TextField { return _locationHeader.systemText; }
-		
-		public function get miniMap():MiniMap { return _miniMapBlock.miniMap; }
-		
-		public function get encounterHp():StatBar { return _enemyEncounterBlock.hpBar; }
-		public function get encounterShield():StatBar { return _enemyEncounterBlock.shieldBar; }
-		public function get encounterLust():StatBar { return _enemyEncounterBlock.lustBar; }
-		public function get encounterEnergy():StatBar { return _enemyEncounterBlock.energyBar; }
-		public function get encounterLevel():StatBar { return _enemyEncounterBlock.levelBar; }
-		public function get encounterRace():StatBar { return _enemyEncounterBlock.raceBar; }
-		public function get encounterSex():StatBar { return _enemyEncounterBlock.sexBar; }
-		public function get encounterStatusEffects():StatusEffectsDisplay { return _enemyEncounterBlock.statusEffects; }
 		
 		public function get timeText():TextField { return _genInfoBlock.time; }
 		public function get daysText():TextField { return _genInfoBlock.days; }
@@ -54,8 +42,7 @@ package classes.UIComponents
 		
 		// Block level access
 		public function get locationBlock():LocationHeader { return _locationHeader; }
-		public function get miniMapBlock():MiniMapBlock { return _miniMapBlock; }
-		public function get encounterBlock():EnemyEncounterBlock { return _enemyEncounterBlock; }
+		public function get partyBlock():PartyBlock { return _playerParty; }
 		public function get generalInfoBlock():GeneralInfoBlock { return _genInfoBlock; }
 		public function get menuButtonBlock():SideBarButtonBlock { return _menuButtonBlock; }
 		
@@ -72,11 +59,17 @@ package classes.UIComponents
 			
 			this.BuildBackground();
 			
-			// The location/bust block
+			// The location
 			_locationHeader = new LocationHeader();
 			this.addChild(_locationHeader);
 			_locationHeader.x = 0;
 			_locationHeader.y = 0;
+			
+			// Player party display
+			_playerParty = new PartyBlock(3, "left");
+			this.addChild(_playerParty);
+			_playerParty.x = 0;
+			_playerParty.y = _locationHeader.y + _locationHeader.height - 20;
 			
 			// Time/day display shit
 			_genInfoBlock = new GeneralInfoBlock();
@@ -107,36 +100,9 @@ package classes.UIComponents
 			this.y = 0;
 		}
 		
-		public function ShowStats():void
+		public function setPartyData(party:Array):void
 		{
-			_miniMapBlock.visible = false;
-			_genInfoBlock.visible = false;
-			_enemyEncounterBlock.visible = true;
-		}
-		
-		public function ShowMiniMap():void
-		{
-			if (_miniMapBlock.miniMap.hasMapRender == true)
-			{
-				_miniMapBlock.visible = true;
-			}
-			else
-			{
-				_miniMapBlock.visible = false;
-			}
-			if (_genInfoBlock) _genInfoBlock.visible = true;
-			_enemyEncounterBlock.visible = false;
-		}
-		
-		public function HideStats():void
-		{
-			_enemyEncounterBlock.visible = false;
-			_genInfoBlock.visible = true;
-		}
-		
-		public function HideMiniMap():void
-		{
-			_miniMapBlock.visible = false;
+			_playerParty.showParty(party);
 		}
 		
 		public function hideLocation():void
