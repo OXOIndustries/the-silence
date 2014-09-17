@@ -9,7 +9,7 @@ package classes.GameData.Map
 		public var SectorIndex:String;
 		public var SectorName:String;
 		
-		public var Systems:Object;
+		public var Systems:Object = {};
 		
 		public function Sector() 
 		{
