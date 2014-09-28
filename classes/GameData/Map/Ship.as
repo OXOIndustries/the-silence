@@ -1,5 +1,7 @@
 package classes.GameData.Map 
 {
+	import flash.geom.Point;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -11,7 +13,6 @@ package classes.GameData.Map
 		{
 			
 		}
-		
 	}
 
 }

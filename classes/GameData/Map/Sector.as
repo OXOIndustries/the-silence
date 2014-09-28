@@ -9,7 +9,8 @@ package classes.GameData.Map
 		public var SectorIndex:String;
 		public var SectorName:String;
 		
-		public var Systems:Object = {};
+		public var Systems:Object = { };
+		public var Ships:Object = { };
 		
 		public function Sector() 
 		{
@@ -31,9 +32,14 @@ package classes.GameData.Map
 		
 		public function GetSystem(name:String):System
 		{
-			return Systems[name];
+			if (Systems[name] != undefined) return Systems[name];
+			return null;
 		}
 		
+		public function GetShip(name:String):Ship
+		{
+			if (Ships[name] != undefined) return Ships[name];
+			return null;
+		}
 	}
-
 }

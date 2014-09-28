@@ -194,7 +194,7 @@
 			//Display the room description
 			clearOutput();
 			
-			MapIndex.executeRoom(GameState.currentLocation);
+			MapIndex.displayRoom(GameState.currentLocation);
 		}
 		
 		public function processEventBuffer():Boolean
