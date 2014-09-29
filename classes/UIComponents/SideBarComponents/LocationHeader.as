@@ -73,7 +73,7 @@ package classes.UIComponents.SideBarComponents
 			// Text Elements
 			_roomText = new TextField();
 			_roomText.x = _roomBlock.x + 5;
-			_roomText.y = _roomBlock.y + 70; // Was 60, should probably do something different though, an anchor to roomBlock.y, set height to same and textAlign from bottom?
+			_roomText.y = _roomBlock.y; // Was 60, should probably do something different though, an anchor to roomBlock.y, set height to same and textAlign from bottom?
 			_roomText.width = 179;
 			_roomText.height = 90;
 			_roomText.defaultTextFormat = UIStyleSettings.gLocationBlockRoomFormatter;

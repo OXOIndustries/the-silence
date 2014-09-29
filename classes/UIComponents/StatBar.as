@@ -53,7 +53,7 @@ package classes.UIComponents
 			Build();
 		}
 		
-		private function Build()
+		private function Build():void
 		{
 			if (_desiredMode == "BIG")
 			{

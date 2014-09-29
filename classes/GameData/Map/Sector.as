@@ -2,6 +2,7 @@ package classes.GameData.Map
 {
 	/**
 	 * Sectors contain Systems
+	 * They're the "root" area that a game takes place in, and should setup all the things that will be explorable- planets, locations and ships.
 	 * @author Gedan
 	 */
 	public class Sector 
@@ -34,6 +35,11 @@ package classes.GameData.Map
 		{
 			if (Systems[name] != undefined) return Systems[name];
 			return null;
+		}
+		
+		public function AddShip(ship:Ship):void
+		{
+			Ships[ship.LocationIndex] = ship;
 		}
 		
 		public function GetShip(name:String):Ship

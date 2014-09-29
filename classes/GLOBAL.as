@@ -636,6 +636,7 @@
 		public static const AIRLOCK:int								   = 12;
 		public static const FAST_TRAVEL:int								= 13;
 		public static const ELEVATOR:int								= 14;
+		public static const ROOT:int									= 15;
 
 		//ITEM TYPES
 		public static const PILL:int                                   = 0;

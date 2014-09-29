@@ -151,7 +151,7 @@ package classes.GameData.Content
 				output("\n\n“<i>Wake up, everyone! Get your shit together, it’s time to earn your keep. Somebody go bang on Tarik’s door till he actually gets out. Gather in the conference room in 10 minutes. Captain out.</i>”");
 			}
 
-			currentLocation = "CaptainsQuarters"
+			currentLocation = "TheSilence.CaptainsQuarters"
 
 			clearMenu();
 			addButton(0, "Next", mainGameMenu);

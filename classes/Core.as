@@ -492,11 +492,11 @@
 			return(returnVar);
 		}
 
-		function leftBarClear():void {
+		public function leftBarClear():void {
 			this.userInterface.leftBarClear();
 		}
 
-		function deglow():void 
+		public function deglow():void 
 		{
 			this.userInterface.deglow()
 		}			

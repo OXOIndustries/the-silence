@@ -1,6 +1,7 @@
 package classes.GameData.Map 
 {
 	import classes.GameData.Content.BaseContent;
+	import flash.geom.Vector3D;
 	
 	/**
 	 * ...
@@ -48,6 +49,9 @@ package classes.GameData.Map
 		public var CanSaveInRoom:Boolean = true;
 		
 		public var ElevatorRooms:Array = [];
+		
+		public var MapPosition:Vector3D = null;
+		public var MapIndex:int = -1;
 		
 		public function HasFlag(arg:int):Boolean
 		{

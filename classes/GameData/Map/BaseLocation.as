@@ -22,6 +22,8 @@ package classes.GameData.Map
 		
 		public var Position:Point = new Point(0, 0);
 		
+		public var RootRoom:Room;
+				
 		public function BaseLocation() 
 		{
 			
@@ -38,13 +40,20 @@ package classes.GameData.Map
 			{
 				FastTravelRooms.push(room);
 			}
+			
+			if (room.HasFlag(GLOBAL.ROOT))
+			{
+				RootRoom = room;
+			}
+			
+			Rooms[room.RoomIndex] = room;
+			room.ParentLocation = this;
 		}
 		
 		public function GetRoom(name:String):Room
 		{
 			return Rooms[name];
-		}
-		
+		}		
 	}
 
 }

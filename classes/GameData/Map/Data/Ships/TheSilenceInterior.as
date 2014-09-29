@@ -9,12 +9,12 @@ package classes.GameData.Map.Data.Ships
 	 * ...
 	 * @author Gedan
 	 */
-	public class TheSilence extends Ship
+	public class TheSilenceInterior extends Ship
 	{
-		public function TheSilence() 
+		public function TheSilenceInterior() 
 		{
 			LocationIndex = "TheSilence";
-			LocationName = "Silence";
+			LocationName = "SILENCE";
 			
 			// CREW DECK
 			var airlock:Room = new Room();
@@ -188,6 +188,8 @@ package classes.GameData.Map.Data.Ships
 			engineeringDeck2.EntryFunction = ContentIndex.theSilence.engineeringDeck2RoomFunction;
 			engineeringDeck2.AddFlag(GLOBAL.INDOOR);
 			AddRoom(engineeringDeck2);
+			
+			trace("Created Silence Instance");
 		}	
 	}
 }

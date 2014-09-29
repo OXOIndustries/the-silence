@@ -1,7 +1,7 @@
 package classes.GameData 
 {
 	import classes.GameData.Map.BaseLocation;
-	import classes.GameData.Map.Data.Ships.TheSilence;
+	import classes.GameData.Map.Data.Ships.TheSilenceInterior;
 	import classes.GameData.Map.Data.SilenceSector;
 	import classes.GameData.Map.Place;
 	import classes.GameData.Map.Room;
@@ -40,10 +40,16 @@ package classes.GameData
 		
 		public static function executeRoom(room:Room):void
 		{
-			setLocation(room.RoomName, room.ParentLocation.LocationName, room.ParentLocation.ParentSystem.SystemName);
+			if (room.ParentLocation is Ship)
+			{
+				setLocation(room.RoomName, "SHIP: " + room.ParentLocation.LocationName, room.ParentLocation.ParentSystem.SystemName);
+			}
+			else
+			{
+				setLocation(room.RoomName, room.ParentLocation.LocationName, room.ParentLocation.ParentSystem.SystemName);
+			}
 			
 			clearMenu();
-			showBust("none");
 			
 			GameState.inSceneBlockSaving = false;
 			GameState.encountersDisabled = true;

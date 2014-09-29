@@ -1,6 +1,6 @@
 package classes.GameData.Map.Data.Systems {
 	import classes.GameData.Map.System;
-	import classes.GameData.Map.Data.Ships.TheSilence;
+	import classes.GameData.Map.Data.Ships.TheSilenceInterior;
 	import flash.geom.Point;
 	/**
 	 * ...
@@ -14,8 +14,6 @@ package classes.GameData.Map.Data.Systems {
 			SystemName = "Silence System";
 			
 			Position = new Point(0, 0);
-			
-			AddLocation(new TheSilence());
 		}
 	}
 }
