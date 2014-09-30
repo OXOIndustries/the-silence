@@ -44,8 +44,10 @@ package classes.GameData.Map.Data.Ships
 			crewDeckL21.EntryFunction = ContentIndex.theSilence.crewDeckL21RoomFunction;
 			crewDeckL21.MoveTime = 1;
 			crewDeckL21.NorthExit = "CrewL20";
+			crewDeckL21.NorthCondition = function():Boolean { return false; }
 			crewDeckL21.EastExit = "CrewDeckM21";
 			crewDeckL21.SouthExit = "CrewL22";
+			crewDeckL21.SouthCondition = function():Boolean { return false; }
 			crewDeckL21.WestExit = "CrewDeckK21";
 			crewDeckL21.AddFlag(GLOBAL.INDOOR);
 			AddRoom(crewDeckL21);
@@ -72,8 +74,10 @@ package classes.GameData.Map.Data.Ships
 			crewDeckM21.EntryFunction = ContentIndex.theSilence.crewDeckM21RoomFunction;
 			crewDeckM21.MoveTime = 1;
 			crewDeckM21.NorthExit = "CrewM20";
+			crewDeckM21.NorthCondition = function():Boolean { return false; }
 			crewDeckM21.EastExit = "CrewDeckN21";
 			crewDeckM21.SouthExit = "CrewM22";
+			crewDeckM21.SouthCondition = function():Boolean { return false; }
 			crewDeckM21.WestExit = "CrewDeckL21";
 			crewDeckM21.AddFlag(GLOBAL.INDOOR);
 			AddRoom(crewDeckM21);
@@ -119,7 +123,7 @@ package classes.GameData.Map.Data.Ships
 			captainsQuarters.RoomIndex = "CaptainsQuarters";
 			captainsQuarters.RoomName = "CAPTAINS\nQUARTERS";
 			captainsQuarters.EntryFunction = ContentIndex.theSilence.captainsQuartersRoomFunction;
-			captainsQuarters.NorthExit = "CrewDeckM21";
+			captainsQuarters.NorthExit = "CrewDeckN22";
 			captainsQuarters.AddFlag(GLOBAL.INDOOR);
 			AddRoom(captainsQuarters);
 

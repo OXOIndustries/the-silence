@@ -1,5 +1,7 @@
 package classes.UIComponents 
 {
+	import classes.UIComponents.MiniMap.MiniMap;
+	import classes.UIComponents.SideBarComponents.MiniMapBlock;
 	import classes.UIComponents.StatBar;
 	import classes.UIComponents.SideBarComponents.StatusEffectsBlock;
 	import classes.UIComponents.StatusEffectComponents.StatusEffectsDisplay;
@@ -7,6 +9,7 @@ package classes.UIComponents
 	import flash.events.Event;
 	import flash.text.TextField;
 	import flash.text.AntiAliasType;
+	import classes.UIComponents.SideBarComponents.PartyBlock;
 	
 	/**
 	 * Should maybe extend a base SideBar but whatevs, makes the code much neater for shared shit.
@@ -17,11 +20,10 @@ package classes.UIComponents
 	 */
 	public class RightSideBar extends Sprite
 	{
-		// All of the individual bars are broken out here, because *this* class is where I'd likely configure
-		// bindUtils.bindProperty things back out into the game data classes. On load, the load code
-		// just sends the PC char to the UI, which passes it into RightSideBar, which configures the DataBinds
-		// And then there's no longer a need to manually update all the bars!
-		// The idea is UI gets seperated from game logic entirely. All UI cares about is values in Creatures.
+		private var _enemyParty:PartyBlock;
+		private var _minimapBlock:MiniMapBlock;
+		
+		public function get minimap():MiniMap { return _minimapBlock.miniMap; }
 		
 		/**
 		 * Config for lazy init.
@@ -42,6 +44,18 @@ package classes.UIComponents
 			this.removeEventListener(Event.ADDED_TO_STAGE, init);
 			
 			this.BuildBackground();
+			
+			// Enemy party container
+			_enemyParty = new PartyBlock(5, "right");
+			this.addChild(_enemyParty);
+			_enemyParty.x = 0;
+			_enemyParty.y = 0;
+			
+			// Minimap Container
+			_minimapBlock = new MiniMapBlock("right");
+			this.addChild(_minimapBlock);
+			_minimapBlock.x = 0;
+			_minimapBlock.y = 0;
 		}
 		
 		/**
@@ -58,32 +72,37 @@ package classes.UIComponents
 			this.y = 0;
 		}
 		
-		/**
-		 * Build the character name header stuff
-		 */
-		private function BuildCharacterHeader():void
+		public function setPartyData(party:Array):void
 		{
-
+			_enemyParty.showParty(party);
 		}
 		
-		public function hideItems():void
+		public function showParty():void
 		{
-
+			_enemyParty.visible = true;
+			_minimapBlock.visible = false;
 		}
 		
-		public function showItems():void
+		public function hideParty():void
 		{
-
+			_enemyParty.visible = false;
 		}
 		
-		public function removeGlows():void
+		public function showMinimap():void
 		{
-
+			_enemyParty.visible = false;
+			_minimapBlock.visible = true;
 		}
 		
-		public function resetItems():void
+		public function hideMinimap():void
 		{
-
+			_minimapBlock.visible = false;
+		}
+		
+		public function hideAll():void 
+		{
+			_enemyParty.visible = false;
+			_minimapBlock.visible = false;
 		}
 	}
 

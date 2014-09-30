@@ -1,5 +1,8 @@
 ﻿package classes
 {
+	import classes.GameData.Map.Room;
+	import classes.GameData.MapIndex;
+	
 	public class Mapper
 	{
 
@@ -15,7 +18,7 @@
 		public static const y_pos_exit_mask:int         = 1<<3;
 		public static const y_neg_exit_mask:int         = 1<<4;
 		public static const z_pos_exit_mask:int         = 1<<5;
-		public static const z_neg_exit_mask:int         = 1<<6;
+		public static const z_neg_exit_mask:int         = 1 << 6;
 		public static const current_locaton_mask:int    = 1<<7;
 		public static const room_bar_mask:int			= 1<<8;
 		public static const room_commerce_mask:int		= 1<<9;
@@ -27,14 +30,17 @@
 		public static const room_outdoor_mask:int		= 1<<15; // I don't want to lean on assuming INDOOR = !OUTDOOR because we might end up with other variations etc.
 		public static const room_indoor_mask:int		= 1 << 16;
 		public static const room_hazard_mask:int		= 1 << 17;
+		public static const x_pos_lock_mask:int			= 1 << 18;
+		public static const x_neg_lock_mask:int			= 1 << 19;
+		public static const y_pos_lock_mask:int			= 1 << 20;
+		public static const y_neg_lock_mask:int			= 1 << 21;
 
 		private var roomsObj:Object;
 
-		public function Mapper(roomsObj:Object, mapSz:Number = 7)
+		public function Mapper(mapSz:Number = 7)
 		{
 			// I'm assuming we'll only ever have one rooms object. 
 			// eh, can always simply change roomsObj.
-			this.roomsObj = roomsObj;
 			this._mapSz = mapSz
 		}
 
@@ -98,87 +104,99 @@
 				throw("How did this even happen? Room name = ", targetRoom);
 			}
 
+			// Get the room object
+			var room:Room = roomsObj[targetRoom];
 
-			if (roomsObj[targetRoom].northExit)
+			if (room.NorthExit)
 			{
-				map[x][y][z] |= y_pos_exit_mask;
+				if (room.NorthCondition == undefined || room.NorthCondition() == true) map[x][y][z] |= y_pos_exit_mask;
+				else map[x][y][z] |= y_pos_lock_mask;
+				
 				if (this.mapDebug) trace("Have exit - northExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].northExit);
-				processRoom(roomsObj[targetRoom].northExit, map, x, y+1, z);
+				processRoom(roomsObj[targetRoom].NorthExit, map, x, y+1, z);
 			}
-			if (roomsObj[targetRoom].southExit)
+			if (roomsObj[targetRoom].SouthExit)
 			{
-				map[x][y][z] |= y_neg_exit_mask;
+				if (room.SouthCondition == undefined || room.SouthCondition() == true) map[x][y][z] |= y_neg_exit_mask;
+				else map[x][y][z] |= y_neg_lock_mask;
+				
 				if (this.mapDebug) trace("Have exit - southExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].southExit);
-				processRoom(roomsObj[targetRoom].southExit, map, x, y-1, z);
+				processRoom(roomsObj[targetRoom].SouthExit, map, x, y-1, z);
 			}
-			if (roomsObj[targetRoom].eastExit)
+			if (roomsObj[targetRoom].EastExit)
 			{
-				map[x][y][z] |= x_pos_exit_mask;
+				if (room.EastCondition == undefined || room.EastCondition() == true) map[x][y][z] |= x_pos_exit_mask;
+				else map[x][y][z] |= x_pos_lock_mask;
+				
 				if (this.mapDebug) trace("Have exit - eastExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].eastExit);
-				processRoom(roomsObj[targetRoom].eastExit, map, x+1, y, z)
+				processRoom(roomsObj[targetRoom].EastExit, map, x+1, y, z)
 			}
-			if (roomsObj[targetRoom].westExit)
+			if (roomsObj[targetRoom].WestExit)
 			{
-				map[x][y][z] |= x_neg_exit_mask;
+				if (room.WestCondition == undefined || room.WestCondition() == true) map[x][y][z] |= x_neg_exit_mask;
+				else map[x][y][z] |= x_neg_lock_mask;
+				
 				if (this.mapDebug) trace("Have exit - westExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].westExit);
-				processRoom(roomsObj[targetRoom].westExit, map, x-1, y, z)
+				processRoom(roomsObj[targetRoom].WestExit, map, x-1, y, z)
 			}
-			if (roomsObj[targetRoom].inExit)
+			if (roomsObj[targetRoom].InExit)
 			{
-				map[x][y][z] |= z_pos_exit_mask;
+				if (room.InCondition == undefined || room.InCondition() == true) map[x][y][z] |= z_pos_exit_mask;
+				
 				if (this.mapDebug) trace("Have exit - inExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].inExit);
-				processRoom(roomsObj[targetRoom].inExit, map, x, y, z+1)
+				processRoom(roomsObj[targetRoom].InExit, map, x, y, z+1)
 			}
-			if (roomsObj[targetRoom].outExit)
+			if (roomsObj[targetRoom].OutExit)
 			{
-				map[x][y][z] |= z_neg_exit_mask;
+				if (room.OutCondition == undefined || room.OutCondition() == true) map[x][y][z] |= z_neg_exit_mask;
+				
 				if (this.mapDebug) trace("Have exit - outExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].outExit);
-				processRoom(roomsObj[targetRoom].outExit, map, x, y, z-1)
+				processRoom(roomsObj[targetRoom].OutExit, map, x, y, z-1)
 			}
 			
 			// Inside/Outside flags applied to the rooms
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.INDOOR))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.INDOOR))
 			{
 				map[x][y][z] |= room_indoor_mask;
 			}
-			else if (roomsObj[targetRoom].hasFlag(GLOBAL.OUTDOOR))
+			else if (roomsObj[targetRoom].HasFlag(GLOBAL.OUTDOOR))
 			{
 				map[x][y][z] |= room_outdoor_mask;
 			}
 			
 			// Special flags applied to the rooms
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.COMMERCE))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.COMMERCE))
 			{
 				map[x][y][z] |= room_commerce_mask;
 			}
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.BAR))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.BAR))
 			{
 				map[x][y][z] |= room_bar_mask;
 			}
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.NPC))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.NPC))
 			{
 				map[x][y][z] |= room_npc_mask;
 			}
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.MEDICAL))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.MEDICAL))
 			{
 				map[x][y][z] |= room_medical_mask;
 			}
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.SHIPHANGAR))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.SHIPHANGAR))
 			{
 				map[x][y][z] |= room_ship_mask;
 			}
 			
 			// This pair will need more complex handling, but we'll deal with it when there are actual quests and state like that to query properly.
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.QUEST))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.QUEST))
 			{
 				map[x][y][z] |= room_quest_mask;
 			}
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.OBJECTIVE))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.OBJECTIVE))
 			{
 				map[x][y][z] |= room_objective_mask;
 			}
 			
-			if (roomsObj[targetRoom].hasFlag(GLOBAL.HAZARD))
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.HAZARD))
 			{
 				map[x][y][z] |= room_hazard_mask;
 			}
@@ -212,13 +230,13 @@
 
 		public function generateMap(startRoom:String):*
 		{	
+			var map:* = allocateMapArray();
 			
-			var map:* = allocateMapArray()
-			if (!(startRoom in roomsObj))
-				throw("Invalid map starting room!")
-
-
-			this.processRoomsIntoMap(startRoom, map);
+			// Get the room object from the mapindex
+			var room:Room = MapIndex.FindRoom(startRoom);
+			roomsObj = room.ParentLocation.Rooms;
+			
+			this.processRoomsIntoMap(room.RoomIndex, map);
 
 			return map;
 		}

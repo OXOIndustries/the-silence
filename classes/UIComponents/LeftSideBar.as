@@ -114,5 +114,16 @@ package classes.UIComponents
 		{
 			this._locationHeader.showLocationText();
 		}
+		
+		public function hideAll():void
+		{
+			this._locationHeader.hideLocationText();
+			_playerParty.visible = false;
+		}
+		
+		public function showParty():void
+		{
+			_playerParty.visible = true;
+		}
 	}
 }

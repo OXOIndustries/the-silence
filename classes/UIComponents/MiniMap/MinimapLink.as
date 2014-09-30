@@ -4,6 +4,7 @@
 	import flash.events.Event;
 	import flash.utils.getDefinitionByName;
 	import classes.Resources.MapIcons;
+	import classes.UIComponents.UIStyleSettings;
 	
 	/**
 	 * ...
@@ -56,6 +57,8 @@
 					_linkIcons[i].x -= _linkIcons[i].width / 2;
 					_linkIcons[i].y -= _linkIcons[i].height / 2;
 				}
+				
+				_linkIcons[i].transform.colorTransform = UIStyleSettings.gForegroundColourTransform;
 			}
 		}
 		

@@ -256,106 +256,7 @@
 			userInterface.showName(name);
 		}
 		
-		public function addItemButton(slot:int, item:ItemSlotClass, func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null, seller:Creature = null, buyer:Creature = null):void
-		{
-			var comparisonString:String = null;
-			var compareItem:ItemSlotClass = null;
-			
-			if (item.type == GLOBAL.RANGED_WEAPON)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).rangedWeapon;
-			}
-			else if (item.type == GLOBAL.MELEE_WEAPON)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).meleeWeapon;
-			}
-			else if (item.type == GLOBAL.ARMOR || item.type == GLOBAL.CLOTHING)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).armor;
-			}
-			else if (item.type == GLOBAL.SHIELD)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).shield;
-			}
-			else if (item.type == GLOBAL.LOWER_UNDERGARMENT)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).lowerUndergarment;
-			}
-			else if (item.type == GLOBAL.UPPER_UNDERGARMENT)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).upperUndergarment;
-			}
-			else if (item.type == GLOBAL.ACCESSORY)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).accessory;
-			}
-			
-			if (compareItem == null)
-			{
-				compareItem = new NoItem();
-			}
-			
-			comparisonString = item.compareTo(compareItem, seller, buyer);
-			
-			// Do GUI stuff with the compareItem string -- can probably mangle a call together a call to addButton() to do the needful
-			// if we have any null arguments at this point rather than throwing an error and shit.
-			userInterface.addItemButton(slot, item.shortName, item.quantity, func, arg, ttHeader, ttBody, comparisonString);
-		}
 		
-		public function addOverrideItemButton(slot:int, item:ItemSlotClass, buttonName:String, func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null):void
-		{
-			var comparisonString:String = null;
-			var compareItem:ItemSlotClass = null;
-			
-			if (item.type == GLOBAL.RANGED_WEAPON)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).rangedWeapon;
-			}
-			else if (item.type == GLOBAL.MELEE_WEAPON)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).meleeWeapon;
-			}
-			else if (item.type == GLOBAL.ARMOR || item.type == GLOBAL.CLOTHING)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).armor;
-			}
-			else if (item.type == GLOBAL.SHIELD)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).shield;
-			}
-			else if (item.type == GLOBAL.LOWER_UNDERGARMENT)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).lowerUndergarment;
-			}
-			else if (item.type == GLOBAL.UPPER_UNDERGARMENT)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).upperUndergarment;
-			}
-			else if (item.type == GLOBAL.ACCESSORY)
-			{
-				compareItem = (GameState.characters["PC"] as Creature).accessory;
-			}
-			
-			if (compareItem == null)
-			{
-				compareItem = new NoItem();
-			}
-			
-			comparisonString = item.compareTo(compareItem);
-			
-			var itemHeader:String = null;
-			var itemBody:String = null;
-			
-			if (ttHeader != null && ttHeader.length > 0) itemHeader = ttHeader;
-			if (ttBody != null && ttBody.length > 0) itemBody = ttBody;
-			
-			if (itemHeader == null || itemHeader.length == 0) itemHeader = TooltipManager.getFullName(item.shortName);
-			if (itemBody == null || itemBody.length == 0) itemBody = TooltipManager.getTooltip(item.shortName);
-			
-			// Do GUI stuff with the compareItem string -- can probably mangle a call together a call to addButton() to do the needful
-			// if we have any null arguments at this point rather than throwing an error and shit.
-			userInterface.addItemButton(slot, buttonName, 1, func, arg, itemHeader, itemBody, comparisonString);
-		}
 		
 		public function removeButton(slot:int):void
 		{
@@ -439,67 +340,11 @@
 		{
 			this.userInterface.BufferPagePrevHandler();
 		}
-	
-		/*
-		MOST of this should be broken up into simple shim-functions that call the real, relevant function in userInterface:GUI
-		I'm breaking it out into a separate class, and just manipulating those class variables for the moment
-		once that's working, I can start piecemeal moving things to functions in GUI.
 
-		*/
-
-		//1: TEXT FUNCTIONS
-		public function outputCodex(words:String, markdown:Boolean = false):void
+		public function leftBarClear():void 
 		{
-			this.userInterface.outputCodexBuffer += doParse(words, markdown);
-		}
-
-		public function clearOutputCodex():void
-		{
-			this.userInterface.clearOutputCodex();
-		}
-
-		// HTML tag formatting wrappers, because lazy as fuck
-		public function header(words:String):String
-		{
-			return String("<span class='header'>" + words + "</span>\n");
-		}
-
-		public function blockHeader(words:String):String
-		{
-			return String("<span class='blockHeader'>" + words + "</span>\n");
-		}
-
-		public function num2Text(number:Number):String {
-			var returnVar:String = null;
-			var numWords = new Array("zero","one","two","three","four","five","six","seven","eight","nine","ten");
-			if (number > 10 || int(number) != number) {
-				returnVar = "" + number;
-			} 
-			else {
-				returnVar = numWords[number];
-			}
-			return(returnVar);
-		}
-		public function num2Text2(number:int):String {
-			var returnVar:String = null;
-			var numWords = new Array("zero","first","second","third","fourth","fifth","sixth","seventh","eighth","ninth","tenth");
-			if (number > 10) {
-				returnVar = "" + number + "th";
-			} 
-			else {
-				returnVar = numWords[number];
-			}
-			return(returnVar);
-		}
-
-		public function leftBarClear():void {
 			this.userInterface.leftBarClear();
 		}
-
-		public function deglow():void 
-		{
-			this.userInterface.deglow()
-		}			
 
 		public function updateNPCStats():void 
 		{

@@ -17,11 +17,13 @@ package classes.UIComponents.SideBarComponents
 		private var _headerUnderline:Sprite;
 		
 		private var _miniMap:MiniMap;
+		private var _alignment:String;		
 		
 		public function get miniMap():MiniMap { return _miniMap; }
 		
-		public function MiniMapBlock() 
+		public function MiniMapBlock(align:String = "left") 
 		{
+			_alignment = align;
 			this.addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
@@ -42,8 +44,8 @@ package classes.UIComponents.SideBarComponents
 			_miniMap.childNumY = 7;
 			_miniMap.childNumX = 7;
 			
-			_miniMap.paddingLeft = 0;
-			_miniMap.paddingRight = 11;
+			_miniMap.paddingLeft = 11;
+			_miniMap.paddingRight = 0;
 			_miniMap.paddingTop = 5;
 			_miniMap.paddingBottom = 31;
 			this.addChild(_miniMap);
@@ -52,7 +54,7 @@ package classes.UIComponents.SideBarComponents
 		private function BuildHeader():void
 		{
 			_headerUnderline = new Sprite();
-			_headerUnderline.x = 0;
+			_headerUnderline.x = (_alignment == "left") ? 0 : 10;
 			_headerUnderline.y = 17;
 			_headerUnderline.graphics.beginFill(UIStyleSettings.gHighlightColour, 1);
 			_headerUnderline.graphics.drawRect(0, 0, 190, 1);
@@ -60,7 +62,7 @@ package classes.UIComponents.SideBarComponents
 			this.addChild(_headerUnderline);
 			
 			_headerText = new TextField();
-			_headerText.x = 10;
+			_headerText.x = 10 + (_alignment == "right") ? 10 : 0;
 			_headerText.y = 0;
 			_headerText.width = 190;
 			_headerText.defaultTextFormat = UIStyleSettings.gStatBlockHeaderFormatter;

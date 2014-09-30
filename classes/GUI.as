@@ -65,8 +65,7 @@
 		//Used for output()
 		public var outputBuffer:String;
 		public var outputBuffer2:String;
-		var outputCodexBuffer:String
-		var authorBuffer:Array;
+		public var outputCodexBuffer:String
 		var textPage:int;
 
 		//Lazy man state checking
@@ -120,7 +119,6 @@
 			//Used for output()
 			this.outputBuffer = "";
 			this.outputBuffer2 = "";
-			this.authorBuffer = new Array("","","","");
 			this.textPage = 4;
 
 			//Build the buttons
@@ -436,7 +434,6 @@
 					_buttonTray.y = 898; // TWEAK ME
 				}
 				
-				this.deglow();
 				this.DeGlowButtons();
 				
 				if (_currentModule != null)
@@ -474,6 +471,9 @@
 			_buttonTray.buttonPagePrev.Deactivate();
 			_buttonTray.textPageNext.Deactivate();
 			_buttonTray.textPagePrev.Deactivate();
+			
+			_leftSideBar.hideAll();
+			_rightSideBar.hideAll();
 		}
 		
 		public function showOptionsModule():void
@@ -724,7 +724,6 @@
 			
 			bufferButtonUpdater();
 			menuButtonsOn();
-			deglow();
 		}
 		
 		public function output2():void
@@ -825,14 +824,12 @@
 			if(tempText != "") {
 				textBuffer[textBuffer.length] = tempText;
 				tempText = "";
-				tempAuthor = "";
 			}
 			else {
 				textBuffer[textBuffer.length] = this.primaryOutputModule.htmlText;
 			}
 			if(textBuffer.length > 4) {
 				textBuffer.splice(0,1);
-				authorBuffer.splice(0,1);
 			}
 		}
 
@@ -978,23 +975,23 @@
 		
 		public function showMinimap():void
 		{
-			throw new Error("REWIRE!");
+			_rightSideBar.showMinimap();
+		}
+		
+		public function showNPCStats():void
+		{
+			_rightSideBar.showParty();
 		}
 		
 		public function hideNPCStats():void 
 		{
-			throw new Error("REWIRE!");
+			_rightSideBar.hideParty();
 		}
 		
 		public function hideMinimap():void
 		{
-			throw new Error("REWIRE!");
+			_rightSideBar.hideMinimap();
 		}
-		
-		public function deglow():void 
-		{
-			_rightSideBar.removeGlows();
-		}	
 
 		//2. DISPLAY STUFF
 		//EXAMPLE: setupStatBar(monsterSex,"SEX","Genderless");
@@ -1015,9 +1012,8 @@
 		// Set the current map data
 		public function setMapData(data:*):void
 		{
-			//this._leftSideBar.miniMap.setMapData(data);
-			//_leftSideBar.ShowMiniMap();
-			throw new Error("REWIRE!");
+			_rightSideBar.minimap.setMapData(data);
+			_rightSideBar.showMinimap();
 		}
 		
 		public function DeGlowButtons():void

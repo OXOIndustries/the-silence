@@ -8,6 +8,7 @@ package classes.GameData
 	import classes.GameData.Map.Sector;
 	import classes.GameData.Map.Ship;
 	import classes.GameData.Map.System;
+	import classes.Mapper;
 	
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.mainGameMenu;
@@ -22,6 +23,7 @@ package classes.GameData
 	public class MapIndex 
 	{
 		public static var sector:SilenceSector;
+		private static var mapper:Mapper;
 		
 		{
 			MapIndex.init();
@@ -30,6 +32,7 @@ package classes.GameData
 		public static function init():void
 		{
 			sector = new SilenceSector();
+			mapper = new Mapper();
 		}
 		
 		public static function displayRoom(room:String):void
@@ -85,10 +88,10 @@ package classes.GameData
 				addButton(7, room.OutName, Move, room.OutExit);
 				
 			// Show the minimap too!
-			//this.userInterface.showMinimap();
-			//var map:* = mapper.generateMap(currentLocation);
-			//this.userInterface.setMapData(map);
-			//
+			userInterface().showMinimap();
+			var map:* = mapper.generateMap(GameState.currentLocation);
+			userInterface().setMapData(map);
+			
 			// Enable the perk list button
 			//(userInterface as GUI).perkDisplayButton.Activate();
 		}

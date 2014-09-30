@@ -340,7 +340,7 @@
 			trace("Parent Dimensions (x,y):(" + this.parent.width + "," + this.parent.height + ")");
 		}
 		
-		private function roomConnection(sourceRoom:int, targetRoom:int, posMask:int, negMask:int):int
+		private function roomConnection(sourceRoom:int, targetRoom:int, posMask:int, negMask:int, posLockMask:int, negLockMask:int):int
 		{
 			// Early return -- source or target doesn't exist, fuck all to do (hide)
 			if (!(sourceRoom & Mapper.room_present_mask)) return -1;
@@ -350,6 +350,12 @@
 			if ((sourceRoom & posMask) && (targetRoom & negMask))
 			{
 				return LINK_PASSAGE;
+			}
+			
+			// Locks -- if either direction has a lock specified, then we're showing the lock symbol, fuck off
+			if ((sourceRoom & posLockMask) || (targetRoom & negLockMask))
+			{
+				return LINK_LOCKED;
 			}
 			
 			// One way, source > target
@@ -398,7 +404,7 @@
 					var roomEast:int = map[xPos + 1][yPos][zPos];
 					
 					// East room
-					_childLinksX[xPos][6 - yPos].setLink(roomConnection(roomFlags, roomEast, Mapper.x_pos_exit_mask, Mapper.x_neg_exit_mask));
+					_childLinksX[xPos][6 - yPos].setLink(roomConnection(roomFlags, roomEast, Mapper.x_pos_exit_mask, Mapper.x_neg_exit_mask, Mapper.x_pos_lock_mask, Mapper.x_neg_lock_mask));
 				}
 			}
 			
@@ -410,7 +416,7 @@
 					var roomSouth:int = map[xPos][yPos + 1][zPos];
 					
 					// South room
-					_childLinksY[xPos][5 - yPos].setLink(roomConnection(roomFlags, roomSouth, Mapper.y_pos_exit_mask, Mapper.y_neg_exit_mask));
+					_childLinksY[xPos][5 - yPos].setLink(roomConnection(roomFlags, roomSouth, Mapper.y_pos_exit_mask, Mapper.y_neg_exit_mask, Mapper.y_pos_lock_mask, Mapper.y_neg_lock_mask));
 				}
 			}
 			
@@ -433,7 +439,7 @@
 						
 						if (roomFlags & Mapper.current_locaton_mask)
 						{
-						tarSprite.setColour(UIStyleSettings.gMapPCLocationRoomColourTransform);
+							tarSprite.setColour(UIStyleSettings.gMapPCLocationRoomColourTransform);
 						}
 						else if (roomFlags & Mapper.room_indoor_mask)
 						{
