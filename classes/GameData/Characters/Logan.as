@@ -7,24 +7,25 @@ package classes.GameData.Characters
 	import classes.GameData.Items.Protection.DecentShield;
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
+	import classes.Resources.Busts.StaticRenders;
 	
 	/**
-	 * Yeah this is kinda bullshit, but it also means we can version the PC data structure like NPCs.
-	 * Might be useful, but its mainly here to do some proper error checking.
+	 * ...
 	 * @author Gedan
 	 */
-	public class PlayerCharacter extends Creature
+	public class Logan extends Creature
 	{
-		public function PlayerCharacter() 
+		
+		public function Logan() 
 		{
 			this._latestVersion = 1;
 			this.version = _latestVersion;
 			this._neverSerialize = false;
 			
-			this.short = "Kara";
-			this.long = "Kara Volke";
-			this.originalRace = "Kaithrit";
-			this.description = "You were born a slave on the world of Kahassin, outside the United Galactic Confederacy's borders. Raised in chains because of a quirk of birth, you escaped thanks to the smuggler Rourke Blackstar. He taught you the tools of the trade, became your lover and, a few months ago, sacrificed himself so you and the crew of the Silence could escape. You've since become captain, and lead this rag-tag band of outlaws in your mentor's stead. The crew is still getting used to your leadership, but they know what Blackstar thought of you, and that's been enough to keep them in line. Whether you intend to live up to Blackstar's legacy or carve your own legend, your story is just beginning!";
+			this.short = "Logan";
+			this.long = "Logan";
+			this.originalRace = "Human";
+			this.description = "Logan's the best pilot you've ever seen. She was also the best starfighter ace the Coalition fleet had, until they busted her for mod abuse and theft. She's an addict, hooked on Throbb and reptilian genetic modifications, but you've never seen it get in the way of her job... so long as you keep the cash coming in so she can keep getting at her needles. Logan is your closest friend on the Silence's crew, and frequent lover. She's a bit twitchy, and can be downright ruthless at times... and you'd never call her <i>reliable</i>... but Logan's proved a capable executive officer during your command, and continues to get you out of even the most desperate scrapes in one piece. ";
 			
 			this.customBlock = "";
 			this.customDodge = "";
@@ -36,7 +37,8 @@ package classes.GameData.Characters
 			this.armor = new ProtectiveJacket();
 			this.shield = new DecentShield();
 			
-			this.INDEX = "PC";
+			this.INDEX = "LOGAN";
+			this.bustT = StaticRenders.CREW_LOGAN;
 			
 			this.level = 5;
 			this.physiqueRaw = 18;
@@ -164,31 +166,6 @@ package classes.GameData.Characters
 			this._isLoading = false;
 		}
 		
-		// Level up stuff		
-		override public function loadInCunt(cumFrom:Creature, vagIndex:int = -1):Boolean
-		{
-			return false;
-		}
-		
-		override public function loadInAss(cumFrom:Creature):Boolean
-		{
-			return false;
-		}
-		
-		override public function loadInMouth(cumFrom:Creature):Boolean
-		{
-			return false;
-		}
-		
-		// *shrug*
-		override public function loadInNipples(cumFrom:Creature):Boolean
-		{
-			return false;
-		}
-		
-		override public function loadInCuntTail(cumFrom:Creature):Boolean
-		{
-			return false;
-		}
 	}
+
 }

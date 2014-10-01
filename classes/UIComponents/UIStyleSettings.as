@@ -106,11 +106,11 @@ package classes.UIComponents
 		public static var gStatusBarTextColour:uint 		= 0xD1D1D1;
 		
 		// Specialist font/tweaked colours for certain UI elements
-		public static var gBlueBindColour:uint				= 0x862C2A;
+		public static var gBlueBindColour:uint				= 0xA87728;
 		
 		// Map room colour settings
 		// I'm going to tie a bunch of flags to colour the underlying room "block" based on these values
-		public static var gPCLocationRoomColour:uint		= 0x862C2A;
+		public static var gPCLocationRoomColour:uint		= 0xA87728;
 		public static var gFallbackRoomColour:uint			= 0x000000; // Obvious colour to highlight rooms without flags.
 		public static var gIndoorRoomFlagColour:uint 		= 0x383838;
 		public static var gOutdoorRoomFlagColour:uint		= 0xD1D1D1;
@@ -146,7 +146,7 @@ package classes.UIComponents
 				UIStyleSettings._gNameHeaderFormatter.size = 25;
 				UIStyleSettings._gNameHeaderFormatter.color = 0xFFFFFF;
 				UIStyleSettings._gNameHeaderFormatter.align = TextFormatAlign.LEFT;
-				UIStyleSettings._gNameHeaderFormatter.font = "Lato";
+				UIStyleSettings._gNameHeaderFormatter.font = "Univers UltraCondensed";
 				UIStyleSettings._gNameHeaderFormatter.bold = true;
 			}
 			return UIStyleSettings._gNameHeaderFormatter;
@@ -158,10 +158,10 @@ package classes.UIComponents
 			if (UIStyleSettings._gStatBlockHeaderFormatter == null)
 			{
 				UIStyleSettings._gStatBlockHeaderFormatter = new TextFormat();
-				UIStyleSettings._gStatBlockHeaderFormatter.size = 14;
+				UIStyleSettings._gStatBlockHeaderFormatter.size = 21;
 				UIStyleSettings._gStatBlockHeaderFormatter.color = 0xFFFFFF;
 				UIStyleSettings._gStatBlockHeaderFormatter.align = TextFormatAlign.LEFT;
-				UIStyleSettings._gStatBlockHeaderFormatter.font = "Lato";
+				UIStyleSettings._gStatBlockHeaderFormatter.font = "Univers UltraCondensed";
 				UIStyleSettings._gStatBlockHeaderFormatter.bold = true;
 			}
 			return UIStyleSettings._gStatBlockHeaderFormatter;

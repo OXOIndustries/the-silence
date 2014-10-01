@@ -108,7 +108,7 @@
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
 
-			version = "0.00.01";
+			version = "0.00.02";
 
 			eventQueue = new Array();
 			eventBuffer = "";
@@ -363,7 +363,7 @@
 		
 		public function CharacterCreation():void
 		{
-			if (GameState.characters["PC"].short.length >= 1) 
+			if (GameState.gameStarted == true) 
 			{
 				this.userInterface.warningText.htmlText = "<b>Are you sure you want to create a new character?</b>";
 				this.userInterface.confirmNewCharacter();

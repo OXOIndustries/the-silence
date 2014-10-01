@@ -8,6 +8,7 @@ package classes.UIComponents.SideBarComponents
 	import classes.UIComponents.UIStyleSettings;
 	import flash.text.AntiAliasType;
 	import classes.Resources.Busts.StaticRenders;
+	import classes.StringUtil;
 	
 	/**
 	 * ...
@@ -75,7 +76,7 @@ package classes.UIComponents.SideBarComponents
 		{
 			_nameHeaderUnderline = new Sprite();
 			_nameHeaderUnderline.x = (_alignment == "left") ? 0 : 10;
-			_nameHeaderUnderline.y = 17;
+			_nameHeaderUnderline.y = 22;
 			_nameHeaderUnderline.graphics.beginFill(UIStyleSettings.gHighlightColour, 1);
 			_nameHeaderUnderline.graphics.drawRect(0, 0, 190, 1);
 			_nameHeaderUnderline.graphics.endFill();
@@ -105,8 +106,8 @@ package classes.UIComponents.SideBarComponents
 			_bustImage = new Sprite();
 			this.addChild(_bustImage);
 			
-			_bustImage.x = 90;
-			_bustImage.y = 80;
+			_bustImage.x = 100;
+			_bustImage.y = 85;
 			
 			bustBackground.x = _bustImage.x;
 			bustBackground.y = _bustImage.y;
@@ -127,8 +128,8 @@ package classes.UIComponents.SideBarComponents
 			_circleStats = new CircularStatBar();
 			this.addChild(_circleStats);
 			
-			_circleStats.x = 90;
-			_circleStats.y = 80;
+			_circleStats.x = 100;
+			_circleStats.y = 85;
 		}
 		
 		private function ShowBust(bustT:Class):void
@@ -165,6 +166,7 @@ package classes.UIComponents.SideBarComponents
 		public function showCharacter(tar:Creature):void
 		{
 			ShowBust(tar.bustT);
+			_nameHeader.text = tar.long.toUpperCase();
 			_circleStats.setShield(tar.shields(), tar.shieldsMax());
 			_circleStats.setHP(tar.HP(), tar.HPMax());
 		}

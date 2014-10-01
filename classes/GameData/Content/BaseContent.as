@@ -3,8 +3,10 @@ package classes.GameData.Content
 	import classes.Creature;
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.mainGameMenu;
+	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.ContentIndex;
 	import classes.GameData.GameModel;
+	import classes.GameData.Party;
 	import classes.GUI;
 	import classes.kGAMECLASS;
 	import flash.utils.Dictionary;
@@ -110,6 +112,31 @@ package classes.GameData.Content
 		protected function mainGameMenu():void
 		{
 			classes.Engine.mainGameMenu();
+		}
+		
+		protected function get PlayerParty():Party
+		{
+			return GameState.playerParty;
+		}
+		
+		protected function get EnemyParty():Party
+		{
+			return GameState.enemyParty;
+		}
+		
+		protected function get pc():PlayerCharacter
+		{
+			return GameState.pc;
+		}
+		
+		protected function get gameStarted():Boolean
+		{
+			return GameState.gameStarted;
+		}
+		
+		protected function set gameStarted(v:Boolean):void
+		{
+			GameState.gameStarted = v;
 		}
 	}
 

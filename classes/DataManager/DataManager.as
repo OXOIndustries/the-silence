@@ -64,7 +64,7 @@
 					kGAMECLASS.userInterface.showPrimaryOutput();
 				}
 				
-				if (kGAMECLASS.pc.short.length == 0)
+				if (!GameState.gameStarted)
 				{
 					kGAMECLASS.userInterface.showMainMenu();
 				}
@@ -429,7 +429,7 @@
 			}
 			else
 			{
-				if (GameState.characters["PC"] != undefined && GameState.characters["PC"].short != "uncreated" && GameState.characters["PC"].short.length > 0)
+				if (GameState.gameStarted)
 				{
 					var ph:Object = new Object();
 					this.loadBaseData(saveBackup, ph);
@@ -454,7 +454,7 @@
 			var i:int;
 			
 			// Watch this magic
-			if (GameState.characters["PC"].short != "uncreated" && GameState.characters["PC"].short.length > 0)
+			if (GameState.gameStarted)
 			{
 				this.saveBaseData(curGameObj); // Current game state backed up! Shocking!
 			}

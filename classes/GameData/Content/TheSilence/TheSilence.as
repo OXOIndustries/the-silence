@@ -105,7 +105,7 @@ package classes.GameData.Content.TheSilence
 			if (flags["CONFROOM_FIRST_ENTRY"] == undefined)
 			{
 				flags["CONFROOM_FIRST_ENTRY"] = 1;
-				output("\n\n“<i>Looks like everyone’s here, Captain,</i>” Logan says, flopping down on the couch.");	
+				output("\n\n<i>“Looks like everyone’s here, Captain,”</i> Logan says, flopping down on the couch.");	
 			}
 			
 			return false;
@@ -134,7 +134,7 @@ package classes.GameData.Content.TheSilence
 			
 			if (logan.currentLocation == "BRIDGE" && inSpaceCombat == false)
 			{
-				output("\n\nLogan's sitting at the pilot's console, feeding nav data from the console into the auto-pilot programs. Her job will come later, when Nova gets on your tail. “<i>Everything’s solid up here, Captain,</i>” she says, tone formal now that she’s on duty.");
+				output("\n\nLogan's sitting at the pilot's console, feeding nav data from the console into the auto-pilot programs. Her job will come later, when Nova gets on your tail. <i>“Everything’s solid up here, Captain,”</i> she says, tone formal now that she’s on duty.");
 			}
 			
 			if (logan.currentLocation == "BRIDGE" && inSpaceCombat == true)

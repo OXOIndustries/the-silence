@@ -1,5 +1,6 @@
 package classes.GameData 
 {
+	import classes.GameData.Characters.Logan;
 	import classes.GameData.Characters.PlayerCharacter;
 	/**
 	 * ...
@@ -9,24 +10,28 @@ package classes.GameData
 	{
 		public static var Chars:Object;
 		
-		public static var PlayerGroup:Array;
-		public static var EnemyGroup:Array;
+		public static var PlayerGroup:Party;
+		public static var EnemyGroup:Party;
 		
 		{
 			Chars = new Object();
-			PlayerGroup = new Array();
-			EnemyGroup = new Array();
+			PlayerGroup = new Party(true);
+		EnemyGroup = new Party(false);
 			
 			CharacterIndex.init(false);
 		}
 		
 		public static function init(justUpdate:Boolean = false):void 
 		{
-			trace("initializeNPCs Called, just doing cleanup?", justUpdate);
-			
-			if (!justUpdate || (justUpdate && Chars["PC"] == undefined))
+			initFor("PC", PlayerCharacter, justUpdate);
+			initFor("LOGAN", Logan, justUpdate);
+		}
+		
+		private static function initFor(idx:String, classT:Class, justUpdate:Boolean):void
+		{
+			if (!justUpdate || (justUpdate && Chars[idx] == undefined))
 			{
-				Chars["PC"] = new PlayerCharacter();
+				Chars[idx] = new classT();
 			}
 		}
 		
@@ -34,6 +39,11 @@ package classes.GameData
 		public static function get pc():PlayerCharacter
 		{
 			return CharacterIndex.Chars["PC"];
+		}
+		
+		public static function get logan():Logan
+		{
+			return CharacterIndex.Chars["LOGAN"];
 		}
 	}
 }

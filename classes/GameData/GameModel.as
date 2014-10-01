@@ -1,6 +1,8 @@
 package classes.GameData 
 {
 	import classes.Creature;
+	import classes.GameData.Characters.Logan;
+	import classes.GameData.Characters.PlayerCharacter;
 	import flash.utils.Dictionary;
 	/**
 	 * GameModel stores all of the current state of the game, and is accessible to all other classes at-will.
@@ -20,6 +22,7 @@ package classes.GameData
 		public var inSceneBlockSaving:Boolean = false;
 		public var encountersDisabled:Boolean = false;
 		
+		public var gameStarted:Boolean = false;
 		public var inCombat:Boolean = false;
 		public var inSpaceCombat:Boolean = false;
 		
@@ -30,22 +33,22 @@ package classes.GameData
 			return CharacterIndex.Chars;
 		}
 		
-		public function get pc():Creature
+		public function get pc():PlayerCharacter
 		{
 			return CharacterIndex.Chars["PC"];
 		}
 		
-		public function get logan():Creature
+		public function get logan():Logan
 		{
 			return CharacterIndex.Chars["LOGAN"];
 		}
 		
-		public function get enemyParty():Array
+		public function get enemyParty():Party
 		{
 			return CharacterIndex.EnemyGroup;
 		}
 		
-		public function get playerParty():Array
+		public function get playerParty():Party
 		{
 			return CharacterIndex.PlayerGroup;
 		}

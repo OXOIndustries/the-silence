@@ -2,6 +2,7 @@ package classes
 {
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.Resources.StatusIcons;
+	import classes.GameData.GameState;
 	
 	/**
 	 * ...
@@ -23,7 +24,7 @@ package classes
 		
 		public static function RoomTeleport():void
 		{
-			if (kGAMECLASS.pc.short == "uncreated" || kGAMECLASS.pc.short.length == 0)
+			if (!GameState.gameStarted)
 			{
 				return;
 			}
@@ -39,7 +40,7 @@ package classes
 		
 		public static function SceneExecute():void
 		{
-			if (kGAMECLASS.pc.short == "uncreated" || kGAMECLASS.pc.short.length == 0)
+			if (!GameState.gameStarted)
 			{
 				return;
 			}

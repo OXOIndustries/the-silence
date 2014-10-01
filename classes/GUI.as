@@ -2,6 +2,7 @@
 {
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.CodexManager;
+	import classes.GameData.Party;
 	import classes.UIComponents.ButtonTooltips;
 	import classes.UIComponents.ButtonTray;
 	import classes.UIComponents.ContentModule;
@@ -232,7 +233,7 @@
 		private function mainMenuToggle(e:Event = null):void
 		{
 			if (!mainMenuButton.isActive) return;
-			if (kGAMECLASS.pc.short.length == 0) return;
+			if (!GameState.gameStarted) return;
 			
 			if (_availableModules["MainMenu"].visible == true)
 			{
@@ -464,7 +465,7 @@
 			
 			var buttons:Array = (_availableModules["MainMenu"] as MainMenuModule).mainMenuButtons;
 			
-			if (CharacterIndex.pc.short.length > 0) this.mainMenuButton.Glow();
+			if (GameState.gameStarted) this.mainMenuButton.Glow();
 			this.resetMenuButtons();
 			
 			_buttonTray.buttonPageNext.Deactivate();
@@ -482,7 +483,7 @@
 			(_currentModule as OptionsModule).updateDisplay();
 			clearGhostMenu();
 			
-			if (kGAMECLASS.pc.short.length == 0) addGhostButton(4, "Back", showMainMenu);
+			if (!GameState.gameStarted) addGhostButton(4, "Back", showMainMenu);
 			else addGhostButton(4, "Back", showPrimaryOutput);
 		}
 		
@@ -928,7 +929,7 @@
 		public function menuButtonsOn():void 
 		{
 			//trace("this.stagePtr = ", this.stagePtr);
-			if (GameState.pc.hasStatusEffect("In Creation") && titsClassPtr.pc.short.length > 0) 
+			if (GameState.gameStarted) 
 			{
 				appearanceOn();
 			}
@@ -986,6 +987,26 @@
 		public function hideNPCStats():void 
 		{
 			_rightSideBar.hideParty();
+		}
+		
+		public function setPlayerPartyData(party:Array):void
+		{
+			_leftSideBar.setPartyData(party);
+		}
+		
+		public function setEnemyPartyData(party:Array):void
+		{
+			_rightSideBar.setPartyData(party);
+		}
+		
+		public function showPlayerParty():void
+		{
+			_leftSideBar.showParty();
+		}
+		
+		public function hidePlayerParty():void
+		{
+			_leftSideBar.hideParty();
 		}
 		
 		public function hideMinimap():void

@@ -62,10 +62,12 @@
 
 		//For enemies
 		public var bustT:Class = StaticRenders.MISSING;
+		public var INDEX:String = "";
 		public var short: String = "";
 		public var originalRace: String = "human";
 		public var a: String = "a ";
 		public var long: String = "You scrawny, yo.";
+		public var description:String = "";
 		public var capitalA: String = "A ";
 		public var currentLocation:String = "";
 

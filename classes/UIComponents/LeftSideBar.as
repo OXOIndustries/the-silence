@@ -69,7 +69,7 @@ package classes.UIComponents
 			_playerParty = new PartyBlock(3, "left");
 			this.addChild(_playerParty);
 			_playerParty.x = 0;
-			_playerParty.y = _locationHeader.y + _locationHeader.height - 20;
+			_playerParty.y = _locationHeader.y + _locationHeader.height + 1;
 			
 			// Time/day display shit
 			_genInfoBlock = new GeneralInfoBlock();
@@ -124,6 +124,11 @@ package classes.UIComponents
 		public function showParty():void
 		{
 			_playerParty.visible = true;
+		}
+		
+		public function hideParty():void
+		{
+			_playerParty.visible = false;
 		}
 	}
 }
