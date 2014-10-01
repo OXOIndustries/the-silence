@@ -31,7 +31,6 @@ package classes.GameData.Content
 			// Add player to the player party, lel
 			PlayerParty.addToParty(pc, true);
 			userInterface.showPlayerParty();
-			
 						
 			clearOutput();
 			output("You jolt awake, breathing hard. A sheen of ice-cold sweat clings to you, soaking into your sheets. The scar on your sides is throbbing painfully, a dull and pounding ache that has you instinctively reaching for the pill bottle on your nightstand. You wash them down with a long swig from the flask in the drawer.");

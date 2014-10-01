@@ -57,16 +57,16 @@ package classes.GameData
 			GameState.inSceneBlockSaving = false;
 			GameState.encountersDisabled = true;
 			
-			addDisabledButton(2, "Inventory");
-			addDisabledButton(3, "Masturbate");
+			addDisabledButton(9, "Inventory");
+			addDisabledButton(13, "Masturbate");
 			
 			if (room.HasFlag(GLOBAL.BED))
 			{
-				addDisabledButton(4, "Sleep");
+				addDisabledButton(14, "Sleep");
 			}
 			else
 			{
-				addDisabledButton(4, "Rest");
+				addDisabledButton(14, "Rest");
 			}
 			
 			if (room.EntryFunction != undefined)
@@ -87,6 +87,10 @@ package classes.GameData
 			if (DirectionCheck(room.OutExit, room.OutCondition))
 				addButton(7, room.OutName, Move, room.OutExit);
 				
+			// If the room has elevator rooms listed, show the elevator control interface
+			if (room.ElevatorRooms.length > 0)
+				addButton(0, "Lift Cntrls.", liftControls, room, "Elevator Control Panel", "Use the elevators control panel.");
+				
 			// Show the minimap too!
 			userInterface().showMinimap();
 			var map:* = mapper.generateMap(GameState.currentLocation);
@@ -94,6 +98,24 @@ package classes.GameData
 			
 			// Enable the perk list button
 			//(userInterface as GUI).perkDisplayButton.Activate();
+		}
+		
+		private static function liftControls(room:Room):void
+		{
+			clearMenu();
+			
+			for (var i:int = 0; i < room.ElevatorRooms.length; i++)
+			{
+				if (room.ElevatorRooms[i] == room.RoomIndex)
+					addDisabledButton(i, room.ShortName);
+				else
+				{
+					var tarRoom:Room = room.ParentLocation.Rooms[room.ElevatorRooms[i]];
+					addButton(i, tarRoom.ShortName, Move, tarRoom.RoomIndex);
+				}
+			}
+			
+			addButton(14, "Back", mainGameMenu);
 		}
 		
 		private static function DirectionCheck(tarRoom:String, lockFunc:Function):Boolean

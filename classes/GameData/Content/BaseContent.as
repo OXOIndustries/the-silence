@@ -138,6 +138,11 @@ package classes.GameData.Content
 		{
 			GameState.gameStarted = v;
 		}
+		
+		protected function setLocation(room:String, planet:String = null, system:String = null):void
+		{
+			classes.Engine.Interfaces.setLocation(room, planet, system);
+		}
 	}
 
 }

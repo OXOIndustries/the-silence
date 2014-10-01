@@ -574,15 +574,15 @@
 		public function get warningText():TextField { return (_availableModules["MainMenu"] as MainMenuModule).warningText; }
 		
 		// Useful functions I've pulled out of the rest of the code base
-		public function setLocation(title:String, planet:String = "Error Planet", system:String = "Error System"):void
+		public function setLocation(title:String, planet:String = null, system:String = null):void
 		{
 			cacheRoom = roomText;
 			cachePlanet = planetText;
 			cacheSystem = systemText;
 			
 			roomText = title;
-			planetText = planet;
-			systemText = system;
+			if (planet != null) planetText = planet;
+			if (system != null) systemText = system;
 		}
 		
 		public function restoreLocation():void

@@ -1,6 +1,8 @@
 package classes.GameData.Content.TheSilence 
 {
 	import classes.GameData.Content.BaseContent;
+	import classes.GameData.ContentIndex;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -100,12 +102,19 @@ package classes.GameData.Content.TheSilence
 			clearOutput();
 			output("The ‘conference room’ is what you and the crew call the combination mess/galley/rec room at the fore of the ship, just behind the elevator. It's the largest room on this deck, dominated by a long dining table that runs its length. A couch, holoscreen TV, and several entertainment devices are set up along the southern wall, opposite the tiny kitchen setup.");
 			
-			output("\n\nThe crew’s gathered here as ordered. Pyra, the tiny red ball of energy that is your chief engineer, is making herself a bowl of cereal. A huge, furred creature with the lower body of a snake - Tarik - is yawning and rubbing his eyes.");
+			if (flags["CREW_BRIEFED"] == undefined)
+			{
+				output("\n\nThe crew’s gathered here as ordered. Pyra, the tiny red ball of energy that is your chief engineer, is making herself a bowl of cereal. A huge, furred creature with the lower body of a snake - Tarik - is yawning and rubbing his eyes.");
+				
+				addButton(0, "Mission Brief", ContentIndex.chapter2.missionBrief, undefined, "Mission Briefing", "Brief the crew on the upcoming mission");
+			}
 			
 			if (flags["CONFROOM_FIRST_ENTRY"] == undefined)
 			{
 				flags["CONFROOM_FIRST_ENTRY"] = 1;
-				output("\n\n<i>“Looks like everyone’s here, Captain,”</i> Logan says, flopping down on the couch.");	
+				output("\n\n<i>“Looks like everyone’s here, Captain,”</i> Logan says, flopping down on the couch.");
+				PlayerParty.removeFromParty(logan);
+				logan.currentLocation = "TheSilence.ConferenceRoom";
 			}
 			
 			return false;
@@ -132,12 +141,12 @@ package classes.GameData.Content.TheSilence
 			clearOutput();
 			output("The Silence’s bridge isn’t too far removed from a warship’s: pristine, white, glowing with readouts, V.I. holograms, and several projected star maps and status displays. A forward view screen sits over the pilot's console, which has been pulled adjacent to the Navigation station, allowing for (assisted) one-man flight. Weapons consoles flank the bridge, and a tactical map dominates the center, completely with active sensor projections and positioning data for the surrounding several thousand kilometers of space.");
 			
-			if (logan.currentLocation == "BRIDGE" && inSpaceCombat == false)
+			if (logan.currentLocation == "TheSilence.Bridge" && inSpaceCombat == false)
 			{
 				output("\n\nLogan's sitting at the pilot's console, feeding nav data from the console into the auto-pilot programs. Her job will come later, when Nova gets on your tail. <i>“Everything’s solid up here, Captain,”</i> she says, tone formal now that she’s on duty.");
 			}
 			
-			if (logan.currentLocation == "BRIDGE" && inSpaceCombat == true)
+			if (logan.currentLocation == "TheSilence.Bridge" && inSpaceCombat == true)
 			{
 				output("\n\nLogan’s furiously typing with one hand, steering with the other, desperately trying to wrangle an advantage for the crew against the overwhelming assault of the <i>Black Rose</i>.");
 			}

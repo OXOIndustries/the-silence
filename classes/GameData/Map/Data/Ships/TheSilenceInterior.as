@@ -139,6 +139,7 @@ package classes.GameData.Map.Data.Ships
 			var crewDeckElevator:Room = new Room();
 			crewDeckElevator.RoomIndex = "CrewDeckElevator";
 			crewDeckElevator.RoomName = "ELEVATOR:\nCREW DECK";
+			crewDeckElevator.ShortName = "Crew Deck";
 			crewDeckElevator.ElevatorRooms = ["BridgeElevator", "CrewDeckElevator", "EngineeringElevator"];
 			crewDeckElevator.EntryFunction = ContentIndex.theSilence.crewDeckElevatorRoomFunction;
 			crewDeckElevator.WestExit = "ConferenceRoom";
@@ -150,12 +151,13 @@ package classes.GameData.Map.Data.Ships
 			var bridgeElevator:Room = new Room();
 			bridgeElevator.RoomIndex = "BridgeElevator";
 			bridgeElevator.RoomName = "ELEVATOR:\nBRIDGE";
+			bridgeElevator.ShortName = "Bridge Deck";
 			bridgeElevator.ElevatorRooms = ["BridgeElevator", "CrewDeckElevator", "EngineeringElevator"];
 			bridgeElevator.WestExit = "Bridge";
 			bridgeElevator.EntryFunction = ContentIndex.theSilence.bridgeElevatorRoomFunction;
 			bridgeElevator.AddFlag(GLOBAL.ELEVATOR);
 			bridgeElevator.AddFlag(GLOBAL.INDOOR);
-			AddRoom(crewDeckElevator);
+			AddRoom(bridgeElevator);
 
 			var bridge:Room = new Room();
 			bridge.RoomIndex = "Bridge";
@@ -169,6 +171,7 @@ package classes.GameData.Map.Data.Ships
 			var engineeringElevator:Room = new Room();
 			engineeringElevator.RoomIndex = "EngineeringElevator";
 			engineeringElevator.RoomName = "ELEVATOR:\nENGINEERING";
+			engineeringElevator.ShortName = "Eng. Deck";
 			engineeringElevator.ElevatorRooms = ["BridgeElevator", "CrewDeckElevator", "EngineeringElevator"];
 			engineeringElevator.WestExit = "EngineeringDeck1";
 			engineeringElevator.EntryFunction = ContentIndex.theSilence.engineeringElevatorRoomFunction;
