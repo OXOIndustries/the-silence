@@ -539,7 +539,13 @@
 		public function get planetText():String { return _leftSideBar.locationBlock.planetText.text; }
 		public function get systemText():String { return _leftSideBar.locationBlock.systemText.text; }
 		
-		public function set roomText(v:String):void { _leftSideBar.locationBlock.roomText.text = v; }
+		public function set roomText(v:String):void 
+		{
+			if (v.indexOf("\n") == -1)
+				v = "\n" + v;
+				
+			_leftSideBar.locationBlock.roomText.text = v; 
+		}
 		public function set planetText(v:String):void { _leftSideBar.locationBlock.planetText.text = v; }
 		public function set systemText(v:String):void { _leftSideBar.locationBlock.systemText.text = v; }
 		

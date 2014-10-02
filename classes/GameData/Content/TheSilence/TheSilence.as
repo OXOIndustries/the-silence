@@ -141,6 +141,11 @@ package classes.GameData.Content.TheSilence
 			clearOutput();
 			output("The Silence’s bridge isn’t too far removed from a warship’s: pristine, white, glowing with readouts, V.I. holograms, and several projected star maps and status displays. A forward view screen sits over the pilot's console, which has been pulled adjacent to the Navigation station, allowing for (assisted) one-man flight. Weapons consoles flank the bridge, and a tactical map dominates the center, completely with active sensor projections and positioning data for the surrounding several thousand kilometers of space.");
 			
+			if (flags["CAPTAIN_TO_THE_BRIDGE"] == undefined && logan.currentLocation == "TheSilence.Bridge")
+			{
+				addButton(0, "Logan", ContentIndex.chapter3.captainToTheBridge, undefined, "Approach Logan", "Find out what Logan wants.");
+			}
+			
 			if (logan.currentLocation == "TheSilence.Bridge" && inSpaceCombat == false)
 			{
 				output("\n\nLogan's sitting at the pilot's console, feeding nav data from the console into the auto-pilot programs. Her job will come later, when Nova gets on your tail. <i>“Everything’s solid up here, Captain,”</i> she says, tone formal now that she’s on duty.");
