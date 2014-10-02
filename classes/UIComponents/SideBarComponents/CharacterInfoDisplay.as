@@ -1,6 +1,7 @@
 package classes.UIComponents.SideBarComponents 
 {
 	import classes.Creature;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -148,7 +149,8 @@ package classes.UIComponents.SideBarComponents
 				}
 			}
 			
-			var bust:DisplayObject = new bustT();
+			var bust:Bitmap = new bustT();
+			bust.smoothing = true;
 			
 			_bustImage.addChild(bust);
 			

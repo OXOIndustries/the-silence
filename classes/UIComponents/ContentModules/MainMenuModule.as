@@ -2,6 +2,7 @@ package classes.UIComponents.ContentModules
 {
 	import classes.Core;
 	import classes.UIComponents.ContentModuleComponents.MainMenuButton;
+	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
@@ -39,8 +40,8 @@ package classes.UIComponents.ContentModules
 			return btnArray;
 		}
 		
-		private var _titsLogo:DisplayObject;
-		private var _warningBackground:DisplayObject;
+		private var _titsLogo:Bitmap;
+		private var _warningBackground:Bitmap;
 		private var _warningText:TextField;
 		private var _creditText:TextField;
 		private var _websiteText:TextField;
@@ -73,11 +74,13 @@ package classes.UIComponents.ContentModules
 		private function BuildGraphicsElements():void 
 		{
 			_titsLogo = new MainMenuModule.Tits_Logo();
+			_titsLogo.smoothing = true;
 			_titsLogo.x = 168;
 			_titsLogo.y = 42;
 			this.addChild(_titsLogo);
 			
 			_warningBackground = new MainMenuModule.Warning_BG();
+			_warningBackground.smoothing = true;
 			_warningBackground.x = 10;
 			_warningBackground.y = 380;
 			this.addChild(_warningBackground);
@@ -98,8 +101,8 @@ package classes.UIComponents.ContentModules
 			this.addChild(_creditText);
 			
 			_creditText.x = 10; // 210
-			_creditText.y = 305;
-			_creditText.height = 77;
+			_creditText.y = 285;
+			_creditText.height = 97;
 			_creditText.width = 780;
 			_creditText.htmlText = "A TiTS mini-adventure.\nCreated by Savin & Gedan, Inspired by Fenoxo.\nWrites: Savin, Code: Gedan, Busts: Echo3Dx\n<b>Game Version: " + (this.root as Core).version + "</b>";
 			
