@@ -9,6 +9,7 @@ package classes.GameData
 	import classes.GameData.Map.Ship;
 	import classes.GameData.Map.System;
 	import classes.Mapper;
+	import flash.geom.Point;
 	
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.mainGameMenu;
@@ -93,7 +94,7 @@ package classes.GameData
 				
 			// Show the minimap too!
 			userInterface().showMinimap();
-			var map:* = mapper.generateMap(GameState.currentLocation);
+			var map:* = mapper.generateMap(GameState.pc.currentLocation);
 			userInterface().setMapData(map);
 			
 			// Enable the perk list button
@@ -152,7 +153,7 @@ package classes.GameData
 				{
 					loc = room.ParentLocation.ParentSystem.SystemIndex + "." + room.ParentLocation.LocationIndex + "." + room.RoomIndex;
 				}
-				GameState.currentLocation = loc;
+				GameState.pc.currentLocation = loc;
 				
 				mainGameMenu();
 			}
@@ -160,6 +161,21 @@ package classes.GameData
 			{
 				throw new Error("Could not find the desired room!");
 			}
+		}
+		
+		public function ShipToPoint(point:Point):void
+		{
+			throw new Error("Not implemented yet.");
+		}
+		
+		public function shipToLocation(name:String):void
+		{
+			
+		}
+		
+		public function shipToSystem(name:String):void
+		{
+			throw new Error("Not implemented yet.");
 		}
 		
 		public static function FindRoom(name:String):Room
@@ -191,7 +207,7 @@ package classes.GameData
 		
 		private static function RebuildFQName(name:String):String
 		{
-			var current:String = GameState.currentLocation;
+			var current:String = GameState.pc.currentLocation;
 			current = current.slice(0, current.lastIndexOf("."));
 			current += "." + name;
 			

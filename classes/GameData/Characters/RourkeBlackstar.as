@@ -10,7 +10,8 @@ package classes.GameData.Characters
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
-	
+	import classes.GameData.Items.Melee.Greataxe;
+	import classes.GameData.Items.Guns.Handaxes;
 	/**
 	 * ...
 	 * @author Gedan

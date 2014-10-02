@@ -86,6 +86,7 @@ package classes.GameData.Ships
 			{
 				total += equippedModules[i].powergrid;
 			}
+			return total;
 		}
 		
 		public var baseMaxCrewComplement:int = 7;
@@ -96,7 +97,7 @@ package classes.GameData.Ships
 		
 		// Stats -- Combat
 		public var baseHullHP:int = 100;
-		public var currentHullHP:int = 100;
+		public var actualHullHP:int = 100;
 		
 		public function get maxHullHP():int
 		{
@@ -104,7 +105,7 @@ package classes.GameData.Ships
 		}
 		public function get currentHullHP():int
 		{
-			return currentHullHP;
+			return actualHullHP;
 		}
 		
 		public var baseAgility:int = 10;

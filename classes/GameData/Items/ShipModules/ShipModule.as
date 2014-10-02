@@ -19,7 +19,7 @@ package classes.GameData.Items.ShipModules
 			
 		}
 		
-		public var type:String = TYPE_GENERIC;
+		public var type:String = TYPE_UTILITY;
 		public var powergrid:int = 100;
 		public var moduleRemovable:Boolean = true;
 		

@@ -1,8 +1,13 @@
 package classes.GameData 
 {
 	import classes.Creature;
+	import classes.GameData.Characters.BlackVoidPirate;
 	import classes.GameData.Characters.Logan;
+	import classes.GameData.Characters.MirianBragga;
 	import classes.GameData.Characters.PlayerCharacter;
+	import classes.GameData.Characters.Pyra;
+	import classes.GameData.Characters.RourkeBlackstar;
+	import classes.GameData.Characters.Tarik;
 	import flash.utils.Dictionary;
 	/**
 	 * GameModel stores all of the current state of the game, and is accessible to all other classes at-will.
@@ -17,8 +22,6 @@ package classes.GameData
 		public var hours:uint = 0;
 		public var minutes:uint = 0;
 		
-		public var currentLocation:String = "";
-		public var shipLocation:String = "";
 		public var inSceneBlockSaving:Boolean = false;
 		public var encountersDisabled:Boolean = false;
 		
@@ -33,6 +36,11 @@ package classes.GameData
 			return CharacterIndex.Chars;
 		}
 		
+		public function get ships():Object
+		{
+			return ShipIndex.Ships;
+		}
+		
 		public function get pc():PlayerCharacter
 		{
 			return CharacterIndex.Chars["PC"];
@@ -41,6 +49,26 @@ package classes.GameData
 		public function get logan():Logan
 		{
 			return CharacterIndex.Chars["LOGAN"];
+		}
+		
+		public function get pyra():Pyra
+		{
+			return CharacterIndex.Chars["PYRA"];
+		}
+		
+		public function get tarik():Tarik
+		{
+			return CharacterIndex.Chars["TARIK"];
+		}
+		
+		public function get mirian():MirianBragga
+		{
+			return CharacterIndex.Chars["MIRIAN"];
+		}
+		
+		public function get rourke():RourkeBlackstar
+		{
+			return CharacterIndex.Chars["ROURKE"];
 		}
 		
 		public function get enemyParty():Party
@@ -57,6 +85,12 @@ package classes.GameData
 		{
 			CharacterIndex.Chars = v;
 			CharacterIndex.init(true);
+		}
+		
+		public function set ships(v:Object):void
+		{
+			ShipIndex.Ships = v;
+			ShipIndex.init(true);
 		}
 	}
 }

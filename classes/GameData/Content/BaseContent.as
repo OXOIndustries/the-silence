@@ -101,12 +101,12 @@ package classes.GameData.Content
 		
 		protected function get currentLocation():String
 		{
-			return GameState.currentLocation;
+			return GameState.pc.currentLocation;
 		}
 		
 		protected function set currentLocation(v:String):void
 		{
-			GameState.currentLocation = v;
+			GameState.pc.currentLocation = v;
 		}
 		
 		protected function mainGameMenu():void

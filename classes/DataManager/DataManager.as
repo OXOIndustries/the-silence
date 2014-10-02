@@ -300,8 +300,6 @@
 			dataFile.playerGender 	= GameState.characters["PC"].mfn("M", "F", "A");
 
 			// Game state
-			dataFile.playerLocation 	= GameState.currentLocation;
-			dataFile.shipLocation 		= GameState.shipLocation;
 			dataFile.daysPassed 		= GameState.days;
 			dataFile.currentHours 		= GameState.hours;
 			dataFile.currentMinutes 	= GameState.minutes;
@@ -460,8 +458,6 @@
 			}
 			
 			// Game state
-			GameState.currentLocation = obj.playerLocation;
-			GameState.shipLocation = obj.shipLocation;
 			GameState.days = obj.daysPassed;
 			GameState.hours = obj.currentHours;
 			GameState.minutes = obj.currentMinutes;
