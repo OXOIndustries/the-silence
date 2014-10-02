@@ -11,7 +11,7 @@ package classes.GameData.Content
 		public function missionBrief():void
 		{
 			clearOutput();
-			setLocation("MISSION\nBRIEFING");
+			setLocation("MISSION BRIEFING");
 
 			flags["CREW_BRIEFED"] = 1;
 
@@ -28,7 +28,7 @@ package classes.GameData.Content
 		private function missionBriefII(response:String):void
 		{
 			clearOutput();
-			setLocation("MISSION\nBRIEFING");
+			setLocation("MISSION BRIEFING");
 
 			// Kind
 			// We need the money. Especially after that last job...
@@ -126,7 +126,7 @@ package classes.GameData.Content
 		private function missionBriefIII():void
 		{
 			clearOutput();
-			setLocation("MISSION\nBRIEFING");
+			setLocation("MISSION BRIEFING");
 
 			output("A few moments later, the P.A. chimes, and Logan’s voice comes through. <i>“Captain to the bridge. Captain to the bridge.”</i>");
 

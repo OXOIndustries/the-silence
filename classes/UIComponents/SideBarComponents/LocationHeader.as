@@ -5,6 +5,7 @@ package classes.UIComponents.SideBarComponents
 	import flash.text.TextField;
 	import classes.UIComponents.UIStyleSettings;
 	import flash.text.AntiAliasType;
+	import flash.text.TextFormatAlign;
 	
 	/**
 	 * ...
@@ -12,6 +13,8 @@ package classes.UIComponents.SideBarComponents
 	 */
 	public class LocationHeader extends Sprite
 	{
+		private var _alignment:String;
+		
 		private var _roomBlock:Sprite;
 		private var _roomText:TextField;
 		
@@ -25,8 +28,10 @@ package classes.UIComponents.SideBarComponents
 		public function get planetText():TextField { return _planetText; }
 		public function get systemText():TextField { return _systemText; }
 		
-		public function LocationHeader() 
+		public function LocationHeader(align:String = "left") 
 		{
+			_alignment = align;
+			
 			this.addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
@@ -42,33 +47,33 @@ package classes.UIComponents.SideBarComponents
 			// Background Elements
 			_roomBlock = new Sprite();
 			_roomBlock.graphics.beginFill(UIStyleSettings.gHighlightColour, 1);
-			_roomBlock.graphics.drawRect(0, 0, 189, 78);
+			_roomBlock.graphics.drawRect(0, 0, 189, 53);
 			_roomBlock.graphics.endFill();
 			
 			this.addChild(_roomBlock);
 			
-			_roomBlock.x = 0;
+			_roomBlock.x = (_alignment == "left") ? 0 : 11;
 			_roomBlock.y = 5;
 			
 			_planetBlock = new Sprite();
 			_planetBlock.graphics.beginFill(UIStyleSettings.gHighlightColour, 1);
-			_planetBlock.graphics.drawRect(0, 0, 189, 20);
+			_planetBlock.graphics.drawRect(0, 0, 189, 22);
 			_planetBlock.graphics.endFill();
 			
 			this.addChild(_planetBlock);
 			
 			_planetBlock.x = Math.floor(_roomBlock.x);
-			_planetBlock.y = Math.floor(_roomBlock.y + _roomBlock.height + 6);
+			_planetBlock.y = Math.floor(_roomBlock.y + _roomBlock.height + 5);
 			
 			_systemBlock = new Sprite();
 			_systemBlock.graphics.beginFill(UIStyleSettings.gHighlightColour, 1);
-			_systemBlock.graphics.drawRect(0, 0, 189, 20);
+			_systemBlock.graphics.drawRect(0, 0, 189, 22);
 			_systemBlock.graphics.endFill();
 			
 			this.addChild(_systemBlock);
 			
 			_systemBlock.x = Math.floor(_planetBlock.x);
-			_systemBlock.y = Math.floor(_planetBlock.y + _planetBlock.height + 6);
+			_systemBlock.y = Math.floor(_planetBlock.y + _planetBlock.height + 5);
 			
 			// Text Elements
 			_roomText = new TextField();
@@ -76,7 +81,10 @@ package classes.UIComponents.SideBarComponents
 			_roomText.y = _roomBlock.y; // Was 60, should probably do something different though, an anchor to roomBlock.y, set height to same and textAlign from bottom?
 			_roomText.width = 179;
 			_roomText.height = 90;
+					
+			if (_alignment == "right") UIStyleSettings.gLocationBlockRoomFormatter.align = TextFormatAlign.LEFT;
 			_roomText.defaultTextFormat = UIStyleSettings.gLocationBlockRoomFormatter;
+			
 			_roomText.embedFonts = true;
 			_roomText.antiAliasType = AntiAliasType.ADVANCED;
 			_roomText.text = "";
@@ -90,10 +98,13 @@ package classes.UIComponents.SideBarComponents
 			
 			_planetText = new TextField();
 			_planetText.x = _planetBlock.x + 5;
-			_planetText.y = _planetBlock.y - 4;
+			_planetText.y = _planetBlock.y - 3;
 			_planetText.width = 179;
 			_planetText.height = 28;
+			
+			if (_alignment == "right") UIStyleSettings.gLocationBlockPlanetSystemFormatter.align = TextFormatAlign.LEFT;
 			_planetText.defaultTextFormat = UIStyleSettings.gLocationBlockPlanetSystemFormatter;
+			
 			_planetText.embedFonts = true;
 			_planetText.antiAliasType = AntiAliasType.ADVANCED;
 			_planetText.text = "";
@@ -101,12 +112,13 @@ package classes.UIComponents.SideBarComponents
 			_planetText.wordWrap = false;
 			_planetText.mouseEnabled = false;
 			_planetText.mouseWheelEnabled = false;
+			_planetText.filters = [UIStyleSettings.gRoomLocationTextGlow];
 			
 			this.addChild(_planetText);
 			
 			_systemText = new TextField();
 			_systemText.x = _systemBlock.x + 5;
-			_systemText.y = _systemBlock.y - 4;
+			_systemText.y = _systemBlock.y - 3;
 			_systemText.width = 179;
 			_systemText.height = 28;
 			_systemText.defaultTextFormat = UIStyleSettings.gLocationBlockPlanetSystemFormatter;
@@ -117,6 +129,7 @@ package classes.UIComponents.SideBarComponents
 			_systemText.wordWrap = false;
 			_systemText.mouseEnabled = false;
 			_systemText.mouseWheelEnabled = false;
+			_systemText.filters = [UIStyleSettings.gRoomLocationTextGlow];
 			
 			this.addChild(_systemText);
 		}

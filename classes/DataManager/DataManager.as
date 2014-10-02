@@ -59,7 +59,7 @@
 				kGAMECLASS.userInterface.dataButton.DeGlow();
 				kGAMECLASS.userInterface.showPrimaryOutput();
 				
-				if (kGAMECLASS.pc.short == "uncreated")
+				if (GameState.gameStarted)
 				{
 					kGAMECLASS.userInterface.showPrimaryOutput();
 				}

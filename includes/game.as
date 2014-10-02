@@ -195,13 +195,13 @@ function shipMenu():Boolean {
 	this.addButton(9,"Fly",flyMenu);
 
 	if(shipLocation == "TAVROS HANGAR") {
-		setLocation("SHIP\nINTERIOR","TAVROS STATION","SYSTEM: KALAS");
+		setLocation("SHIP INTERIOR","TAVROS STATION","SYSTEM: KALAS");
 	}
 	else if(shipLocation == "SHIP HANGAR") {
-		setLocation("SHIP\nINTERIOR","MHEN'GA","SYSTEM: ARA ARA");
+		setLocation("SHIP INTERIOR","MHEN'GA","SYSTEM: ARA ARA");
 	}
-	else if(shipLocation == "201") setLocation("SHIP\nINTERIOR","TARKUS","SYSTEM: REDACTED");
-	else if(shipLocation == "500") setLocation("SHIP\nINTERIOR","NEW TEXAS","SYSTEM: NYE");
+	else if(shipLocation == "201") setLocation("SHIP INTERIOR","TARKUS","SYSTEM: REDACTED");
+	else if(shipLocation == "500") setLocation("SHIP INTERIOR","NEW TEXAS","SYSTEM: NYE");
 	if(currentLocation == "SHIP INTERIOR") {
 		if(crew(true) > 0) {
 			this.addButton(8,"Crew",crew);

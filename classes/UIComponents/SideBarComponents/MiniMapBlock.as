@@ -45,7 +45,7 @@ package classes.UIComponents.SideBarComponents
 			_miniMap.childNumX = 7;
 			
 			_miniMap.paddingLeft = 11;
-			_miniMap.paddingRight = 0;
+			_miniMap.paddingRight = 5;
 			_miniMap.paddingTop = 5;
 			_miniMap.paddingBottom = 31;
 			this.addChild(_miniMap);

@@ -1,6 +1,7 @@
 package classes.UIComponents 
 {
 	import classes.UIComponents.MiniMap.MiniMap;
+	import classes.UIComponents.SideBarComponents.LocationHeader;
 	import classes.UIComponents.SideBarComponents.MiniMapBlock;
 	import classes.UIComponents.StatBar;
 	import classes.UIComponents.SideBarComponents.StatusEffectsBlock;
@@ -20,11 +21,18 @@ package classes.UIComponents
 	 */
 	public class RightSideBar extends Sprite
 	{
+		private var _locationHeader:LocationHeader;
 		private var _enemyParty:PartyBlock;
 		private var _minimapBlock:MiniMapBlock;
 		
 		public function get minimap():MiniMap { return _minimapBlock.miniMap; }
 		
+		public function get roomText():TextField { return _locationHeader.roomText; }
+		public function get planetText():TextField { return _locationHeader.planetText; }
+		public function get systemText():TextField { return _locationHeader.systemText; }
+		
+		public function get locationBlock():LocationHeader { return _locationHeader; }
+				
 		/**
 		 * Config for lazy init.
 		 * @param	doTween	Set the bar to tween in from offscreen during startup
@@ -45,17 +53,23 @@ package classes.UIComponents
 			
 			this.BuildBackground();
 			
+			// Location Header
+			_locationHeader = new LocationHeader("right");
+			addChild(_locationHeader);
+			_locationHeader.x = 0;
+			_locationHeader.y = 0;
+			
 			// Enemy party container
 			_enemyParty = new PartyBlock(5, "right");
 			this.addChild(_enemyParty);
 			_enemyParty.x = 0;
-			_enemyParty.y = 0;
+			_enemyParty.y = _locationHeader.y + _locationHeader.height;
 			
 			// Minimap Container
 			_minimapBlock = new MiniMapBlock("right");
 			this.addChild(_minimapBlock);
 			_minimapBlock.x = 0;
-			_minimapBlock.y = 0;
+			_minimapBlock.y = _locationHeader.y + _locationHeader.height;
 		}
 		
 		/**
@@ -101,8 +115,19 @@ package classes.UIComponents
 		
 		public function hideAll():void 
 		{
+			_locationHeader.hideLocationText();
 			_enemyParty.visible = false;
 			_minimapBlock.visible = false;
+		}
+		
+		public function hideLocation():void
+		{
+			_locationHeader.hideLocationText();
+		}
+		
+		public function showLocation():void
+		{
+			_locationHeader.showLocationText();
 		}
 	}
 

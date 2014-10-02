@@ -188,7 +188,7 @@ package classes.UIComponents
 			if (UIStyleSettings._gLocationBlockRoomFormatter == null)
 			{
 				UIStyleSettings._gLocationBlockRoomFormatter = new TextFormat();
-				UIStyleSettings._gLocationBlockRoomFormatter.size = 37;
+				UIStyleSettings._gLocationBlockRoomFormatter.size = 24;
 				UIStyleSettings._gLocationBlockRoomFormatter.color = 0xFFFFFF;
 				UIStyleSettings._gLocationBlockRoomFormatter.align = TextFormatAlign.RIGHT;
 				UIStyleSettings._gLocationBlockRoomFormatter.leading = -4;

@@ -56,7 +56,7 @@ package classes.UIComponents.SideBarComponents
 		{
 			_headerUnderline = new Sprite();
 			_headerUnderline.x = 0;
-			_headerUnderline.y = 17;
+			_headerUnderline.y = 22;
 			_headerUnderline.graphics.beginFill(UIStyleSettings.gHighlightColour, 1);
 			_headerUnderline.graphics.drawRect(0, 0, 190, 1);
 			_headerUnderline.graphics.endFill();
@@ -110,7 +110,7 @@ package classes.UIComponents.SideBarComponents
 			_timeText.height = _timeText.textHeight - 2;
 			
 			// Days Display
-			_daysLabel = new TextField();
+/*			_daysLabel = new TextField();
 			_daysLabel.x = 10;
 			_daysLabel.y = _timeLabel.y + _timeLabel.height - 6;
 			_daysLabel.width = 117;
@@ -139,7 +139,7 @@ package classes.UIComponents.SideBarComponents
 			_daysText.mouseEnabled = false;
 			_daysText.mouseWheelEnabled = false;
 			this.addChild(_daysText);
-			_daysText.height = _daysLabel.textHeight + 1;
+			_daysText.height = _daysLabel.textHeight + 1;*/
 		}
 	}
 

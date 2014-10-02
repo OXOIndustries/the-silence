@@ -12,7 +12,7 @@ package classes.GameData.Content
 		public function captainToTheBridge():void
 		{
 			clearOutput();
-			setLocation("\nLOGAN");
+			setLocation("LOGAN");
 
 			flags["CAPTAIN_TO_THE_BRIDGE"] = 1;
 			PlayerParty.addToParty(logan, true);
@@ -31,7 +31,7 @@ package classes.GameData.Content
 		private function lifeSigns():void
 		{
 			clearOutput();
-			setLocation("\nLOGAN");
+			setLocation("LOGAN");
 
 			output("<i>“Any life signs still aboard?”</i>");
 			
@@ -79,7 +79,7 @@ package classes.GameData.Content
 		private function shipDetails():void
 		{
 			clearOutput();
-			setLocation("\nLOGAN");
+			setLocation("LOGAN");
 
 			output("<i>“So what’re we walking into, Logan?”</i>");
 			
@@ -103,7 +103,7 @@ package classes.GameData.Content
 		private function novaSecurities():void
 		{
 			clearOutput();
-			setLocation("\nLOGAN");
+			setLocation("LOGAN");
 			
 			output("<i>“We’ve never knocked over Nova before,”</i> you muse. ");
 			
@@ -129,7 +129,7 @@ package classes.GameData.Content
 		private function fuckDisGoNext():void
 		{
 			clearOutput();
-			setLocation("\nLOGAN");
+			setLocation("LOGAN");
 
 			output("<i>“Alright. Take us in, Logan,”</i> you say, planting your hands on the back of her chair, watching as the wreckage of the Nova ship comes into focus. The whole ship trembles as Logan kicks off the LightDrive at just the right second to pull you back to normal speed kilometers off the field of debris surrounding it. A second too soon, and you’d be cruising for hours to get there; too late, and you’d have overshot by hours. ");
 			

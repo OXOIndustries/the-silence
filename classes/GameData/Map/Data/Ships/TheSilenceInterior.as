@@ -30,7 +30,7 @@ package classes.GameData.Map.Data.Ships
 			
 			var crewDeckK21:Room = new Room();
 			crewDeckK21.RoomIndex = "CrewDeckK21";
-			crewDeckK21.RoomName = "CREW DECK\nCORRIDOR";
+			crewDeckK21.RoomName = "CREW DECK CORRIDOR";
 			crewDeckK21.EntryFunction = ContentIndex.theSilence.crewDeckK21RoomFunction;
 			crewDeckK21.MoveTime = 1;
 			crewDeckK21.AddFlag(GLOBAL.INDOOR);
@@ -40,7 +40,7 @@ package classes.GameData.Map.Data.Ships
 			
 			var crewDeckL21:Room = new Room();
 			crewDeckL21.RoomIndex = "CrewDeckL21";
-			crewDeckL21.RoomName = "CREW DECK\nCORRIDOR";
+			crewDeckL21.RoomName = "CREW DECK CORRIDOR";
 			crewDeckL21.EntryFunction = ContentIndex.theSilence.crewDeckL21RoomFunction;
 			crewDeckL21.MoveTime = 1;
 			crewDeckL21.NorthExit = "CrewL20";
@@ -54,7 +54,7 @@ package classes.GameData.Map.Data.Ships
 
 			var crewL20:Room = new Room();
 			crewL20.RoomIndex = "CrewL20";
-			crewL20.RoomName = "CREW QUARTERS\n???";
+			crewL20.RoomName = "CREW QUARTERS ???";
 			crewL20.EntryFunction = ContentIndex.theSilence.crewL20RoomFunction;
 			crewL20.SouthExit = "CrewDeckL21";
 			crewL20.AddFlag(GLOBAL.INDOOR);
@@ -62,7 +62,7 @@ package classes.GameData.Map.Data.Ships
 
 			var crewL22:Room = new Room();
 			crewL22.RoomIndex = "CrewL22";
-			crewL22.RoomName = "CREW QUARTERS\n???";
+			crewL22.RoomName = "CREW QUARTERS ???";
 			crewL22.EntryFunction = ContentIndex.theSilence.crewL22RoomFunction;
 			crewL22.NorthExit = "CrewDeckL21";
 			crewL22.AddFlag(GLOBAL.INDOOR);
@@ -70,7 +70,7 @@ package classes.GameData.Map.Data.Ships
 
 			var crewDeckM21:Room = new Room();
 			crewDeckM21.RoomIndex = "CrewDeckM21";
-			crewDeckM21.RoomName = "CREW DECK\nCORRIDOR";
+			crewDeckM21.RoomName = "CREW DECK CORRIDOR";
 			crewDeckM21.EntryFunction = ContentIndex.theSilence.crewDeckM21RoomFunction;
 			crewDeckM21.MoveTime = 1;
 			crewDeckM21.NorthExit = "CrewM20";
@@ -84,7 +84,7 @@ package classes.GameData.Map.Data.Ships
 
 			var crewM22:Room = new Room();
 			crewM22.RoomIndex = "CrewM22";
-			crewM22.RoomName = "CREW QUARTERS\n???";
+			crewM22.RoomName = "CREW QUARTERS ???";
 			crewM22.EntryFunction = ContentIndex.theSilence.crewM22RoomFunction;
 			crewM22.NorthExit = "CrewDeckM21";
 			crewM22.AddFlag(GLOBAL.INDOOR);
@@ -92,7 +92,7 @@ package classes.GameData.Map.Data.Ships
 
 			var crewM20:Room = new Room();
 			crewM20.RoomIndex = "CrewM20";
-			crewM20.RoomName = "CREW QUARTERS\n???";
+			crewM20.RoomName = "CREW QUARTERS ???";
 			crewM20.EntryFunction = ContentIndex.theSilence.crewM20RoomFunction;
 			crewM20.SouthExit = "CrewDeckM21";
 			crewM20.AddFlag(GLOBAL.INDOOR);
@@ -100,7 +100,7 @@ package classes.GameData.Map.Data.Ships
 
 			var crewDeckN21:Room = new Room();
 			crewDeckN21.RoomIndex = "CrewDeckN21";
-			crewDeckN21.RoomName = "CREW DECK\nCORRIDOR";
+			crewDeckN21.RoomName = "CREW DECK CORRIDOR";
 			crewDeckN21.EntryFunction = ContentIndex.theSilence.crewDeckN21RoomFunction;
 			crewDeckN21.MoveTime = 1;
 			crewDeckN21.EastExit = "ConferenceRoom";
@@ -111,7 +111,7 @@ package classes.GameData.Map.Data.Ships
 
 			var crewDeckN22:Room = new Room();
 			crewDeckN22.RoomIndex = "CrewDeckN22";
-			crewDeckN22.RoomName = "CREW DECK\nCORRIDOR";
+			crewDeckN22.RoomName = "CREW DECK CORRIDOR";
 			crewDeckN22.EntryFunction = ContentIndex.theSilence.crewDeckN22RoomFunction;
 			crewDeckN22.MoveTime = 1;
 			crewDeckN22.NorthExit = "CrewDeckN21";
@@ -121,7 +121,7 @@ package classes.GameData.Map.Data.Ships
 
 			var captainsQuarters:Room = new Room();
 			captainsQuarters.RoomIndex = "CaptainsQuarters";
-			captainsQuarters.RoomName = "CAPTAINS\nQUARTERS";
+			captainsQuarters.RoomName = "CAPTAINS QUARTERS";
 			captainsQuarters.EntryFunction = ContentIndex.theSilence.captainsQuartersRoomFunction;
 			captainsQuarters.NorthExit = "CrewDeckN22";
 			captainsQuarters.AddFlag(GLOBAL.INDOOR);
@@ -129,7 +129,7 @@ package classes.GameData.Map.Data.Ships
 
 			var conferenceRoom:Room = new Room();
 			conferenceRoom.RoomIndex = "ConferenceRoom";
-			conferenceRoom.RoomName = "CONFERENCE\nROOM";
+			conferenceRoom.RoomName = "CONFERENCE ROOM";
 			conferenceRoom.EntryFunction = ContentIndex.theSilence.conferenceRoomFunction;
 			conferenceRoom.WestExit = "CrewDeckN21";
 			conferenceRoom.EastExit = "CrewDeckElevator";
@@ -138,7 +138,7 @@ package classes.GameData.Map.Data.Ships
 
 			var crewDeckElevator:Room = new Room();
 			crewDeckElevator.RoomIndex = "CrewDeckElevator";
-			crewDeckElevator.RoomName = "ELEVATOR:\nCREW DECK";
+			crewDeckElevator.RoomName = "ELEVATOR: CREW DECK";
 			crewDeckElevator.ShortName = "Crew Deck";
 			crewDeckElevator.ElevatorRooms = ["BridgeElevator", "CrewDeckElevator", "EngineeringElevator"];
 			crewDeckElevator.EntryFunction = ContentIndex.theSilence.crewDeckElevatorRoomFunction;
@@ -150,7 +150,7 @@ package classes.GameData.Map.Data.Ships
 			// BRDIGE DECK
 			var bridgeElevator:Room = new Room();
 			bridgeElevator.RoomIndex = "BridgeElevator";
-			bridgeElevator.RoomName = "ELEVATOR:\nBRIDGE";
+			bridgeElevator.RoomName = "ELEVATOR: BRIDGE";
 			bridgeElevator.ShortName = "Bridge Deck";
 			bridgeElevator.ElevatorRooms = ["BridgeElevator", "CrewDeckElevator", "EngineeringElevator"];
 			bridgeElevator.WestExit = "Bridge";
@@ -170,7 +170,7 @@ package classes.GameData.Map.Data.Ships
 			// Engineering Deck
 			var engineeringElevator:Room = new Room();
 			engineeringElevator.RoomIndex = "EngineeringElevator";
-			engineeringElevator.RoomName = "ELEVATOR:\nENGINEERING";
+			engineeringElevator.RoomName = "ELEVATOR: ENGINEERING";
 			engineeringElevator.ShortName = "Eng. Deck";
 			engineeringElevator.ElevatorRooms = ["BridgeElevator", "CrewDeckElevator", "EngineeringElevator"];
 			engineeringElevator.WestExit = "EngineeringDeck1";
@@ -181,7 +181,7 @@ package classes.GameData.Map.Data.Ships
 
 			var engineeringDeck1:Room = new Room();
 			engineeringDeck1.RoomIndex = "EngineeringDeck1";
-			engineeringDeck1.RoomName = "ENGINEERING\nDECK";
+			engineeringDeck1.RoomName = "ENGINEERING DECK";
 			engineeringDeck1.WestExit = "EngineeringDeck2";
 			engineeringDeck1.EastExit = "EngineeringElevator";
 			engineeringDeck1.EntryFunction = ContentIndex.theSilence.engineeringDeck1RoomFunction;
@@ -190,7 +190,7 @@ package classes.GameData.Map.Data.Ships
 
 			var engineeringDeck2:Room = new Room();
 			engineeringDeck2.RoomIndex = "EngineeringDeck2";
-			engineeringDeck2.RoomName = "ENGINEERING\nDECK";
+			engineeringDeck2.RoomName = "ENGINEERING DECK";
 			engineeringDeck2.EastExit = "EngineeringDeck1";
 			engineeringDeck2.EntryFunction = ContentIndex.theSilence.engineeringDeck2RoomFunction;
 			engineeringDeck2.AddFlag(GLOBAL.INDOOR);

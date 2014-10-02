@@ -202,7 +202,7 @@
 			if (eventBuffer.length > 0)
 			{
 				clearOutput();
-				output("<b>" + possessive(pc.short) + " log:</b>" + eventBuffer);
+				output("<b>" + possessive(GameState.pc.short) + " log:</b>" + eventBuffer);
 				eventBuffer = "";
 				clearMenu();
 				addButton(0, "Next", mainGameMenu);
@@ -245,19 +245,7 @@
 		{
 			
 		}
-		
-		public function get pc():*
-		{
-			
-		}
-		
-		public function showName(name:String):void
-		{
-			userInterface.showName(name);
-		}
-		
-		
-		
+	
 		public function removeButton(slot:int):void
 		{
 			userInterface.addDisabledButton(slot);

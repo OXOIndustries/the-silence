@@ -535,24 +535,48 @@
 		// use data binding from UI element -> engine variable
 		
 		// Access to LSB items
-		public function get roomText():String { return _leftSideBar.locationBlock.roomText.text; }
-		public function get planetText():String { return _leftSideBar.locationBlock.planetText.text; }
-		public function get systemText():String { return _leftSideBar.locationBlock.systemText.text; }
+		public function get roomText():String { return _rightSideBar.locationBlock.roomText.text; }
+		public function get planetText():String { return _rightSideBar.locationBlock.planetText.text; }
+		public function get systemText():String { return _rightSideBar.locationBlock.systemText.text; }
 		
 		public function set roomText(v:String):void 
 		{
-			if (v.indexOf("\n") == -1)
-				v = "\n" + v;
-				
-			_leftSideBar.locationBlock.roomText.text = v; 
+			var workStr:String = v;
+			
+			// Convert to uppercase
+			workStr = workStr.toUpperCase();
+			
+			// If length is > 32, emit a warning
+			if (workStr.length > 32) trace("Warning! Room name '" + v + "' is too long!");
+			
+			// Text short enough to fit on a single line, bump to bottom
+			if (workStr.length <= 18) 
+			{
+				workStr = "\n" + workStr;
+			}
+			else
+			{
+				// Find a space character closest to the 16 char break and replace
+				for (var i:int = 18; i > 0; i--)
+				{
+					if (workStr.charAt(i) == " ")
+					{
+						var rep:String = workStr.substr(0, i);
+						rep += "\n"
+						rep += workStr.substr(i + 1);
+						workStr = rep;
+						break;
+					}
+				}
+			}
+			
+			_rightSideBar.locationBlock.roomText.text = workStr; 
 		}
-		public function set planetText(v:String):void { _leftSideBar.locationBlock.planetText.text = v; }
-		public function set systemText(v:String):void { _leftSideBar.locationBlock.systemText.text = v; }
+		public function set planetText(v:String):void { _rightSideBar.locationBlock.planetText.text = v; }
+		public function set systemText(v:String):void { _rightSideBar.locationBlock.systemText.text = v; }
 		
 		public function get time():String { return _leftSideBar.timeText.text; }
 		public function set time(v:String):void { _leftSideBar.timeText.text = v; }
-		public function get days():String { return _leftSideBar.daysText.text; }
-		public function set days(v:String):void { _leftSideBar.daysText.text = v; }
 		
 		public function get dataButton():SquareButton { return _leftSideBar.dataButton; }
 		public function get mainMenuButton():SquareButton { return _leftSideBar.menuButton; }
@@ -567,11 +591,6 @@
 		
 		// Child access because MORE LAZY
 		public function get buttonTray():ButtonTray { return _buttonTray; }
-		
-		public function showName(name:String):void
-		{
-			roomText = name;
-		}
 
 		// Text input bullshittery
 		public function get textInput():TextField { return (_availableModules["PrimaryOutput"] as GameTextModule).textInput; }
@@ -600,12 +619,12 @@
 		
 		public function hideLocation():void
 		{
-			this._leftSideBar.hideLocation();
+			_rightSideBar.hideLocation();
 		}
 		
 		public function showLocation():void
 		{
-			this._leftSideBar.showLocation();
+			_rightSideBar.showLocation();
 		}
 		
 		// Useful methods to paste over some issues throughout the codebase whilst mid-refactor
@@ -959,9 +978,6 @@
 		
 		public function leftBarClear():void 
 		{
-			_leftSideBar.roomText.visible = false;
-			_leftSideBar.planetText.visible = false;
-			_leftSideBar.systemText.visible = false;
 			_leftSideBar.generalInfoBlock.HideTime();
 			_leftSideBar.quickSaveButton.visible = false;
 			_leftSideBar.dataButton.visible = false;
