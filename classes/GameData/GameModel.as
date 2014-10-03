@@ -1,6 +1,7 @@
 package classes.GameData 
 {
 	import classes.Creature;
+	
 	import classes.GameData.Characters.BlackVoidPirate;
 	import classes.GameData.Characters.Logan;
 	import classes.GameData.Characters.MirianBragga;
@@ -8,6 +9,8 @@ package classes.GameData
 	import classes.GameData.Characters.Pyra;
 	import classes.GameData.Characters.RourkeBlackstar;
 	import classes.GameData.Characters.Tarik;
+	import classes.GameData.Characters.Connie;
+	
 	import flash.utils.Dictionary;
 	/**
 	 * GameModel stores all of the current state of the game, and is accessible to all other classes at-will.
@@ -69,6 +72,11 @@ package classes.GameData
 		public function get rourke():RourkeBlackstar
 		{
 			return CharacterIndex.Chars["ROURKE"];
+		}
+		
+		public function get connie():Connie
+		{
+			return CharacterIndex.Chars["CONNIE"];
 		}
 		
 		public function get enemyParty():Party

@@ -4,6 +4,7 @@ package classes.GameData.Map.Data.Ships
 	import classes.GameData.Map.Ship;
 	import classes.GLOBAL;
 	import classes.GameData.ContentIndex;
+	import classes.GameData.GameState;
 	
 	/**
 	 * ...
@@ -28,6 +29,10 @@ package classes.GameData.Map.Data.Ships
 			breach.NorthExit = "CommandDeckM24";
 			breach.OutExit = "BreachEngineering";
 			breach.OutName = "Down";
+			breach.OutCondition = function():Boolean {
+				if (GameState.flags["CONSTELLATION_INTERNAL_SHIELDS_ON"] == 1) return true;
+				return false;
+			}
 			AddRoom(breach);
 
 			// Engineering Deck "Airlock"
@@ -184,11 +189,15 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckL23.RoomIndex = "CommandDeckL23";
 			CommandDeckL23.RoomName = "Command Deck: Corridor";
 			CommandDeckL23.ShortName = "Cmd.Dk Crrdr"
-			CommandDeckL23.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
+			CommandDeckL23.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorToOfficersQuartersFunction;
 			CommandDeckL23.MoveTime = 1;
 			CommandDeckL23.AddFlag(GLOBAL.INDOOR);
 			CommandDeckL23.EastExit = "CommandDeckM23";
 			CommandDeckL23.WestExit = "OfficersQuarters";
+			CommandDeckL23.WestCondition = function():Boolean {
+				if (GameState.flags["CONSTELLATION_OFFICERS_QUARTERS_UNLOCKED"] == 1) return true;
+				return false;
+			}
 			AddRoom(CommandDeckL23);
 
 			var EngineeringDeckL33:Room = new Room();
@@ -282,7 +291,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckShieldControl.RoomIndex = "CommandDeckShieldControl";
 			ComamndDeckShieldControl.RoomName = "Command Deck: Shield Control";
 			CommandDeckShieldControl.ShortName = "Cmd. Dk Shield";
-			CommandDeckShieldControl.EntryFunction = ContentIndex.theConstellation.CommandDeckShieldControlFunction;
+			CommandDeckShieldControl.EntryFunction = ContentIndex.theConstellation.commandDeckShieldControlFunction;
 			CommandDeckShieldControl.MoveTime = 1;
 			CommandDeckShieldControl.AddFlag(GLOBAL.INDOOR);
 			CommandDeckShieldControl.EastExit = "ComamndDeckL20";
@@ -292,7 +301,7 @@ package classes.GameData.Map.Data.Ships
 			StarboardCargo.RoomIndex = "StarboardCargo";
 			StarboardCargo.RoomName = "Command Deck: Starboard Cargo";
 			StarboardCargo.ShortName = "Cmd.Dk Cargo";
-			StarboardCargo.EntryFunction = ContentIndex.theConstellation.CommandDeckStarboardCargoFunction;
+			StarboardCargo.EntryFunction = ContentIndex.theConstellation.commandDeckStarboardCargoFunction;
 			StarboardCargo.MoveTime = 1;
 			StarboardCargo.AddFlag(GLOBAL.INDOOR);
 			StarboardCargo.WestExit = "CommandDeckN20";
@@ -302,7 +311,7 @@ package classes.GameData.Map.Data.Ships
 			Bridge.RoomIndex = "CommandDeckBridge";
 			Bridge.RoomName = "Command Deck: Bridge";
 			Bridge.ShortName = "Cmd.Dk Bridge";
-			Bridge.EntryFunction = ContentIndex.theConstellation.CommandDeckBridgeFunction;
+			Bridge.EntryFunction = ContentIndex.theConstellation.commandDeckBridgeFunction;
 			Bridge.MoveTime = 1;
 			Bridge.AddFlag(GLOBAL.INDOOR);
 			Bridge.SouthExit = "CommandDeckM19";
@@ -313,7 +322,7 @@ package classes.GameData.Map.Data.Ships
 			PortCargo.RoomIndex = "PortCargo";
 			PortCargo.RoomName = "Engineering Deck: Port Cargo";
 			PortCargo.ShortName = "Eng. Dk Cargo";
-			PortCargo.EntryFunction = ContentIndex.theConstellation.EngineeringDeckPortCargoFunction;
+			PortCargo.EntryFunction = ContentIndex.theConstellation.engineeringDeckPortCargoFunction;
 			PortCargo.MoveTime = 1;
 			PortCargo.AddFlag(GLOBAL.INDOOR);
 			PortCargo.EastExit = "EngineeringDeckL33";
@@ -323,7 +332,7 @@ package classes.GameData.Map.Data.Ships
 			DroneControl.RoomIndex = "DroneControl";
 			DroneControl.RoomName = "Engineering Deck: Drone Control";
 			DroneControl.ShortName = "Eng.Dk Drone";
-			DroneControl.EntryFunction = ContentIndex.theConstellation.EngineeringDeckDroneControlFunction;
+			DroneControl.EntryFunction = ContentIndex.theConstellation.engineeringDeckDroneControlFunction;
 			DroneControl.MoveTime = 1;
 			DroneControl.AddFlag(GLOBAL.INDOOR);
 			DroneControl.WestExit = "EngineeringDeckM33";
@@ -333,7 +342,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckShieldControl.RoomIndex = "EngineeringDeckShieldControl";
 			EngineeringDeckShieldControl.RoomName = "Engineering Deck: Shield Control";
 			EngineeringDeckShieldControl.ShortName = "Eng.Dk Shield";
-			EngineeringDeckShieldControl.EntryFunction = ContentIndex.theConstellation.EngineeringDeckShieldControlFunction;
+			EngineeringDeckShieldControl.EntryFunction = ContentIndex.theConstellation.engineeringDeckShieldControlFunction;
 			EngineeringDeckShieldControl.MoveTime = 1;
 			EngineeringDeckShieldControl.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckShieldControl.EastExit = "EngineeringDeckL30";
@@ -343,7 +352,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckAtmos.RoomIndex = "EngineeringDeckAtmosphericControl";
 			EngineeringDeckAtmos.RoomName = "Engineering Deck: Atmospheric Control";
 			EngineeringDeckAtmos.ShortName = "Eng.Dk Atmos";
-			EngineeringDeckAtmos.EntryFunction = ContentIndex.theConstellation.EngineeringDeckAtmosFunction;
+			EngineeringDeckAtmos.EntryFunction = ContentIndex.theConstellation.engineeringDeckAtmosFunction;
 			EngineeringDeckAtmos.MoveTime = 1;
 			EngineeringDeckAtmos.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckAtmos.WestExit = "EngineeringDeckN30";
@@ -353,7 +362,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckBattery.RoomIndex = "EngineeringDeckForwardBattery";
 			EngineeringDeckBattery.RoomName = "Engineering Deck: Forward Battery";
 			EngineeringDeckBattery.ShortName = "Eng.Dk Battery";
-			EngineeringDeckBattery.EntryFunction = ContentIndex.theConstellation.EngineeringDeckForwardBatteryFunction;
+			EngineeringDeckBattery.EntryFunction = ContentIndex.theConstellation.engineeringDeckForwardBatteryFunction;
 			EngineeringDeckBattery.MoveTime = 1;
 			EngineeringDeckBattery.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckBattery.SouthExit = "EngineeringDeckM29";

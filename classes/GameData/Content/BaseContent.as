@@ -3,7 +3,9 @@ package classes.GameData.Content
 	import classes.Creature;
 	import classes.Engine.Interfaces.*;
 	import classes.Engine.mainGameMenu;
+	import classes.GameData.Characters.Logan;
 	import classes.GameData.Characters.PlayerCharacter;
+	import classes.GameData.Characters.Connie;
 	import classes.GameData.ContentIndex;
 	import classes.GameData.GameModel;
 	import classes.GameData.Party;
@@ -129,6 +131,16 @@ package classes.GameData.Content
 			return GameState.pc;
 		}
 		
+		protected function get logan():Logan
+		{
+			return GameState.logan;
+		}
+		
+		protected function get connie():Connie
+		{
+			return GameState.connie;
+		}
+		
 		protected function get gameStarted():Boolean
 		{
 			return GameState.gameStarted;
@@ -142,6 +154,25 @@ package classes.GameData.Content
 		protected function setLocation(room:String, planet:String = null, system:String = null):void
 		{
 			classes.Engine.Interfaces.setLocation(room, planet, system);
+		}
+		
+		/**
+		 * Generates 3 buttons for the target function. Passes one of three arguments:
+		 * "kind", "misc" or "hard".
+		 * @param	tarFunction
+		 */
+		protected function doTalkTree(tarFunction:Function):void
+		{
+			clearMenu();
+			addButton(0, "Kind", tarFunction, "kind");
+			addButton(1, "Mischievous", tarFunction, "misc");
+			addButton(2, "Hard", tarFunction, "hard");
+		}
+		
+		protected function doNext(tarFunction:Function = null):void
+		{
+			clearMenu();
+			addButton(0, "Next", ((tarFunction == null) ? mainGameMenu : tarFunction));
 		}
 	}
 

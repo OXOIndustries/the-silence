@@ -65,6 +65,12 @@ package classes.GameData
 			// Really this should isolate the concept of the storage array from the output but I'm being lazy.
 			return _charactersInParty;
 		}
+		
+		public function get isInParty(char:Creature):Boolean
+		{
+			if (_charactersInParty.indexOf(char) != -1) return true;
+			return false;
+		}
 	}
 
 }

@@ -2,6 +2,7 @@ package classes.GameData
 {
 	import classes.GameData.Characters.Logan;
 	import classes.GameData.Characters.PlayerCharacter;
+	import classes.GameData.Characters.Connie;
 	/**
 	 * ...
 	 * @author Gedan
@@ -25,6 +26,7 @@ package classes.GameData
 		{
 			initFor("PC", PlayerCharacter, justUpdate);
 			initFor("LOGAN", Logan, justUpdate);
+			initFor("CONNIE", Connie, justUpdate);
 		}
 		
 		private static function initFor(idx:String, classT:Class, justUpdate:Boolean):void
@@ -44,6 +46,11 @@ package classes.GameData
 		public static function get logan():Logan
 		{
 			return CharacterIndex.Chars["LOGAN"];
+		}
+		
+		public static function get connie():Connie
+		{
+			return CharacterIndex.Chars["CONNIE"];
 		}
 	}
 }
