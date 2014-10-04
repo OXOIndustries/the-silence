@@ -1,4 +1,4 @@
-package classes.GameData.Content.TheSilence 
+package classes.GameData.Content 
 {
 	import classes.GameData.Content.BaseContent;
 	/**

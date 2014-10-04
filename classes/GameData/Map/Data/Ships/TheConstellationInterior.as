@@ -12,11 +12,11 @@ package classes.GameData.Map.Data.Ships
 	 */
 	public class TheConstellationInterior extends Ship
 	{
-		LocationIndex = "TheConstellation";
-		LocationName = "CONSTELLATION";
-		
 		public function TheConstellationInterior() 
 		{
+			LocationIndex = "TheConstellation";
+			LocationName = "CONSTELLATION";
+			
 			// Command Deck "Airlock"
 			var breach:Room = new Room();
 			breach.RoomIndex = "BreachCommand";
@@ -39,13 +39,13 @@ package classes.GameData.Map.Data.Ships
 			var breachEngineering:Room = new Room();
 			breachEngineering.RoomIndex = "BreachEngineering";
 			breachEngineering.RoomName = "Engineering Deck: Breach";
-			breachEngineering.ShortName = "Eng.Dk Breach";]
+			breachEngineering.ShortName = "Eng.Dk Breach";
 			breachEngineering.EntryFunction = ContentIndex.theConstellation.breachFunction;
-			breachEngineering.Move = 1;
+			breachEngineering.MoveTime = 1;
 			breachEngineering.AddFlag(GLOBAL.INDOOR);
 			breachEngineering.NorthExit = "EngineeringDeckM34";
 			breachEngineering.InExit = "BreachCommand";
-			breachEngineering.InText = "Up";
+			breachEngineering.InName = "Up";
 			AddRoom(breachEngineering);
 
 			// Command Deck Corridors
@@ -289,12 +289,12 @@ package classes.GameData.Map.Data.Ships
 
 			var CommandDeckShieldControl:Room = new Room();
 			CommandDeckShieldControl.RoomIndex = "CommandDeckShieldControl";
-			ComamndDeckShieldControl.RoomName = "Command Deck: Shield Control";
+			CommandDeckShieldControl.RoomName = "Command Deck: Shield Control";
 			CommandDeckShieldControl.ShortName = "Cmd. Dk Shield";
 			CommandDeckShieldControl.EntryFunction = ContentIndex.theConstellation.commandDeckShieldControlFunction;
 			CommandDeckShieldControl.MoveTime = 1;
 			CommandDeckShieldControl.AddFlag(GLOBAL.INDOOR);
-			CommandDeckShieldControl.EastExit = "ComamndDeckL20";
+			CommandDeckShieldControl.EastExit = "CommandDeckL20";
 			AddRoom(CommandDeckShieldControl);
 
 			var StarboardCargo:Room = new Room();

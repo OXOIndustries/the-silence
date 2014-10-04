@@ -4,6 +4,7 @@ package classes.GameData
 	import classes.GameData.Content.Chapter2;
 	import classes.GameData.Content.Chapter3;
 	import classes.GameData.Content.Creation;
+	import classes.GameData.Content.TheConstellation;
 	import classes.GameData.Content.TheSilence.TheSilence;
 	
 	public class ContentIndex 
@@ -15,12 +16,14 @@ package classes.GameData
 		
 		// Ship Interiors
 		public static var theSilence:TheSilence;
+		public static var theConstellation:TheConstellation;
 		
 		{
 			appearance = new Appearance();
 				
 			// Room content
 			theSilence = new TheSilence();
+			theConstellation = new TheConstellation();
 			
 			// Chapter Content
 			creation = new Creation();

@@ -8,6 +8,7 @@ package classes.GameData
 	import classes.GameData.Map.Sector;
 	import classes.GameData.Map.Ship;
 	import classes.GameData.Map.System;
+	import classes.GameData.Ships.Ship;
 	import classes.Mapper;
 	import flash.geom.Point;
 	
@@ -44,7 +45,7 @@ package classes.GameData
 		
 		public static function executeRoom(room:Room):void
 		{
-			if (room.ParentLocation is Ship)
+			if (room.ParentLocation is classes.GameData.Map.Ship)
 			{
 				setLocation(room.RoomName, "SHIP: " + room.ParentLocation.LocationName, room.ParentLocation.ParentSystem.SystemName);
 			}
@@ -91,6 +92,21 @@ package classes.GameData
 			// If the room has elevator rooms listed, show the elevator control interface
 			if (room.ElevatorRooms.length > 0)
 				addButton(0, "Lift Cntrls.", liftControls, room, "Elevator Control Panel", "Use the elevators control panel.");
+				
+			// If the room has the airlock flag, try and find out if the ship is connected to another location for docking purposes
+			if (room.HasFlag(GLOBAL.AIRLOCK)) 
+			{
+				var shipP:classes.GameData.Ships.Ship = ShipIndex.Ships[room.ParentLocation.LocationName];
+				
+				if (shipP != undefined && shipP.hasConnection == true)
+				{
+					addButton(0, "Exit Airlock", Move, (ShipIndex.Ships[room.ParentLocation.LocationName] as classes.GameData.Ships.Ship).airlockConnectsTo);
+				}
+				else
+				{
+					addDisabledButton(0, "Exit Airlock", "Exit via Airlock", "Use of the airlock requires that the ship be properly docked to another vessel or boarding system.");
+				}
+			}
 				
 			// Show the minimap too!
 			userInterface().showMinimap();
@@ -145,7 +161,7 @@ package classes.GameData
 				processTime(room.MoveTime);
 				
 				var loc:String = "";
-				if (room.ParentLocation is Ship)
+				if (room.ParentLocation is classes.GameData.Map.Ship)
 				{
 					loc = room.ParentLocation.LocationIndex + "." + room.RoomIndex;
 				}
@@ -163,21 +179,6 @@ package classes.GameData
 			}
 		}
 		
-		public function ShipToPoint(point:Point):void
-		{
-			throw new Error("Not implemented yet.");
-		}
-		
-		public function shipToLocation(name:String):void
-		{
-			
-		}
-		
-		public function shipToSystem(name:String):void
-		{
-			throw new Error("Not implemented yet.");
-		}
-		
 		public static function FindRoom(name:String):Room
 		{
 			if (name.indexOf(".") == -1)
@@ -191,7 +192,7 @@ package classes.GameData
 			// Should be a ship -- ShipName.RoomName
 			if (exploded.length == 2)
 			{
-				var ship:Ship = sector.GetShip(exploded[0]);
+				var ship:classes.GameData.Map.Ship = sector.GetShip(exploded[0]);
 				room = ship.GetRoom(exploded[1]);
 			}
 			// Otherwise should be some a room nested within a system

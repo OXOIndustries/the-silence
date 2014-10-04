@@ -66,7 +66,7 @@ package classes.GameData
 			return _charactersInParty;
 		}
 		
-		public function get isInParty(char:Creature):Boolean
+		public function isInParty(char:Creature):Boolean
 		{
 			if (_charactersInParty.indexOf(char) != -1) return true;
 			return false;

@@ -146,6 +146,8 @@ package classes.GameData.Content
 			output("\n\n<i>“Better get down to the airlock, captain. I should have a... whatever passes for docking right now... set up in a minute.”</i>");
 			
 			output("\n\nYou pat her on the shoulder and step towards the elevator.");
+			
+			theSilence.moveToShip(theConstellation);
 
 			clearMenu();
 			addButton(0, "Next", actuallyGoNext);

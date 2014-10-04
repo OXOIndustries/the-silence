@@ -9,10 +9,15 @@ package classes.GameData.Content
 	import classes.GameData.ContentIndex;
 	import classes.GameData.GameModel;
 	import classes.GameData.Party;
+	import classes.GameData.Ships.Constellation;
+	import classes.GameData.Ships.TheSilence;
 	import classes.GUI;
 	import classes.kGAMECLASS;
 	import flash.utils.Dictionary;
 	import classes.GameData.GameState;
+	
+	import classes.GameData.ShipIndex;
+	import classes.GameData.CharacterIndex;
 	
 	public class BaseContent 
 	{
@@ -86,11 +91,6 @@ package classes.GameData.Content
 			return GameState.flags;
 		}
 		
-		protected function get logan():Creature
-		{
-			return GameState.logan;
-		}
-		
 		protected function get inSpaceCombat():Boolean
 		{
 			return GameState.inSpaceCombat;
@@ -126,21 +126,6 @@ package classes.GameData.Content
 			return GameState.enemyParty;
 		}
 		
-		protected function get pc():PlayerCharacter
-		{
-			return GameState.pc;
-		}
-		
-		protected function get logan():Logan
-		{
-			return GameState.logan;
-		}
-		
-		protected function get connie():Connie
-		{
-			return GameState.connie;
-		}
-		
 		protected function get gameStarted():Boolean
 		{
 			return GameState.gameStarted;
@@ -149,6 +134,33 @@ package classes.GameData.Content
 		protected function set gameStarted(v:Boolean):void
 		{
 			GameState.gameStarted = v;
+		}
+		
+		// Character Accessors
+		protected function get pc():PlayerCharacter
+		{
+			return CharacterIndex.pc;
+		}
+		
+		protected function get logan():Logan
+		{
+			return CharacterIndex.logan;
+		}
+		
+		protected function get connie():Connie
+		{
+			return CharacterIndex.connie;
+		}
+		
+		// Ship Accessors
+		protected function get theSilence():TheSilence
+		{
+			return ShipIndex.theSilence;
+		}
+		
+		protected function get theConstellation():Constellation
+		{
+			return ShipIndex.theConstellation;
 		}
 		
 		protected function setLocation(room:String, planet:String = null, system:String = null):void

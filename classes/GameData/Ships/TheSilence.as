@@ -20,7 +20,6 @@ package classes.GameData.Ships
 			
 			currentLocation = "SilenceSystem";
 			shipInterior = "TheSilence.Airlock";
-			airlockConnectsTo = "";
 			
 			// TODO: Actual modules
 			maxOffensiveModules = 5;

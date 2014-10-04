@@ -17,7 +17,7 @@ package classes.GameData
 		{
 			Chars = new Object();
 			PlayerGroup = new Party(true);
-		EnemyGroup = new Party(false);
+			EnemyGroup = new Party(false);
 			
 			CharacterIndex.init(false);
 		}

@@ -2,6 +2,8 @@
 // It's janky as fuck, but it does work, at it means the actual codex "body" content can be done almost exactly
 // like regular scenes are now.
 
+import classes.Engine.Formatting.*;
+
 public function configureCodex():void
 {
 	// Complex path tree entries DO work, but until we actually NEED to organise the data
@@ -37,18 +39,18 @@ public function configureCodex():void
 	//CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_RACE, "Ara Ara", "Vanae: History", vanaeHistoryCodexEntry);
 	//CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_RACE, "Core Worlds","Leithan",leithanCodexEntry);
 	
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Kara Volke", karaVolkeCodex);
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Pyra", pyraCodex);
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Logan", loganCodex);
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Tarik", tarikCodex);
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Captain Mirian Bragga", mirianCodex);
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Rourke Blackstar", rourkeCodex);
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Black Void Pirates", blackVoidCodex);
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Security Droids", securityDroidsCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Silence Crew", "Kara Volke", karaVolkeCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Silence Crew", "Pyra", pyraCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Silence Crew", "Logan", loganCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Silence Crew", "Tarik", tarikCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Black Void", "Captain Mirian Bragga", mirianCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Silence Crew", "Rourke Blackstar", rourkeCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Black Void", "Black Void Pirates", blackVoidCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Constellation Crew", "Security Droids", securityDroidsCodex);
 	
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "The Silence", theSilenceCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_ITEM, "Ships", "The Silence", theSilenceCodex);
 	
-	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Nova Securities", novaSecuritiesCodex);
+	CodexManager.addCodexEntry(CodexManager.CODEX_TYPE_PERSON, "Organisations", "Nova Securities", novaSecuritiesCodex);
 }
 
 public function codexHomeFunction():void
@@ -112,7 +114,7 @@ public function tarikCodex():void
 {
 	clearOutputCodex();
 	outputCodex(header("Tarik"));
-	outputCodex(blockheader("- Naleen Brawler"));
+	outputCodex(blockHeader("- Naleen Brawler"));
 	
 	outputCodex("Tarik's the newest addition to the crew. A few weeks ago, you knocked over a freighter convoy heading to Tavros, and lo and behold, found a cargo full of exotic xeno slaves. You freed them -- you of all people know what it's like to live in a collar, after all. You didn't come away from the job with a profit, thanks to that, but you did get Tarik: a slave meant for the gladiator rings of Thallisus. When you rescued him, the big bastard swore some kind of oath of service to you. What's the difference between that and slavery? Still, it doesn't hurt to have a huge bruiser with an axe on the crew, especially when he can rip most folk in half with his bare hands. At least, that's what he says he can do... and you don't doubt him.");
 }
@@ -158,7 +160,7 @@ public function theSilenceCodex():void
 	
 	outputCodex("The Silence. Your home. She's a sleek light freighter stroke pleasure yacht owned by the famous outlaw Rourke Blackstar, converted for a high cargo capacity, heavy shielding, and speed like you wouldn't believe. The Silence was the first taste of the greater galaxy you ever got as a mere breeder slave on your homeworld, and it whisked you away to the stars. She's the best ship in the 'verse as far as you're concerned.");
 	
-	outputCodex(blockHeader("Armaments & Equipment");
+	outputCodex(blockHeader("Armaments & Equipment"));
 	outputCodex("2x Reaper Industries Twin-linked Forward Firing Laser Cannons");
 	outputCodex("\n2x Reaper Industries Light Laser Turrets");
 	outputCodex("\n1x Steele Tech Vanguard-XXVII Missile System");

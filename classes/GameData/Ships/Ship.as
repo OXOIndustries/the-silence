@@ -4,6 +4,8 @@ package classes.GameData.Ships
 	import classes.Resources.Busts.StaticRenders;
 	import flash.geom.Point;
 	import classes.GameData.Items.ShipModules.ShipModule;
+	import classes.GameData.ShipIndex;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -34,7 +36,43 @@ package classes.GameData.Ships
 		public var position:Point = new Point(0, 0); // Position of the ship within the system
 		
 		public var shipInterior:String = ""; // The FQN of the ship interior airlock
-		public var airlockConnectsTo:String = ""; // The FQN of the room that the airlock connects to when exiting the ship.		
+		public var connectedShip:String = "";
+		
+		/**
+		 * Connect the two ships together.
+		 * @param	ship
+		 */
+		public function moveToShip(ship:Ship):void
+		{
+			connectedShip = ship.INDEX;
+			connectedShipObject.connectedShip = this.INDEX;
+		}
+		
+		public function disconnectShips():void
+		{
+			connectedShipObject.connectedShip = "";
+			connectedShip = "";
+		}
+		
+		public function get hasConnection():Boolean
+		{
+			if (airlockConnectsTo != null && airlockConnectsTo.length > 0) return true;
+			return false;
+		}
+		
+		public function get connectedShipObject():Ship
+		{
+			if (connectedShip.length > 0)
+				return ShipIndex.Ships[connectedShip];
+			else
+				return null;
+		}
+		
+		public function get airlockConnectsTo():String
+		{
+			if (connectedShipObject != null) return connectedShipObject.shipInterior;
+			else return "";
+		}
 		
 		// Equipment
 		public var maxOffensiveModules:int = 1;

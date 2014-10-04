@@ -1,6 +1,7 @@
 package classes.GameData 
 {
 	import classes.GameData.Ships.TheSilence;
+	import classes.GameData.Ships.Constellation;
 	/**
 	 * ...
 	 * @author Gedan
@@ -9,7 +10,6 @@ package classes.GameData
 	{
 		public static var Ships:Object;
 		
-		public function ShipIndex() 
 		{
 			Ships = new Object();
 			
@@ -19,6 +19,7 @@ package classes.GameData
 		public static function init(justUpdate:Boolean = false):void
 		{
 			initFor("SILENCE", TheSilence, justUpdate);
+			initFor("CONSTELLATION", Constellation, justUpdate);
 		}
 		
 		private static function initFor(idx:String, classT:Class, justUpdate:Boolean):void
@@ -32,6 +33,11 @@ package classes.GameData
 		public static function get theSilence():TheSilence
 		{
 			return ShipIndex.Ships["SILENCE"];
+		}
+		
+		public static function get theConstellation():Constellation
+		{
+			return ShipIndex.Ships["CONSTELLATION"];
 		}
 		
 	}

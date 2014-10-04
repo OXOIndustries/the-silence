@@ -1,5 +1,6 @@
 package classes.GameData.Map.Data 
 {
+	import classes.GameData.Map.Data.Ships.TheConstellationInterior;
 	import classes.GameData.Map.Data.Ships.TheSilenceInterior;
 	import classes.GameData.Map.Data.Systems.UnknownSystem;
 	import classes.GameData.Map.Sector;
@@ -21,8 +22,10 @@ package classes.GameData.Map.Data
 			AddSystem(new SilenceSystem());
 			AddSystem(new UnknownSystem());
 			AddShip(new TheSilenceInterior());
+			AddShip(new TheConstellationInterior());
 			
 			GetShip("TheSilence").ParentSystem = GetSystem("UnknownSystem");
+			GetShip("TheConstellation").ParentSystem = GetSystem("UnknownSystem");
 		}	
 	}
 
