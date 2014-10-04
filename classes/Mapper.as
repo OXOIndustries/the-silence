@@ -27,13 +27,16 @@
 		public static const room_objective_mask:int		= 1<<12;
 		public static const room_quest_mask:int			= 1<<13;
 		public static const room_ship_mask:int			= 1<<14;
-		public static const room_outdoor_mask:int		= 1<<15; // I don't want to lean on assuming INDOOR = !OUTDOOR because we might end up with other variations etc.
+		public static const room_outdoor_mask:int		= 1<<15;
 		public static const room_indoor_mask:int		= 1 << 16;
 		public static const room_hazard_mask:int		= 1 << 17;
 		public static const x_pos_lock_mask:int			= 1 << 18;
 		public static const x_neg_lock_mask:int			= 1 << 19;
 		public static const y_pos_lock_mask:int			= 1 << 20;
 		public static const y_neg_lock_mask:int			= 1 << 21;
+		public static const room_elevator_mask:int		= 1 << 22;
+		public static const room_bed_mask:int			= 1 << 23;
+		public static const room_airlock_mask:int		= 1 << 24;
 
 		private var roomsObj:Object;
 
@@ -184,6 +187,18 @@
 			if (roomsObj[targetRoom].HasFlag(GLOBAL.SHIPHANGAR))
 			{
 				map[x][y][z] |= room_ship_mask;
+			}
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.AIRLOCK))
+			{
+				map[x][y][z] |= room_airlock_mask;
+			}
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.ELEVATOR))
+			{
+				map[x][y][z] |= room_elevator_mask;
+			}
+			if (roomsObj[targetRoom].HasFlag(GLOBAL.BED))
+			{
+				map[x][y][z] |= room_bed_mask;
 			}
 			
 			// This pair will need more complex handling, but we'll deal with it when there are actual quests and state like that to query properly.

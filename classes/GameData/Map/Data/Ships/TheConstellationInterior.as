@@ -92,7 +92,9 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckM33.MoveTime = 1;
 			EngineeringDeckM33.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckM33.NorthExit = "EngineeringDeckM32";
+			EngineeringDeckM33.EastExit = "EngineeringDeckN33";
 			EngineeringDeckM33.SouthExit = "EngineeringDeckM34";
+			EngineeringDeckM33.WestExit = "EngineeringDeckL33";
 			AddRoom(EngineeringDeckM33);
 
 			var CommandDeckM22:Room = new Room();
@@ -160,7 +162,9 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckM30.MoveTime = 1;
 			EngineeringDeckM30.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckM30.NorthExit = "EngineeringDeckM29";
+			EngineeringDeckM30.EastExit = "EngineeringDeckN30";
 			EngineeringDeckM30.SouthExit = "EngineeringDeckM31";
+			EngineeringDeckM30.WestExit = "EngineeringDeckL30";
 			AddRoom(EngineeringDeckM30);
 
 			var CommandDeckM19:Room = new Room();
@@ -215,7 +219,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckN23.RoomIndex = "CommandDeckN23";
 			CommandDeckN23.RoomName = "Command Deck: Corridor";
 			CommandDeckN23.ShortName = "Cmd.Dk Crrdr"
-			CommandDeckN23.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
+			CommandDeckN23.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorN23Function;
 			CommandDeckN23.MoveTime = 1;
 			CommandDeckN23.AddFlag(GLOBAL.INDOOR);
 			CommandDeckN23.WestExit = "CommandDeckM23";

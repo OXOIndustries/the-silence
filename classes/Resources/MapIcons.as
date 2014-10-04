@@ -50,6 +50,12 @@ package classes.Resources
 		[Embed(source = "../../assets/icons/map/map_up.svg", mimeType = "image/svg")]
 		public static var Map_Up:Class;
 		
+		[Embed(source = "../../assets/icons/map/map_elevator.svg", mimeType = "image/svg")]
+		public static var Map_Elevator:Class;
+		
+		[Embed(source = "../../assets/icons/map/map_airlock.svg", mimeType = "image/svg")]
+		public static var Map_Airlock:Class;
+		
 	}
 
 }

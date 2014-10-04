@@ -59,7 +59,7 @@ package classes.GameData.Content
 			
 			if (flags["CONSTELLATION_OFFICERS_QUARTERS_UNLOCKED"] == undefined)
 			{
-				output("\n\nThere's a door to the west beside a security panel glowing an ominious red....");
+				output("\n\nThe plate here reads ‘Officers’ Quarters’. However, the path ahead is sealed by a security bulkhead. ");
 				
 				addButton(0, "Security Override", overrideOfficersQuartersSecurity);
 			}

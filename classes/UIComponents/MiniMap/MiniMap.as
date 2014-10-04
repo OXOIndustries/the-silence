@@ -33,12 +33,14 @@
 		public static const ICON_UP = 6;
 		public static const ICON_COMMERCE = 7;
 		public static const ICON_BAR = 8;
-		public static const ICONS_MAX = 9;
+		public static const ICON_ELEVATOR = 9;
+		public static const ICON_AIRLOCK = 10;
+		public static const ICONS_MAX = 11;
 		
 		// I've spied rumblings of a way to search through an SWF class definitions to build a list like this completely dynamically... but the code I found to do it looks a) awful b) is russian... maybe later? maybe.
 		// Basically, this is the list of linkage class names for the icons symbols in the FLA's library, which we're going to use to build icons in the correct order -- you might notice that they're in the same order as the integer flags up ^ there... the integer flags are used as array indexes to find the proper classname.
-		public static const ICON_NAMES:Array = new Array("Map_Ship", "Map_Quest", "Map_Objective", "Map_NPC", "Map_Medical", "Map_Down", "Map_Up", "Map_Commerce", "Map_Bar");
-		
+		//public static const ICON_NAMES:Array = new Array("Map_Ship", "Map_Quest", "Map_Objective", "Map_NPC", "Map_Medical", "Map_Down", "Map_Up", "Map_Commerce", "Map_Bar", "Map_Elevator", "Map_Airlock");
+		public static const ICON_NAMES:Array = new Array("Map_Ship", "Map_Quest", "Map_Objective", "Map_NPC", "Map_Medical", "Map_Down", "Map_Up", "Map_Commerce", "Map_Bar", "Map_Elevator", "Map_Airlock");
 		
 		/* Each room only deals with the links it has to neighbours in the East + South direction (Right + Down)
 		 * Ergo, we need to work out which directionality a one way link is; target to neighbour or vice versa, hence the 2 flags for directionality.
@@ -491,6 +493,14 @@
 						else if (roomFlags & Mapper.room_quest_mask)
 						{
 							tarSprite.setIcon(ICON_QUEST);
+						}
+						else if (roomFlags & Mapper.room_elevator_mask)
+						{
+							tarSprite.setIcon(ICON_ELEVATOR);
+						}
+						else if (roomFlags & Mapper.room_airlock_mask)
+						{
+							tarSprite.setIcon(ICON_AIRLOCK);
 						}
 						else
 						{

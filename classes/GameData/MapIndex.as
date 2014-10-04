@@ -156,6 +156,8 @@ package classes.GameData
 		{
 			var room:Room = FindRoom(name);
 			
+			trace("Entering room", name);
+			
 			if (room != null)
 			{
 				processTime(room.MoveTime);
