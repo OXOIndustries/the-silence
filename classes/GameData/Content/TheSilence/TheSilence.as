@@ -22,7 +22,78 @@ package classes.GameData.Content.TheSilence
 		{
 			clearOutput();
 			output("This is the <i>Silence’s</i> airlock. Several E.V.A. suits are hooked up onto the bulkhead, as well as a few of the heavier weapons your crew possesses, including Pyra's flamethrower. Everything is, of course, locked down with DNA identification.");
+			
+			if (flags["DOCKED_WITH_CONSTELLATION"] == 1)
+			{
+				clearOutput();
+				flags["DOCKED_WITH_CONSTELLATION"] = 2;
+				
+				output("As you approach the airlock, you feel the deck rumble slightly under your feet. Logan's voice comes over the P.A., <i>“We're as docked as we're getting. Grappling lines are down. Should be just a short hop through zero-G and into the belly of the beast.”</i>");
+
+				output("\n\nThe inner door <i>whooshes</i> open as Logan speaks, and you step into where your two fellow boarders have gathered. Both are wearing space suits: Pyra's is much too big for her diminutive raskvel frame; Tarik's is monstrously deformed by his serpent lower body and bulging, muscular upper half, straining to accommodate the massive naleen. ");
+
+				output("\n\n<i>“We go to fight a beast, now?”</i> Tarik says, the excitement evident in his voice. He hefts his greataxe, grinning.");
+
+				doTalkTree(initialDockingWithConstellation);
+
+				return true;
+			}
+			
 			return false;
+		}
+
+		private function initialDockingWithConstellation(choice:String):void
+		{
+			clearOutput();
+			if (choice == "kind")
+			{
+				output("<i>“No, Tarik,”</i> you say, reaching up to pat his tremendous shoulder. <i>“Calm down.”</i>");
+			}
+			else if (choice == "misc")
+			{
+				output("<i>“It’s a figure of speech, nip-for-brains,”</i> you say, rolling your eyes.");
+			}
+			else if (choice == "hard")
+			{
+				output("<i>“No, dumbass. It's an expression.”");
+			}
+
+			output("\n\n<i>“Ah,”</i> he grunts, coiling down on his tail. <i>“Very well, then.”</i>");
+
+			output("\n\nPyra saunters up, having to waddle thanks to her awkward space suit and the massive tank of flammable... whatever it is she's got slung on her back. <i>“Just lemme go first, captain. I bet I can get atmosphere back, maybe bring the shields online again. Then we can get out of these stupid suits.”</i>");
+
+			output("<i>“Agreed.”</i> You grab your space suit from the rack and pull it on over your clothes. Tarik hands you your gunbelt and force sword once you're squared away, and you're good to go.");
+
+				PlayerParty.addToParty(pyra);
+				PlayerParty.addToParty(tarik)
+
+			// {Next} Add [Cycle Airlock] button.
+			clearMenu();
+			doNext(cycleAirlock);
+		}
+
+		private function cycleAirlock():void
+		{
+			clearOutput();
+			output("Once you’re certain everyone’s helmets are secure, you punch the airlock and cycle through. A second of hard vacuum greets you, straining the magnets on your boots, trying to suck you into the black from whence you’ll never come back. The suction stops after a moment, leaving you standing in an utter void of... anything. No air, no sound, nothing. Just the drifting debris outside the airlock separating you from the Nova hulk, a straight shot down by less than a kilometer. Three grappling lines connect the deck below you to the tremendous hole punched through the other ship, acting as your safest way in.");
+			
+			output("\n\nYou take a deep breath and step forward, latching onto the wire and launching off. The thrusters on your suit go to work at the twitch of a finger, lighting your suit’s HUD up with trajectories and danger warnings as you slip into the debris field. Behind you, Tarik and Pyra follow you in, deviating only to avoid bits of deadly junk floating by -- each piece fast enough to slice you clear in half, or crush you into a mangle of broken limbs of blood. You zip up, tumbling over a chunk of hull plating bearing the ship’s name, shredded by shrapnel: <i>Constellation</i>, in huge red letters. The thrusters correct your course, back onto the grappling line. You grip on and hurtle the rest of the way into the hole. ");
+			
+			output("\n\nYour thrusters bring you to a stop a few feet from the top deck of the ship, letting you drag along the grappling line to decelerate. Still, you all but slam into the ruined deck, tumbling into the cavernous impact hole and onto your feet next to a shredded emergency bulkhead. You draw your plasma caster and wait the few seconds for your crew to arrive, not much more gracefully than you did. Tarik crashes into the bulkhead at nearly full force;, ten feet of kitty-naga spread eagle out across the deck as he peels himself off and staggers back.");
+			
+			output("\n\n<i>“These thrusters-”</i> he starts, cut off by Pyra.");
+			
+			output("\n\n<i>“You need twice as many for twice as much fat cat. Gotta get you a new space suit, catnip.”</i>");
+			
+			output("\n\nHe nods, rubbing at his head through the glass of his helmet.");
+			
+			output("\n\n<i>“Alright. Tarik, get the door open for us.”</i>");
+			
+			output("\n\nThe naleen nods and slithers over to the bulkhead, hefts his axe from over his shoulder, and gets chopping. Three good hews tear a chunk out of it, a triangle on the deck large enough for any of you to slip through. You give the hulking cat a wink and slip through after his last strike, somersaulting through the gap and onto the deck of the <i>Constellation</i>.");
+
+			pc.currentLocation = "TheConstellation.BreachCommand";
+			clearMenu();
+			doNext(mainGameMenu);
 		}
 		
 		public function crewDeckK21RoomFunction():Boolean

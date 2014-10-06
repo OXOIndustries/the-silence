@@ -148,6 +148,7 @@ package classes.GameData.Content
 			output("\n\nYou pat her on the shoulder and step towards the elevator.");
 			
 			theSilence.moveToShip(theConstellation);
+			flags["DOCKED_WITH_CONSTELLATION"] = 1;
 
 			clearMenu();
 			addButton(0, "Next", actuallyGoNext);

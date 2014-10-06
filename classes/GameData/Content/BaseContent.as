@@ -6,6 +6,8 @@ package classes.GameData.Content
 	import classes.GameData.Characters.Logan;
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.Characters.Connie;
+	import classes.GameData.Characters.Pyra;
+	import classes.GameData.Characters.Tarik;
 	import classes.GameData.ContentIndex;
 	import classes.GameData.GameModel;
 	import classes.GameData.Party;
@@ -150,6 +152,16 @@ package classes.GameData.Content
 		protected function get connie():Connie
 		{
 			return CharacterIndex.connie;
+		}
+		
+		protected function get pyra():Pyra
+		{
+			return CharacterIndex.pyra;
+		}
+		
+		protected function get tarik():Tarik
+		{
+			return CharacterIndex.tarik;
 		}
 		
 		// Ship Accessors
