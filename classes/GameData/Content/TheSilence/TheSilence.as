@@ -62,7 +62,7 @@ package classes.GameData.Content.TheSilence
 
 			output("\n\nPyra saunters up, having to waddle thanks to her awkward space suit and the massive tank of flammable... whatever it is she's got slung on her back. <i>“Just lemme go first, captain. I bet I can get atmosphere back, maybe bring the shields online again. Then we can get out of these stupid suits.”</i>");
 
-			output("<i>“Agreed.”</i> You grab your space suit from the rack and pull it on over your clothes. Tarik hands you your gunbelt and force sword once you're squared away, and you're good to go.");
+			output("\n\n<i>“Agreed.”</i> You grab your space suit from the rack and pull it on over your clothes. Tarik hands you your gunbelt and force sword once you're squared away, and you're good to go.");
 
 				PlayerParty.addToParty(pyra);
 				PlayerParty.addToParty(tarik)

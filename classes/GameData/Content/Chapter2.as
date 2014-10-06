@@ -20,9 +20,7 @@ package classes.GameData.Content
 			output("\n\n<i>“Chow again?”</i> Pyra huffs. You turn your attention to the short, red-scaled chief engineer, barely visible over the lip of the table save for her plumage of bright purple feathers. She pulls herself a little straighter so that you can see her eyes. <i>“Chow fucking screwed us on that last run. I almost got my ears pinched off!”</i> she adds, manhandling one of the nearly body-length ears dangling from her head. Several metallic studs and rings jingle around a large scar running along its length.");
 
 			clearMenu();
-			addButton(0, "Kind", missionBriefII, "kind");
-			addButton(1, "Mischievous", missionBriefII, "misc");
-			addButton(2, "Hard", missionBriefII, "hard");
+			doTalkTree(missionBriefII);
 		}
 
 		private function missionBriefII(response:String):void

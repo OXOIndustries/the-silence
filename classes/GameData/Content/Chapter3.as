@@ -42,9 +42,7 @@ package classes.GameData.Content
 			output("\n\n<i>“I’ve got a few on radar,”</i> she says, waving a hand dismissively toward the holomap. <i>“Should be fine until their buddies come pick ‘em up. Tell me you’re not planning on playing rescue mission, right?”</i>");
 
 			clearMenu();
-			addButton(0, "Kind", lifeSignsII, "kind");
-			addButton(1, "Mischievous", lifeSignsII, "misc");
-			addButton(2, "Hard", lifeSignsII, "hard");
+			doTalkTree(lifeSignsII);
 		}
 
 		private function menu():void

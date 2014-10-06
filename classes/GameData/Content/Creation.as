@@ -96,6 +96,7 @@ package classes.GameData.Content
 
 			if (choice == "kind")
 			{
+				pc.kindOptions++;
 				output("<i>“Alright, Chow,”</i> you say, pulling your robe a little tighter. <i>“We’re in.”</i>");
 				
 				output("\n\nHis dragon-smile twists up. <i>“I’m glad to hear it, Captain. This will make us both very, very rich. I’m forwarding the coordinates of the battle to you now. I’d hurry, if I were you. Nova isn’t likely to leave the ship unguarded for very long. Your window to recover the platinum is quite short.”</i>");
@@ -109,6 +110,7 @@ package classes.GameData.Content
 			}
 			else if (choice == "misc")
 			{
+				pc.miscOptions++;
 				output("<i>“Well, since we’re the only ship around... and I’m guessing that Nova will be coming back in a hurry to get their lost cargo... seems like we’re the only chance of you getting your slimey mitts on that platinum, unless you want to hope in that little speeder of yours and come get it yourself.”</i>");
 				
 				output("\n\nChow scowls. <i>“Watch your tone, girl. I-”</i>");
@@ -124,6 +126,7 @@ package classes.GameData.Content
 			}
 			else if (choice == "hard")
 			{
+				pc.hardOptions++;
 				output("<i>“We’re the closest ship, huh? Well, seeing as it’s in this system, and it was a big battle, I don’t think we’ll have any problem finding the wreck on our own. But thanks for the heads up, Chow.”</i>");
 				
 				output("\n\n<i>“Wait just a minute!”</i> the old man snaps, his smile twisting into something more dangerous. <i>“The Nova escort group isn’t likely to leave their crew for long. If you want to get to that platinum before they do, you’ll need the exact coordinates. Searching will take far too long.”</i>");
@@ -146,6 +149,11 @@ package classes.GameData.Content
 			
 			output("\n\n<i>“Looks like,”</i> you answer, walking over to the PA next to your door and keying it.");
 
+			doTalkTree(addressTheCrew);
+		}
+		
+		private function addressTheCrew(choice:String):void
+		{
 			if (choice == "kind")
 			{
 				output("\n\nAlright, everyone, we’ve got work to do. Wake up, get a drink, wake Tarik </i>back<i> up, and meet in the conference room in 10 minutes. Captain out.”</i>");

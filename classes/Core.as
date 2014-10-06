@@ -108,7 +108,7 @@
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
 
-			version = "0.00.05";
+			version = "0.00.06";
 
 			eventQueue = new Array();
 			eventBuffer = "";
@@ -244,11 +244,6 @@
 		public function updateUI():void
 		{
 			
-		}
-	
-		public function removeButton(slot:int):void
-		{
-			userInterface.addDisabledButton(slot);
 		}
 		
 		public function refreshFontSize():void

@@ -164,6 +164,28 @@ package classes.GameData.Characters
 			this._isLoading = false;
 		}
 		
+		public var kindOptions:int = 0;
+		public var miscOptions:int = 0;
+		public var hardOptions:int = 0;
+		
+		public function get isKind():Boolean
+		{
+			if (kindOptions > miscOptions && kindOptions > hardOptions) return true;
+			return false;
+		}
+		
+		public function get isMisc():Boolean
+		{
+			if (miscOptions > kindOptions && miscOptions > hardOptions) return true;
+			return false;
+		}
+		
+		public function get isHard():Boolean
+		{
+			if (hardOptions > kindOptions && hardOptions > miscOptions) return true;
+			return false;
+		}
+		
 		// Level up stuff		
 		override public function loadInCunt(cumFrom:Creature, vagIndex:int = -1):Boolean
 		{

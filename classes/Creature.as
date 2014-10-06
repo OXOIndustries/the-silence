@@ -216,7 +216,6 @@
 
 		public var affinity: String = "intelligence";
 		public var characterClass: int = GLOBAL.CLASS_SMUGGLER;
-		public var personality: int = 50;
 
 		//Combat Stats
 		// I think some of my UI work has highlighted some areas where stats are doing things that aren't intended, or otherwise possibly broken.
@@ -1714,42 +1713,6 @@
 		}
 		public function isChestGarbed(): Boolean {
 			return isChestCovered();
-		}
-		//STATS!
-		//Personalities!
-		public function isNice(): Boolean {
-			return (personality <= 33);
-		}
-		public function isMischievous(): Boolean {
-			return (personality <= 66 && personality > 33);
-		}
-		public function isAss(): Boolean {
-			return (personality > 66);
-		}
-		//Placeholders for when i rework the personality system soon-ish."
-		public function addHard(arg:Number):void
-		{
-			personality += arg;
-			if(personality > 100) personality = 100;
-		}
-		public function addNice(arg:Number):void
-		{
-			personality -= arg;
-			if(personality < 0) personality = 0;
-		}
-		public function addMischievous(arg:Number):void
-		{
-			var originalPersonality:Number = personality;
-			if(personality < 50)
-			{
-				personality += arg;
-				if(personality > 50) personality = 50;
-			}
-			else
-			{
-				personality -= arg
-				if(personality < 50) personality = 50;
-			}
 		}
 		//XP!
 		function XP(arg: int = 0): Number {

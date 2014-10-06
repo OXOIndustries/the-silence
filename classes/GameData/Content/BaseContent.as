@@ -53,6 +53,16 @@ package classes.GameData.Content
 			classes.Engine.Interfaces.addButton(slot, cap, func, arg, ttHeader, ttBody);
 		}
 		
+		protected function addDisabledButton(slot:int, cap:String = "", ttHeader:String = null, ttBody:String = null):void
+		{
+			classes.Engine.Interfaces.addDisabledButton(slot, cap, ttHeader, ttBody);
+		}
+		
+		protected function removeButton(slot:int):void
+		{
+			classes.Engine.Interfaces.removeButton
+		}
+		
 		protected function get userInterface():GUI
 		{
 			return classes.Engine.Interfaces.userInterface();
@@ -188,9 +198,9 @@ package classes.GameData.Content
 		protected function doTalkTree(tarFunction:Function):void
 		{
 			clearMenu();
-			addButton(0, "Kind", tarFunction, "kind");
-			addButton(1, "Mischievous", tarFunction, "misc");
-			addButton(2, "Hard", tarFunction, "hard");
+			addButton(0, "Kind", function():void { pc.kindOptions++; tarFunction; }, "kind");
+			addButton(1, "Mischievous", function():void { pc.miscOptions++; tarFunction; }, "misc");
+			addButton(2, "Hard", function():void { pc.hardOptions++; tarFunction; }, "hard");
 		}
 		
 		protected function doNext(tarFunction:Function = null):void
