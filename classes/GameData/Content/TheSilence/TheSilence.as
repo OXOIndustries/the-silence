@@ -2,6 +2,8 @@ package classes.GameData.Content.TheSilence
 {
 	import classes.GameData.Content.BaseContent;
 	import classes.GameData.ContentIndex;
+	import classes.GameData.CombatManager;
+	import classes.GameData.MapIndex;
 	
 	/**
 	 * ...
@@ -21,6 +23,16 @@ package classes.GameData.Content.TheSilence
 		public function airlockRoomFunction():Boolean
 		{
 			clearOutput();
+			
+			if (theSilence.connectedShipObject == theBlackRose)
+			{
+				output("There’s not much of your airlock hatch left. It’s been torn to shreds in the impact, riddled with holes and floating debris in the low-grav gap between the ships. Where the hatch should be, there’s now a great big slab of black that’s been lasered open, creating a passage into the enemy ship. You steel yourself before preparing to step over the threshold...");
+
+				clearMenu();
+				addButton(0, "Enter Breach", MapIndex.Move, theSilence.airlockConnectsTo);
+				return true;
+			}
+			
 			output("This is the <i>Silence’s</i> airlock. Several E.V.A. suits are hooked up onto the bulkhead, as well as a few of the heavier weapons your crew possesses, including Pyra's flamethrower. Everything is, of course, locked down with DNA identification.");
 			
 			if (flags["DOCKED_WITH_CONSTELLATION"] == 1)
@@ -217,17 +229,204 @@ package classes.GameData.Content.TheSilence
 				addButton(0, "Logan", ContentIndex.chapter3.captainToTheBridge, undefined, "Approach Logan", "Find out what Logan wants.");
 			}
 			
-			if (logan.currentLocation == "TheSilence.Bridge" && inSpaceCombat == false)
+			if (logan.currentLocation == "TheSilence.Bridge" && flags["DEFEATED_PIRATES_AT_BREACH"] == undefined)
 			{
 				output("\n\nLogan's sitting at the pilot's console, feeding nav data from the console into the auto-pilot programs. Her job will come later, when Nova gets on your tail. <i>“Everything’s solid up here, Captain,”</i> she says, tone formal now that she’s on duty.");
 			}
 			
-			if (logan.currentLocation == "TheSilence.Bridge" && inSpaceCombat == true)
+			if (logan.currentLocation == "TheSilence.Bridge" && flags["DEFEATED_PIRATES_AT_BREACH"] == 1 && flags["DEFEATED_MIRI_SPESSCOMBAT"] == undefined)
 			{
-				output("\n\nLogan’s furiously typing with one hand, steering with the other, desperately trying to wrangle an advantage for the crew against the overwhelming assault of the <i>Black Rose</i>.");
+				if (flags["INITIAL_RETURN_DURING_SPESS_COMBAT"] == undefined)
+				{
+					flags["INITIAL_RETURN_DURING_SPESS_COMBAT"] = 1;
+					ohShitMiriGonnaFuckYouUp();
+					return true;
+				}
+				else
+				{
+					output("\n\nLogan’s furiously typing with one hand, steering with the other, desperately trying to wrangle an advantage for the crew against the overwhelming assault of the <i>Black Rose</i>.");
+
+					addButton(0, "Fight!", startSpessFightAgainstMiri);
+				}
 			}
 			return false;
 		}
+
+		private function startSpessFightAgainstMiri():void
+		{
+			CombatManager.newSpaceCombat(); // Setup for a new combat phase.
+			CombatManager.setPlayers(theSilence); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
+			CombatManager.setEnemies(theBlackRose); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
+			CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED); // Set the victory condition and optional argument
+			CombatManager.victoryScene(waitWhatHowFuckYouCheater); // The function reference that will be called when the player achieves the victory condition
+			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
+			CombatManager.lossScene(rammingSpeedLogan); // The function reference that will be called if the player is defeated
+
+			CombatManager.beginCombat();
+		}
+
+		private function waitWhatHowFuckYouCheater():void
+		{
+			clearOutput();
+			output("Kay, I guess you done cheated gud n stuff. Black Rose is intended to be undefeatable...");
+		}
+
+		private function rammingSpeedLogan():void
+		{
+			clearOutput();
+			output("<i>“She can’t take much more, captain!”</i> Logan shouts over the din of emergency klaxons and overloading equipment. Even the emergency shields are buckling, straining to keep the Silence from tearing itself apart. ");
+			
+			output("\n\n<i>“Tell me we’re ready to jump, Logan,”</i> you shout back. Her answer is drowned out as a rocket slams into the Silence, throwing you out of the captain’s chair. You tumble across the deck, slamming into a bulkhead. Your head cracks hard against steel. Pain shoots through you and your world spins, hazing your vision. You can still see the flashes of light through the forward screen, laser fire coming in and going out. The ship shudders and lurches under you under the hail of fire, rattling you to your bones. ");
+			
+			output("\n\nIs this it? The end? You groan in pain, trying to stand. <i>“Logan, talk to me!”</i>");
+			
+			output("\n\n<i>“They fucked our engines, Kara,”</i> she grunts, grabbing your hand and pulling you up. You lean hard against the nav console, staring at the red readouts, showing just about every system in critical condition. <i>“There’s no way we’re jumping, babe. We’re dead in the water.”</i> ");
+			
+			output("\n\nShit. You look between Logan, the rest of the crew, and the massive frigate bearing down on you.");
+
+			doTalkTree(rammingSpeedLoganII);
+		}
+
+		private function rammingSpeedLoganII(choice:String):void
+		{
+			clearOutput();
+			if (choice == "kind")
+			{
+				output("<i>“Keep it... keep it together, Logan,”</i> you say through gritted teeth. <i>“We’re going to get out of here.”</i>");
+			}
+			else if (choice == "misc")
+			{
+				output("<i>“Don’t worry, Logan, I’ve got this,”</i> you tell her. Only half lying.");
+			}
+			else if (choice == "hard")
+			{
+				output("<i>“Just keep to your post, Logan,”</i> you growl. <i>“I’ll get us through this.”</i>");
+			}
+
+			output("\n\nYou say that, but... shit, not a lot of options left. You’ve got nothing firing left but the point lasers, barely enough to knock a torpedo down, much less punch through a frigate’s shields. No possibility for escape... no way to take the bitch down.... There goes the classic fight or flight instinct. What else can you do but just sit down and die? ");
+			
+			output("\n\nMight as well go down with one great big <i>“fuck you.”</i>");
+
+			clearMenu();
+			addButton(0, "Ramming Speed", rammingSpeedLoganIII);
+		}
+
+		private function rammingSpeedLoganIII():void
+		{
+			clearOutput();
+			output("<i>“Logan, we still have sublight engines?”</i>");
+			
+			output("\n\n<i>“Barely.”</i>");
+			
+			output("\n\n<i>“Enough for ramming speed?”</i>");
+			
+			output("\n\nShe looks at you with wide eyes, then smiles, her forked tongue flicking out across her lips. <i>“I think we can manage that.”</i> ");
+			
+			output("\n\nYou limp back to the captain’s seat and buckle up. The rest of your crew follows suit. Still, you shout out <i>“Brace for impact!”</i> as Logan turns the Silence around, angling the bow of your little freighter towards the Black Void frigate. Your fingers dig into the armrests as the Silence accelerates, closing towards the bridge of the pirate ship. Pyra screams as the viewscreen is overwhelmed by black steel, followed soon by Logan and Tarik... and you. ");
+			
+			output("\n\nAt the last moment, you could have sworn you could see the pirate bridge crew screaming in terror.");
+			
+			output("\n\nThe impact hits you like a brick wall, slamming you forward in your seat, just about breaking your ribs against the restraint harness. The lights explode, raining sparks and glass down on the deck. The ship lurches and groans, a horrible cry of shearing metal that rattles your teeth and makes you clutch at your ears. The structural integrity fields give up the ghost, and the Silence crumples against the enemy’s armor, hitting it like a six thousand ton bullet. Their shields buckle, completely unprepared to stop a ship-sized projectile, and you’re greeted by another wrenching tear as your bow batters into theirs. ");
+			
+			output("\n\nYou must have blacked out after that. The next thing you see is Logan’s face over yours, her mouth moving, but no sound coming out. All you can hear is ringing...");
+			
+			output("\n\n<i>“Fuck. Ow,”</i> you groan, rubbing your feline ears. There’s a little blood staining your fingers when you look back at them. ");
+			
+			output("\n\n<i>“YOU OKAY!?”</i> she shouts into your face, barely audible.");
+			
+			output("\n\nYou shake your head and, with a little help, struggle up to your feet. Your bridge is a wreck, and seriously on fire. Tarik and Pyra and flopped out on the deck, groaning and cradling their heads after the crash. Every alarm on the ship seems to be going off at once, from atmosphere breach to intruder alerts.");
+			
+			output("\n\nWait, intruder alerts!?");
+			
+			output("\n\n<i>“ON YOUR FEET,”</i> you shout, rushing over and hauling them up. <i>“They’re boarding us!”</i>");
+			
+			output("\n\n<i>“You crashed us,”</i> Pyra groans, <i>“I work so hard on those cock-sucking engines and you FUCKING CRASHED US.”</i>");
+			
+			output("\n\nHey, it’s <i>your</i> ship. You’ll crash if you damn well please.");
+			
+			output("\n\n<i>“Shut up and get your gun, Pyra,”</i> you snap. <i>“Tarik. Axes. We’re about to have company.”</i> ");
+			
+			output("\n\n<i>“Good,”</i> the naleen grins, picking up his greataxe. <i>“Let them come to break upon my AXES!”</i>");
+			
+			output("\n\nPyra slaps her palm against her face, but you can’t help but grin. With any luck the pirates think you’re all already dead -- and they’re not far from wrong. The bastards will be in for a surprise, though. ");
+			
+			output("\n\n<i>“What’s the plan, Kara?”</i>");
+			
+			output("\n\nYou draw your plasma caster and rack the charging handle. <i>“We’re taking the fight to the bitch. C’mon, down to the airlock.”</i>");
+			
+			output("\n\nPyra groans. <i>“You all go. I’ve gotta go make sure the fucking engines don’t explode. Or worse, turn back on. Shoot us out of here like a rocket. And THEN we explode.”</i>");
+			
+			output("\n\nCan’t argue with that. <i>“Right. Logan, grab your gun. You’re with me.”</i> ");
+
+			//Pirate gangs can now be fought on the Silence's deck. 
+			//Logan joins the party, Pyra leaves
+			flags["DEFEATED_MIRI_SPESSCOMBAT"] = 1;
+			PlayerParty.removeFromParty(pyra);
+			PlayerParty.addToParty(logan);
+
+			logan.currentLocation = "";
+			pyra.currentLocation = "";
+
+			doNext(mainGameMenu);
+		}
+
+		private function ohShitMiriGonnaFuckYouUp():void
+		{
+			clearOutput();
+			output("<i>“Captain!”</i> Logan calls, shooting you a relieved look over her shoulder. <i>“Thank God you’re back.”</i>");
+			
+			output("\n\n<i>“Good to see you too,”</i> you smile, planting a kiss on the top of her head. <i>“What’s our status?”</i>");
+			
+			output("\n\nShe shakes her head. <i>“Not good. That pirate ship scares the hell out of me, Kara. I’ve never seen anything like it.”</i> ");
+			
+			output("\n\n<i>“Me neither. Let’s-”</i>");
+			
+			output("\n\nThe forward viewscreen flickers, and goes dark. It comes back showing you a holographic image of a black rose, barely visible against a field of stars. Then a woman’s face appears. She might have been beautiful once, though now her face is marred with scars and a rosevine tattoo that covers half of her face. A high-collared black cape shrouds her body, along with a blood-red full-body suit. ");
+			
+			output("\n\nShe stares dead at you with a cold, soulless look in her eyes. <i>“This is Captain Mirian Bragga of the <i>Black Rose</i>. Lysander Chow should have known better than to interfere in the Void’s affairs. You saw what happened to the <i>Constellation</i>. That was a disabling shot. Worse happened to the rest of the Nova fleet. Surrender the platinum, and you’ll be allowed to live.”</i> ");
+			
+			output("\n\nYou’ve heard that offer a thousand times before, and you know better than to even think about it. ");
+
+			doTalkTree(ohShitMiriGonnaFuckYouUpII);
+		}
+
+		private function ohShitMiriGonnaFuckYouUpII(choice:String):void
+		{
+			clearOutput();
+			if (choice == "kind")
+			{
+				output("<i>“That’s a mighty kind offer, but I’m afraid we’ll have to decline,”</i> you say, shutting down the screen. <i>“Logan, what are our options?”</i>");
+				
+				output("\n\n<i>“Die or run, captain,”</i> she answers, fingers dancing across her control panel. <i>“I’m spooling up the LightDrive now, can try and get us out. But it’ll take a minute. Gotta hold out until we can make the jump... it isn’t going to be easy.”</i>");
+				
+				output("\n\n<i>“I trust you,”</i> you say, squeezing her shoulder. <i>“Just keep us flying, Logan. We’ll cover you.”</i> ");
+			}
+			else if (choice == "misc")
+			{
+				output("<i>“What do you think we are, toddlers? Who the fuck falls for that?”</i>");
+				
+				output("\n\n<i>“It’s always worth a try,”</i> Bragga says, making a throat-cutting gesture. The video feed clicks off. ");
+				
+				output("\n\n<i>“Creepy. Logan, get us out of here, babe.”</i> ");
+				
+				output("\n\nShe nods. <i>“Already spooling up the LightDrive, captain. It’s going to take a couple of minutes, though. Need you on the guns until we’re ready to make the jump.”</i>");
+				
+				output("\n\nYou wave Pyra and Tarik to their stations and ruffle Logan’s hair. <i>“We’ll get through this. Just keep us flying.”</i>");
+			}
+			else if (choice == "hard")
+			{
+				output("<i>“Go fuck yourself,”</i> you sneer, flipping the bird at the pirate captain. Logan gives you a second before cutting the video feed. ");
+				
+				output("\n\n<i>“Nice, Kara,”</i> she laughs, reaching up to give you a high-five. <i>“Definitely going to murder us now, but still. It’s the thought that counts.”</i> ");
+				
+				output("\n\nYou chuckle. <i>“Alright. Get us out of here, babe.”</i> ");
+				
+				output("\n\nShe nods. <i>“Already spooling up the LightDrive, captain. It’s going to take a couple of minutes, though. Need you on the guns until we’re ready to make the jump.”</i>");
+				
+				output("\n\nYou wave Pyra and Tarik to their stations and ruffle Logan’s hair. <i>“Keep us alive, Logan.”</i>");
+			}
+		}
+
 		//} end region
 		
 		//{ region Engineering Deck

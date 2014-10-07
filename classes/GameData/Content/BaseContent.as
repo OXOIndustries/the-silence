@@ -11,6 +11,7 @@ package classes.GameData.Content
 	import classes.GameData.ContentIndex;
 	import classes.GameData.GameModel;
 	import classes.GameData.Party;
+	import classes.GameData.Ships.BlackRose;
 	import classes.GameData.Ships.Constellation;
 	import classes.GameData.Ships.TheSilence;
 	import classes.GUI;
@@ -183,6 +184,11 @@ package classes.GameData.Content
 		protected function get theConstellation():Constellation
 		{
 			return ShipIndex.theConstellation;
+		}
+		
+		protected function get theBlackRose():BlackRose
+		{
+			return ShipIndex.theBlackRose;
 		}
 		
 		protected function setLocation(room:String, planet:String = null, system:String = null):void

@@ -2,6 +2,8 @@ package classes.GameData.Content
 {
 	import classes.GameData.Content.BaseContent;
 	import classes.GameData.Items.Melee.GravityAxe;
+	import classes.GameData.CombatManager;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -19,6 +21,82 @@ package classes.GameData.Content
 			clearOutput();
 			output("Some kind of ungodly powerful weapon blew a hole straight through the <i>Constellation</i>. Debris floats listlessly through open space, drifting in the gaping wound blasted through the hull. Lucky for you, that gives you easy access between the main decks.");
 			return false;
+		}
+		
+		public function breachEngineeringFunction():Boolean
+		{
+			clearOutput();
+			if (flags["CONSTELLATION_PIRATES_ARRIVED"] == undefined)
+			{
+				output("Some kind of ungodly powerful weapon blew a hole straight through the <i>Constellation</i>. Debris floats listlessly through open space, drifting in the gaping wound blasted through the hull. Lucky for you, that gives you easy access between the main decks.");
+				return false;
+			}
+			else
+			{
+				breachPirateHoldoutFight();
+				return true;
+			}
+		}
+		
+		private function breachPirateHoldoutFight():void
+		{
+			clearOutput();
+			output("\n\nYou run for the breach, pushing your body as hard as you can. One foot ahead of the other, clutching your case of platinum tight against yourself, hurtling towards the gaping wound in the <i>Constellation</i>’s belly. Almost there... almost there...");
+			
+			output("\n\nJust seconds from the edge, you see a flash of light as several jetpacks flare, bringing several figures into view: black-armored pirates leap onto the deck, weapons leveled at you. Others climb into view from the lower and upper decks, tumbling into the corridor ahead of you. Pyra screams, and behind you, you see even more rushing towards you. Surrounded on all sides! ");
+			
+			output("\n\n<i>“Stand your ground!”</i> you shout, raising your pistol. <i>“They won’t show us any mercy, crew. Don’t even think of surrendering!”</i>");
+			
+			output("\n\nThe pirates circle around you, leveling shotguns and sub-machine guns at you and your crewmen. This isn’t going to be easy...");
+
+			// PC fights a pirate crew. Every time they kill one, a new pirate rushes up to take his place. The party must last for TEN TURNS until...
+
+			CombatManager.newGroundCombat(); // Setup for a new combat phase.
+			CombatManager.setPlayers(PlayerParty); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
+			CombatManager.setEnemies(EnemyParty); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
+			CombatManager.victoryCondition(CombatManager.SURVIVE_WAVES, 10); // Set the victory condition and optional argument
+			CombatManager.victoryScene(pirateBreachVictory); // The function reference that will be called when the player achieves the victory condition
+			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
+			CombatManager.lossScene(pirateBreachLoss); // The function reference that will be called if the player is defeated
+
+			CombatManager.beginCombat();
+		}
+
+		private function pirateBreachLoss():void
+		{
+			clearOutput();
+			output("U lose fgt.");
+			clearMenu();
+		}
+		
+		private function pirateBreachVictory():void
+		{
+			clearOutput();
+			output("Holy fuck they keep coming! You fire and fire until your trigger finger goes numb, drilling holes through pirate after pirate. But for every one you drop, another takes his place. They’re like insects, crawling out of every hole in the ship, leaping through the breach or out of torn airlocks all throughout the crumbling ship. Plasma vapors and gunsmoke cloud around the hallway, making it almost impossible to see more than few feet ahead of you. That’s enough to see them as the pirates come rushing forward, though, illuminated by the flashes of their blazing guns. ");
+			
+			output("\n\nOver the din of gunfire, you hear a voice in your ear shout, <i>“Everyone! Brace for impact!”</i>");
+			
+			output("\n\nYou drop to the deck and grab on for dear life, and just in time. The ship rumbles around you, shuddering as the Silence speeds across her bow, tearing into the pirate dropships clinging to the ship. The pirates around you are thrown down, tossed about like ragdolls under the force of the impacts. The deck trembles as the Silence sweeps into the breach, floodlights kicking on with blinding brightness. The forward guns flare to life, tearing into the pirates between you and the breach, riddling them with laser bolts until there’s not much left but a fine red mist. Logan brakes on the trigger, giving you and the crew just a second to get on your feet and start running. You hit the edge and make a leap of faith towards the Silence, out of the artificial gravity and into the void.");
+			
+			output("\n\nThere’s a mere second of weightlessness, letting you tumble home. At the last moment, Logan turns the ship, angling the airlock towards you. It cycles open, and you glide right in. You slam into the back of the airlock, joined a second later by Tarik, then Pyra");
+			if (PlayerParty.isInParty(connie)) output(", and finally Connie");
+			output(". You punch the cycle button, even as the Silence rumbles underfoot, flying away from the <i>Constellation</i>. You watch through the airlock view port as the Nova ship recedes, now surrounded by the wreckage of a half-dozen crippled pirate dropships, clinging to the <i>Constellation</i>’s corpse like parasites.");
+			if (flags["CONSTELLATION_MAIN_SHIELDS_ACTIVE"] != undefined) output(" The Nova ship’s shields flicker and buckle as fire rains down upon it, focused beams of light diffracting against the electromagnetic shell surrounding the ship in a protective layer. Bursts of light scatter into the inky black void of space like fireworks.");
+			
+			output("\n\nAnd then you see it: the pirate mothership. It’s several times bigger than the Silence, pitch black save for a white skull and crossbones emblazoned across its bow, wedged between two massive gun batteries. The whole ship is bristling with gun turrets, launchers, and batteries, enough armament to give a destroyer a run for its money.");
+			
+			output("\n\n<i>“There’s no way we can take that thing on,”</i> you breathe, cursing to yourself as the airlock finishes and you’re able to yank your suit off. ");
+			
+			output("\n\n<i>“Let us speak to Logan,”</i> Tarik says, breathing a sigh of relief as he slithers out of his awkward space suit, <i>“We should not tarry.”</i>");
+			
+			output("\n\nPyra shivers as the <i>Constellation</i> takes a rocket through the bridge, blasting a hole through it. <i>“No we should not.”</i> ");
+
+			pc.currentLocation = "TheSilence.Airlock";
+			theSilence.disconnectShips();
+			flags["DEFEATED_PIRATES_AT_BREACH"] = 1;
+			
+			CombatManager.postCombat();
+			doNext(mainGameMenu);
 		}
 		
 		public function commandDeckCorridorGeneralFunction():Boolean
@@ -51,6 +129,55 @@ package classes.GameData.Content
 			clearOutput();
 			output("The corridors through the <i>Constellation</i> are littered with debris sucked out in the moments of decompression that followed the massive hull breach. Emergency lights are still on, though main lighting is non-functional, bathing the corridors in a dark, flickering red. Occasional plates on the wall tell you that you're on the Engineering deck.");
 			return false;
+		}
+
+		public function engineeringDeckCorridorL33Function():Boolean
+		{
+			clearOutput();
+
+			if (flags["GOT_THE_BRIEFCASE"] == 2 && flags["CONSTELLATION_PIRATES_ARRIVED"] == undefined)
+			{
+				constellationPiratesArrived();
+				return true;
+			}
+			else
+			{
+				engineeringDeckCorridorGeneralFunction();
+			}
+
+			return false;
+		}
+
+		private function constellationPiratesArrived():void
+		{
+			clearOutput();
+			output("As you move toward the hatch, you hear a slight buzz in one of your cat-like ears. Incoming message. You key the comlink, and Logan’s holographic face shimmers to life on your wrist. ");
+			
+			output("\n\n<i>“Captain! Another ship has just exited LightDrive speeds in the debris field. She’s coming in fast and hard. Estimate sixty seconds to contact.”</i>");
+			
+			output("\n\nOh, shit. <i>“Track her. We’ve got the prize, coming back to you as soon as possible.”</i>");
+			
+			output("\n\n<i>“Aye, captain. I’ll-”</i>");
+			
+			output("\n\nBefore Logan can finish, the <i>Constellation</i> shudders around you, recoiling hard enough to nearly throw you off your feet. You and Tarik");
+			if (PlayerParty.isInParty(connie)) output(" and Connie");
+			output(" grab onto the hatch as Pyra goes flying, too tiny and weak to find purchase. She slams against the far bulkhead, only barely avoiding the crushing weight of a crate. She screeches, rolling out of the way.");
+			
+			output("\n\n<i>“What the </i>fuck<i> was that!?”</i> you shout over the comms, grabbing Pyra and leaping out the hatch. Another impact slams into the <i>Constellation</i>, throwing the lot of you against the corridor bulkhead. Lights flicker overhead and circuits overload in the bulkheads, raining sparks and wiring down on you. You can almost hear the navigational shields collapsing, shorting out all through the ship. <i>“Don’t tell me Nova’s firing on their own ship?”</i>");
+			
+			output("\n\n<i>“It’s not Nova, Captain,”</i> Logan says. You can hear the fear in her voice.");
+			
+			output("\n\nA moment of near silence passes as you look between your crew. <i>“Pirates?”</i>");
+			
+			output("\n\n<i>“One ship, captain. Frigate. Not broadcasting identification. They’re lighting you up with light lasers, but this thing’s </i>armed<i>, Kara. Heavily. I’m pulling the Silence back; doesn’t look like they’ve seen me yet.”</i> ");
+			
+			output("\n\n<i>“Right. We’re on the way to the breach. Be ready to scoop us up, Logan. We-”</i>");
+			
+			output("\n\n<i>“Captain! Enemy vessel closing. I’ve got armored troop carriers deploying. You’re about to have company on the deck.”</i> ");
+			
+			output("\n\nShit. Shitshitshit. You draw your plasma caster as you run. <i>“Understood. We’re on our way, Logan!”</i>");
+			flags["CONSTELLATION_PIRATES_ARRIVED"] = 1;
+			doNext(mainGameMenu);
 		}
 		
 		public function commandDeckCorridorToOfficersQuartersFunction():Boolean
@@ -179,14 +306,16 @@ package classes.GameData.Content
 			}
 			else addDisabledButton(0, "Briefcase");
 
-			if (flags["GOT_GRAVITY_AXE"] == undefined)
+			if (flags["GOT_GRAVITY_AXE"] == undefined && flags["GOT_THE_BRIEFCASE"] >= 1)
 			{
 				addButton(1, "Gravity Axe", takeGravityAxe, "Take Gravity Axe", "Offer up the huge Gravity Axe to your equally enormous companion Tarik.");
 			}
 			else addDisabledButton(1, "Gravity Axe");
 
-			addButton(2, "Take Silicone", takeSilicone);
-			if (flags["INSPECTED_DROID"] == undefined) addButton(3, "Take Droid", takeCompanionDroid);
+			if (flags["GOT_THE_BRIEFCASE"] >= 1) addButton(2, "Silicone", takeSilicone);
+			else addDisabledButton(2, "Silicone");
+			
+			if (flags["INSPECTED_DROID"] == undefined && flags["GOT_THE_BRIEFCASE"] >= 1) addButton(3, "Take Droid", takeCompanionDroid);
 			else addDisabledButton(3, "Droid");
 
 			if (flags["CONNIE_VI_HACKED"] == 1)
@@ -458,6 +587,8 @@ package classes.GameData.Content
 			output("\n\n<i>“Not to cut this short, but we need to go,”</i> you say, placing a hand on the newly-minted ConnieBot’s shoulder and giving her a slight pull toward the hatch. Unsteadily, the android follows you as you prepare to leave.");
 
 			flags["CONNIE_GOT_A_BODY"] = 1;
+			
+			PlayerParty.addToParty(connie);
 
 			doNext(mainGameMenu);
 		}

@@ -1,5 +1,6 @@
 package classes.GameData 
 {
+	import classes.GameData.Ships.BlackRose;
 	import classes.GameData.Ships.TheSilence;
 	import classes.GameData.Ships.Constellation;
 	/**
@@ -20,6 +21,7 @@ package classes.GameData
 		{
 			initFor("SILENCE", TheSilence, justUpdate);
 			initFor("CONSTELLATION", Constellation, justUpdate);
+			initFor("BLACKROSE", BlackRose, justUpdate);
 		}
 		
 		private static function initFor(idx:String, classT:Class, justUpdate:Boolean):void
@@ -38,6 +40,11 @@ package classes.GameData
 		public static function get theConstellation():Constellation
 		{
 			return ShipIndex.Ships["CONSTELLATION"];
+		}
+		
+		public static function get theBlackRose():BlackRose
+		{
+			return ShipIndex.Ships["BLACKROSE"];
 		}
 		
 	}

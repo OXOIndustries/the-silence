@@ -40,7 +40,7 @@ package classes.GameData.Map.Data.Ships
 			breachEngineering.RoomIndex = "BreachEngineering";
 			breachEngineering.RoomName = "Engineering Deck: Breach";
 			breachEngineering.ShortName = "Eng.Dk Breach";
-			breachEngineering.EntryFunction = ContentIndex.theConstellation.breachFunction;
+			breachEngineering.EntryFunction = ContentIndex.theConstellation.breachEngineeringFunction;
 			breachEngineering.MoveTime = 1;
 			breachEngineering.AddFlag(GLOBAL.INDOOR);
 			breachEngineering.NorthExit = "EngineeringDeckM34";
