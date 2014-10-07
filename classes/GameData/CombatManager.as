@@ -6,15 +6,12 @@ package classes.GameData
 	 */
 	public class CombatManager 
 	{
-		public static const COMBAT_NONE:int = 0;
-		public static const COMBAT_GROUND:int = 1;
-		public static const COMBAT_SPACE:int = 2;
-		
-		private static var combatMode:int = COMBAT_NONE;
+		private static var combatContainer:CombatContainer = null;
 		
 		public static function get inGroundCombat():Boolean
 		{
-			if (combatMode == COMBAT_GROUND) return true;
+			if (combatContainer == null) return false;
+			if (combatContainer.combatMode == COMBAT_GROUND) return true;
 			return false;
 		}
 		
