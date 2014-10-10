@@ -12,12 +12,6 @@ import classes.Items.Miscellaneous.GrayMicrobots;
 
 //Tracks what NPC in combat we are on. 0 = PC, 1 = first NPC, 2 = second NPC, 3 = fourth NPC... totalNPCs + 1 = status tic
 
-
-public function inCombat():Boolean 
-{
-	return (pc.hasStatusEffect("Round"));
-}
-
 function combatMainMenu():void 
 {
 	userInterface.showPrimaryOutput();
