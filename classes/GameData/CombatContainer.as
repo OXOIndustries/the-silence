@@ -16,8 +16,8 @@ package classes.GameData
 		protected var _roundCounter:int = 0;
 		public function get roundCounter():int { return _roundCounter; }
 		
-		private var _victoryFunction:Function;
-		private var _lossFunction:Function;
+		protected var _victoryFunction:Function;
+		protected var _lossFunction:Function;
 		public function victoryScene(func:Function):void
 		{
 			_victoryFunction = func;
