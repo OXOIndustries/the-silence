@@ -85,6 +85,8 @@
 
 		public var customDodge: String = "";
 		public var customBlock: String = "";
+		public var defaultMeleeAttack:String = "";
+		public var defaultRangedAttack:String = "";
 
 		//Clothing/Armor
 		public var meleeWeapon: ItemSlotClass = new EmptySlot();

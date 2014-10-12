@@ -3,6 +3,9 @@ package classes.GameData
 	import classes.Creature;
 	
 	import classes.Engine.Combat.*;
+	import classes.Engine.Interfaces.*;
+	import classes.Engine.Utility.num2Text;
+	import classes.Engine.Utility.upperCase;
 	
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.Characters.Pyra;
@@ -305,6 +308,110 @@ package classes.GameData
 			addButton(14, "Back", generateCombatMenu);
 		}
 		
+		public function doMeleeAttack(attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter)
+			{
+				output("\n\nYou flick on the blade of your hardlight sword and charge, hacking a deadly arc toward " + target.a + target.short + ".");
+			}
+			else if (attacker is Tarik)
+			{
+				output("\n\nTarik swings his massive greataxe,");
+			}
+			else if (attacker is Pyra)
+			{
+				output("\n\n<i>“Batter up!”</i> Pyra cheers, leaping toward " + target.a + target.short + " with her wrench held in a two-handed grip. She swings");
+			}
+			
+			if (calculateMiss(attacker, target, true))
+			{
+				if (attacker is PlayerCharacter)
+				{
+					output(" Your strike is parried!");
+				}
+				else if (attacker is Tarik)
+				{
+					output(" missing " + target.a + target.short + ".");
+				}
+				else if (attacker is Pyra)
+				{
+					output(" wide, staggering forward with the momentum of her missed attack.");
+				}
+			}
+			else
+			{
+				if (attacker is PlayerCharacter)
+				{
+					output(" It hits!");
+					calculateDamage(attacker, target, attacker.meleeWeapon.damage, attacker.meleeWeapon.damageType, "melee");
+				}
+				else if (attacker is Tarik)
+				{
+					output(" bringing it down in a brutal hit on " + target.a + target.short + ".");
+					calculateDamage(attacker, target, attacker.meleeWeapon.damage, attacker.meleeWeapon.damageType, "melee");
+				}
+				else if (attacker is Pyra)
+				{
+					output(" straight into " + target.a + possessive(target.short) + " knee.");
+					calculateDamage(attacker, target, attacker.meleeWeapon.damage, attacker.meleeWeapon.damageType, "melee");
+				}
+			}
+		}
+		
+		public function doRangedAttack(attacker:Creature, target:Creature):void
+		{
+			if (attacker is PlayerCharacter)
+			{
+				output("\n\nYou fire a bolt of superheated plasma at " + target.a + target.short + ".");
+			}
+			else if (attacker is Tarik)
+			{
+				output("\n\nTarik grabs one of the smaller axes from the bandolier across his broad chest and hucks it at " + target.a + target.short +",");
+			}
+			else if (attacker is Pyra)
+			{
+				// Pyra never misses -- or at least, 5 pellets will hit, 5 will roll for hit using standard mechanics.
+				output("\n\nPyra levels her shotgun at " + target.a + target.short + " and pulls the trigger, scattering a mass of metal pellets in their direction.");
+				
+				var damage:int = 0;
+				for (var i:int = 0; i < 5; i++)
+				{
+					if (!calculateMiss(attacker, target, false, -1, 3.0))
+					{
+						damage += calculateDamage(attacker, target, attacker.rangedWeapon.damage, attacker.rangedWeapon.damageType, "ranged",  true);
+					}
+					damage += calculateDamage(attacker, target, attacker.rangedWeapon.damage, attacker.rangedWeapon.damageType, "ranged",  true);
+				}
+				
+				return;
+			}
+			
+			if (calculateMiss(attacker, target, false))
+			{
+				if (attacker is PlayerCharacter)
+				{
+					output(" Your shot goes wide, burning into a bulkhead!");
+				}
+				else if (attacker is Tarik)
+				{
+					output(" though his throw goes wide.");
+				}
+			}
+			else
+			{
+				if (attacker is PlayerCharacter)
+				{
+					output(" It hits!");
+					calculateDamage(attacker, target, attacker.rangedWeapon.damage, attacker.rangedWeapon.damageType, "ranged");
+				}
+				else if (attacker is Tarik)
+				{
+					output(" scoring a direct hit.");
+					calculateDamage(attacker, target, attacker.rangedWeapon.damage, attacker.rangedWeapon.damageType, "ranged");
+				}
+			}
+		}
+		
 		private function chargeShot(attacker:Creature, target:Creature):void
 		{
 			output("\n\nYou hold down the trigger on your plasma pistol, just for a second, letting a charge build up before you let the bolt of green go screaming towards ");
@@ -381,34 +488,132 @@ package classes.GameData
 			}
 		}
 		
-		private function cleave(attacker:Creature, target:Creature):void
+		private function cleave(attacker:Creature, target:Creature = null):void
 		{
+			output("\n\nTarik lunges towards the enemy, swinging his tremendous greataxe in a vicious arc, letting the momentum carry him until he looks like he's spinning -- a twirling pillar of death!");
 			
+			var managedAHit:Boolean = false;
+			for (var i:int = 0; i < _hostiles.length; i++)
+			{
+				if (!calculateMiss(attacker, _hostiles[i], true, -1, 1.25))
+				{
+					managedAHit = true;
+					output("\nHe strikes " + _hostiles[i].a + _hostiles[i].short + " in his furious attacks!");
+					calculateDamage(attacker, _hostiles[i], attacker.meleeWeapon.damage, attacker.meleeWeapon.damageType, "melee");
+				}
+			}
+			
+			if (!managedAHit)
+			{
+				output(" His furious attacks all gone wide, leaving not a scratch on your foes!");
+			}
 		}
 		
-		private function battlecry(attacker:Creature, target:Creature):void
+		private function battlecry(attacker:Creature, target:Creature = null):void
 		{
-			
+			output("\n\nTarik lets out a howling battlecry that echoes through the corridor, drawing everyone's attention solely to the berserking cat-snake.");
+			attacker.createStatusEffect("Focus Fire", 3, 0, 0, 0, false, "Focus", "Focus Fire", true, 0);
+			attacker.createStatusEffect("Damage Reduction", 3, 75.0, 0, 0, true, "", "", true, 0);
 		}
 		
 		private function stunningStrike(attacker:Creature, target:Creature):void
 		{
-			
+			// (Normal dmg, stuns for 1-2 turns. Phys save negates
+			output("\n\nTarik leaps at " + target.a + target.short + ", bringing his greataxe up for an overhead strike.");
+			if (calculateMiss(attacker, target, true))
+			{
+				output(" However, "+ target.a + target.short +" dodges out of the way just in time, leaving Tarik's axe buried in the bulkhead, the kittynaga struggling to pull it free.");
+			}
+			else
+			{ 
+				output(" The blow connects with bone-crunching force,");
+				var damage = calculateDamage(attacker, target, attacker.meleeWeapon.damage, attacker.meleeWeapon.damageType, "melee", true);
+				if (target.HP() <= 0)
+				{
+					output(" cleaving right into " + target.a + target.short + ", throwing it lifelessly to the ground");
+				}
+				else
+				{
+					output(" leaving " + target.a + target.short);
+					if (target.physique() / target.physiqueMax() > 0.5) 
+					{
+						output(" momentarily");
+					}
+					else
+					{
+						target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Stunned", true, 0);
+					}
+					output(" staggered by the sheet weight of the impact. + (<b>" + damage + "</b>)");
+				}
+			}		
 		}
 		
 		private function flamethrower(attacker:Creature, target:Creature):void
 		{
+			output("\n\nPyra pulls a nozzle from her bulky backpack and levels it at " + target.a + target.short + ". She giggles maniacally before unleashing a huge gout of flame, bathing " + target.mfn("him", "her", "it") +" in roiling fire.");
 			
+			calculateDamage(attacker, target, 15, GLOBAL.THERMAL, "special", false);
+			
+			output(" Flames continue to lick at " + target.a + possessive(target.short) + " extremities. " + target.mfn("He","She","It") + " is burning now!");
+			target.createStatusEffect("Flamethrower Burn", 4, 0, 0, 0, false, "DoT", "Flamethrower Burn", true, 0);
 		}
 		
 		private function paralyticDarts(attacker:Creature, target:Creature):void
 		{
+			output("\n\nPyra levels her wrist-launcher at " + target.a + target.short + " and fires all three barrels, launching a trio of tiny, venom-laced darts downrange.");
 			
+			if (target.originalRace == "Machine")
+			{
+				output(" The venom has no effect - which isn't suprising given the inorganic nature of the target.");
+			}
+			else if (target.shieldsRaw > 0)
+			{
+				output(" The darts harmlessly bounce off of their targets shield. Huh.");
+			}
+			else
+			{
+				var numHits:int = 0;
+				for (var i:int = 0; i < 3; i++)
+				{
+					if (!calculateMiss(attacker, target, false, 3, 0))
+					{
+						numHits++;
+					}
+				}
+				
+				if (numHits == 0)
+				{
+					output(" All three miss their target entirely!");
+				}
+				else
+				{
+					output(upperCase(num2Text(numHits)) + " manage" + ((numHits == 1) ? "s" : "") + " to hit! " + target.a + target.short + " is slowed!");
+					target.createStatusEffect("Paralytic Venom", 3, numHits, 0, 0, false, "Stats", "Paralytic Venom", true, 0);
+					target.aimMod -= numHits;
+					target.reflexesMod -= numHits;
+				}
+			}
 		}
 		
 		private function shieldBoost(attacker:Creature, target:Creature):void
 		{
+			output("\n\nPyra brings up her tiny holoband screen and starts typing furiously, trying to boost the crew's shield generators. Shields restored!");
 			
+			for (var i:int = 0; i < _friendlies.length; i++)
+			{
+				var sGain:int = (_friendlies[i] as Creature).shieldsMax() * 0.25;
+				
+				if (sGain > (_friendlies[i] as Creature).shieldsMax() - (_friendlies[i] as Creature).shieldsRaw)
+				{
+					sGain = _friendlies[i].shieldsMax() - _friendlies[i].shieldsRaw;
+				}
+				
+				if (sGain > 0)
+				{
+					if (_friendlies[i] is PlayerCharacter) output("\nYou gained " + sGain + " shields!");
+					else output("\n" + _friendlies[i].short + " gained " + sGain + " shields!");
+				}
+			}
 		}
 		
 		private function selectSpecialAttack(args:Array):void
@@ -485,8 +690,49 @@ package classes.GameData
 			{
 				output("\n\nFirey green plasma continues to wear down " + ((target is PlayerCharacter) ? "your" : target.a + possessive(target.short)) + " defenses");
 				target.addStatusValue("Plasma Burn", 1, -1);
-				if (target.statusEffectv1("Plasma Burn") < 0) output(", but the green fire looks like it's finally died out.");
-				calculateDamage(null, target, 3, GLOBAL.PLASMA, "");
+				if (target.statusEffectv1("Plasma Burn") < 0)
+				{
+					output(", but the green fire looks like it's finally dying out.");
+					target.removeStatusEffect("Plasma Burn");
+				}
+				else output(".");
+				output(" (<b>" + calculateDamage(null, target, 3, GLOBAL.PLASMA, "dot", true) + "</b>)");
+			}
+			if (target.hasStatusEffect("Flamethrower Burn"))
+			{
+				output("\n\nOrange flames continue to lick at " + ((target is PlayerCharacter) ? "your" : target.a + possessive(target.short)) + " defenses");
+				target.addStatusValue("Flamethrower Burn", 1, -1);
+				if (target.statusEffectv1("Flamethrower Burn") < 0) 
+				{
+					output(", but the fire looks like it's finally dying out.");
+					target.removeStatusEffect("Flamethrower Burn");
+				}
+				else output(".");
+				output(" (<b>" + calculateDamage(null, target, 3, GLOBAL.THERMAL, "dot", true) + "</b>)");
+			}
+			if (target.hasStatusEffect("Damage Reduction"))
+			{
+				target.addStatusValue("Damage Reduction", 1, -1);
+			}
+			if (target.hasStatusEffect("Focus Fire"))
+			{
+				target.addStatusValue("Focus Fire", 1, -1);
+				if (target.statusEffectv1("Focus Fire") < 0)
+				{
+					output("\n\n" + target.a + possessive(target.short) + " furious challenge seems to fade from the battle.");
+				}
+			}
+			if (target.hasStatusEffect("Paralytic Venom"))
+			{
+				target.addStatusValue("Paralytic Venom", 1, -1);
+				if (target.statusEffectv1("Paralytic Venom") < 0)
+				{
+					output("\n\nThe venom affecting " + target.a + target.short + " seems to be wearing off.");
+					target.aimMod += target.statusEffectv2("Paralytic Venom");
+					target.reflexesMod += target.statusEffectv2("Paralytic Venom");
+					target.removeStatusEffect("Paralytic Venom");
+				}
+			}
 		}
 		
 		private function playerVictoryCondition():Boolean
