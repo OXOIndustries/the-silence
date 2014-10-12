@@ -102,8 +102,14 @@ package classes.GameData
 			
 			if (!doneRoundActions())
 			{
+				clearOutput();
 				_roundCounter++;
 				_attackSelections = new Object();
+				
+				for (var i:int = 0; i < _friendlies.length; i++)
+				{
+					_attackSelections[_friendlies[i].INDEX] = new Object();
+				}
 			}
 			
 			if (playerVictoryCondition())
@@ -124,6 +130,8 @@ package classes.GameData
 			}
 			
 			generateCombatMenu();
+			showCombatDescriptions();
+			showCombatUI();
 			
 			_initForRound = _roundCounter;
 		}
@@ -131,7 +139,7 @@ package classes.GameData
 		private function generateCombatMenu():void
 		{
 			addButton(4, "Execute", processCombat);
-			addButton(14, "Escape", attemptEscape);
+			//addButton(14, "Escape", attemptEscape);
 			
 			for (var i:int = 0; i < _friendlies.length; i++)
 			{
@@ -641,11 +649,16 @@ package classes.GameData
 		
 		private function showCombatUI():void
 		{
-			
+			userInterface().showPlayerParty();
+			userInterface().setPlayerPartyData(_friendlies);
+			userInterface().showEnemyParty();
+			userInterface().setEnemyPartyData(_hostiles);
 		}
 		
 		private function showCombatDescriptions():void
 		{
+			output("You're fighting " + num2Text(enemiesAlive()) + " hostiles.");
+			
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
 				displayHostileStatus(_hostiles[i]);
@@ -654,33 +667,54 @@ package classes.GameData
 		
 		private function displayHostileStatus(target:Creature):void
 		{
-			
+			if (target.HP() <= 0)
+			{
+				output("\n\n<b>You've knocked the resistance out of " + target.a + target.short + ".</b>");
+			}
+			else if (target.lust() >= target.lustMax())
+			{
+				output("\n\n<b>" + target.capitalA + target.short + ((target.plural == true) ? " are" : " is") + " too turned on to fight.</b>");
+			}
+			else
+			{
+				output("\n\n" + target.long);
+			}
 		}
 		
 		private function processCombat():void
 		{
-
+			applyPlayerActions();
+			updateStatusEffects(_friendlies);
+			
+			generateAIActions();
+			updateStatusEffects(_hostiles);
 		}
 		
 		private function applyPlayerActions():void
 		{
-			
+			for (var i:int = 0; i < _friendlies.length; i++)
+			{
+				if (_friendlies[i].HP() >= 0)
+				{
+					var func:Function = _attackSelections[_friendlies[i].INDEX].func;
+					if (func != null) func(_friendlies[i], _attackSelections[_friendlies[i].INDEX].target);
+				}
+			}
 		}
 		
 		private function generateAIActions():void
 		{
-			
+			for (var i:int = 0; i < _hostiles.length; i++)
+			{
+				_hostiles[i].groundCombatAI(_hostiles, _friendlies);
+			}
 		}
 		
-		private function updateStatusEffects():void
+		private function updateStatusEffects(group:Array):void
 		{
-			for (var i:int = 0; i < _friendlies.length; i++)
+			for (var i:int = 0; i < group.length; i++)
 			{
-				updateStatusEffectsFor(_friendlies[i]);
-			}
-			for (i = 0; i < _hostiles.length; i++)
-			{
-				updateStatusEffectsFor(_hostiles[i]);
+				updateStatusEffectsFor(group[i]);
 			}
 		}
 		
@@ -737,17 +771,69 @@ package classes.GameData
 		
 		private function playerVictoryCondition():Boolean
 		{
+			if (victoryCondition == CombatManager.ENTIRE_PARTY_DEFEATED)
+			{
+				for (var i:int = 0; i < _hostiles.length; i++)
+				{
+					if (_hostiles[i].HP() >= 0 && _hostiles[i].lust() <= _hostiles[i].lustMax()) return false;
+				}
+				return true;
+			}
+			else if (victoryCondition == CombatManager.SURVIVE_WAVES)
+			{
+				if (_roundCounter >= victoryArgument) return true;
+				return false;
+			}
 			
+			return false;
 		}
 		
 		private function playerLossCondition():Boolean
 		{
+			if (lossCondition == CombatManager.ENTIRE_PARTY_DEFEATED)
+			{
+				for (var i:int = 0; i < _friendlies[i].length; i++)
+				{
+					if (_friendlies[i].HP() >= 0 && _friendlies[i].lust() <= _friendlies[i].lustMax()) return false;
+				}
+				return true;
+			}
+			else if (lossCondition == CombatManager.SURVIVE_WAVES)
+			{
+				if (_roundCounter >= lossArgument) return true;
+				return false;
+			}
 			
+			return false;
 		}
 		
 		override public function doCombatCleanup():void
 		{
+			doCleanup(_friendlies);
+			doCleanup(_hostiles);
+		}
+		
+		private function doCleanup(group:Array):void
+		{
+			for (var i:int = 0; i < group.length; i++)
+			{
+				doCleanupFor(group[i]);
+			}
+		}
+		
+		private function doCleanupFor(target:Creature):void
+		{
 			
+		}
+		
+		public function enemiesAlive():int
+		{
+			var num:int = 0;
+			for (var i:int = 0; i < _hostiles.length; i++)
+			{
+				if (_hostiles[i].HP() > 0) num++;
+			}
+			return num;
 		}
 	}
 

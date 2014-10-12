@@ -1026,6 +1026,11 @@
 			_leftSideBar.showParty();
 		}
 		
+		public function showEnemyPart():void
+		{
+			_rightSideBar.showParty();
+		}
+		
 		public function hidePlayerParty():void
 		{
 			_leftSideBar.hideParty();
