@@ -4,12 +4,16 @@ package classes.GameData
 	
 	import classes.Engine.Combat.*;
 	import classes.Engine.Interfaces.*;
+	import classes.Engine.mainGameMenu;
+	
 	import classes.Engine.Utility.num2Text;
 	import classes.Engine.Utility.upperCase;
 	
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.Characters.Pyra;
 	import classes.GameData.Characters.Tarik;
+	
+	import classes.Engine.Utility.possessive;
 	
 	import classes.GLOBAL;
 	
@@ -34,7 +38,7 @@ package classes.GameData
 			_roundCounter = 0;
 		}
 		
-		public function setPlayers(... args):void
+		override public function setPlayers(... args):void
 		{
 			if (args.length > 1)
 			{
@@ -57,7 +61,7 @@ package classes.GameData
 				if (!(_friendlies[i] is Creature)) throw new Error("Attempted to use a non-creature object in Ground Combat.");
 			}
 		}
-		public function setEnemies(... args):void
+		override public function setEnemies(... args):void
 		{
 			if (args.length > 1)
 			{
@@ -124,11 +128,6 @@ package classes.GameData
 				return;
 			}
 			
-			if (!doneRoundActions())
-			{
-				updateStatusEffects();
-			}
-			
 			generateCombatMenu();
 			showCombatDescriptions();
 			showCombatUI();
@@ -143,13 +142,19 @@ package classes.GameData
 			
 			for (var i:int = 0; i < _friendlies.length; i++)
 			{
-				generateCombatMenuForCreature(_friendlies[i], i);
+				generateCombatMenuFor(_friendlies[i], i);
 			}
 		}
 		
 		private function generateCombatMenuFor(target:Creature, offset:int):void
 		{
 			addDisabledButton((offset * 5), target.short + ":");
+			if (target.isDefeated)
+			{
+				addDisabledButton(1 + (offset * 5), "DEFEATED");
+				return;
+			}
+			
 			if (target.hasStatusEffect("Stunned"))
 			{
 				addButton(1 + (offset * 5), "Recover", stunRecover, target);
@@ -223,12 +228,27 @@ package classes.GameData
 			generateCombatMenu();
 		}
 		
+		private function doStunRecover(target:Creature):void
+		{
+			
+		}
+		
+		private function doStruggleRecover(target:Creature):void
+		{
+			
+		}
+		
 		private function standUp(target:Creature):void
 		{
 			_attackSelections[target.INDEX].type = "stand";
 			_attackSelections[target.INDEX].func = doStandUp;
 			_attackSelections[target.INDEX].target = undefined;
 			generateCombatMenu();
+		}
+		
+		private function doStandUp(target:Creature):void
+		{
+			
 		}
 		
 		private function targetSelectionMenu(target:Creature):void
@@ -686,8 +706,31 @@ package classes.GameData
 			applyPlayerActions();
 			updateStatusEffects(_friendlies);
 			
+			for (var i:int = 0; i < _hostiles.length; i++)
+			{
+				if (_hostiles[i].isDefeated && _hostiles[i].alreadyDefeated == false)
+				{
+					_hostiles[i].alreadyDefeated == true;
+					output("\n\n" + _hostiles[i].capitalA + _hostiles[i].short + " falls to the ground,");
+					if (_hostiles[i].HP() <= 0) output(" defeated.");
+					else output(" stricken with lust.");
+				}
+			}
+			
 			generateAIActions();
 			updateStatusEffects(_hostiles);
+			
+			for (var i:int = 0; i < _friendlies.length; i++)
+			{
+				if (_hostiles[i].isDefeated && _friendlies[i].alreadyDefeated == false)
+				{
+					_friendlies[i].alreadyDefeated == true;
+					if (_friendlies[i] is PlayerCharacter) output("\n\nYou fall to the ground,");
+					else output("\n\n" + _friendlies[i].capitalA + _friendlies[i].short + " falls to the ground,");
+					if (_hostiles[i].HP() <= 0) output(" defeated.");
+					else output(" stricken with lust.");
+				}
+			}
 		}
 		
 		private function applyPlayerActions():void
@@ -823,7 +866,9 @@ package classes.GameData
 		
 		private function doCleanupFor(target:Creature):void
 		{
-			
+			// Remove all combat effects
+			target.clearCombatStatuses();
+			target.alreadyDefeated = false;
 		}
 		
 		public function enemiesAlive():int

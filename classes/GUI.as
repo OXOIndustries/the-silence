@@ -1026,7 +1026,7 @@
 			_leftSideBar.showParty();
 		}
 		
-		public function showEnemyPart():void
+		public function showEnemyParty():void
 		{
 			_rightSideBar.showParty();
 		}

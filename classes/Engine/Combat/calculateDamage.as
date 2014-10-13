@@ -4,6 +4,8 @@ package classes.Engine.Combat
 	import classes.Engine.Interfaces.rand;
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.Engine.Utility.possessive;
+	import classes.Engine.Interfaces.*;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -82,5 +84,7 @@ package classes.Engine.Combat
 				}
 			}
 		}
+		
+		return damage;
 	}
 }

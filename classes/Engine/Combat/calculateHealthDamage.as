@@ -1,6 +1,8 @@
 package classes.Engine.Combat 
 {
 	import classes.Creature;
+	import classes.Engine.Interfaces.rand;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -11,8 +13,8 @@ package classes.Engine.Combat
 		
 		if (special == "ranged" && target.hasPerk("Armor Piercing"))
 		{
-			if (defense > 0) temp -= (target.level + rand(3));
-			if (defense < 0) temp = 0;
+			if (defense > 0) defense -= (target.level + rand(3));
+			if (defense < 0) defense = 0;
 		}
 		
 		damage -= defense;
@@ -27,7 +29,7 @@ package classes.Engine.Combat
 		}
 		
 		if (damage < 1) damage = 1;
-		victim.HP( -damage);
+		target.HP( -damage);
 		
 		return damage;
 	}

@@ -3310,6 +3310,15 @@
 		public function removeStatuses(): void {
 			removeStorage(statusEffects);
 		}
+		
+		public function get isDefeated():Boolean
+		{
+			if (HP() <= 0 || lust() >= lustMax()) return true;
+			return false;
+		}
+		
+		public var alreadyDefeated:Boolean = false;	
+		
 		public function clearCombatStatuses(): void {
 			
 			//trace("Removing combat statuses.");
@@ -3322,10 +3331,8 @@
 			for (var x: int = statusEffects.length-1; x >= 0; x--) {
 				if (statusEffects[x].combatOnly)
 				{
-					//trace("Removed: " + statusEffects[x].storageName + " at position " + x + ".");
 					statusEffects.splice(x,1);
 				}
-				//else trace("Not a combat status: " + statusEffects[x].storageName + " at position " + x + ".");
 			}
 		}
 		//perk

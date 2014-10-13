@@ -1,6 +1,7 @@
 package classes.Engine.Combat 
 {
 	import classes.Creature;
+	import classes.Engine.Interfaces.rand;
 	/**
 	 * ...
 	 * @author Gedan

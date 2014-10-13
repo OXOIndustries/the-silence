@@ -1,5 +1,6 @@
 package classes.GameData 
 {
+	import classes.StorageClass;
 	/**
 	 * ...
 	 * @author Gedan
@@ -50,21 +51,21 @@ package classes.GameData
 		public var lossArgument:Number = Number.NaN;
 		
 		protected var _combatEffects:Object = {};
-		public function addCombatEffect(effect:CombatEffect):void
+		public function addCombatEffect(effect:StorageClass):void
 		{
-			if (!hasCombatEffect(effect.index))
+			if (!hasCombatEffect(effect.storageName))
 			{
-				_combatEffects[effect.index] = effect;
+				_combatEffects[effect.storageName] = effect;
 			}
 		}
-		public function removeCombatEffect():void
+		public function removeCombatEffect(index:String):void
 		{
-			if (hasCombatEffect(effect.index))
+			if (hasCombatEffect(index))
 			{
-				delete _combatEffects[effect.index];
+				delete _combatEffects[index];
 			}
 		}
-		public function hasCombatEffect(index:String):void
+		public function hasCombatEffect(index:String):Boolean
 		{
 			if (_combatEffects[index] != undefined) return true;
 			return false;

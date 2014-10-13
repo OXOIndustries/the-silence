@@ -8,7 +8,7 @@ package classes.GameData
 	{
 		public function SpaceCombat() 
 		{
-			_combatMode = 
+			_combatMode = CombatContainer.COMBAT_SPACE;
 		}
 	}
 

@@ -25,9 +25,8 @@ package classes.Engine.Utility
 	}
 	
 	// ^ Packages can only have one externally public definition
-	
-	// \/ but we can have as many private/package-internal-only definitions as we want to make that happen
-	private static const numWords:Array = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
-	private static const numWordsPosition:Array = ["zero", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"];
-	
 }
+
+// \/ but we can have as many private/package-internal-only definitions as we want to make that happen
+internal const numWords:Array = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+internal const numWordsPosition:Array = ["zero", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth"];
