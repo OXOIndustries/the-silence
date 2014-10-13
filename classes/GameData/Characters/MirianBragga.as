@@ -11,6 +11,9 @@ package classes.GameData.Characters
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
 	
+	import classes.Engine.Combat.calculateDamage;
+	import classes.Engine.Combat.calculateMiss;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -166,6 +169,108 @@ package classes.GameData.Characters
 			this.ass.bonusCapacity += 15;
 			
 			this._isLoading = false;
+		}
+		
+		override public function generateAIActions(sameTeam:Array, otherTeam:Array):void
+		{
+			if (HP() <= HPMax() * 0.25)
+			{
+				relentless();
+			}
+			
+			var attacks:Array = [rangedAttack, rangedAttack, meleeAttack, meleeAttack, lasPistol, forcePunch];
+			
+			if (shieldsRaw > 0) attacks.push(forceSabre);
+		}
+		
+		public function lasPistol(target:Creature):void
+		{
+			output("\n\nBragga levels her pistol at");
+			if (target is PlayerCharacter) output(" you");
+			else output(" " + target.a + target.short);
+			output(", taking just a moment to steady her shot before squeezing the trigger. A searing beam of light lances forth,");
+			
+			if (calculateMiss(this, target, false, rangedWeapon.attack, 0.5))
+			{
+				output(" though");
+				if (target is PlayerCharacter) output(" you're");
+				else output(" " + target.a + target.short);
+				output(" is able to dodge aside in the nick of time!");
+			}
+			else
+			{
+				output(" slamming into ");
+				if (target is PlayerCharacter) output(" you");
+				else output(" " + target.mf("him", "her"));
+				output(" with deadly force.");
+				
+				calculateDamage(this, target, damage(false) + aim() + 10, rangedWeapon.damageType, "ranged", false);
+			}
+		}
+		
+		public function forceSabre(target:Creature):void
+		{
+			output("\n\nThe captain rushes towards ");
+			if (target is PlayerCharacter) output("you");
+			else output(target.a + target.short);
+			output(", her shields coalescing around her hand into a long, razor-honed edge.");
+			if (target is PlayerCharacter) output(" You");
+			else output(" " + target.capitalA + target.short);
+			output(" barely has a moment to react before she's on");
+			if (target is PlayerCharacter) output(" you");
+			else output(" " + target.mf("him", "her"));
+			output(", slashing in a lethal arc");
+		
+			if (calculateMiss(this, target, true))
+			{
+				output(" that");
+				if (target is PlayerCharacter) output(" you are");
+				else output(" " + target.a + target.short + " is");
+				output(" barely able to dodge!");
+			}
+			else
+			{
+				output(" that hammers into");
+				if (target is PlayerCharacter) output(" you");
+				else output(" " + target.mf("him", "her"));
+				output(".");
+				calculateDamage(this, target, (damage(true) + physique() / 2) + 10, meleeWeapon.damageType, "melee");
+			}
+		}
+		
+		public function forcePunch(target:Creature):void
+		{
+			output("\n\nBragga cracks her knuckles, and you see the flickering glow of hardlight shields coalescing around her hands, wrapping around her like a pair of boxing gloves. She leaps towards");
+			if (target is PlayerCharacter) output(" you");
+			else output(" " + target.a + target.short);
+			output(", bringing her fist down in a crushing blow");
+			
+			if (calculateMiss(this, target, true))
+			{
+				output(" that");
+				if (target is PlayerCharacter) output(" you are");
+				else output(" " + target.a + target.short + " is");
+				output(" barely able to dodge!");
+			}
+			else
+			{
+				output(" that hammers into");
+				if (target is PlayerCharacter) output(" you");
+				else output(" " + target.mf("him", "her"));
+				output(".");
+				
+				target.createStatusEffect("Trip", 1, 0, 0, 0, false, "Trip", "Tripped", true, 0);
+				
+				calculateDamage(this, target, (damage(true) + physique() / 2) + 10, meleeWeapon.damageType, "melee");
+			}
+		}
+		
+		public function relentless():void
+		{
+			//Self-Healing. Activate every time she reaches 25% or less HP. Resotre 25% HP + 25% shields. 
+			output("\n\n<i>“You'll not get the better of me that easily, captain,”</i> Bragga says with a slight, almost imperceptible smirk. She stands upright, dusting herself off as if she'd barely been harmed.");
+			HP(HPMax() * 0.25);
+			this.shieldsRaw += shieldMax() * 0.25;
 		}
 		
 	}

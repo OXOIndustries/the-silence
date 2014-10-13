@@ -11,6 +11,9 @@ package classes.GameData.Characters
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
 	
+	import classes.Engine.Combat.calculateMiss;
+	import classes.Engine.Combat.calculateDamage;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -166,6 +169,98 @@ package classes.GameData.Characters
 			this.ass.bonusCapacity += 15;
 			
 			this._isLoading = false;
+		}
+		
+		override public function generateAIActions(sameTeam:Array, otherTeam:Array):void
+		{
+			var target:Creature = selectTarget(otherTeam);
+			
+			var attacks:Array = [rangedAttack, rangedAttack, rangedAttack, threeRoundBurst];
+			
+			if (!hasStatusEffect("Flashbang Used"))
+			{
+				attacks.push("flashbang");
+			}
+			
+			if (!hasStatusEffect("Net Used"))
+			{
+				attacks.push(lightNet);
+			}
+			
+			var sel:Function = attacks[rand(attacks.length)];
+			if (sel is String) sel(otherTeam);
+			else sel(target);
+		}
+		
+		public function threeRoundBurst(target:Creature):void
+		{
+			output("\n\nThe pirate lets loose, spraying lead at");
+			if (target is PlayerCharacter) output(" you.");
+			else output(" " + target.a + target.short +".");
+			
+			var numHits:int = 0;
+			
+			for (var i:int = 0; i < 3; i++)
+			{
+				if (!calculateMiss(this, target, false, -1, 2.0)) numHits++;
+			}
+			
+			if (numHits == 0)
+			{
+				output(" His barrage of fire goes completely wide!");
+			}
+			else
+			{
+				if (numHits == 1) output(" One bullet hits home.");
+				else output(" Several bullets hit home.");
+				
+				var dmg:Number = (damage(false) + (aim() / 2)) * numHits;
+				
+				calculateDamage(this, target, dmg, rangedWeapon.damageType, "ranged");
+			}
+		}
+		
+		public function flashbang(otherTeam:Array):void
+		{
+			output("\n\nThe pirate grabs a grenade from his belt and tosses at your crew! You all cover your eyes as best you can, but the flash still leaves you slightly disoriented. AIM lowered for a turn!");
+			createStatusEffect("Flashbang Used");
+			
+			for (var i:int = 0; i < otherTeam.length; i++)
+			{
+				(otherTeam[i] as Creature).createStatusEffect("Aim Reduction", 1, 2, 0, 0, false, "AimDown", "Aim Penalty", true, 0);
+				(otherTeam[i] as Creature).aimMod -= 2;
+			}
+		}
+		
+		public function lightNet(target:Creature):void
+		{
+			output("\n\nThe pirate grabs what looks like a fishing net from a pouch on his belt. The net starts glowing as the pirate pulls his arm back and hucks it at");
+			if (target is PlayerCharacter) output(" you.");
+			else output(" " + target.a + target.short + ".");
+			
+			createStatusEffect("Net Used");
+			
+			if (calculateMiss(this, target, false, 1, 3.0))
+			{
+				if (target is PlayerCharacter) output(" You dodge");
+				else output(" " + target.capitalA + target.short + " dodges");
+				output(" the light net.");
+			}
+			else
+			{
+				output(" The net entangles");
+				if (target is PlayerCharacter) output(" you");
+				else output(" " + target.a + target.short);
+				output(", barelling");
+				if (target is PlayerCharacter) output(" you");
+				else output(" " + target.mf("him", "her"));
+				output(" to the ground with incredible weight, preventing all but the slightest movements.");
+				if (target is PlayerCharacter) output(" You");
+				else output(" " + target.capitalA + target.short);
+				output(" is grappled!");
+				
+				target.createStatusEffect("Grappled", 3, 0, 0, 0, false, "Grapple", "Grappled", true, 0);
+			}
 		}
 		
 	}

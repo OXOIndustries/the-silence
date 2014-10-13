@@ -177,7 +177,11 @@ package classes.GameData.Characters
 				this.shieldWall();
 				return;
 			}
+			
 			var target:Creature = selectTarget(otherTeam);
+			
+			var attacks:Array = [rangedAttack, rangedAttack, rangedAttack, shock, laserBarrage];
+			attacks[rand(attacks.length)](target);
 		}
 		
 		public function laserBarrage(target:Creature):void
@@ -194,19 +198,43 @@ package classes.GameData.Characters
 			}
 			else
 			{
-				if (numHits == 1) output(" One hits");
-				if (numHits == 2) output(" Both hit");
+				if (numHits == 1) output(" One hits.");
+				if (numHits == 2) output(" Both hit.");
 				
-				var dmg:Number = calculateDamage(this, target, this.rangedWeapon.);
-				
-				output(" for " + dmg + " damage!");
+				var dmg:Number = calculateDamage(this, target, (this.damage(false) + (aim()/2)) * numHits, this.rangedWeapon.damageType, "ranged", false);
 			}
 		}
 		
 		public function shock(target:Creature):void
 		{
 			//Deals light electricity damage, chance to stun.
-The drone takes its left wrist off its rifle, levels it at {target}, and fires a small dart from a hidden launcher. The dart {goes wide, plinking against a bulkhead // strikes home, releasing an electrical charge that zaps {target}, ripping a scream from {his/her/your} throat. ({target} is stunned!)
+			output("\n\nThe drone takes its left wrist off its rifle, levels it at ");
+			if (target is PlayerCharacter) output("you");
+			else output(target.a + target.short");
+			output(", and fires a small dart from a hidden launcher. The dart");
+			
+			if (calculateMiss(this, target, false))
+			{
+				output(" goes wide, plinking against a bulkhead.");
+			}
+			else 
+			{
+				output(" strikes home, releasing an electrical charge that zaps ");
+				if (target is PlayerCharacter) output("you");
+				else output(target.a + target.short);
+				output(", ripping a scream from");
+				if (target is PlayerCharacter) output(" your");
+				else output(target.mf("his", "her"));
+				output(" throat.");
+				
+				if (rand(3) == 0)
+				{
+					if (target is PlayerCharacter) output(" You're");
+					else output(" " + target.a + target.short);
+					output(" is stunned!")
+					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Stunned", true, 0);
+				}
+			}
 		}
 		
 		public function shieldWall():void

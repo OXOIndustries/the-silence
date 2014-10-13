@@ -810,6 +810,22 @@ package classes.GameData
 					target.removeStatusEffect("Paralytic Venom");
 				}
 			}
+			if (target.hasStatusEffect("Aim Reduction"))
+			{
+				target.addStatusValue("Aim Reduction", 1, -1)
+				if (target.statusEffectv1("Aim Reduction") < 0)
+				{
+					output("\n\nThe blinding flash that was disorienting ");
+					if (target is PlayerCharacter) output("you");
+					else output(target.a + target.short);
+					output(" clears, allowing ");
+					if (target is PlayerCharacter) output("you");
+					else output("them");
+					output(" to see clearly again.");
+					target.aimMod += target.statusEffectv2("Aim Reduction");
+					target.removeStatusEffect("Aim Reduction");
+				}
+			}
 		}
 		
 		private function playerVictoryCondition():Boolean
@@ -853,7 +869,6 @@ package classes.GameData
 		override public function doCombatCleanup():void
 		{
 			doCleanup(_friendlies);
-			doCleanup(_hostiles);
 		}
 		
 		private function doCleanup(group:Array):void

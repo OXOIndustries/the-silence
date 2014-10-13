@@ -3329,6 +3329,17 @@
 				aimMod -= 5;
 			}
 			
+			if (hasStatusEffect("Aim Reduction"))
+			{
+				aimMod += statusEffectv2("Aim Reduction");
+			}
+			
+			if (hasStatusEffect("Paralytic Venom"))
+			{
+				aimMod += statusEffectv2("Paralytic Venom");
+				reflexesMod == statusEffectv2("Paralytic Venom");
+			}
+			
 			for (var x: int = statusEffects.length-1; x >= 0; x--) {
 				if (statusEffects[x].combatOnly)
 				{
@@ -3382,7 +3393,7 @@
 				}
 				else
 				{
-					output("\n\n" + target.short + " manages to avoid " + ((this is PlayerCharacter) ? "your" : possessive(this.short)) + " weaponfire.");
+					output("\n\n" + target.short + " manages to avoid " + ((this is PlayerCharacter) ? "your" : possessive(this.short)) + " attack.");
 				}
 			}
 			//Extra miss for blind
@@ -3394,7 +3405,7 @@
 				}
 				else
 				{
-					output("\n\n" + capitalA + possessive(short) + " blinded shots fail to connect!");
+					output("\n\n" + capitalA + possessive(short) + " blind attacks fail to connect!");
 				}
 			}
 			//Attack connected!
@@ -3403,96 +3414,55 @@
 				if(this is PlayerCharacter) output("\n\nYou land a hit on " + target.a + target.short + " with your " + rangedWeapon.longName + "!");
 				else if (this.plural) output("\n\n" + capitalA + short + " connect with their " + rangedWeapon.longName + "!");
 				else output("\n\n" + capitalA + short + " connects with " + mfn("his", "her", "its") + " " + rangedWeapon.longName + "!");
-			}
-		
-		if (!(attacker.rangedWeapon is Goovolver))
-		{
-			//Damage bonuses:
-			var damage:int = attacker.damage(false) + attacker.aim()/2;
-			var crit:Boolean = false;
-			//Now that damage values are grabbed, check for "Concentrated Fire" stuff
-			concentratedFire();
-			//Critical hits! 
-			if(attacker.critBonus(false) >= rand(100) + 1 && attacker == pc)
-			{
-				crit = true;
-				damage *= 2;
-				output("\n<b>Critical hit!</b>");
-			}
-			//Bonus damage for "sneak attack perk!"
-			if((target.hasStatusEffect("Stunned") || target.hasStatusEffect("Blind")) && attacker.hasPerk("Aimed Shot")) {
-				output("\n<b>Aimed shot!</b>");
-				damage += attacker.level * 2;
-				if(attacker.hasStatusEffect("Take Advantage")) damage += attacker.level * 2;
-				if(target.hasStatusEffect("Stunned") && target.hasStatusEffect("Blind")) damage += attacker.level;
-			}
-			//Randomize +/- 15%
-			var randomizer = (rand(31)+ 85)/100;
-			damage *= randomizer;
-			var sDamage:Array = new Array();
-			//Apply damage reductions
-			if(target.shieldsRaw > 0) {
-				sDamage = shieldDamage(target,damage,attacker.rangedWeapon.damageType);
-				//Set damage to leftoverDamage from shieldDamage
-				damage = sDamage[1];
-				if(attacker == pc) {
-					if(target.shieldsRaw > 0) output(" The shield around " + target.a + target.short + " crackles under your assault, but it somehow holds. (<b>" + sDamage[0] + "</b>)");
-					else output(" There is a concussive boom and tingling aftershock of energy as you disperse " + target.a + possessive(target.short) + " defenses. (<b>" + sDamage[0] + "</b>)");
-				}
-				else {
-					if(target.shieldsRaw > 0) output(" Your shield crackles but holds. (<b>" + sDamage[0] + "</b>)");
-					else output(" There is a concussive boom and tingling aftershock of energy as your shield is breached. (<b>" + sDamage[0] + "</b>)");
-				}
-			}
-			if(damage >= 1) {
-				damage = HPDamage(target,damage,attacker.rangedWeapon.damageType,"ranged");
-				if(attacker == pc) {
-					if(sDamage[0] > 0) output(" Your " + attacker.rangedWeapon.longName + " has enough momentum to carry through and strike your target! (<b>" + damage + "</b>)");
-					else output(" (<b>" + damage + "</b>)");			
-				}
-				else {
-					if(sDamage[0] > 0) output(" The hit carries on through to damage you! (<b>" + damage + "</b>)");
-					else output(" (<b>" + damage + "</b>)");	
-				}
-			}
-		}
-		// Goovolver attack!
-		else
-		{
-			var lustDamage:int = 0;
-			var randomiser:Number = (rand(31) + 85) / 100;
-
-			if (target.lustDamageMultiplier() == 0)
-			{
-				output("\n<b>" + target.capitalA + target.short + " ");
-				if (target.plural) output("don’t");
-				else output("doesn’t");
-				output(" seem the least bit bothered by the miniature goo crawling over them. (0)</b>\n");
-			}
-			else
-			{
-				lustDamage += 15;
-				lustDamage *= randomiser;
-				lustDamage *= target.lustDamageMultiplier();
-
-				if (target.lust() + lustDamage > target.lustMax()) lustDamage = target.lustMax() - target.lust();
-				damage = Math.ceil(lustDamage);
-
-				output(" A tiny " + (attacker.rangedWeapon as Goovolver).randGooColour() + " goo, vaguely female in shape, pops out and starts to crawl over " + target.mf("him", "her") + ", teasing " + target.mf("his", "her") + " most sensitive parts!");
-				output(" (" + lustDamage +")");
-				target.lust(lustDamage);
+				
+				calculateDamage(this, target, this.damage(false) + aim() / 2, rangedWeapon.damageType, "ranged", false);
 			}
 		}
 		
-	}
-	//Do multiple attacks if more are queued.
-	if(attacker.hasStatusEffect("Multiple Shots") && special == 0) {
-		output("\n");
-		rangedAttack(attacker,target);
-		return;
-	}
-	if(attacker == chars["PC"]) output("\n");
-	if(!noProcess) processCombat();
+		protected function meleeAttack(target:Creature):void
+		{
+			//Attack prevented by disarm
+			if (hasStatusEffect("Disarmed")) 
+			{
+				if (this is PlayerCharacter) output("\n\nYou try to attack until you remember you got disarmed!");
+				else output("\n\n" + capitalA + short + " scrabbles about, trying to find " + mfn("his","her","its") + " missing weapon.");
+			}
+			else if (calculateMiss(this, target, false))
+			{
+				if (this is PlayerCharacter) 
+				{
+					output("\n\nYou " + meleeWeapon.attackVerb + " at " + a + short + " with your " + meleeWeapon.longName + ", but just can't connect.");
+				}
+				else if (target is PlayerCharacter)
+				{
+					output("\n\nYou manage to avoid " + a + possessive(short) + " " + meleeWeapon.attackVerb + ".");
+				}
+				else
+				{
+					output("\n\n" + target.short + " manages to avoid " + ((this is PlayerCharacter) ? "your" : possessive(this.short)) + " attack.");
+				}
+			}
+			//Extra miss for blind
+			else if (hasStatusEffect("Blind") && rand(10) > 0) 
+			{
+				if(this is PlayerCharacter) 
+				{
+					output("\n\nYour blind strike fails to connect.");
+				}
+				else
+				{
+					output("\n\n" + capitalA + possessive(short) + " blind attack fails to connect!");
+				}
+			}
+			//Attack connected!
+			else 
+			{
+				if(this is PlayerCharacter) output("\n\nYou land a hit on " + target.a + target.short + " with your " + meleeWeapon.longName + "!");
+				else if (this.plural) output("\n\n" + capitalA + short + " connect with their " + meleeWeapon.longName + "!");
+				else output("\n\n" + capitalA + short + " connects with " + mfn("his", "her", "its") + " " + meleeWeapon.longName + "!");
+				
+				calculateDamage(this, target, this.damage() + physique() / 2, meleeWeapon.damageType, "melee", false);
+			}
 		}
 		
 		//perk
