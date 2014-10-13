@@ -1,6 +1,8 @@
 package classes.GameData.Characters 
 {
 	import classes.Creature;
+	import classes.Engine.Combat.calculateMiss;
+	import classes.Engine.Combat.calculateDamage;
 	import classes.GameData.Items.Apparel.ProtectiveJacket;
 	import classes.GameData.Items.Guns.Handaxes;
 	import classes.GameData.Items.Guns.PlasmaPistol;
@@ -166,6 +168,55 @@ package classes.GameData.Characters
 			this.ass.bonusCapacity += 15;
 			
 			this._isLoading = false;
+		}
+		
+		override public function generateAIActions(sameTeam:Array, otherTeam:Array):void
+		{
+			if (this.HP() <= this.HPMax() * 0.75 && !hasStatusEffect("Shieldwall Cooldown"))
+			{
+				this.shieldWall();
+				return;
+			}
+			var target:Creature = selectTarget(otherTeam);
+		}
+		
+		public function laserBarrage(target:Creature):void
+		{
+			output("\n\nThe drone stomps forward, firing rapidly from the hip. Bolts of red-hot energy streak towards" + target.short + ", guided by the droid's onboard targeting computers.");
+			
+			var numHits:int = 0;
+			if (calculateMiss(this, target, false)) numHits++;
+			if (calculateMiss(this, target, false)) numHits++;
+			
+			if (numHits == 0)
+			{
+				output(" Both shots go wide!");
+			}
+			else
+			{
+				if (numHits == 1) output(" One hits");
+				if (numHits == 2) output(" Both hit");
+				
+				var dmg:Number = calculateDamage(this, target, this.rangedWeapon.);
+				
+				output(" for " + dmg + " damage!");
+			}
+		}
+		
+		public function shock(target:Creature):void
+		{
+			//Deals light electricity damage, chance to stun.
+The drone takes its left wrist off its rifle, levels it at {target}, and fires a small dart from a hidden launcher. The dart {goes wide, plinking against a bulkhead // strikes home, releasing an electrical charge that zaps {target}, ripping a scream from {his/her/your} throat. ({target} is stunned!)
+		}
+		
+		public function shieldWall():void
+		{
+			//Recharge 25% shields. 1/encounter.
+			output("\n\nA drone reaches down and taps on its shield generator, activating an emergency generator to harden its defenses. Shields restored!");
+			
+			createStatusEffect("Shieldwall Cooldown", 0, 0, 0, 0, true, "", "", true, 0);
+			
+			shieldsRaw = shieldsMax() * 0.25;
 		}
 		
 	}
