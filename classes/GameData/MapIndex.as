@@ -75,6 +75,20 @@ package classes.GameData
 			{
 				if (room.EntryFunction()) return;
 			}
+			
+			if (room.EnemyEncounterContainers.length > 0)
+			{
+				for (var i:int = 0; i < room.EnemyEncounterContainers.length; i++)
+				{
+					if (room.EnemyEncounterContainers[i].IsEnabled())
+					{
+						if (room.EnemyEncounterContainers[i].EncounterFunction())
+						{
+							return;
+						}
+					}
+				}
+			}
 
 			if (DirectionCheck(room.NorthExit, room.NorthCondition))
 				addButton(6, "North", Move, room.NorthExit);

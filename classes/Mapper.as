@@ -200,6 +200,10 @@
 			{
 				map[x][y][z] |= room_bed_mask;
 			}
+			if (roomsObj[targetRoom].HasActiveEnemies())
+			{
+				map[x][y][z] |= room_hazard_mask;
+			}
 			
 			// This pair will need more complex handling, but we'll deal with it when there are actual quests and state like that to query properly.
 			if (roomsObj[targetRoom].HasFlag(GLOBAL.QUEST))

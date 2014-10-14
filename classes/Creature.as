@@ -22,6 +22,7 @@
 	import classes.Resources.Busts.StaticRenders;
 	import classes.Engine.Combat.calculateMiss;
 	import classes.Engine.Combat.calculateDamage;
+	import classes.Engine.Utility.possessive;
 
 	/**
 	 * I cannot yet implement "smart" detection of which characters (or furthermore, what *properties* of which characters)
@@ -3353,7 +3354,7 @@
 			throw new Error("Override me fgt.");
 		}
 		
-		protected function selectTarget(otherTeam:Array):void
+		protected function selectTarget(otherTeam:Array):Creature
 		{
 			var selTarget:Creature = null;
 			
@@ -3371,6 +3372,8 @@
 				selTarget = otherTeam[rand(otherTeam.length)];
 				if (selTarget.isDefeated) selTarget = null;
 			}
+			
+			return selTarget;
 		}
 		
 		protected function rangedAttack(target:Creature):void

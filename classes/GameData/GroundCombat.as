@@ -36,6 +36,16 @@ package classes.GameData
 		{
 			_combatMode = CombatContainer.COMBAT_GROUND;
 			_roundCounter = 0;
+			
+			genericVictory = function():void {
+				clearMenu();
+				addButton(0, "Next", mainGameMenu);
+			}
+		
+			genericLoss = function():void {
+				clearMenu();
+				addButton(0, "Next", mainGameMenu);
+			}
 		}
 		
 		override public function setPlayers(... args):void

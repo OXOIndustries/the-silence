@@ -14,6 +14,8 @@ package classes.GameData.Characters
 	import classes.Engine.Combat.calculateDamage;
 	import classes.Engine.Combat.calculateMiss;
 	
+	import classes.Engine.Interfaces.*;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -270,7 +272,7 @@ package classes.GameData.Characters
 			//Self-Healing. Activate every time she reaches 25% or less HP. Resotre 25% HP + 25% shields. 
 			output("\n\n<i>“You'll not get the better of me that easily, captain,”</i> Bragga says with a slight, almost imperceptible smirk. She stands upright, dusting herself off as if she'd barely been harmed.");
 			HP(HPMax() * 0.25);
-			this.shieldsRaw += shieldMax() * 0.25;
+			this.shieldsRaw += shieldsMax() * 0.25;
 		}
 		
 	}

@@ -77,6 +77,16 @@ package classes.GameData
 			combatContainer.doCombatCleanup();
 			combatContainer = null;
 		}
+		
+		public static function get GenericVictory():Function
+		{
+			return combatContainer.genericVictory;
+		}
+		
+		public static function get GenericLoss():Function
+		{
+			return combatContainer.genericLoss;
+		}
 	}
 
 }

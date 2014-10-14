@@ -204,9 +204,21 @@ package classes.GameData.Content
 		protected function doTalkTree(tarFunction:Function):void
 		{
 			clearMenu();
-			addButton(0, "Kind", function():void { pc.kindOptions++; tarFunction; }, "kind");
-			addButton(1, "Mischievous", function():void { pc.miscOptions++; tarFunction; }, "misc");
-			addButton(2, "Hard", function():void { pc.hardOptions++; tarFunction; }, "hard");
+			addButton(0, "Kind", function(arg:String):void 
+			{ 
+				pc.kindOptions++; 
+				tarFunction(arg); 
+			}, "kind");
+			addButton(1, "Mischievous", function(arg:String):void 
+			{ 
+				pc.miscOptions++; 
+				tarFunction(arg); 
+			}, "misc");
+			addButton(2, "Hard", function(arg:String):void
+			{ 
+				pc.hardOptions++; 
+				tarFunction(arg); 
+			}, "hard");
 		}
 		
 		protected function doNext(tarFunction:Function = null):void

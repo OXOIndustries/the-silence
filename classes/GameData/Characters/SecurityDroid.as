@@ -12,6 +12,7 @@ package classes.GameData.Characters
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
+	import classes.Engine.Interfaces.*;
 	
 	/**
 	 * ...
@@ -210,7 +211,7 @@ package classes.GameData.Characters
 			//Deals light electricity damage, chance to stun.
 			output("\n\nThe drone takes its left wrist off its rifle, levels it at ");
 			if (target is PlayerCharacter) output("you");
-			else output(target.a + target.short");
+			else output(target.a + target.short);
 			output(", and fires a small dart from a hidden launcher. The dart");
 			
 			if (calculateMiss(this, target, false))

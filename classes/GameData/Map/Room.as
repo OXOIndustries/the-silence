@@ -53,6 +53,17 @@ package classes.GameData.Map
 		public var MapPosition:Vector3D = null;
 		public var MapIndex:int = -1;
 		
+		public var EnemyEncounterContainers:Array = [];
+		
+		public function HasActiveEnemies():Boolean
+		{
+			for (var i:int = 0; i < EnemyEncounterContainers.length; i++)
+			{
+				if (EnemyEncounterContainers[i].IsEnabled()) return true;
+			}
+			return false;
+		}
+		
 		public function HasFlag(arg:int):Boolean
 		{
 			if (RoomFlags.indexOf(arg) != -1) return true;

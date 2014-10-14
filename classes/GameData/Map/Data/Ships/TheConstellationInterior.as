@@ -1,5 +1,6 @@
 package classes.GameData.Map.Data.Ships 
 {
+	import classes.GameData.Map.EnemyEncounters.SecurityDroidsFight;
 	import classes.GameData.Map.Room;
 	import classes.GameData.Map.Ship;
 	import classes.GLOBAL;
@@ -17,6 +18,8 @@ package classes.GameData.Map.Data.Ships
 			LocationIndex = "TheConstellation";
 			LocationName = "CONSTELLATION";
 			
+			var droidFights:SecurityDroidsFight = new SecurityDroidsFight();
+			
 			// Command Deck "Airlock"
 			var breach:Room = new Room();
 			breach.RoomIndex = "BreachCommand";
@@ -24,6 +27,7 @@ package classes.GameData.Map.Data.Ships
 			breach.ShortName = "Cmd.Dk Breach";
 			breach.EntryFunction = ContentIndex.theConstellation.breachFunction;
 			breach.MoveTime = 1;
+			breach.EnemyEncounterContainers.push(droidFights);
 			breach.AddFlag(GLOBAL.AIRLOCK);
 			breach.AddFlag(GLOBAL.INDOOR);
 			breach.NorthExit = "CommandDeckM24";
@@ -42,6 +46,7 @@ package classes.GameData.Map.Data.Ships
 			breachEngineering.ShortName = "Eng.Dk Breach";
 			breachEngineering.EntryFunction = ContentIndex.theConstellation.breachEngineeringFunction;
 			breachEngineering.MoveTime = 1;
+			breachEngineering.EnemyEncounterContainers.push(droidFights);
 			breachEngineering.AddFlag(GLOBAL.INDOOR);
 			breachEngineering.NorthExit = "EngineeringDeckM34";
 			breachEngineering.InExit = "BreachCommand";
@@ -55,6 +60,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckM24.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckM24.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
 			CommandDeckM24.MoveTime = 1;
+			CommandDeckM24.EnemyEncounterContainers.push(droidFights);
 			CommandDeckM24.AddFlag(GLOBAL.INDOOR);
 			CommandDeckM24.NorthExit = "CommandDeckM23";
 			CommandDeckM24.SouthExit = "BreachCommand";
@@ -66,6 +72,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckM34.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckM34.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckM34.MoveTime = 1;
+			EngineeringDeckM34.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckM34.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckM34.NorthExit = "EngineeringDeckM33";
 			EngineeringDeckM34.SouthExit = "BreachEngineering";
@@ -77,6 +84,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckM23.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckM23.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
 			CommandDeckM23.MoveTime = 1;
+			CommandDeckM23.EnemyEncounterContainers.push(droidFights);
 			CommandDeckM23.AddFlag(GLOBAL.INDOOR);
 			CommandDeckM23.NorthExit = "CommandDeckM22";
 			CommandDeckM23.EastExit = "CommandDeckN23";
@@ -90,6 +98,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckM33.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckM33.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckM33.MoveTime = 1;
+			EngineeringDeckM33.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckM33.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckM33.NorthExit = "EngineeringDeckM32";
 			EngineeringDeckM33.EastExit = "EngineeringDeckN33";
@@ -103,6 +112,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckM22.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckM22.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
 			CommandDeckM22.MoveTime = 1;
+			CommandDeckM22.EnemyEncounterContainers.push(droidFights);
 			CommandDeckM22.AddFlag(GLOBAL.INDOOR);
 			CommandDeckM22.NorthExit = "CommandDeckM21";
 			CommandDeckM22.SouthExit = "CommandDeckM23";
@@ -114,6 +124,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckM32.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckM32.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckM32.MoveTime = 1;
+			EngineeringDeckM32.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckM32.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckM32.NorthExit = "EngineeringDeckM31";
 			EngineeringDeckM32.SouthExit = "EngineeringDeckM33";
@@ -125,6 +136,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckM21.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckM21.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
 			CommandDeckM21.MoveTime = 1;
+			CommandDeckM21.EnemyEncounterContainers.push(droidFights);
 			CommandDeckM21.AddFlag(GLOBAL.INDOOR);
 			CommandDeckM21.NorthExit = "CommandDeckM20";
 			CommandDeckM21.SouthExit = "CommandDeckM22";
@@ -136,6 +148,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckM31.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckM31.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckM31.MoveTime = 1;
+			EngineeringDeckM31.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckM31.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckM31.NorthExit = "EngineeringDeckM30";
 			EngineeringDeckM31.SouthExit = "EngineeringDeckM32";
@@ -147,6 +160,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckM20.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckM20.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
 			CommandDeckM20.MoveTime = 1;
+			CommandDeckM20.EnemyEncounterContainers.push(droidFights);
 			CommandDeckM20.AddFlag(GLOBAL.INDOOR);
 			CommandDeckM20.NorthExit = "CommandDeckM19";
 			CommandDeckM20.EastExit = "CommandDeckN20";
@@ -160,6 +174,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckM30.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckM30.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckM30.MoveTime = 1;
+			EngineeringDeckM30.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckM30.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckM30.NorthExit = "EngineeringDeckM29";
 			EngineeringDeckM30.EastExit = "EngineeringDeckN30";
@@ -173,6 +188,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckM19.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckM19.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
 			CommandDeckM19.MoveTime = 1;
+			CommandDeckM19.EnemyEncounterContainers.push(droidFights);
 			CommandDeckM19.AddFlag(GLOBAL.INDOOR);
 			CommandDeckM19.NorthExit = "CommandDeckBridge";
 			CommandDeckM19.SouthExit = "CommandDeckM20";
@@ -184,6 +200,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckM29.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckM29.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckM29.MoveTime = 1;
+			EngineeringDeckM29.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckM29.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckM29.NorthExit = "EngineeringDeckForwardBattery";
 			EngineeringDeckM29.SouthExit = "EngineeringDeckM30";
@@ -195,6 +212,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckL23.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckL23.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorToOfficersQuartersFunction;
 			CommandDeckL23.MoveTime = 1;
+			CommandDeckL23.EnemyEncounterContainers.push(droidFights);
 			CommandDeckL23.AddFlag(GLOBAL.INDOOR);
 			CommandDeckL23.EastExit = "CommandDeckM23";
 			CommandDeckL23.WestExit = "OfficersQuarters";
@@ -210,6 +228,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckL33.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckL33.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckL33.MoveTime = 1;
+			EngineeringDeckL33.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckL33.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckL33.EastExit = "EngineeringDeckM33";
 			EngineeringDeckL33.WestExit = "PortCargo";
@@ -221,6 +240,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckN23.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckN23.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorN23Function;
 			CommandDeckN23.MoveTime = 1;
+			CommandDeckN23.EnemyEncounterContainers.push(droidFights);
 			CommandDeckN23.AddFlag(GLOBAL.INDOOR);
 			CommandDeckN23.WestExit = "CommandDeckM23";
 			AddRoom(CommandDeckN23);
@@ -231,6 +251,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckN33.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckN33.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckN33.MoveTime = 1;
+			EngineeringDeckN33.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckN33.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckN33.WestExit = "EngineeringDeckM33";
 			EngineeringDeckN33.EastExit = "DroneControl";
@@ -242,6 +263,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckL20.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckL20.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
 			CommandDeckL20.MoveTime = 1;
+			CommandDeckL20.EnemyEncounterContainers.push(droidFights);
 			CommandDeckL20.AddFlag(GLOBAL.INDOOR);
 			CommandDeckL20.EastExit = "CommandDeckM20";
 			CommandDeckL20.WestExit = "CommandDeckShieldControl";
@@ -253,6 +275,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckL30.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckL30.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckL30.MoveTime = 1;
+			EngineeringDeckL30.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckL30.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckL30.EastExit = "EngineeringDeckM30";
 			EngineeringDeckL30.WestExit = "EngineeringDeckShieldControl"
@@ -264,6 +287,7 @@ package classes.GameData.Map.Data.Ships
 			CommandDeckN20.ShortName = "Cmd.Dk Crrdr"
 			CommandDeckN20.EntryFunction = ContentIndex.theConstellation.commandDeckCorridorGeneralFunction;
 			CommandDeckN20.MoveTime = 1;
+			CommandDeckN20.EnemyEncounterContainers.push(droidFights);
 			CommandDeckN20.AddFlag(GLOBAL.INDOOR);
 			CommandDeckN20.EastExit = "StarboardCargo";
 			CommandDeckN20.WestExit = "CommandDeckM20";
@@ -275,6 +299,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckN30.ShortName = "Eng.Dk Crrdr";
 			EngineeringDeckN30.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
 			EngineeringDeckN30.MoveTime = 1;
+			EngineeringDeckN30.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckN30.AddFlag(GLOBAL.INDOOR);
 			EngineeringDeckN30.EastExit = "EngineeringDeckAtmosphericControl";
 			EngineeringDeckN30.WestExit = "EngineeringDeckM30";

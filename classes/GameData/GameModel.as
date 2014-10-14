@@ -7,7 +7,6 @@ package classes.GameData
 	import classes.GameData.Characters.MirianBragga;
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.Characters.Pyra;
-	import classes.GameData.Characters.RourkeBlackstar;
 	import classes.GameData.Characters.Tarik;
 	import classes.GameData.Characters.Connie;
 	
@@ -67,11 +66,6 @@ package classes.GameData
 		public function get mirian():MirianBragga
 		{
 			return CharacterIndex.Chars["MIRIAN"];
-		}
-		
-		public function get rourke():RourkeBlackstar
-		{
-			return CharacterIndex.Chars["ROURKE"];
 		}
 		
 		public function get connie():Connie

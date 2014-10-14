@@ -11,6 +11,9 @@ package classes.GameData
 		public static const COMBAT_GROUND:int = 1;
 		public static const COMBAT_SPACE:int = 2;
 		
+		public var genericLoss:Function;
+		public var genericVictory:Function;
+		
 		protected var _combatMode:int = COMBAT_NONE;
 		public function get combatMode():int { return _combatMode; }
 		
