@@ -56,9 +56,9 @@ package classes.GameData
 			}
 			else if (args.length == 1)
 			{
-				if (args[0] is Array)
+				if (args[0] is Party)
 				{
-					_friendlies = args[0];
+					_friendlies = (args[0] as Party).getParty();
 				}
 				else
 				{
@@ -79,9 +79,13 @@ package classes.GameData
 			}
 			else if (args.length == 1)
 			{
-				if (args[0] is Array)
+				if (args[0] is Party)
 				{
-					_hostiles = args[0];
+					_hostiles = (args[0] as Party).getParty();
+				}
+				else if (args[0] is Array)
+				{
+					
 				}
 				else
 				{

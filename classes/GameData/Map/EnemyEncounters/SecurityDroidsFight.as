@@ -43,7 +43,7 @@ package classes.GameData.Map.EnemyEncounters
 					}
 					
 					CombatManager.newGroundCombat();
-					CombatManager.setPlayers(GameState.playerParty);
+					CombatManager.setPlayers(GameState.playerParty.getParty());
 					CombatManager.setEnemies(enemies);
 					CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
 					CombatManager.victoryScene(CombatManager.GenericVictory);

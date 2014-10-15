@@ -255,8 +255,8 @@ package classes.GameData.Content.TheSilence
 		private function startSpessFightAgainstMiri():void
 		{
 			CombatManager.newSpaceCombat(); // Setup for a new combat phase.
-			CombatManager.setPlayers(theSilence); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
-			CombatManager.setEnemies(theBlackRose); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
+			//CombatManager.setPlayers(theSilence); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
+			//CombatManager.setEnemies(theBlackRose); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
 			CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED); // Set the victory condition and optional argument
 			CombatManager.victoryScene(waitWhatHowFuckYouCheater); // The function reference that will be called when the player achieves the victory condition
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);

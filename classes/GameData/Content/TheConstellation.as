@@ -52,8 +52,8 @@ package classes.GameData.Content
 			// PC fights a pirate crew. Every time they kill one, a new pirate rushes up to take his place. The party must last for TEN TURNS until...
 
 			CombatManager.newGroundCombat(); // Setup for a new combat phase.
-			CombatManager.setPlayers(PlayerParty); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
-			CombatManager.setEnemies(EnemyParty); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
+			CombatManager.setPlayers(PlayerParty.getParty()); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
+			//CombatManager.setEnemies(EnemyParty); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
 			CombatManager.victoryCondition(CombatManager.SURVIVE_WAVES, 10); // Set the victory condition and optional argument
 			CombatManager.victoryScene(pirateBreachVictory); // The function reference that will be called when the player achieves the victory condition
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);

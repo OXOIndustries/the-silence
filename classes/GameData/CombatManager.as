@@ -31,14 +31,14 @@ package classes.GameData
 			combatContainer = new SpaceCombat();
 		}
 		
-		public static function setPlayers(... args):void
+		public static function setPlayers(players:Array):void
 		{
-			combatContainer.setPlayers.apply(null, args);
+			combatContainer.setPlayers(players);
 		}
 		
-		public static function setEnemies(... args):void
+		public static function setEnemies(enemies:Array):void
 		{
-			combatContainer.setEnemies.call(null, args);
+			combatContainer.setEnemies(enemies);
 		}
 		
 		// Victory & Loss Condition indicators

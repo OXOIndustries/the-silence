@@ -81,8 +81,8 @@ package classes.GameData.Content
 			// And replace with new pirate.
 
 			CombatManager.newGroundCombat(); // Setup for a new combat phase.
-			CombatManager.setPlayers(PlayerParty); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
-			CombatManager.setEnemies(EnemyParty); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
+			CombatManager.setPlayers(PlayerParty.getParty()); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
+			//CombatManager.setEnemies(EnemyParty); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
 			CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED); // Set the victory condition and optional argument
 			CombatManager.victoryScene(fugUCheater); // The function reference that will be called when the player achieves the victory condition
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);

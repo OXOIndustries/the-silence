@@ -191,6 +191,7 @@
 			}
 			
 			updateUI();
+			userInterface.showLocation();
 			
 			//Set up all appropriate flags
 			//Display the room description
