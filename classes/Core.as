@@ -243,7 +243,7 @@
 		
 		public function updateUI():void
 		{
-			
+			userInterface.setPlayerPartyData(GameState.playerParty.getParty());
 		}
 		
 		public function refreshFontSize():void
@@ -337,11 +337,6 @@
 		public function updateStatBar(arg:StatBar , value = undefined, max = undefined):void 
 		{
 
-		}
-		
-		public function rootMenu():void
-		{
-			
 		}
 		
 		public function CharacterCreation():void

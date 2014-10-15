@@ -226,13 +226,9 @@
 			
 			// Valid file to preview!
 			returnString += slotNumber;
-			returnString += ": <b>" + dataFile.data.saveName + "</b>";
-			returnString += " - <i>" + dataFile.data.saveNotes + "</i>\n";
-			returnString += "\t<b>Days:</b> " + dataFile.data.daysPassed;
-			returnString += "  <b>Gender:</b> " + dataFile.data.playerGender;
-			returnString += "  <b>Location:</b> " + StringUtil.toTitleCase(dataFile.data.saveLocation);
+			returnString += " - <b>Location:</b> " + StringUtil.toTitleCase(dataFile.data.gameState.saveLocation);
 			
-			returnString += "\n";
+			returnString += "\n\n";
 			return returnString;
 		}
 		
@@ -287,61 +283,7 @@
 			// Versioning Information
 			dataFile.version 		= DataManager.LATEST_SAVE_VERSION;
 			dataFile.minVersion 	= DataManager.MINIMUM_SAVE_VERSION;
-			
-			// Base/Primary information
-			
-			// We're going to extract some things from the player object and dump it in here for "preview" views into the file
-			dataFile.saveName 		= GameState.characters["PC"].short;
-			dataFile.saveLocation 	= StringUtil.toTitleCase(kGAMECLASS.userInterface.planetText + ", " + kGAMECLASS.userInterface.systemText);
-			
-			if (kGAMECLASS.userInterface.currentPCNotes == null || kGAMECLASS.userInterface.currentPCNotes.length == 0 || kGAMECLASS.userInterface.currentPCNotes == "") dataFile.saveNotes = "No notes available.";
-			else dataFile.saveNotes = kGAMECLASS.userInterface.currentPCNotes;
-			
-			dataFile.playerGender 	= GameState.characters["PC"].mfn("M", "F", "A");
-
-			// Game state
-			dataFile.daysPassed 		= GameState.days;
-			dataFile.currentHours 		= GameState.hours;
-			dataFile.currentMinutes 	= GameState.minutes;
-			
-			// Game data
-			dataFile.characters = new Object();
-			var gamePtr:* = kGAMECLASS;
-			var prop:String;
-			var i:int;
-			for (prop in GameState.characters)
-			{
-				if ((GameState.characters[prop] as Creature).neverSerialize == false)
-				{
-					dataFile.characters[prop] = (GameState.characters[prop] as Creature).getSaveObject();
-				}
-			}
-			
-			dataFile.flags = new Object();
-			for (prop in GameState.flags)
-			{
-				dataFile.flags[prop] = GameState.flags[prop];
-			}
-			
-			dataFile.gameOptions = kGAMECLASS.gameOptions.getSaveObject();
-			
-			// Codex entries
-			dataFile.unlockedCodexEntries = new Array();
-			var cEntries:Array = CodexManager.unlockedEntryList;
-			for (i = 0; i < cEntries.length; i++)
-			{
-				dataFile.unlockedCodexEntries.push(cEntries[i]);
-			}
-			
-			dataFile.viewedCodexEntries = new Array();
-			var cViewed:Array = CodexManager.viewedEntryList;
-			for (i = 0; i < cViewed.length; i++)
-			{
-				dataFile.viewedCodexEntries.push(cViewed[i]);
-			}
-			
-			// Stat tracking
-			dataFile.statTracking = cloneObject(StatTracking.getStorageObject());
+			dataFile.gameState 		= GameState.getSaveObject();
 		}
 		
 		/**
@@ -458,103 +400,7 @@
 			}
 			
 			// Game state
-			GameState.days = obj.daysPassed;
-			GameState.hours = obj.currentHours;
-			GameState.minutes = obj.currentMinutes;
-			
-			// Game data
-			GameState.characters = new Object();
-			var aRef:Object = GameState.characters;
-			var failure:Boolean = false
-			
-			for (prop in obj.characters)
-			{
-				try
-				{
-					if (!obj.characters[prop].hasOwnProperty("classInstance"))
-					{
-						GameState.characters[prop] = new (getDefinitionByName(getQualifiedClassName(obj.characters[prop])) as Class)();
-						GameState.characters[prop].loadSaveObject(obj.characters[prop]);
-					}
-					else
-					{
-						GameState.characters[prop] = new (getDefinitionByName(obj.characters[prop].classInstance) as Class)();
-						GameState.characters[prop].loadSaveObject(obj.characters[prop]);
-					}
-				}
-				catch (e:ReferenceError)
-				{
-					// If the classDefintion doesn't exist, we'll get a ReferenceError exception
-					trace(e.message)
-					
-					if (failure == false)
-					{
-						output2("Load error(s) detected: \n\n");
-					}
-					
-					output2(e.message);
-					output2("\n");
-					
-					failure = true;
-				}
-			}
-			
-			if (failure == true)
-			{
-				output2("\n\n");
-				return failure;
-			}
-			
-			CharacterIndex.init(false);
-			
-			GameState.flags = new Dictionary();
-			
-			for (prop in obj.flags)
-			{
-				GameState.flags[prop] = obj.flags[prop];
-			}
-			
-			// Game settings
-			kGAMECLASS.gameOptions.loadSaveObject(obj.gameOptions);
-			
-			// Codex entry stuff
-			// Codex entry keys are always strings stuffed in arrays, so we don't need to do anything special... yet
-			if (obj.unlockedCodexEntries != undefined && obj.unlockedCodexEntries is Array)
-			{
-				var cEntries:Array = new Array();
-				
-				for (i = 0; i < obj.unlockedCodexEntries.length; i++)
-				{
-					cEntries.push(obj.unlockedCodexEntries[i]);
-				}
-				
-				CodexManager.unlockedEntryList = cEntries;
-			}
-			else
-			{
-				CodexManager.unlockedEntryList = new Array();
-			}
-			
-			if (obj.viewedCodexEntries != undefined && obj.viewedCodexEntries is Array)
-			{
-				var cViewed:Array = new Array();
-				
-				for (i = 0; i < obj.viewedCodexEntries.length; i++)
-				{
-					cViewed.push(obj.viewedCodexEntries[i]);
-				}
-				
-				CodexManager.viewedEntryList = cViewed;
-			}
-			else
-			{
-				CodexManager.viewedEntryList = new Array();
-			}
-			
-			if (obj.statTracking != undefined && obj.statTracking is Object)
-			{
-				StatTracking.loadStorageObject(cloneObject(obj.statTracking));
-			}
+			GameState.loadSaveObject(obj.gameState);
 			
 			// Returns the backup
 			return false;
@@ -585,17 +431,6 @@
 			// We COULD pass the blob back and run another verify, but this is a quick, cheap-ish way 
 			if (data.version == undefined) throw new Error("Version failed");	
 			if (data.minVersion == undefined) throw new Error("minVersion failed");
-			if (data.saveName == undefined) throw new Error("saveName failed");
-			if (data.playerGender == undefined) throw new Error("playerGender failed");
-			if (data.saveLocation == undefined) throw new Error("saveLocation failed");
-			if (data.playerLocation == undefined) throw new Error("playerLocation failed");
-			if (data.shipLocation == undefined) throw new Error("shipLocation failed");
-			if (data.daysPassed == undefined) throw new Error("daysPassed failed");
-			if (data.currentHours == undefined) throw new Error("currentHours failed");
-			if (data.currentMinutes == undefined) throw new Error("currentMinutes failed");
-			if (data.characters == undefined) throw new Error("characters failed");
-			if (data.flags == undefined) throw new Error("flags failed");
-			if ((data.sillyMode == undefined || data.easyMode == undefined || data.debugMode == undefined) && data.gameOptions == undefined) throw new Error("Game options failed");
 			return true;
 		}
 		
@@ -615,8 +450,7 @@
 			kGAMECLASS.userInterface.showPrimaryOutput();
 			
 			// Trigger an attempt to update display font size
-			kGAMECLASS.refreshFontSize();						
-			kGAMECLASS.rootMenu();
+			kGAMECLASS.refreshFontSize();
 		}
 		
 		private function doAutoSave():void

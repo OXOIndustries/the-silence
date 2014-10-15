@@ -22,10 +22,10 @@ package classes.GameData
 			PlayerGroup = new Party(true);
 			EnemyGroup = new Party(false);
 			
-			CharacterIndex.init(false);
+			CharacterIndex.configure(false);
 		}
 		
-		public static function init(justUpdate:Boolean = false):void 
+		public static function configure(justUpdate:Boolean = false):void 
 		{
 			initFor("PC", PlayerCharacter, justUpdate);
 			initFor("LOGAN", Logan, justUpdate);

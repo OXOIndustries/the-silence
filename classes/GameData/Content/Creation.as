@@ -1,5 +1,7 @@
 package classes.GameData.Content 
 {
+	import classes.GameData.GameState;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -10,10 +12,13 @@ package classes.GameData.Content
 		
 		public function StartCreation():void
 		{
+			GameState.newGame();
+			
 			clearOutput();
 			userInterface.setLocation("MORNING AFTER", "SHIP: SILENCE", "SYSTEM: UNKNOWN");
 			//setLocation("This is a testing room name");
 			userInterface.showLocation();
+			gameStarted = true;
 			
 			output("The nightmare is always the same. You’re running, desperate and terrified and hurting bad, through the winding alleys of Terra. You can hear the sirens in the distance, the sound of laser fire, a muffled voice on a bull horn, the words drowned out in the pounding rain. No matter how fast you run, you never seem to get further away; the sounds of the standoff are in your ears, the loud thumps of weapons fire reverberating in your chest. ");
 

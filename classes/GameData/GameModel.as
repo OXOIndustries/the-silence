@@ -20,6 +20,8 @@ package classes.GameData
 	import classes.Engine.Utility.clone;
 	import flash.utils.getDefinitionByName;
 	
+	import classes.StringUtil;
+	
 	/**
 	 * GameModel stores all of the current state of the game, and is accessible to all other classes at-will.
 	 * It contains ALL things that must persist between game saves.
@@ -29,11 +31,55 @@ package classes.GameData
 	 */
 	public class GameModel implements ISaveable
 	{
+		function GameModel()
+		{
+			newGame();
+		}
+		
+		public function newGame():void
+		{
+			days = 0;
+			hours = 0;
+			minutes = 0;
+			
+			gameStarted = false;
+			inSceneBlockSaving = false;
+			encountersDisabled = false;
+			
+			flags = new Dictionary();
+			
+			CharacterIndex.configure();
+			ShipIndex.init();
+			
+			CharacterIndex.PlayerGroup = new Party();
+			CodexManager.viewedEntryList = new Array();
+			CodexManager.unlockedEntryList = new Array();
+			
+			StatTracking.reset();
+		}
+		
 		public var days:uint = 0;
 		public var hours:uint = 0;
 		public var minutes:uint = 0;
 		
 		public var gameStarted:Boolean = false;
+		public var inSceneBlockSaving:Boolean = false;
+		public var encountersDisabled:Boolean = false;
+		
+		public function get inCombat():Boolean
+		{
+			return (CombatManager.inGroundCombat || CombatManager.inSpaceCombat);
+		}
+		
+		public function get inGroundCombat():Boolean
+		{
+			return CombatManager.inGroundCombat;
+		}
+		
+		public function get inSpaceCombat():Boolean
+		{
+			return CombatManager.inSpaceCombat;
+		}
 		
 		public var flags = new Dictionary();
 		
@@ -87,15 +133,15 @@ package classes.GameData
 			return CharacterIndex.PlayerGroup;
 		}
 		
-		public function set playerParty(v:Array):Party
+		public function setPlayerParty(v:Array):void
 		{
-			CharacterIndex.PlayerGroup = v;
+			CharacterIndex.PlayerGroup.setParty(v);
 		}
 		
 		public function set characters(v:Object):void
 		{
 			CharacterIndex.Chars = v;
-			CharacterIndex.init(true);
+			CharacterIndex.configure(true);
 		}
 		
 		public function set ships(v:Object):void
@@ -108,6 +154,11 @@ package classes.GameData
 		{
 			var o:Object = new Object();
 			
+			o.saveName = pc.short;
+			o.saveLocation = StringUtil.toTitleCase(kGAMECLASS.userInterface.planetText + ", " + kGAMECLASS.userInterface.systemText);
+			o.currentPCNotes = "";
+			o.playerGender = pc.mfn("M", "F", "A");
+			
 			o.days = this.days;
 			o.hours = this.hours;
 			o.minutes = this.minutes;
@@ -117,9 +168,9 @@ package classes.GameData
 			o.gameOptions = kGAMECLASS.gameOptions.getSaveObject();
 			
 			o.flags = new Object();
-			for (prop in this.flags)
+			for (var prop:String in this.flags)
 			{
-				o.flags[prop] = this.flags[prop];
+				if (this.flags[prop] != undefined) o.flags[prop] = this.flags[prop];
 			}
 			
 			o.characters = new Object();
@@ -176,6 +227,12 @@ package classes.GameData
 			
 			kGAMECLASS.gameOptions.loadSaveObject(o.gameOptions);
 			
+			this.flags = new Dictionary();
+			for (var prop:String in o.flags)
+			{
+				this.flags[prop] = o.flags[prop];
+			}
+			
 			var characters:Object = new Object();
 			for (prop in o.characters)
 			{
@@ -189,7 +246,7 @@ package classes.GameData
 			{
 				party.push(CharacterIndex.Chars[o.playerparty[i].INDEX]);
 			}
-			playerParty = party;
+			setPlayerParty(party);
 			
 			var ships:Object = new Object();
 			for (prop in o.ships)
@@ -197,6 +254,27 @@ package classes.GameData
 				ships[prop] = new (getDefinitionByName(o.ships[prop].classInstance) as Class)();
 				ships[prop].loadSaveObject(o.ships[prop]);
 			}
+			
+			var unlockedCodexEntries:Array = new Array();
+			for (i = 0; i < o.unlockedCodexEntries.length; i++)
+			{
+				unlockedCodexEntries.push(o.unlockedCodexEntries[i]);
+			}
+			CodexManager.unlockedEntryList = unlockedCodexEntries;
+			
+			var viewedCodexEntries:Array = new Array();
+			for (i = 0; i < o.viewedCodexEntries.length; i++)
+			{
+				viewedCodexEntries.push(o.viewedCodexEntries[i]);
+			}
+			CodexManager.viewedEntryList = viewedCodexEntries;
+			
+			StatTracking.loadStorageObject(clone(o.statTracking));
+		}
+		
+		public function makeCopy():*
+		{
+			
 		}
 	}
 }

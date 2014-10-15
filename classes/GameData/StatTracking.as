@@ -12,6 +12,11 @@ package classes.GameData
 		
 		private static var _STORAGE:Object;
 		
+		public static function reset():void
+		{
+			StatTracking._STORAGE = new Object();
+		}
+		
 		public static function getStorageObject():Object
 		{
 			return StatTracking._STORAGE;
