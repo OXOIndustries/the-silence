@@ -108,7 +108,7 @@
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
 
-			version = "0.02.00";
+			version = "0.02.01";
 
 			eventQueue = new Array();
 			eventBuffer = "";
