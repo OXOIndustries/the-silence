@@ -10,6 +10,7 @@ package classes.GameData.Ships
 		public function BlackRose() 
 		{
 			this.version = 1;
+			this._latestVersion = 1;
 			
 			INDEX = "BLACKROSE";
 			shortName = "black rose";

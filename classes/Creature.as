@@ -52,6 +52,12 @@
 		//Constructor
 		public function Creature() {
 			this.addIgnoredField("neverSerialize");
+			this.addIgnoredField("bustT");
+			this.addIgnoredField("isDefeated");
+			this.addIgnoredField("isMisc");
+			this.addIgnoredField("isNice");
+			this.addIgnoredField("isKind");
+			this.addIgnoredField("isHard");
 
 			cocks = new Array();
 			vaginas = new Array();

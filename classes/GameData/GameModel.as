@@ -244,7 +244,7 @@ package classes.GameData
 			var party:Array = new Array();
 			for (var i:int = 0; i < o.playerparty.length; i++)
 			{
-				party.push(CharacterIndex.Chars[o.playerparty[i].INDEX]);
+				party.push(CharacterIndex.Chars[o.playerparty[i]]);
 			}
 			setPlayerParty(party);
 			

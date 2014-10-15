@@ -108,7 +108,7 @@
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
 
-			version = "0.02.01";
+			version = "0.02.02";
 
 			eventQueue = new Array();
 			eventBuffer = "";
@@ -190,6 +190,8 @@
 				return;
 			}
 			
+			updateUI();
+			
 			//Set up all appropriate flags
 			//Display the room description
 			clearOutput();
@@ -243,6 +245,7 @@
 		
 		public function updateUI():void
 		{
+			userInterface.showPlayerParty();
 			userInterface.setPlayerPartyData(GameState.playerParty.getParty());
 		}
 		

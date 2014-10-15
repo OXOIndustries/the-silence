@@ -54,6 +54,11 @@
 			// Raw properties
 			for each (var prop:XML in _dl)
 			{
+				if (_ignoredFields.indexOf(prop.@name) != -1)
+				{
+					continue;
+				}
+				
 				if (this[prop.@name] != null && this[prop.@name] != undefined)
 				{
 					if (this[prop.@name] is ISaveable)
@@ -170,7 +175,7 @@
 				// Dynamic objects ie v2+ saves
 				for (prop in dataObject)
 				{
-					if (prop != "prototype" && prop != "neverSerialize" && prop != "classInstance")
+					if (prop != "prototype" && prop != "neverSerialize" && prop != "classInstance" && (_ignoredFields.indexOf(prop) == -1))
 					{
 						// Directly referencing something that supports this serialization method
 						if (this[prop] is ISaveable)

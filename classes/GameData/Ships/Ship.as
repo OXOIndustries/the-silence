@@ -19,6 +19,19 @@ package classes.GameData.Ships
 		public function Ship() 
 		{
 			this.addIgnoredField("neverSerialize");
+			this.addIgnoredField("hasConnection");
+			this.addIgnoredField("connectedShipObject");
+			this.addIgnoredField("airlockConnectsTo");
+			this.addIgnoredField("equippedDefensiveModules");
+			this.addIgnoredField("equippedNavigationModules");
+			this.addIgnoredField("equippedOffensiveModules");
+			this.addIgnoredField("equippedUtilityModules");
+			this.addIgnoredField("currentPowergrid");
+			this.addIgnoredField("maxCrewComplement");
+			this.addIgnoredField("maxHullHP");
+			this.addIgnoredField("currentHullHP");
+			this.addIgnoredField("agility");
+			this.addIgnoredField("bustT");
 		}
 		
 		// Identification/display
@@ -33,7 +46,8 @@ package classes.GameData.Ships
 		
 		// Location
 		public var currentLocation:String = ""; // System the ship is located in
-		public var position:Point = new Point(0, 0); // Position of the ship within the system
+		public var posX:Number = 0;
+		public var posY:Number = 0;
 		
 		public var shipInterior:String = ""; // The FQN of the ship interior airlock
 		public var connectedShip:String = "";

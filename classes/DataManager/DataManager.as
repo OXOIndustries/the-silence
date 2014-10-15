@@ -451,6 +451,7 @@
 			
 			// Trigger an attempt to update display font size
 			kGAMECLASS.refreshFontSize();
+			kGAMECLASS.mainGameMenu();
 		}
 		
 		private function doAutoSave():void
