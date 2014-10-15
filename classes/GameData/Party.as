@@ -66,6 +66,11 @@ package classes.GameData
 			return _charactersInParty;
 		}
 		
+		public function setParty(party:Array):void
+		{
+			_charactersInParty = party;
+		}
+		
 		public function isInParty(char:Creature):Boolean
 		{
 			if (_charactersInParty.indexOf(char) != -1) return true;

@@ -79,7 +79,7 @@
 		
 		private function getSO(slotNumber:int):SharedObject
 		{
-			return SharedObject.getLocal("mod0_" + slotNumber, "/the_silence");
+			return SharedObject.getLocal("silence_" + slotNumber);
 		}
 		
 		private function replaceDataWithBlob(so:SharedObject, blob:Object):void
