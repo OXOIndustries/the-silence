@@ -59,22 +59,22 @@ package classes.GameData.Ships
 		public function moveToShip(ship:Ship):void
 		{
 			connectedShip = ship.INDEX;
-			connectedShipObject.connectedShip = this.INDEX;
+			connectedShipObject().connectedShip = this.INDEX;
 		}
 		
 		public function disconnectShips():void
 		{
-			connectedShipObject.connectedShip = "";
+			connectedShipObject().connectedShip = "";
 			connectedShip = "";
 		}
 		
-		public function get hasConnection():Boolean
+		public function hasConnection():Boolean
 		{
-			if (airlockConnectsTo != null && airlockConnectsTo.length > 0) return true;
+			if (airlockConnectsTo() != null && airlockConnectsTo().length > 0) return true;
 			return false;
 		}
 		
-		public function get connectedShipObject():Ship
+		public function connectedShipObject():Ship
 		{
 			if (connectedShip.length > 0)
 				return ShipIndex.Ships[connectedShip];
@@ -82,9 +82,9 @@ package classes.GameData.Ships
 				return null;
 		}
 		
-		public function get airlockConnectsTo():String
+		public function airlockConnectsTo():String
 		{
-			if (connectedShipObject != null) return connectedShipObject.shipInterior;
+			if (connectedShipObject() != null) return connectedShipObject().shipInterior;
 			else return "";
 		}
 		
@@ -112,26 +112,26 @@ package classes.GameData.Ships
 			return total;		
 		}
 		
-		public function get equippedOffensiveModules():int
+		public function equippedOffensiveModules():int
 		{
 			return numModulesOfType(ShipModule.TYPE_WEAPON);	
 		}
-		public function get equippedDefensiveModules():int
+		public function equippedDefensiveModules():int
 		{
 			return numModulesOfType(ShipModule.TYPE_DEFENSIVE);
 		}
-		public function get equippedNavigationModules():int
+		public function equippedNavigationModules():int
 		{
 			return numModulesOfType(ShipModule.TYPE_NAVIGATION);
 		}
-		public function get equippedUtilityModules():int
+		public function equippedUtilityModules():int
 		{
 			return numModulesOfType(ShipModule.TYPE_UTILITY);
 		}
 		
 		// Stats -- Fitting
 		public var maxPowergrid:int = 1000;
-		public function get currentPowergrid():int
+		public function currentPowergrid():int
 		{
 			var total:int = 0;
 			for (var i:int = 0; i < equippedModules.length; i++)
@@ -142,7 +142,7 @@ package classes.GameData.Ships
 		}
 		
 		public var baseMaxCrewComplement:int = 7;
-		public function get maxCrewComplement():int
+		public function maxCrewComplement():int
 		{
 			return baseMaxCrewComplement;
 		}
@@ -151,17 +151,17 @@ package classes.GameData.Ships
 		public var baseHullHP:int = 100;
 		public var actualHullHP:int = 100;
 		
-		public function get maxHullHP():int
+		public function maxHullHP():int
 		{
 			return baseHullHP;
 		}
-		public function get currentHullHP():int
+		public function currentHullHP():int
 		{
 			return actualHullHP;
 		}
 		
 		public var baseAgility:int = 10;
-		public function get agility():int
+		public function agility():int
 		{
 			return baseAgility;
 		}

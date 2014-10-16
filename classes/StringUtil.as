@@ -19,6 +19,7 @@ package classes
 		 */
 		public static function toTitleCase(value:String):String
 		{
+			value = value.toLowerCase();
 			var w:Array = value.split(" ");
 			for (var i:int = 0; i < w.length; i++)
 			{

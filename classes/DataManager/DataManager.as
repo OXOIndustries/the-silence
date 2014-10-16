@@ -79,7 +79,7 @@
 		
 		private function getSO(slotNumber:int):SharedObject
 		{
-			return SharedObject.getLocal("silence_" + slotNumber);
+			return SharedObject.getLocal("silence_" + slotNumber, "/");
 		}
 		
 		private function replaceDataWithBlob(so:SharedObject, blob:Object):void
@@ -226,9 +226,19 @@
 			
 			// Valid file to preview!
 			returnString += slotNumber;
-			returnString += " - <b>Location:</b> " + StringUtil.toTitleCase(dataFile.data.gameState.saveLocation);
+			returnString += " - Kara Volke - (";
 			
-			returnString += "\n\n";
+			if (dataFile.data.gameState.hours < 10) returnString += "0";
+			returnString += dataFile.data.gameState.hours;
+			returnString += ":";
+			
+			if (dataFile.data.gameState.minutes < 10) returnString += "0";
+			returnString += dataFile.data.gameState.minutes;
+			returnString += " Days: " + dataFile.data.gameState.days + ")";
+			
+			returnString += "\n\t<b>Location:</b> " + StringUtil.toTitleCase(dataFile.data.gameState.roomName) + " / " + StringUtil.toTitleCase(dataFile.data.gameState.planetName) + " / " + StringUtil.toTitleCase(dataFile.data.gameState.systemName);
+			
+			returnString += "\n";
 			return returnString;
 		}
 		

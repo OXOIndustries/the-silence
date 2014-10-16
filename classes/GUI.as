@@ -493,7 +493,6 @@
 			if (_currentModule.moduleName != "PrimaryOutput")
 			{
 				this.showTargetOutput("PrimaryOutput");
-				this.restoreLocation();
 			}
 			
 			this.showingPCAppearance = false;
@@ -550,7 +549,7 @@
 			if (workStr.length > 32) trace("Warning! Room name '" + v + "' is too long!");
 			
 			// Text short enough to fit on a single line, bump to bottom
-			if (workStr.length <= 18) 
+			if (workStr.length <= 18 && workStr.indexOf("\n") == -1) 
 			{
 				workStr = "\n" + workStr;
 			}

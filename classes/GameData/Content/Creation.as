@@ -89,6 +89,8 @@ package classes.GameData.Content
 			
 			output("\n\n<b><i>(Choose one of the following dialogue options. Hover your mouse over an option for a more detailed explanation.)</i></b>");
 
+			processTime(10);
+			
 			clearMenu();
 			addButton(0, "Kind", CreationIII, "kind", "Respond kindly", "Kind responses are diplomatic and truthful. Tell Chow you'll take the job, no questions asked. The man's given you good business before; keep it professional.");
 			addButton(1, "Mischievous", CreationIII, "misc", "Respond mischievously", "Mischievous responses are joking, cunning, and frequently involve bluffing. Tell Chow if he wants it so bad, he can come get it himself -- or give you a big, fat slice of the pie.");
@@ -154,6 +156,7 @@ package classes.GameData.Content
 			
 			output("\n\n<i>“Looks like,”</i> you answer, walking over to the PA next to your door and keying it.");
 
+			processTime(10);
 			doTalkTree(addressTheCrew);
 		}
 		
@@ -174,8 +177,9 @@ package classes.GameData.Content
 			
 			PlayerParty.addToParty(logan);
 
-			currentLocation = "TheSilence.CaptainsQuarters"
+			currentLocation = "TheSilence.CaptainsQuarters";
 
+			processTime(10);
 			clearMenu();
 			addButton(0, "Next", mainGameMenu);
 		}

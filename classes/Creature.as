@@ -69,6 +69,39 @@
 			inventory = new Array();
 			sexualPreferences = new SexualPreferences();
 		}
+		
+		public function progressTime(delta:int):void
+		{
+			this.shieldsRaw = this.shieldsMax();
+			updateStatusEffects(delta);
+		}
+		
+		public function updateStatusEffects(delta:int):void
+		{
+			var removals:Array = new Array();
+			for (var i:int = this.statusEffects.length - 1; i >= 0; i++)
+			{
+				if (this.statusEffects[i].minutesLeft > 0)
+				{
+					this.statusEffects[i].minutesLeft -= delta;
+					
+					if (this.statusEffects[i].minutesLeft <= 0)
+					{
+						// Individual removal handlers for special effects
+						
+						// Add index to removal list for handling once processing of all effets complete
+						removals.push(i);
+					}
+				}
+			}
+			
+			// Remove the needful
+			while (removals.length > 0)
+			{
+				this.statusEffects.splice(removals[0], 1);
+				removals.splice(0, 1);
+			}
+		}
 
 		//For enemies
 		public var bustT:Class = StaticRenders.MISSING;

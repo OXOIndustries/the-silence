@@ -27,6 +27,8 @@ package classes.GameData.Content
 			
 			output("\n\nThe pirate captain stands, striding out from the shadows, her cape flowing behind her. The scars and tattoos on her face twist as her lips curl into a half-smile, an ugly grin that ill suits her. <i>“I have to say, I’m impressed,”</i> she says, her hands falling away to her side and to the heavy laser gun slung there. <i>“You defied the Black Void, rammed a much bigger, more powerful ship, and now you’ve </i>boarded<i> the </i>Rose<i>. Bravo, captain. Now that you’re here, however... what exactly did you hope to accomplish? To kill me and steal the ship?”</i>");
 
+			processTime(5);
+			
 			doTalkTree(fugUMiri);
 
 			return true;
@@ -69,6 +71,8 @@ package classes.GameData.Content
 				
 				output("\n\nFuck if you’re not going down swinging!");
 			}
+			
+			processTime(5);
 
 			clearMenu();
 			doNext(startMiriFite);
@@ -126,6 +130,8 @@ package classes.GameData.Content
 			
 			output("\n\nBlackness takes you.");
 
+			processTime(20);
+			
 			doNext(piratesWinII);
 		}
 
@@ -164,6 +170,7 @@ package classes.GameData.Content
 			
 			output("\n\n<i>To Be Continued</i>");
 
+			processTime(10);
 			clearMenu();
 		}
 		

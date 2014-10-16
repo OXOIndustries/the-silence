@@ -19,6 +19,8 @@ package classes.GameData.Content
 			
 			output("\n\n<i>“Chow again?”</i> Pyra huffs. You turn your attention to the short, red-scaled chief engineer, barely visible over the lip of the table save for her plumage of bright purple feathers. She pulls herself a little straighter so that you can see her eyes. <i>“Chow fucking screwed us on that last run. I almost got my ears pinched off!”</i> she adds, manhandling one of the nearly body-length ears dangling from her head. Several metallic studs and rings jingle around a large scar running along its length.");
 
+			processTime(5);
+			
 			clearMenu();
 			doTalkTree(missionBriefII);
 		}
@@ -117,6 +119,8 @@ package classes.GameData.Content
 
 			output("\n\nTarik sighs. <i>“Aye, Captain. As you say,”</i> before slithering down toward the airlock, his enormous shoulders slumped. With him gone, you’re left alone in the conference room as your crew prepares for action.");
 
+			processTime(10);
+			
 			clearMenu();
 			addButton(0, "Next", missionBriefIII);
 		}
@@ -128,6 +132,8 @@ package classes.GameData.Content
 
 			output("A few moments later, the P.A. chimes, and Logan’s voice comes through. <i>“Captain to the bridge. Captain to the bridge.”</i>");
 
+			processTime(2);
+			
 			clearMenu();
 			addButton(0, "Next", mainGameMenu);
 		}

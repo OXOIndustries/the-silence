@@ -1,5 +1,6 @@
 package classes.GameData 
 {
+	import classes.Creature;
 	import classes.GameData.Characters.Logan;
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.Characters.Pyra;
@@ -66,6 +67,14 @@ package classes.GameData
 		public static function get tarik():Tarik
 		{
 			return CharacterIndex.Chars["TARIK"];
+		}
+		
+		public static function progressTime(delta:int):void
+		{
+			for (var prop:String in Chars)
+			{
+				(Chars[prop] as Creature).progressTime(delta);
+			}
 		}
 	}
 }

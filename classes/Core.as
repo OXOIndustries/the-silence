@@ -108,7 +108,7 @@
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
 
-			version = "0.02.02";
+			version = "0.02.03";
 
 			eventQueue = new Array();
 			eventBuffer = "";
@@ -246,8 +246,20 @@
 		
 		public function updateUI():void
 		{
+			userInterface.time = timeText();
 			userInterface.showPlayerParty();
 			userInterface.setPlayerPartyData(GameState.playerParty.getParty());
+		}
+		
+		private function timeText():String
+		{
+			var buffer:String = "";
+			
+			if (GameState.hours < 10) buffer += "0";
+			buffer += GameState.hours + ":";
+			if (GameState.minutes < 10) buffer += "0";
+			buffer += GameState.minutes;
+			return buffer;
 		}
 		
 		public function refreshFontSize():void

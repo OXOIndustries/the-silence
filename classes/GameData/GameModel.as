@@ -38,9 +38,9 @@ package classes.GameData
 		
 		public function newGame():void
 		{
-			days = 0;
-			hours = 0;
-			minutes = 0;
+			days = 1;
+			hours = 8;
+			minutes = 37;
 			
 			gameStarted = false;
 			inSceneBlockSaving = false;
@@ -155,7 +155,9 @@ package classes.GameData
 			var o:Object = new Object();
 			
 			o.saveName = pc.short;
-			o.saveLocation = StringUtil.toTitleCase(kGAMECLASS.userInterface.planetText + ", " + kGAMECLASS.userInterface.systemText);
+			o.roomName = StringUtil.toTitleCase(MapIndex.FindRoom(pc.currentLocation).RoomName);
+			o.planetName = StringUtil.toTitleCase(MapIndex.FindRoom(pc.currentLocation).ParentLocation.LocationName);
+			o.systemName = StringUtil.toTitleCase(MapIndex.FindRoom(pc.currentLocation).ParentLocation.ParentSystem.SystemName);
 			o.currentPCNotes = "";
 			o.playerGender = pc.mfn("M", "F", "A");
 			
@@ -254,6 +256,7 @@ package classes.GameData
 				ships[prop] = new (getDefinitionByName(o.ships[prop].classInstance) as Class)();
 				ships[prop].loadSaveObject(o.ships[prop]);
 			}
+			this.ships = ships;
 			
 			var unlockedCodexEntries:Array = new Array();
 			for (i = 0; i < o.unlockedCodexEntries.length; i++)

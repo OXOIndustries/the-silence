@@ -27,7 +27,7 @@ package classes.GameData.Map.Data.Ships
 			breach.ShortName = "Cmd.Dk Breach";
 			breach.EntryFunction = ContentIndex.theConstellation.breachFunction;
 			breach.MoveTime = 1;
-			breach.EnemyEncounterContainers.push(droidFights);
+			//breach.EnemyEncounterContainers.push(droidFights);
 			breach.AddFlag(GLOBAL.AIRLOCK);
 			breach.AddFlag(GLOBAL.INDOOR);
 			breach.NorthExit = "CommandDeckM24";

@@ -112,7 +112,7 @@ package classes.GameData
 			{
 				var shipP:classes.GameData.Ships.Ship = ShipIndex.Ships[room.ParentLocation.LocationName];
 				
-				if (shipP != undefined && shipP.hasConnection == true)
+				if (shipP != undefined && shipP.hasConnection() == true)
 				{
 					addButton(0, "Exit Airlock", Move, (ShipIndex.Ships[room.ParentLocation.LocationName] as classes.GameData.Ships.Ship).airlockConnectsTo);
 				}
@@ -171,6 +171,7 @@ package classes.GameData
 			var room:Room = FindRoom(name);
 			
 			trace("Entering room", name);
+			MapIndex.displayRoom(GameState.pc.currentLocation);
 			
 			if (room != null)
 			{

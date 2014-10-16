@@ -226,6 +226,11 @@ package classes.GameData.Content
 			clearMenu();
 			addButton(0, "Next", ((tarFunction == null) ? mainGameMenu : tarFunction));
 		}
+		
+		protected function processTime(delta:int):void
+		{
+			classes.Engine.Interfaces.processTime(delta);
+		}
 	}
 
 }

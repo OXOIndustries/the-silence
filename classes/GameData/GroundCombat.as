@@ -60,6 +60,10 @@ package classes.GameData
 				{
 					_friendlies = (args[0] as Party).getParty();
 				}
+				else if (args[0] is Array)
+				{
+					_friendlies = args[0];
+				}
 				else
 				{
 					_friendlies = [args[0]];
@@ -85,7 +89,7 @@ package classes.GameData
 				}
 				else if (args[0] is Array)
 				{
-					
+					_hostiles = args[0];
 				}
 				else
 				{
@@ -188,7 +192,7 @@ package classes.GameData
 			if (_attackSelections[target.INDEX].type != "attack")
 				addButton(1 + (offset * 5), "Attack", attackMenu, target);
 			else
-				addButton(1 (offset * 5), _attackSelections[target.INDEX].label, attackMenu, target);
+				addButton(1 + (offset * 5), _attackSelections[target.INDEX].label, attackMenu, target);
 			
 			if (_attackSelections[target.INDEX].type != "special")
 				addButton(2 + (offset * 5), "Specials", specialsMenu, target);
@@ -274,7 +278,7 @@ package classes.GameData
 			}
 		}
 		
-		private function selectTarget(... args):void
+		private function selectTarget(args:Array):void
 		{
 			_attackSelections[args[1].INDEX].target = args[0];
 			
@@ -865,7 +869,7 @@ package classes.GameData
 		{
 			if (lossCondition == CombatManager.ENTIRE_PARTY_DEFEATED)
 			{
-				for (var i:int = 0; i < _friendlies[i].length; i++)
+				for (var i:int = 0; i < _friendlies.length; i++)
 				{
 					if (_friendlies[i].HP() >= 0 && _friendlies[i].lust() <= _friendlies[i].lustMax()) return false;
 				}

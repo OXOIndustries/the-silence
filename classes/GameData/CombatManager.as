@@ -17,6 +17,7 @@ package classes.GameData
 		
 		public static function get inSpaceCombat():Boolean
 		{
+			if (combatContainer == null) return false;
 			if (combatContainer.combatMode == CombatContainer.COMBAT_SPACE) return true;
 			return false;
 		}

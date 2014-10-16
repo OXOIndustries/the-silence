@@ -25,6 +25,8 @@ package classes.GameData.Content
 			
 			output("\n\nThat’s good news. The less time Tarik spends in that hideous suit you had to rig up for his serpentine lower half, the less complaining you’ll hear tomorrow.");
 
+			processTime(10);
+			
 			menu();
 		}
 
@@ -32,6 +34,8 @@ package classes.GameData.Content
 		{
 			clearOutput();
 			setLocation("LOGAN");
+			
+			flags["LOGAN_LIFESIGNS"] = 1;
 
 			output("<i>“Any life signs still aboard?”</i>");
 			
@@ -41,6 +45,8 @@ package classes.GameData.Content
 			
 			output("\n\n<i>“I’ve got a few on radar,”</i> she says, waving a hand dismissively toward the holomap. <i>“Should be fine until their buddies come pick ‘em up. Tell me you’re not planning on playing rescue mission, right?”</i>");
 
+			processTime(5);
+			
 			clearMenu();
 			doTalkTree(lifeSignsII);
 		}
@@ -48,9 +54,15 @@ package classes.GameData.Content
 		private function menu():void
 		{
 			clearMenu();
-			addButton(0, "Life Signs", lifeSigns);
-			addButton(1, "Ship Details", shipDetails);
-			addButton(2, "Nova Sec.", novaSecurities);
+			if (flags["LOGAN_LIFESIGNS"] == undefined) addButton(0, "Life Signs", lifeSigns);
+			else addDisabledButton(0, "Life Signs");
+			
+			if (flags["LOGAN_SHIPDETAILS"] == undefined) addButton(1, "Ship Details", shipDetails);
+			else addDisabledButton(1, "Ship Details");
+			
+			if (flags["LOGAN_NOVASEC"] == undefined) addButton(2, "Nova Sec.", novaSecurities);
+			else addDisabledButton(2, "Nova Sec.");
+			
 			addButton(3, "Next", fuckDisGoNext);
 		}
 
@@ -70,6 +82,8 @@ package classes.GameData.Content
 				
 				output("\n\nShe laughs. <i>“Sorry. For the REST of you to shoot through. I’m a pilot, not a gunslinger.”</i>");
 			}
+			
+			processTime(5);
 
 			menu();
 		}
@@ -78,6 +92,8 @@ package classes.GameData.Content
 		{
 			clearOutput();
 			setLocation("LOGAN");
+			
+			flags["LOGAN_SHIPDETAILS"] = 1;
 
 			output("<i>“So what’re we walking into, Logan?”</i>");
 			
@@ -95,6 +111,8 @@ package classes.GameData.Content
 			
 			output("\n\n<i>“I’ll keep that in mind.”</i> ");
 
+			processTime(10);
+			
 			menu();
 		}
 
@@ -102,6 +120,8 @@ package classes.GameData.Content
 		{
 			clearOutput();
 			setLocation("LOGAN");
+			
+			flags["LOGAN_NOVASEC"] = 1;
 			
 			output("<i>“We’ve never knocked over Nova before,”</i> you muse. ");
 			
@@ -122,6 +142,10 @@ package classes.GameData.Content
 			output("\n\n<i>“... and just so happened to know how to pilot a star shuttle after our old pilot was so hammered he couldn’t see straight,”</i> you finish for her, and you both share a laugh. <i>“If it wasn’t for you, we’d have been done for. Nova doesn’t seem like they take prisoners these days.”</i>");
 			
 			output("\n\n<i>“Not when you’re leading a running firefight through their space port in the middle of the big Christmas rush.”</i>");
+			
+			processTime(10);
+			
+			menu();
 		}
 
 		private function fuckDisGoNext():void
@@ -148,6 +172,8 @@ package classes.GameData.Content
 			theSilence.moveToShip(theConstellation);
 			flags["DOCKED_WITH_CONSTELLATION"] = 1;
 
+			processTime(15);
+			
 			clearMenu();
 			addButton(0, "Next", actuallyGoNext);
 		}
