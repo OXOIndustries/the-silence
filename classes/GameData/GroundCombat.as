@@ -17,6 +17,8 @@ package classes.GameData
 	
 	import classes.GLOBAL;
 	
+	import classes.StringUtil;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -97,18 +99,30 @@ package classes.GameData
 				}
 			}
 			
+			var appends:Array = ["A", "B", "C", "D"];
+			var appendNum:int = 0;
+			
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
 				if (!(_hostiles[i] is Creature)) throw new Error("Attempted to use a non-creature object in Ground Combat.");
+				
+				// Append ident chars to creature names
+				if ((_hostiles[i] as Creature).isUniqueInFight == false)
+				{
+					_hostiles[i].short += " " + appends[appendNum];
+					_hostiles[i].long += " " + appends[appendNum];
+					_hostiles[i].btnTargetText += " " + appends[appendNum];
+					appendNum++;
+				}
 			}
 		}
 		
 		override public function beginCombat():void
 		{
 			validateContainer();
-			showCombatMenu();
-			showCombatDescriptions();
+			showCombatDescriptions(true);
 			showCombatUI();
+			showCombatMenu();
 		}
 		
 		private function validateContainer():void
@@ -120,7 +134,6 @@ package classes.GameData
 		private function showCombatMenu():void
 		{
 			clearMenu();
-			showCombatDescriptions();
 			
 			if (!doneRoundActions())
 			{
@@ -167,7 +180,7 @@ package classes.GameData
 		private function generateCombatMenuFor(target:Creature, offset:int):void
 		{
 			addDisabledButton((offset * 5), target.short + ":");
-			if (target.isDefeated)
+			if (target.isDefeated())
 			{
 				addDisabledButton(1 + (offset * 5), "DEFEATED");
 				return;
@@ -192,12 +205,18 @@ package classes.GameData
 			if (_attackSelections[target.INDEX].type != "attack")
 				addButton(1 + (offset * 5), "Attack", attackMenu, target);
 			else
+			{
 				addButton(1 + (offset * 5), _attackSelections[target.INDEX].label, attackMenu, target);
+				addDisabledButton(3 + (offset * 5), _attackSelections[target.INDEX].target.btnTargetText);
+			}
 			
 			if (_attackSelections[target.INDEX].type != "special")
 				addButton(2 + (offset * 5), "Specials", specialsMenu, target);
 			else
+			{
 				addButton(2 + (offset * 5), _attackSelections[target.INDEX].label, specialsMenu, target);
+				addDisabledButton(3 + (offset * 5), _attackSelections[target.INDEX].target.btnTargetText);
+			}
 		}
 		
 		private function attemptEscape():void
@@ -272,15 +291,24 @@ package classes.GameData
 		private function targetSelectionMenu(target:Creature):void
 		{
 			clearMenu();
+			addDisabledButton(0, target.short);
+			addDisabledButton(1, _attackSelections[target.INDEX].label);
+			
+			var btnOffset:int = 0;
+			
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
-				addButton(i, _hostiles[i].short, selectTarget, [i, target]);
+				if (!_hostiles[i].isDefeated()) 
+				{
+					addButton(btnOffset + 5, _hostiles[i].short, selectTarget, [i, target]);
+					btnOffset++;
+				}
 			}
 		}
 		
 		private function selectTarget(args:Array):void
 		{
-			_attackSelections[args[1].INDEX].target = args[0];
+			_attackSelections[args[1].INDEX].target = _hostiles[args[0]];
 			
 			generateCombatMenu();
 		}
@@ -288,9 +316,11 @@ package classes.GameData
 		private function attackMenu(target:Creature):void
 		{
 			clearMenu();
+			addDisabledButton(0, target.short);
+			
 			if (target.meleeWeapon != null)
 			{
-				addButton(0, target.meleeWeapon.attackVerb, selectMeleeAttack, target);
+				addButton(5, StringUtil.toTitleCase(target.meleeWeapon.attackVerb), selectMeleeAttack, target);
 			}
 			else
 			{
@@ -299,7 +329,7 @@ package classes.GameData
 			
 			if (target.rangedWeapon != null)
 			{
-				addButton(1, target.rangedWeapon.attackVerb, selectRangedAttack, target);
+				addButton(6, StringUtil.toTitleCase(target.rangedWeapon.attackVerb), selectRangedAttack, target);
 			}
 			else
 			{
@@ -310,7 +340,7 @@ package classes.GameData
 		private function selectMeleeAttack(target:Creature):void
 		{
 			_attackSelections[target.INDEX].type = "attack";
-			_attackSelections[target.INDEX].label = target.meleeWeapon.attackVerb;
+			_attackSelections[target.INDEX].label = StringUtil.toTitleCase(target.meleeWeapon.attackVerb);
 			_attackSelections[target.INDEX].func = doMeleeAttack;
 			
 			targetSelectionMenu(target);
@@ -319,7 +349,7 @@ package classes.GameData
 		private function selectRangedAttack(target:Creature):void
 		{
 			_attackSelections[target.INDEX].type = "attack";
-			_attackSelections[target.INDEX].label = target.rangedWeapon.attackVerb;
+			_attackSelections[target.INDEX].label = StringUtil.toTitleCase(target.rangedWeapon.attackVerb);
 			_attackSelections[target.INDEX].func = doRangedAttack;
 			
 			targetSelectionMenu(target);
@@ -419,15 +449,16 @@ package classes.GameData
 				// Pyra never misses -- or at least, 5 pellets will hit, 5 will roll for hit using standard mechanics.
 				output("\n\nPyra levels her shotgun at " + target.a + target.short + " and pulls the trigger, scattering a mass of metal pellets in their direction.");
 				
-				var damage:int = 0;
+				var hits:int = 3;
 				for (var i:int = 0; i < 5; i++)
 				{
 					if (!calculateMiss(attacker, target, false, -1, 3.0))
 					{
-						damage += calculateDamage(attacker, target, attacker.rangedWeapon.damage, attacker.rangedWeapon.damageType, "ranged",  true);
+						hits++;
 					}
-					damage += calculateDamage(attacker, target, attacker.rangedWeapon.damage, attacker.rangedWeapon.damageType, "ranged",  true);
 				}
+
+				calculateDamage(attacker, target, attacker.rangedWeapon.damage * hits, attacker.rangedWeapon.damageType, "ranged");
 				
 				return;
 			}
@@ -693,18 +724,26 @@ package classes.GameData
 			userInterface().setEnemyPartyData(_hostiles);
 		}
 		
-		private function showCombatDescriptions():void
+		private function showCombatDescriptions(showLong:Boolean = false):void
 		{
-			output("You're fighting " + num2Text(enemiesAlive()) + " hostiles.");
+			if (!showLong) output("You're fighting " + num2Text(enemiesAlive()) + " hostiles.");
 			
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
-				displayHostileStatus(_hostiles[i]);
+				displayHostileStatus(_hostiles[i], showLong);
 			}
 		}
 		
-		private function displayHostileStatus(target:Creature):void
+		private var _displayedLongStatus:Array = [];
+		
+		private function displayHostileStatus(target:Creature, showLong:Boolean = false):void
 		{
+			if (showLong && _displayedLongStatus.indexOf(target.INDEX) == -1)
+			{
+				output("\n\n" + target.description);
+				_displayedLongStatus.push(target.INDEX);
+			}
+			
 			if (target.HP() <= 0)
 			{
 				output("\n\n<b>You've knocked the resistance out of " + target.a + target.short + ".</b>");
@@ -715,18 +754,52 @@ package classes.GameData
 			}
 			else
 			{
-				output("\n\n" + target.long);
+				var pHealth:Number = target.HP() / target.HPMax();
+				var pShield:Number = target.shieldsRaw / target.shieldsMax();
+				
+				pHealth *= 100;
+				pShield *= 100;
+				
+				var dHealth:int = Math.round(pHealth);
+				var dShield:int = Math.round(pShield);
+								
+				output("\n\n" + target.long + " (<b>S: " + dShield + "% / H: " + dHealth + "%</b>)");
 			}
 		}
 		
-		private function processCombat():void
+		private function actionSelectionsRemain():Boolean
+		{
+			for (var i:int = 0; i < _friendlies.length; i++)
+			{
+				if (_friendlies[i].isDefeated() == false)
+				{
+					if (_attackSelections[_friendlies[i].INDEX].type == undefined) return true;
+				}
+			}
+			return false;
+		}
+		
+		private function processCombat(ignoreSelections:Boolean = false):void
+		{
+			if (actionSelectionsRemain() && !ignoreSelections)
+			{
+				clearMenu();
+				addButton(0, "Fix", showCombatMenu);
+				addButton(1, "Confirm", processCombat, true);
+				return;
+			}
+			
+			processPlayerActions();
+		}
+		
+		private function processPlayerActions():void
 		{
 			applyPlayerActions();
 			updateStatusEffects(_friendlies);
 			
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
-				if (_hostiles[i].isDefeated && _hostiles[i].alreadyDefeated == false)
+				if (_hostiles[i].isDefeated() && _hostiles[i].alreadyDefeated == false)
 				{
 					_hostiles[i].alreadyDefeated == true;
 					output("\n\n" + _hostiles[i].capitalA + _hostiles[i].short + " falls to the ground,");
@@ -735,12 +808,20 @@ package classes.GameData
 				}
 			}
 			
+			showCombatUI();
+			
+			clearMenu();
+			addButton(0, "Next", processAIActions);
+		}
+		
+		private function processAIActions():void
+		{
 			generateAIActions();
 			updateStatusEffects(_hostiles);
 			
 			for (var i:int = 0; i < _friendlies.length; i++)
 			{
-				if (_hostiles[i].isDefeated && _friendlies[i].alreadyDefeated == false)
+				if ((_friendlies[i] as Creature).isDefeated() && _friendlies[i].alreadyDefeated == false)
 				{
 					_friendlies[i].alreadyDefeated == true;
 					if (_friendlies[i] is PlayerCharacter) output("\n\nYou fall to the ground,");
@@ -749,6 +830,11 @@ package classes.GameData
 					else output(" stricken with lust.");
 				}
 			}
+			
+			_roundCounter++;
+			
+			clearMenu();
+			addButton(0, "Next", mainGameMenu);
 		}
 		
 		private function applyPlayerActions():void
@@ -767,7 +853,7 @@ package classes.GameData
 		{
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
-				_hostiles[i].groundCombatAI(_hostiles, _friendlies);
+				_hostiles[i].generateAIActions(_hostiles, _friendlies);
 			}
 		}
 		

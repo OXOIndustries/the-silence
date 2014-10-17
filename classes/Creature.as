@@ -79,7 +79,7 @@
 		public function updateStatusEffects(delta:int):void
 		{
 			var removals:Array = new Array();
-			for (var i:int = this.statusEffects.length - 1; i >= 0; i++)
+			for (var i:int = this.statusEffects.length - 1; i >= 0; i--)
 			{
 				if (this.statusEffects[i].minutesLeft > 0)
 				{
@@ -113,6 +113,8 @@
 		public var description:String = "";
 		public var capitalA: String = "A ";
 		public var currentLocation:String = "";
+		public var isUniqueInFight:Boolean = true;
+		public var btnTargetText:String = "";
 
 		//Is a creature a 'pluralize' encounter - mob, etc. 
 		public var plural: Boolean = false;
@@ -3352,7 +3354,7 @@
 			removeStorage(statusEffects);
 		}
 		
-		public function get isDefeated():Boolean
+		public function isDefeated():Boolean
 		{
 			if (HP() <= 0 || lust() >= lustMax()) return true;
 			return false;
@@ -3397,7 +3399,7 @@
 		{
 			var selTarget:Creature = null;
 			
-			for (var i:int = 0; otherTeam.length; i++)
+			for (var i:int = 0; i < otherTeam.length; i++)
 			{
 				if (otherTeam[i].hasStatusEffect("Focus Fire") && otherTeam[i].isDefeated == false)
 				{
@@ -3409,7 +3411,7 @@
 			while (selTarget == null)
 			{
 				selTarget = otherTeam[rand(otherTeam.length)];
-				if (selTarget.isDefeated) selTarget = null;
+				if (selTarget.isDefeated()) selTarget = null;
 			}
 			
 			return selTarget;

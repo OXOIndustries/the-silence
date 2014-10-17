@@ -63,7 +63,7 @@ package classes.UIComponents
 			_enemyParty = new PartyBlock(5, "right");
 			this.addChild(_enemyParty);
 			_enemyParty.x = 0;
-			_enemyParty.y = _locationHeader.y + _locationHeader.height;
+			_enemyParty.y = _locationHeader.y + _locationHeader.height + 5;
 			
 			// Minimap Container
 			_minimapBlock = new MiniMapBlock("right");

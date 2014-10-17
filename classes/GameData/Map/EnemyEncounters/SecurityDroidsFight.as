@@ -29,34 +29,48 @@ package classes.GameData.Map.EnemyEncounters
 		{
 			if (IsEnabled())
 			{
-				if (rand(10) == 0)
+				if (GameState.flags["SECURITY_DROIDS_STEPS"] == undefined) GameState.flags["SECURITY_DROIDS_STEPS"] = 0;
+				GameState.flags["SECURITY_DROIDS_STEPS"]++;
+				
+				if (GameState.flags["SECURITY_DROIDS_STEPS"] < 3) return false;
+	
+				if (rand(8) <= GameState.flags["SECURITY_DROIDS_STEPS"])
 				{
 					var numDroids:int = rand(2) + 2;
 					
-					output("\n\nAhead, you hear heavy mechanical footfalls marching in unison, stomping towards you down the corridor. A group of " + num2Text(numDroids) + " gray, steel droids march around the corner.");
+					output("\n\nAhead, you hear heavy mechanical footfalls marching in unison, stomping towards you down the corridor. A group of " + num2Text(numDroids) + " gray, steel droids march around the corner!");
 					
-					var enemies:Array = [];
+					clearMenu();
+					addButton(0, "Fight!", actualEncounterFunction, numDroids);
 					
-					for (var i:int = 0; i < numDroids; i++)
-					{
-						enemies.push(new SecurityDroid());
-					}
-					
-					CombatManager.newGroundCombat();
-					CombatManager.setPlayers(GameState.playerParty.getParty());
-					CombatManager.setEnemies(enemies);
-					CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
-					CombatManager.victoryScene(CombatManager.GenericVictory);
-					CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
-					CombatManager.lossScene(CombatManager.GenericLoss);
-
-					CombatManager.beginCombat();
 					
 					return true;
 				}
 			}
 			
 			return false;
+		}
+		
+		private function actualEncounterFunction(numDroids:int):void
+		{
+			var enemies:Array = [];
+					
+			for (var i:int = 0; i < numDroids; i++)
+			{
+				enemies.push(new SecurityDroid());
+			}
+			
+			CombatManager.newGroundCombat();
+			CombatManager.setPlayers(GameState.playerParty.getParty());
+			CombatManager.setEnemies(enemies);
+			CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
+			CombatManager.victoryScene(CombatManager.GenericVictory);
+			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
+			CombatManager.lossScene(CombatManager.GenericLoss);
+
+			CombatManager.beginCombat();
+			
+			GameState.flags["SECURITY_DROIDS_STEPS"] = 0;
 		}
 		
 	}

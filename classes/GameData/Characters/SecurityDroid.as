@@ -43,7 +43,9 @@ package classes.GameData.Characters
 			this.shield = new DecentShield();
 			
 			this.INDEX = "SECURITYDROID";
-			this.bustT = StaticRenders.CREW_LOGAN;
+			this.bustT = StaticRenders.MISSING;
+			this.isUniqueInFight = false;
+			this.btnTargetText = "SecDroid";
 			
 			this.level = 5;
 			this.physiqueRaw = 18;

@@ -23,6 +23,9 @@ package classes.GameData.Map
 		public var Position:Point = new Point(0, 0);
 		
 		public var RootRoom:Room;
+		
+		public var MaxMovesBeforeCombat:int = 5;
+		public var MinMovesBeforeCombat:int = 2;
 				
 		public function BaseLocation() 
 		{
