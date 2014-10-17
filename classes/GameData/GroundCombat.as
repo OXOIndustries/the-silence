@@ -384,21 +384,36 @@ package classes.GameData
 			
 			if (target is PlayerCharacter)
 			{
-				addButton(0, "ChargeShot", selectSpecialAttack, [chargeShot, target, "ChargeShot"], "Charge Shot", "A charged shot dealing increased damage.");
-				addButton(1, "TargetShot", selectSpecialAttack, [targetingShot, target, "TargetShot"], "Targeting Shot", "Fire a specialised energy marker signal, improving your companions accuracy against the marked target for a single round.");
-				addButton(2, "StimBoost", selectSpecialAttack, [stimulantBoost, target, "StimBoost"], "Stimulant Boost", "Release a localised cloud of emergency doctor nanomachines, healing you and your companions.");
+				if (!target.hasStatusEffect("ChargeShotCooldown")) addButton(0, "ChargeShot", selectSpecialAttack, [chargeShot, target, "ChargeShot"], "Charge Shot", "A charged shot dealing increased damage. Requires a three-round cooldown before you can risk overloading your pistols plasma emitters again.");
+				else addDisabledButton(0, "ChargeShot", "Charged Shot", "Overcharging your plasma pistol again so quickly runs the risk over overloading the emitter!");
+				
+				if (!target.hasStatusEffect("TargetShotCooldown")) addButton(1, "TargetShot", selectSpecialAttack, [targetingShot, target, "TargetShot"], "Targeting Shot", "Fire a specialised energy marker signal, improving your companions accuracy against the marked target for a single round. Requires two rounds to regenerate the marker-particles.");
+				else addDisabledButton(1, "TargetShot", "Targeting Shot", "Your plasma caster is gradually regenerating the unique particles required to mark a target.");
+				
+				if (!target.hasStatusEffect("StimBoostCooldown")) addButton(2, "StimBoost", selectSpecialAttack, [stimulantBoost, target, "StimBoost"], "Stimulant Boost", "Release a localised cloud of emergency doctor nanomachines, healing you and your companions. Can only be used once per combat encounter.");
+				else addDisabledButton(2, "StimBoost", "Stimulant Boost", "You've already used the only container of nanomachines you had to hand!");
 			}
 			else if (target is Tarik)
 			{
-				addButton(0, "Cleave", selectSpecialAttack, [cleave, target, "Cleave"], "Cleave", "A sweeping strike that will hit all enemies present.");
-				addButton(1, "Battlecry", selectSpecialAttack, [battlecry, target, "Battlecry"], "Battlecry", "Draw the ire of all hostiles present for 3 rounds, additionally increases defense for the duration.");
-				addButton(2, "StunStrike", selectSpecialAttack, [stunningStrike, target, "StunStrike"], "Stunning Strike", "A savage attack that has a chance to stun the target for 2 rounds.");
+				if (!target.hasStatusEffect("CleaveCooldown")) addButton(0, "Cleave", selectSpecialAttack, [cleave, target, "Cleave"], "Cleave", "A sweeping strike that will hit all enemies present. Requires two-rounds for Tarik to recuperate after his last cleave attack.");
+				else addDisabledButton(0, "Cleave", "Cleave", "Tarik needs some time to recuperate after his last furiously cleave.");
+				
+				if (!target.hasStatusEffect("BattlecryCooldown")) addButton(1, "Battlecry", selectSpecialAttack, [battlecry, target, "Battlecry"], "Battlecry", "Draw the ire of all hostiles present for 3 rounds, additionally increases defense for the duration. Requires 4 rounds for Tariks shield generator to recharge adequately to provide a defensive buff for the duration.");
+				else addDisabledButton(1, "Battlecry", "Battlecry", "Tariks shield generator is still recharging!");
+				
+				if (!target.hasStatusEffect("StunStrikeCooldown")) addButton(2, "StunStrike", selectSpecialAttack, [stunningStrike, target, "StunStrike"], "Stunning Strike", "A savage attack that has a chance to stun the target for 2 rounds. 3 round cooldown.");
+				else addDisabledButton(2, "StunStrike", "Stunning Strike", "Tarik cannot make another stun attempt yet!");
 			}
 			else if (target is Pyra)
 			{
-				addButton(0, "F.Thrower", selectSpecialAttack, [flamethrower, target, "F.Thrower"], "Flamethrower", "Single-target fire damage, inflicting a burning damage over time effect to it's target.");
-				addButton(1, "ParaDarts", selectSpecialAttack, [paralyticDarts, target, "ParaDarts"], "Paralytic Darts", "Venom-tipped darts that reduces the targets combat capabilities. Has no effect on mechanical targets.");
-				addButton(2, "S.Boost", selectSpecialAttack, [shieldBoost, target, "S.Boost"], "Shield Boost", "Boosts the parties shield generators, restoring shields in the process.");
+				if (!target.hasStatusEffect("F.ThrowerCooldown")) addButton(0, "F.Thrower", selectSpecialAttack, [flamethrower, target, "F.Thrower"], "Flamethrower", "Single-target fire damage, inflicting a burning damage over time effect to it's target. Requires 3 rounds to cool off after each attack.");
+				else addDisabledButton(0, "F.Thrower", "Flamethrower", "Pyras flamethrower is still cooling down from the last attack.");
+				
+				if (!target.hasStatusEffect("ParaDartsCooldown")) addButton(1, "ParaDarts", selectSpecialAttack, [paralyticDarts, target, "ParaDarts"], "Paralytic Darts", "Venom-tipped darts that reduces the targets combat capabilities. Has no effect on mechanical targets. 3 round cooldown to reset a new set of venom-tipped darts.");
+				else addDisabledButton(1, "ParaDarts", "Paralytic Darts", "Pyra is still trying to load another set of darts into her wrist-mounted launcher!");
+				
+				if (!target.hasStatusEffect("ShieldBoostCooldown")) addButton(2, "S.Boost", selectSpecialAttack, [shieldBoost, target, "S.Boost"], "Shield Boost", "Boosts the parties shield generators, restoring shields in the process. Can only be used once per combat encounter.");
+				else addDisabledButton(2, "S.Boost", "Shield Boost", "Attempting to overcharge the parties shield generators again so soon only risks burning them out!");
 			}
 			
 			addButton(14, "Back", generateCombatMenu);
@@ -640,7 +655,7 @@ package classes.GameData
 					{
 						target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Stunned", true, 0);
 					}
-					output(" staggered by the sheet weight of the impact. + (<b>" + damage + "</b>)");
+					output(" staggered by the sheet weight of the impact. (<b>" + damage + "</b>)");
 				}
 			}		
 		}

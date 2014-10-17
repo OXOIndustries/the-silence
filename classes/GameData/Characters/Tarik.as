@@ -62,12 +62,12 @@ package classes.GameData.Characters
 			this.HPRaw = this.HPMax();
 			this.shieldsRaw = this.shieldsMax();
 			
-			this.femininity = 85;
+			this.femininity = 10;
 			this.eyeType = GLOBAL.TYPE_HUMAN;
 			this.eyeColor = "brown";
 			this.tallness = 85;
 			this.thickness = 40;
-			this.tone = 35;
+			this.tone = 80;
 			this.hairColor = "brown";
 			this.hairType = GLOBAL.TYPE_HUMAN;
 			this.furColor = "brown";
@@ -135,12 +135,8 @@ package classes.GameData.Characters
 			this.buttRatingRaw = 6;
 			//No dicks here!
 			this.cocks = new Array();
-			this.createVagina();
-			this.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM;
-			this.vaginalVirgin = false;
-			this.vaginas[0].loosenessRaw = 2;
-			this.vaginas[0].wetnessRaw = 5;
-			this.vaginas[0].bonusCapacity = 55;
+			this.createCock(8, 1.25);
+			
 			//balls
 			this.balls = 0;
 			this.cumMultiplierRaw = 6;

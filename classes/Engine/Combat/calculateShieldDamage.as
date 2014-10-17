@@ -15,7 +15,7 @@ package classes.Engine.Combat
 		
 		shieldDefense += target.shieldDefense();
 		
-		if (special == "ranged" && attacker.hasPerk("Armor Piercing"))
+		if (special == "ranged" && attacker != null && attacker.hasPerk("Armor Piercing"))
 		{
 			if (shieldDefense > 0) shieldDefense -= (attacker.level + rand(3));
 			if (shieldDefense < 0) shieldDefense = 0;
