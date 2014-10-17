@@ -120,7 +120,7 @@ package classes.GameData
 		override public function beginCombat():void
 		{
 			validateContainer();
-			showCombatDescriptions(true);
+			showCombatDescriptions();
 			showCombatUI();
 			showCombatMenu();
 		}
@@ -134,6 +134,8 @@ package classes.GameData
 		private function showCombatMenu():void
 		{
 			clearMenu();
+			
+			removeAllButtonHighlights();
 			
 			if (!doneRoundActions())
 			{
@@ -206,16 +208,28 @@ package classes.GameData
 				addButton(1 + (offset * 5), "Attack", attackMenu, target);
 			else
 			{
+				highlightButton(1 + (offset * 5));
+				
 				addButton(1 + (offset * 5), _attackSelections[target.INDEX].label, attackMenu, target);
-				addDisabledButton(3 + (offset * 5), _attackSelections[target.INDEX].target.btnTargetText);
+				
+				if (_attackSelections[target.INDEX].target != undefined)
+				{
+					addDisabledButton(3 + (offset * 5), _attackSelections[target.INDEX].target.btnTargetText);
+				}
 			}
 			
 			if (_attackSelections[target.INDEX].type != "special")
 				addButton(2 + (offset * 5), "Specials", specialsMenu, target);
 			else
 			{
+				highlightButton(2 + (offset * 5));
+				
 				addButton(2 + (offset * 5), _attackSelections[target.INDEX].label, specialsMenu, target);
-				addDisabledButton(3 + (offset * 5), _attackSelections[target.INDEX].target.btnTargetText);
+				
+				if (_attackSelections[target.INDEX].target != undefined)
+				{
+					addDisabledButton(3 + (offset * 5), _attackSelections[target.INDEX].target.btnTargetText);
+				}
 			}
 		}
 		
@@ -294,13 +308,15 @@ package classes.GameData
 			addDisabledButton(0, target.short);
 			addDisabledButton(1, _attackSelections[target.INDEX].label);
 			
+			removeAllButtonHighlights();
+			
 			var btnOffset:int = 0;
 			
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
 				if (!_hostiles[i].isDefeated()) 
 				{
-					addButton(btnOffset + 5, _hostiles[i].short, selectTarget, [i, target]);
+					addButton(btnOffset + 5, _hostiles[i].btnTargetText, selectTarget, [i, target]);
 					btnOffset++;
 				}
 			}
@@ -317,6 +333,8 @@ package classes.GameData
 		{
 			clearMenu();
 			addDisabledButton(0, target.short);
+			
+			removeAllButtonHighlights();
 			
 			if (target.meleeWeapon != null)
 			{
@@ -359,26 +377,28 @@ package classes.GameData
 		{
 			clearMenu();
 			
+			removeAllButtonHighlights();
+			
 			// Ideally I'd shift this kinda thing into the creature objects themselves and let either the menu be generated there,
 			// or index attacks in the creature objects and build it in a far more dynamic and reusable way.
 			
 			if (target is PlayerCharacter)
 			{
-				addButton(0, "Charge Shot", selectSpecialAttack, [chargeShot, target, "Charge Shot"]);
-				addButton(1, "Targeting Shot", selectSpecialAttack, [targetingShot, target, "Targeting Shot"]);
-				addButton(2, "Stimulant Boost", selectSpecialAttack, [stimulantBoost, target, "Stimulant Boost"]);
+				addButton(0, "ChargeShot", selectSpecialAttack, [chargeShot, target, "ChargeShot"], "Charge Shot", "A charged shot dealing increased damage.");
+				addButton(1, "TargetShot", selectSpecialAttack, [targetingShot, target, "TargetShot"], "Targeting Shot", "Fire a specialised energy marker signal, improving your companions accuracy against the marked target for a single round.");
+				addButton(2, "StimBoost", selectSpecialAttack, [stimulantBoost, target, "StimBoost"], "Stimulant Boost", "Release a localised cloud of emergency doctor nanomachines, healing you and your companions.");
 			}
 			else if (target is Tarik)
 			{
-				addButton(0, "Cleave", selectSpecialAttack, [cleave, target, "Cleave"]);
-				addButton(1, "Battlecry", selectSpecialAttack, [battlecry, target, "Battlecry"]);
-				addButton(2, "Stunning Strike", selectSpecialAttack, [stunningStrike, target, "Stunning Strike"]);
+				addButton(0, "Cleave", selectSpecialAttack, [cleave, target, "Cleave"], "Cleave", "A sweeping strike that will hit all enemies present.");
+				addButton(1, "Battlecry", selectSpecialAttack, [battlecry, target, "Battlecry"], "Battlecry", "Draw the ire of all hostiles present for 3 rounds, additionally increases defense for the duration.");
+				addButton(2, "StunStrike", selectSpecialAttack, [stunningStrike, target, "StunStrike"], "Stunning Strike", "A savage attack that has a chance to stun the target for 2 rounds.");
 			}
 			else if (target is Pyra)
 			{
-				addButton(0, "Flamethrower", selectSpecialAttack, [flamethrower, target, "Flamethrower"]);
-				addButton(1, "Paralytic Darts", selectSpecialAttack, [paralyticDarts, target, "Paralytic Darts"]);
-				addButton(2, "Shield Boost", selectSpecialAttack, [shieldBoost, target, "Shield Boost"]);
+				addButton(0, "F.Thrower", selectSpecialAttack, [flamethrower, target, "F.Thrower"], "Flamethrower", "Single-target fire damage, inflicting a burning damage over time effect to it's target.");
+				addButton(1, "ParaDarts", selectSpecialAttack, [paralyticDarts, target, "ParaDarts"], "Paralytic Darts", "Venom-tipped darts that reduces the targets combat capabilities. Has no effect on mechanical targets.");
+				addButton(2, "S.Boost", selectSpecialAttack, [shieldBoost, target, "S.Boost"], "Shield Boost", "Boosts the parties shield generators, restoring shields in the process.");
 			}
 			
 			addButton(14, "Back", generateCombatMenu);
@@ -705,11 +725,11 @@ package classes.GameData
 			
 			// Requires Targets
 			var reqTarget:Array = [
-				"Charge Shot",
-				"Targeting Shot",
-				"Stunning Strike",
-				"Flamethrower",
-				"Paralytic Darts"
+				"ChargeShot",
+				"TargetShot",
+				"StunStrike",
+				"ParaDarts",
+				"F.Thrower"
 			]
 			
 			if (reqTarget.indexOf(label) != -1) targetSelectionMenu(caster);
@@ -724,26 +744,18 @@ package classes.GameData
 			userInterface().setEnemyPartyData(_hostiles);
 		}
 		
-		private function showCombatDescriptions(showLong:Boolean = false):void
+		private function showCombatDescriptions():void
 		{
-			if (!showLong) output("You're fighting " + num2Text(enemiesAlive()) + " hostiles.");
+			output("You're fighting " + num2Text(enemiesAlive()) + " hostiles.");
 			
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
-				displayHostileStatus(_hostiles[i], showLong);
+				displayHostileStatus(_hostiles[i]);
 			}
 		}
 		
-		private var _displayedLongStatus:Array = [];
-		
-		private function displayHostileStatus(target:Creature, showLong:Boolean = false):void
+		private function displayHostileStatus(target:Creature):void
 		{
-			if (showLong && _displayedLongStatus.indexOf(target.INDEX) == -1)
-			{
-				output("\n\n" + target.description);
-				_displayedLongStatus.push(target.INDEX);
-			}
-			
 			if (target.HP() <= 0)
 			{
 				output("\n\n<b>You've knocked the resistance out of " + target.a + target.short + ".</b>");
@@ -783,8 +795,13 @@ package classes.GameData
 		{
 			if (actionSelectionsRemain() && !ignoreSelections)
 			{
+				clearOutput();
+				output("Not all of your available party members have a selected action.");
+				output("\n\nSelect a full-round of actions, or ignore this warning and continue?");
+				
 				clearMenu();
-				addButton(0, "Fix", showCombatMenu);
+				removeAllButtonHighlights();
+				addButton(0, "Fix", returnToCombatMenu);
 				addButton(1, "Confirm", processCombat, true);
 				return;
 			}
@@ -794,6 +811,9 @@ package classes.GameData
 		
 		private function processPlayerActions():void
 		{
+			clearOutput();
+			output("<b>Your party actions:</b>");
+			
 			applyPlayerActions();
 			updateStatusEffects(_friendlies);
 			
@@ -811,11 +831,15 @@ package classes.GameData
 			showCombatUI();
 			
 			clearMenu();
+			removeAllButtonHighlights();
 			addButton(0, "Next", processAIActions);
 		}
 		
 		private function processAIActions():void
 		{
+			clearOutput();
+			output("<b>Hostile party actions:</b>");
+			
 			generateAIActions();
 			updateStatusEffects(_hostiles);
 			
@@ -834,7 +858,14 @@ package classes.GameData
 			_roundCounter++;
 			
 			clearMenu();
-			addButton(0, "Next", mainGameMenu);
+			removeAllButtonHighlights();
+			addButton(0, "Next", showCombatMenu);
+		}
+		
+		private function returnToCombatMenu():void
+		{
+			clearOutput();
+			showCombatMenu();
 		}
 		
 		private function applyPlayerActions():void
@@ -938,7 +969,7 @@ package classes.GameData
 			{
 				for (var i:int = 0; i < _hostiles.length; i++)
 				{
-					if (_hostiles[i].HP() >= 0 && _hostiles[i].lust() <= _hostiles[i].lustMax()) return false;
+					if (!_hostiles[i].isDefeated()) return false;
 				}
 				return true;
 			}
@@ -957,7 +988,7 @@ package classes.GameData
 			{
 				for (var i:int = 0; i < _friendlies.length; i++)
 				{
-					if (_friendlies[i].HP() >= 0 && _friendlies[i].lust() <= _friendlies[i].lustMax()) return false;
+					if (!_friendlies[i].isDefeated()) return false;
 				}
 				return true;
 			}

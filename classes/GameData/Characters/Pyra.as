@@ -28,6 +28,8 @@ package classes.GameData.Characters
 			this.long = "Pyra";
 			this.originalRace = "Raskvel";
 			this.description = "Pyra's... different. She came on board without invitation, scrambling up through one of the exhaust ports. When Blackstar caught her, she said she'd come aboard when she saw the Silence's shield generator. Because it was broken, and needed fixing. Sure enough, if you'd tried to leave atmos, it would have been crispy catgirl and crew for sure. Raskvel -- that's her species -- have a weird obsession with broken tech, and Pyra's the best damn mechanic you could ask for on a budget of the occasional roll in the hay and a few protein cubes. She's a little abrasive, but ever since your last engineer, Irish, got pinched on New Texas, she's kept the ship running like new. Or as new as the Silence ever was.";
+			this.a = "";
+			this.capitalA = "";
 			
 			this.customBlock = "";
 			this.customDodge = "";

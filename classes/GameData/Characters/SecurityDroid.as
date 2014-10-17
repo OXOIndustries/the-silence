@@ -31,6 +31,8 @@ package classes.GameData.Characters
 			this.long = "Security Droid";
 			this.originalRace = "Machine";
 			this.description = "Basic security droids are ubiquitous across Confederate space. Loaded with the most rudimentary Friend/Foe ID system, small arms controls, and basic tactical movement routines money can buy in bulk, security droids provide area defense and can repel boarders on ships without having to pay living, breathing security personnel. Most security droids are cheap, effective enough at stopping open attackers, and are completely expendable. You've dealt with dozens of them over the course of your career, and they're pretty damn easy to bypass if you're stealthy, or one-shot takedown if you're in a pinch. Overall, only a threat in bulk. Lucky for you, Nova's got the budget to buy them by the container-full.";
+			this.a = "";
+			this.capitalA = "";
 			
 			this.customBlock = "";
 			this.customDodge = "";
@@ -170,6 +172,8 @@ package classes.GameData.Characters
 			this.ass.wetnessRaw = 0;
 			this.ass.bonusCapacity += 15;
 			
+			this.createStatusEffect("Force It Gender");
+			
 			this._isLoading = false;
 		}
 		
@@ -183,13 +187,24 @@ package classes.GameData.Characters
 			
 			var target:Creature = selectTarget(otherTeam);
 			
-			var attacks:Array = [rangedAttack, rangedAttack, rangedAttack, shock, laserBarrage];
-			attacks[rand(attacks.length)](target);
+			if (target != null)
+			{
+				var attacks:Array = [rangedAttack, rangedAttack, rangedAttack, shock, laserBarrage];
+				attacks[rand(attacks.length)](target);
+			}
+			else
+			{
+				output("\n\n" + this.short + " takes no action as it has no valid targets.");
+			}
 		}
 		
 		public function laserBarrage(target:Creature):void
 		{
-			output("\n\nThe drone stomps forward, firing rapidly from the hip. Bolts of red-hot energy streak towards" + target.short + ", guided by the droid's onboard targeting computers.");
+			output("\n\n" + this.short + " stomps forward, firing rapidly from the hip. Bolts of red-hot energy streak towards ");
+			if (target is PlayerCharacter) output("you");
+			else output(target.a + target.short);
+			output(", guided by the droid's onboard targeting computers.");
+			
 			
 			var numHits:int = 0;
 			if (calculateMiss(this, target, false)) numHits++;
@@ -211,7 +226,7 @@ package classes.GameData.Characters
 		public function shock(target:Creature):void
 		{
 			//Deals light electricity damage, chance to stun.
-			output("\n\nThe drone takes its left wrist off its rifle, levels it at ");
+			output("\n\n" + this.short + " takes its left wrist off its rifle, levels it at ");
 			if (target is PlayerCharacter) output("you");
 			else output(target.a + target.short);
 			output(", and fires a small dart from a hidden launcher. The dart");
@@ -227,15 +242,25 @@ package classes.GameData.Characters
 				else output(target.a + target.short);
 				output(", ripping a scream from");
 				if (target is PlayerCharacter) output(" your");
-				else output(target.mf("his", "her"));
+				else output(target.mfn(" his", " her", " its"));
 				output(" throat.");
+				
+				calculateDamage(this, target, 5, GLOBAL.ELECTRIC, "special", false);
 				
 				if (rand(3) == 0)
 				{
-					if (target is PlayerCharacter) output(" You're");
-					else output(" " + target.a + target.short);
+					if (target is PlayerCharacter) output("\nYou're");
+					else output("\n" + target.a + target.short);
 					output(" is stunned!")
 					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Stunned", true, 0);
+				}
+				else
+				{
+					if (target is PlayerCharacter) output("\nYou");
+					else output("\n" + target.a + target.short);
+					output(" quickly shake");
+					if (!(target is PlayerCharacter)) output("s");
+					output(" off the dart.");
 				}
 			}
 		}

@@ -812,12 +812,12 @@
 			_buttonTray.addItemButton(slot, cap, quantity, func, arg, ttHeader, ttBody, ttCompare);
 		}
 		
-		public function setButtonBlue(slot:int):void
+		public function setButtonNotHighlighted(slot:int):void
 		{
 			_buttonTray.setButtonBlue(slot);
 		}
 		
-		public function setButtonPurple(slot:int):void
+		public function setButtonHighlighted(slot:int):void
 		{
 			_buttonTray.setButtonPurple(slot);
 		}

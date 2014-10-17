@@ -29,6 +29,9 @@ package classes.GameData.Characters
 			this.originalRace = "Naleen";
 			this.description = "Tarik's the newest addition to the crew. A few weeks ago, you knocked over a freighter convoy heading to Tavros, and lo and behold, found a cargo full of exotic xeno slaves. You freed them -- you of all people know what it's like to live in a collar, after all. You didn't come away from the job with a profit, thanks to that, but you did get Tarik: a slave meant for the gladiator rings of Thallisus. When you rescued him, the big bastard swore some kind of oath of service to you. What's the difference between that and slavery? Still, it doesn't hurt to have a huge bruiser with an axe on the crew, especially when he can rip most folk in half with his bare hands. At least, that's what he says he can do... and you don't doubt him.";
 			
+			this.a = "";
+			this.capitalA = "";
+			
 			this.customBlock = "";
 			this.customDodge = "";
 			this.plural = false;

@@ -3356,7 +3356,7 @@
 		
 		public function isDefeated():Boolean
 		{
-			if (HP() <= 0 || lust() >= lustMax()) return true;
+			if (HP() <= 0) return true;
 			return false;
 		}
 		
@@ -3382,7 +3382,8 @@
 				reflexesMod == statusEffectv2("Paralytic Venom");
 			}
 			
-			for (var x: int = statusEffects.length-1; x >= 0; x--) {
+			for (var x: int = statusEffects.length - 1; x >= 0; x--) 
+			{
 				if (statusEffects[x].combatOnly)
 				{
 					statusEffects.splice(x,1);
@@ -3399,22 +3400,24 @@
 		{
 			var selTarget:Creature = null;
 			
+			var posTargets:Array = [];
+			
 			for (var i:int = 0; i < otherTeam.length; i++)
 			{
-				if (otherTeam[i].hasStatusEffect("Focus Fire") && otherTeam[i].isDefeated == false)
+				if (!otherTeam[i].isDefeated()) 
 				{
-					selTarget = otherTeam[i];
-					break;
+					posTargets.push(otherTeam[i]);
+					
+					if (otherTeam[i].hasStatusEffect("Focus Fire"))
+					{
+						return otherTeam[i];
+					}
 				}
 			}
+		
+			if (posTargets.length == 0) return null;
 			
-			while (selTarget == null)
-			{
-				selTarget = otherTeam[rand(otherTeam.length)];
-				if (selTarget.isDefeated()) selTarget = null;
-			}
-			
-			return selTarget;
+			return posTargets[rand(posTargets.length)];
 		}
 		
 		protected function rangedAttack(target:Creature):void

@@ -297,6 +297,8 @@ package classes.UIComponents
 		private function setColour(type:int):void
 		{
 			var clrTrans:ColorTransform = new ColorTransform();
+			var cAlpha:Number = this.alpha;
+			
 			if (type == BLUE_BUTTON)
 			{
 				clrTrans.color = UIStyleSettings.gForegroundColour;
@@ -311,6 +313,7 @@ package classes.UIComponents
 			}
 
 			_buttonBody.transform.colorTransform = clrTrans;
+			this.alpha = cAlpha;
 		}
 	}
 

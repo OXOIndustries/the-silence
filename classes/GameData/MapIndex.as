@@ -114,7 +114,7 @@ package classes.GameData
 				
 				if (shipP != undefined && shipP.hasConnection() == true)
 				{
-					addButton(0, "Exit Airlock", Move, (ShipIndex.Ships[room.ParentLocation.LocationName] as classes.GameData.Ships.Ship).airlockConnectsTo);
+					addButton(0, "Exit Airlock", Move, (ShipIndex.Ships[room.ParentLocation.LocationName] as classes.GameData.Ships.Ship).airlockConnectsTo());
 				}
 				else
 				{

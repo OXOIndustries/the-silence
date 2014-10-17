@@ -38,7 +38,7 @@ package classes.Engine.Combat
 					else
 					{
 						if (target.plural) output(" " + target.a + possessive(target.short) + " shields crackle but hold. (<b>" + shieldDamage[0] + "</b>)");
-						else output(" " + target.a + possessive(target.short) + " shields crackles but holds. (<b>" + shieldDamage[0] + "</b>)");
+						else output(" " + target.a + possessive(target.short) + " shield crackles but holds. (<b>" + shieldDamage[0] + "</b>)");
 					}
 				}
 			}

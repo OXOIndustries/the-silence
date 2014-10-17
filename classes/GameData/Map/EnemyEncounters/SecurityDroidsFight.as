@@ -6,6 +6,7 @@ package classes.GameData.Map.EnemyEncounters
 	import classes.GameData.Characters.SecurityDroid;
 	import classes.GameData.CombatManager;
 	import classes.GameData.GameState;
+	import classes.GameData.CodexManager;
 	
 	/**
 	 * ...
@@ -39,6 +40,12 @@ package classes.GameData.Map.EnemyEncounters
 					var numDroids:int = rand(2) + 2;
 					
 					output("\n\nAhead, you hear heavy mechanical footfalls marching in unison, stomping towards you down the corridor. A group of " + num2Text(numDroids) + " gray, steel droids march around the corner!");
+					
+					if (!CodexManager.entryUnlocked("Security Droids"))
+					{
+						CodexManager.unlockEntry("Security Droids");
+						output("\n\n(<b>Codex entry: 'Security Droids' unlocked!</b>)");
+					}
 					
 					clearMenu();
 					addButton(0, "Fight!", actualEncounterFunction, numDroids);
