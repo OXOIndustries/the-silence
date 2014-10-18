@@ -62,6 +62,11 @@ package classes.GameData
 		public var hours:uint = 0;
 		public var minutes:uint = 0;
 		
+		public function get debug():Boolean
+		{
+			return kGAMECLASS.gameOptions.debugMode;
+		}
+		
 		public var gameStarted:Boolean = false;
 		public var inSceneBlockSaving:Boolean = false;
 		public var encountersDisabled:Boolean = false;

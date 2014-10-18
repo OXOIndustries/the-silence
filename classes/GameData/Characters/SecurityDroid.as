@@ -255,7 +255,7 @@ package classes.GameData.Characters
 					if (target is PlayerCharacter) output("\nYou're");
 					else output("\n" + target.a + target.short);
 					output(" is stunned!")
-					target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Stunned", true, 0);
+					target.createStatusEffect("Stunned", 2, this.arrayIdx, 0, 0, false, "Stun", "Stunned", true, 0);
 				}
 				else
 				{
@@ -279,6 +279,11 @@ package classes.GameData.Characters
 			shieldsRaw += sGain;
 			
 			output(" " + sGain + " shields restored!");
+		}
+		
+		override public function doStunRecoverFor(target:Creature):void
+		{
+			output("\n\nThe electrical dart embedded in " + target.a + possessive(target.short) + " armor falls out, allowing them to quickly recover from the stunning effect of the electricity.");
 		}
 		
 	}

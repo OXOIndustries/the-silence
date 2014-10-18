@@ -1,5 +1,7 @@
 package classes.GameData.Content 
 {
+	import classes.GameData.CodexManager;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -122,6 +124,7 @@ package classes.GameData.Content
 			setLocation("LOGAN");
 			
 			flags["LOGAN_NOVASEC"] = 1;
+			CodexManager.unlockEntry("Nova Securities");
 			
 			output("<i>“We’ve never knocked over Nova before,”</i> you muse. ");
 			

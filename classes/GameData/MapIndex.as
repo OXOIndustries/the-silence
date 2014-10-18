@@ -59,8 +59,9 @@ package classes.GameData
 			GameState.inSceneBlockSaving = false;
 			GameState.encountersDisabled = true;
 			
-			addDisabledButton(9, "Inventory");
-			addDisabledButton(13, "Masturbate");
+			//addDisabledButton(9, "Inventory");
+			//addDisabledButton(13, "Masturbate");
+			addButton(13, "Codex", showCodex);
 			
 			if (room.HasFlag(GLOBAL.BED))
 			{

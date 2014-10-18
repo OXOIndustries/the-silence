@@ -8,6 +8,6 @@ package classes.Engine.Interfaces
 	{
 		import classes.kGAMECLASS;
 		kGAMECLASS.userInterface.outputCodexBuffer += doParse(words, markdown);
-		kGAMECLASS.userInterface.output2();
+		kGAMECLASS.userInterface.outputCodex();
 	}
 }

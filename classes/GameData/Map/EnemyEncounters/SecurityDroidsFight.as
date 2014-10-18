@@ -33,9 +33,9 @@ package classes.GameData.Map.EnemyEncounters
 				if (GameState.flags["SECURITY_DROIDS_STEPS"] == undefined) GameState.flags["SECURITY_DROIDS_STEPS"] = 0;
 				GameState.flags["SECURITY_DROIDS_STEPS"]++;
 				
-				if (GameState.flags["SECURITY_DROIDS_STEPS"] < 3) return false;
+				if (GameState.flags["SECURITY_DROIDS_STEPS"] < 4) return false;
 	
-				if (rand(8) <= GameState.flags["SECURITY_DROIDS_STEPS"])
+				if (rand(12) <= GameState.flags["SECURITY_DROIDS_STEPS"])
 				{
 					var numDroids:int = rand(2) + 2;
 					
@@ -78,6 +78,30 @@ package classes.GameData.Map.EnemyEncounters
 			CombatManager.beginCombat();
 			
 			GameState.flags["SECURITY_DROIDS_STEPS"] = 0;
+		}
+		
+		private function droidsVictory():void
+		{
+			clearOutput();
+			setLocation("VICTORY: SECURITY DROIDS");
+			
+			output("The last of the security droids falls to the floor, the broken and scattered remains of their internal components litering the Constellations deck plating with singed plasteel and optical circuitry.");
+			output("\n\nWith the immediate threat dealt with, it would probably be wise to make haste towards your objective.");
+			
+			clearMenu();
+			CombatManager.GenericVictory();
+			CombatManager.postCombat();
+		}
+		
+		private function droidsLoss():void
+		{
+			clearOutput();
+			setLocation("DEFEAT: SECURITY DROIDS");
+			
+			output("The last of your party falls to the ground, defeated: the Constellations internal defenses proving overwhelming to your rag-tag band of compatriots...");
+			output("\n\n<b>GAME OVER</b>");
+			
+			clearMenu();
 		}
 		
 	}

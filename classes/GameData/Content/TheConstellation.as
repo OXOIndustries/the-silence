@@ -1,5 +1,6 @@
 package classes.GameData.Content 
 {
+	import classes.GameData.Characters.BlackVoidPirate;
 	import classes.GameData.Content.BaseContent;
 	import classes.GameData.Items.Melee.GravityAxe;
 	import classes.GameData.CombatManager;
@@ -26,9 +27,14 @@ package classes.GameData.Content
 		public function breachEngineeringFunction():Boolean
 		{
 			clearOutput();
-			if (flags["CONSTELLATION_PIRATES_ARRIVED"] == undefined)
+			if (flags["CONSTELLATION_PIRATES_ARRIVED"] != 1)
 			{
 				output("Some kind of ungodly powerful weapon blew a hole straight through the <i>Constellation</i>. Debris floats listlessly through open space, drifting in the gaping wound blasted through the hull. Lucky for you, that gives you easy access between the main decks.");
+				
+				if (flags["CONSTELLATION_PIRATES_BREACH_CLEARED"] == 1)
+				{
+					output("\n\nPiles of heavily armed Black Void crewmembers line the corridors around here, a testement to you and your compatriots combat proficiency.");
+				}
 				return false;
 			}
 			else
@@ -50,6 +56,8 @@ package classes.GameData.Content
 			output("\n\nThe pirates circle around you, leveling shotguns and sub-machine guns at you and your crewmen. This isn’t going to be easy...");
 
 			// PC fights a pirate crew. Every time they kill one, a new pirate rushes up to take his place. The party must last for TEN TURNS until...
+			clearMenu();
+			addButton(0, "Fight!", breachFightGo);
 
 			CombatManager.newGroundCombat(); // Setup for a new combat phase.
 			CombatManager.setPlayers(PlayerParty.getParty()); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
@@ -61,6 +69,27 @@ package classes.GameData.Content
 
 			CombatManager.beginCombat();
 		}
+		
+		private function breachFightGo():void
+		{
+			var enemies:Array = [];
+			
+			for (var i:int = 0; i < 4; i++)
+			{
+				enemies.push(new BlackVoidPirate());
+				enemies[i].respawn = true;
+			}
+			
+			CombatManager.newGroundCombat();
+			CombatManager.setPlayers(PlayerParty.getParty());
+			CombatManager.setEnemies(enemies);
+			CombatManager.victoryCondition(CombatManager.SURVIVE_WAVES, 10);
+			CombatManager.victoryScene(pirateBreachVictory);
+			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
+			CombatManager.lossScene(pirateBreachLoss);
+			CombatManager.beginCombat();
+			
+		}
 
 		private function pirateBreachLoss():void
 		{
@@ -71,6 +100,7 @@ package classes.GameData.Content
 		
 		private function pirateBreachVictory():void
 		{
+			flags["CONSTELLATION_PIRATES_BREACH_CLEARED"] = 1;
 			clearOutput();
 			output("Holy fuck they keep coming! You fire and fire until your trigger finger goes numb, drilling holes through pirate after pirate. But for every one you drop, another takes his place. They’re like insects, crawling out of every hole in the ship, leaping through the breach or out of torn airlocks all throughout the crumbling ship. Plasma vapors and gunsmoke cloud around the hallway, making it almost impossible to see more than few feet ahead of you. That’s enough to see them as the pirates come rushing forward, though, illuminated by the flashes of their blazing guns. ");
 			

@@ -1,11 +1,14 @@
 package classes.GameData.Characters 
 {
 	import classes.Creature;
+	import classes.GameData.Items.Apparel.BlackVoidArmor;
 	import classes.GameData.Items.Apparel.ProtectiveJacket;
+	import classes.GameData.Items.Guns.HeavyAR;
 	import classes.GameData.Items.Guns.PlasmaPistol;
 	import classes.GameData.Items.Guns.Shotgun;
 	import classes.GameData.Items.Melee.BigFuckingWrench;
 	import classes.GameData.Items.Melee.ForceEdge;
+	import classes.GameData.Items.Miscellaneous.EmptySlot;
 	import classes.GameData.Items.Protection.DecentShield;
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
@@ -14,12 +17,15 @@ package classes.GameData.Characters
 	import classes.Engine.Combat.calculateMiss;
 	import classes.Engine.Combat.calculateDamage;
 	
+	import classes.Engine.Interfaces.*;
+	
 	/**
 	 * ...
 	 * @author Gedan
 	 */
 	public class BlackVoidPirate extends Creature
 	{
+		public var respawn:Boolean = false;
 		
 		public function BlackVoidPirate() 
 		{
@@ -37,20 +43,20 @@ package classes.GameData.Characters
 			this.plural = false;
 			this.lustVuln = 1.0;
 			
-			this.meleeWeapon = new Greataxe();
-			this.rangedWeapon = new Handaxes();
-			this.armor = new ProtectiveJacket();
+			this.meleeWeapon = new EmptySlot();
+			this.rangedWeapon = new HeavyAR();
+			this.armor = new BlackVoidArmor();
 			this.shield = new DecentShield();
 			
 			this.INDEX = "VOIDPIRATE";
 			this.bustT = StaticRenders.MISSING;
 			
-			this.level = 5;
-			this.physiqueRaw = 18;
-			this.reflexesRaw = 18;
-			this.aimRaw = 18;
-			this.intelligenceRaw = 18;
-			this.willpowerRaw = 18;
+			this.level = 3;
+			this.physiqueRaw = 12;
+			this.reflexesRaw = 10;
+			this.aimRaw = 15;
+			this.intelligenceRaw = 8;
+			this.willpowerRaw = 8;
 			this.libidoRaw = 60;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
@@ -58,16 +64,16 @@ package classes.GameData.Characters
 			this.resistances = [1, 1, 1, 1, 1, 1, 1, 1];
 			this.XPRaw = 0;
 			this.credits = 7875;
-			this.HPMod = 15;
+			this.HPMod = 10;
 			this.HPRaw = this.HPMax();
 			this.shieldsRaw = this.shieldsMax();
 			
-			this.femininity = 85;
+			this.femininity = 10;
 			this.eyeType = GLOBAL.TYPE_HUMAN;
 			this.eyeColor = "brown";
 			this.tallness = 85;
 			this.thickness = 40;
-			this.tone = 35;
+			this.tone = 75;
 			this.hairColor = "brown";
 			this.hairType = GLOBAL.TYPE_HUMAN;
 			this.furColor = "brown";
@@ -135,14 +141,10 @@ package classes.GameData.Characters
 			this.buttRatingRaw = 6;
 			//No dicks here!
 			this.cocks = new Array();
-			this.createVagina();
-			this.girlCumType = GLOBAL.FLUID_TYPE_GIRLCUM;
-			this.vaginalVirgin = false;
-			this.vaginas[0].loosenessRaw = 2;
-			this.vaginas[0].wetnessRaw = 5;
-			this.vaginas[0].bonusCapacity = 55;
+			this.createCock(8, 1);
+			
 			//balls
-			this.balls = 0;
+			this.balls = 2;
 			this.cumMultiplierRaw = 6;
 			//Multiplicative value used for impregnation odds. 0 is infertile. Higher is better.
 			this.cumType = GLOBAL.FLUID_TYPE_CUM;

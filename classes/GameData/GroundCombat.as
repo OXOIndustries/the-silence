@@ -1,7 +1,9 @@
 package classes.GameData 
 {
 	import classes.Creature;
+	import classes.GameData.Characters.BlackVoidPirate;
 	import classes.StorageClass;
+	import classes.UIComponents.SideBarComponents.LocationHeader;
 	
 	import classes.Engine.Combat.*;
 	import classes.Engine.Interfaces.*;
@@ -76,6 +78,7 @@ package classes.GameData
 			for (var i:int = 0; i < _friendlies.length; i++)
 			{
 				if (!(_friendlies[i] is Creature)) throw new Error("Attempted to use a non-creature object in Ground Combat.");
+				_friendlies[i].arrayIdx = i;
 			}
 		}
 		override public function setEnemies(... args):void
@@ -115,6 +118,8 @@ package classes.GameData
 					_hostiles[i].btnTargetText += " " + appends[appendNum];
 					appendNum++;
 				}
+				
+				_hostiles[i].arrayIdx = i;
 			}
 		}
 		
@@ -150,17 +155,8 @@ package classes.GameData
 				}
 			}
 			
-			if (playerVictoryCondition())
-			{
-				addButton(0, "Victory", _victoryFunction);
-				return;
-			}
-			
-			if (playerLossCondition())
-			{
-				addButton(0, "Defeat", _lossFunction);
-				return;
-			}
+			if (checkForVictory()) return;
+			if (checkForLoss()) return;
 			
 			generateCombatMenu();
 			showCombatDescriptions();
@@ -169,16 +165,47 @@ package classes.GameData
 			_initForRound = _roundCounter;
 		}
 		
+		private function checkForVictory():Boolean
+		{
+			if (playerVictoryCondition())
+			{
+				clearMenu();
+				addButton(0, "Victory", _victoryFunction);
+				return true;
+			}
+			return false;
+		}
+		
+		private function checkForLoss():Boolean
+		{
+			if (playerLossCondition())
+			{
+				clearMenu();
+				addButton(0, "Defeat", _lossFunction);
+				return true;
+			}
+			return false;
+		}
+		
 		private function generateCombatMenu():void
 		{	
 			removeAllButtonHighlights();
 			
 			addButton(4, "Execute", processCombat);
+			if (GameState.debug) addButton(9, "Cheat", cheatKillEverything);
 			//addButton(14, "Escape", attemptEscape);
 			
 			for (var i:int = 0; i < _friendlies.length; i++)
 			{
 				generateCombatMenuFor(_friendlies[i], i);
+			}
+		}
+		
+		private function cheatKillEverything():void
+		{
+			for (var i:int = 0; i < _hostiles.length; i++)
+			{
+				(_hostiles[i] as Creature).HPRaw = 0;
 			}
 		}
 		
@@ -193,22 +220,23 @@ package classes.GameData
 			
 			if (target.hasStatusEffect("Stunned"))
 			{
-				addButton(1 + (offset * 5), "Recover", stunRecover, target);
+				addDisabledButton(1 + (offset * 5), "Stunned", "Stunned", "This character is currently stunned!");
 				return;
 			}
 			if (target.hasStatusEffect("Grappled"))
 			{
-				addButton(2 + (offset * 5), "Struggle", grappleStruggle, target);
+				addDisabledButton(2 + (offset * 5), "Struggle", "Grappled", "This character is currently grappled, and will attempt to free themselves!");
 				return;
 			}
 			if (target.hasStatusEffect("Tripped"))
 			{
-				addButton(3 + (offset * 5), "Stand Up", standUp, target);
-				return;
+				
 			}
 			
 			if (_attackSelections[target.INDEX].type != "attack")
+			{
 				addButton(1 + (offset * 5), "Attack", attackMenu, target);
+			}
 			else
 			{
 				highlightButton(1 + (offset * 5));
@@ -221,17 +249,35 @@ package classes.GameData
 				}
 			}
 			
-			if (_attackSelections[target.INDEX].type != "special")
-				addButton(2 + (offset * 5), "Specials", specialsMenu, target);
+			if (target.hasStatusEffect("Tripped"))
+			{
+				addButton(2 + (offset * 5), "Stand Up", standUp, target, "Stand Up", "Consume a combat action to stand back up.");
+				
+				if (_attackSelections[target.INDEX].type != "stand")
+				{
+					dehighlightButton(2 + (offset * 5));
+				}
+				else
+				{
+					highlightButton(2 + (offset * 5));
+				}
+			}
 			else
 			{
-				highlightButton(2 + (offset * 5));
-				
-				addButton(2 + (offset * 5), _attackSelections[target.INDEX].label, specialsMenu, target);
-				
-				if (_attackSelections[target.INDEX].target != undefined)
+				if (_attackSelections[target.INDEX].type != "special")
 				{
-					addDisabledButton(3 + (offset * 5), _attackSelections[target.INDEX].target.btnTargetText);
+					addButton(2 + (offset * 5), "Specials", specialsMenu, target);
+				}
+				else
+				{
+					highlightButton(2 + (offset * 5));
+					
+					addButton(2 + (offset * 5), _attackSelections[target.INDEX].label, specialsMenu, target);
+					
+					if (_attackSelections[target.INDEX].target != undefined)
+					{
+						addDisabledButton(3 + (offset * 5), _attackSelections[target.INDEX].target.btnTargetText);
+					}
 				}
 			}
 		}
@@ -270,7 +316,7 @@ package classes.GameData
 		{
 			_attackSelections[target.INDEX].type = "recover";
 			_attackSelections[target.INDEX].func = doStunRecover;
-			_attackSelections[target.INDEX].target = undefined;
+			delete _attackSelections[target.INDEX].target;
 			showCombatMenu();
 		}
 		
@@ -278,7 +324,7 @@ package classes.GameData
 		{
 			_attackSelections[target.INDEX].type = "struggle";
 			_attackSelections[target.INDEX].func = doStruggleRecover;
-			_attackSelections[target.INDEX].target = undefined;
+			delete _attackSelections[target.INDEX].target;
 			showCombatMenu();
 		}
 		
@@ -287,19 +333,64 @@ package classes.GameData
 			if (target.hasStatusEffect("Stunned"))
 			{
 				target.addStatusValue("Stunned", 1, -1);
+				
+				if (target.statusEffectv1("Stunned") < 0)
+				{
+					if (target.statusEffectv2("Stunned") == 0)
+					{
+						output("\n\n" + target.a + target.short + " shakes off the effects of the stun. <b>" + target.a + target.short + " is no longer stunned!</b>");
+					}
+					else
+					{
+						if (_hostiles.indexOf(target) == -1)
+						{
+							_hostiles[target.statusEffectv2("Stunned")].doStunRecoverFor(target);
+						}
+						else
+						{
+							_friendlies[target.statusEffectv2("Stunned")].doStunRecoverFor(target);
+						}
+					}
+					
+					target.removeStatusEffect("Stunned");
+				}
 			}
 		}
 		
 		private function doStruggleRecover(target:Creature):void
 		{
-			
+			if (target.hasStatusEffect("Grappled"))
+			{
+				target.addStatusValue("Grappled", 1, -1);
+				
+				if (target.hasStatusEffect("Grappled") < 0)
+				{
+					if (target.statusEffectv2("Grappled") == 0)
+					{
+						output("\n\n" + target.a + target.short + " wriggles out of the grapple. <b>" + target.a + target.short + " is no longer grappled!</b>");
+					}
+					else
+					{
+						if (_hostiles.indexOf(target) == -1)
+						{
+							_hostiles[target.statusEffectv2("Grappled")].doGrappleEscapeFor(target);
+						}
+						else
+						{
+							_friendlies[target.statusEffectv2("Grappled")].doGrappleEscapeFor(target);
+						}	
+					}
+					
+					target.removeStatusEffect("Grappled");
+				}
+			}
 		}
 		
 		private function standUp(target:Creature):void
 		{
 			_attackSelections[target.INDEX].type = "stand";
 			_attackSelections[target.INDEX].func = doStandUp;
-			_attackSelections[target.INDEX].target = undefined;
+			delete _attackSelections[target.INDEX].target;
 			showCombatMenu();
 		}
 		
@@ -676,7 +767,7 @@ package classes.GameData
 					}
 					else
 					{
-						target.createStatusEffect("Stunned", 2, 0, 0, 0, false, "Stun", "Stunned", true, 0);
+						target.createStatusEffect("Stunned", 2, attacker.arrayIdx, 0, 0, false, "Stun", "Stunned", true, 0);
 					}
 					output(" staggered by the sheet weight of the impact. (<b>" + damage + "</b>)");
 				}
@@ -880,6 +971,8 @@ package classes.GameData
 				}
 			}
 			
+			if (checkForVictory()) return;
+			
 			showCombatUI();
 			
 			clearMenu();
@@ -889,11 +982,15 @@ package classes.GameData
 		
 		private function processAIActions():void
 		{
+			if (checkForVictory()) return;
+			
 			clearOutput();
 			output("<b>Hostile party actions:</b>");
 			
 			generateAIActions();
 			updateStatusEffects(_hostiles);
+			
+			if (checkForVictory()) return;
 			
 			for (var i:int = 0; i < _friendlies.length; i++)
 			{
@@ -907,7 +1004,27 @@ package classes.GameData
 				}
 			}
 			
+			if (checkForLoss());
+			
 			showCombatUI();
+			
+			// Special handler mechanics
+			for (var i:int = 0; i < _hostiles.length; i++)
+			{
+				if (_hostiles[i] is BlackVoidPirate)
+				{
+					var bvp:BlackVoidPirate = _hostiles[i];
+					
+					if (bvp.respawn && bvp.isDefeated())
+					{
+						bvp.HP(bvp.HPMax());
+						bvp.shieldsRaw = bvp.shieldsMax();
+						bvp.clearCombatStatuses();
+						
+						output("\n\nAs one of the Black Void pirates falls to the ground, defeated, another jumps through the breach to take his place!");
+					}
+				}
+			}
 			
 			_roundCounter++;
 			
@@ -928,8 +1045,18 @@ package classes.GameData
 			{
 				if (_friendlies[i].HP() >= 0)
 				{
-					var func:Function = _attackSelections[_friendlies[i].INDEX].func;
-					if (func != null) func(_friendlies[i], _attackSelections[_friendlies[i].INDEX].target);
+					if (_attackSelections[_friendlies[i].INDEX].func != undefined)
+					{
+						var func:Function = _attackSelections[_friendlies[i].INDEX].func;
+						if (_attackSelections[_friendlies[i].INDEX].target != undefined)
+						{
+							func(_friendlies[i], _attackSelections[_friendlies[i].INDEX].target);	
+						}
+						else
+						{
+							func(_friendlies[i]);
+						}
+					}
 				}
 			}
 		}
@@ -938,7 +1065,26 @@ package classes.GameData
 		{
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
-				if (!_hostiles[i].isDefeated()) _hostiles[i].generateAIActions(_hostiles, _friendlies);
+				var target:Creature = _hostiles[i];
+				
+				if (target.isDefeated())
+				{
+					continue;
+				}
+				
+				if (target.hasStatusEffect("Grappled"))
+				{
+					doStruggleRecover(target);
+					continue;
+				}
+				
+				if (target.hasStatusEffect("Stunned"))
+				{
+					doStunRecover(target);
+					continue;
+				}
+				
+				target.generateAIActions(_hostiles, _friendlies);
 			}
 		}
 		

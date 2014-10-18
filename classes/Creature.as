@@ -102,6 +102,16 @@
 				removals.splice(0, 1);
 			}
 		}
+		
+		public function doStunRecoverFor(target:Creature):void
+		{
+			throw new Error("Override me fgt.");
+		}
+		
+		public function doGrappleRecoverFor(target:Creature):void
+		{
+			throw new Error("Override me fgt.");
+		}
 
 		//For enemies
 		public var bustT:Class = StaticRenders.MISSING;
@@ -115,6 +125,7 @@
 		public var currentLocation:String = "";
 		public var isUniqueInFight:Boolean = true;
 		public var btnTargetText:String = "";
+		public var arrayIdx:int = -1;
 
 		//Is a creature a 'pluralize' encounter - mob, etc. 
 		public var plural: Boolean = false;
