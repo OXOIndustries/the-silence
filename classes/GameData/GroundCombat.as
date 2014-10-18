@@ -1,6 +1,7 @@
 package classes.GameData 
 {
 	import classes.Creature;
+	import classes.StorageClass;
 	
 	import classes.Engine.Combat.*;
 	import classes.Engine.Interfaces.*;
@@ -133,13 +134,13 @@ package classes.GameData
 		
 		private function showCombatMenu():void
 		{
+			clearOutput();
 			clearMenu();
 			
 			removeAllButtonHighlights();
 			
 			if (!doneRoundActions())
 			{
-				clearOutput();
 				_roundCounter++;
 				_attackSelections = new Object();
 				
@@ -169,7 +170,9 @@ package classes.GameData
 		}
 		
 		private function generateCombatMenu():void
-		{
+		{	
+			removeAllButtonHighlights();
+			
 			addButton(4, "Execute", processCombat);
 			//addButton(14, "Escape", attemptEscape);
 			
@@ -198,7 +201,7 @@ package classes.GameData
 				addButton(2 + (offset * 5), "Struggle", grappleStruggle, target);
 				return;
 			}
-			if (target.hasStatusEffect("Trip"))
+			if (target.hasStatusEffect("Tripped"))
 			{
 				addButton(3 + (offset * 5), "Stand Up", standUp, target);
 				return;
@@ -268,7 +271,7 @@ package classes.GameData
 			_attackSelections[target.INDEX].type = "recover";
 			_attackSelections[target.INDEX].func = doStunRecover;
 			_attackSelections[target.INDEX].target = undefined;
-			generateCombatMenu();
+			showCombatMenu();
 		}
 		
 		private function grappleStruggle(target:Creature):void
@@ -276,12 +279,15 @@ package classes.GameData
 			_attackSelections[target.INDEX].type = "struggle";
 			_attackSelections[target.INDEX].func = doStruggleRecover;
 			_attackSelections[target.INDEX].target = undefined;
-			generateCombatMenu();
+			showCombatMenu();
 		}
 		
 		private function doStunRecover(target:Creature):void
 		{
-			
+			if (target.hasStatusEffect("Stunned"))
+			{
+				target.addStatusValue("Stunned", 1, -1);
+			}
 		}
 		
 		private function doStruggleRecover(target:Creature):void
@@ -294,12 +300,15 @@ package classes.GameData
 			_attackSelections[target.INDEX].type = "stand";
 			_attackSelections[target.INDEX].func = doStandUp;
 			_attackSelections[target.INDEX].target = undefined;
-			generateCombatMenu();
+			showCombatMenu();
 		}
 		
 		private function doStandUp(target:Creature):void
 		{
+			if (target is PlayerCharacter) output("\n\nYou clamber back to your " + target.feet() + ".");
+			else output(target.a + target.short + " clambers back to their " + target.feet() + ".");
 			
+			target.removeStatusEffect("Tripped");
 		}
 		
 		private function targetSelectionMenu(target:Creature):void
@@ -326,7 +335,8 @@ package classes.GameData
 		{
 			_attackSelections[args[1].INDEX].target = _hostiles[args[0]];
 			
-			generateCombatMenu();
+			clearMenu();
+			showCombatMenu();
 		}
 		
 		private function attackMenu(target:Creature):void
@@ -416,7 +426,7 @@ package classes.GameData
 				else addDisabledButton(2, "S.Boost", "Shield Boost", "Attempting to overcharge the parties shield generators again so soon only risks burning them out!");
 			}
 			
-			addButton(14, "Back", generateCombatMenu);
+			addButton(14, "Back", showCombatMenu, undefined, "Back", "Added in Specials Menu");
 		}
 		
 		public function doMeleeAttack(attacker:Creature, target:Creature):void
@@ -526,6 +536,8 @@ package classes.GameData
 		
 		private function chargeShot(attacker:Creature, target:Creature):void
 		{
+			attacker.createStatusEffect("ChargeShotCooldown", 3, 0, 0, 0, true, "", "", true, 0);
+			
 			output("\n\nYou hold down the trigger on your plasma pistol, just for a second, letting a charge build up before you let the bolt of green go screaming towards ");
 			
 			if (_hostiles.length > 1)
@@ -560,6 +572,8 @@ package classes.GameData
 		
 		private function targetingShot(attacker:Creature, target:Creature):void
 		{
+			attacker.createStatusEffect("TargetShotCooldown", 2, 0, 0, 0, true, "", "", true, 0);
+			
 			output("\n\nYou fire a bolt of superheated plasma at " + target.a + target.short + ".");
 			
 			if (calculateMiss(attacker, target, false, attacker.rangedWeapon.attack * 1.25, 0.75))
@@ -581,6 +595,8 @@ package classes.GameData
 		
 		private function stimulantBoost(attacker:Creature, target:Creature = null):void
 		{
+			attacker.createStatusEffect("StimBoostCooldown", 0, 1, 0, 0, true, "", "", true, 0);
+			
 			output("\n\nYou punch in a command on the holoband at your wrist, unleashing a surge of emergency doctor nanomachines and adrenaline into your companions' systems. Health restored!");
 			
 			for (var i:int = 0; i < _friendlies.length; i++)
@@ -595,13 +611,16 @@ package classes.GameData
 				if (hpGain > 0) 
 				{
 					if (_friendlies[i] is PlayerCharacter) output("\nYou gained " + hpGain + " health!");
-					else output("\n" + _friendlies[i].short + " + gained " + hpGain + " health!");
+					else output("\n" + _friendlies[i].short + " gained " + hpGain + " health!");
+					_friendlies[i].HP(hpGain);
 				}
 			}
 		}
 		
 		private function cleave(attacker:Creature, target:Creature = null):void
 		{
+			attacker.createStatusEffect("CleaveCooldown", 2, 0, 0, 0, true, "", "", true, 0);
+			
 			output("\n\nTarik lunges towards the enemy, swinging his tremendous greataxe in a vicious arc, letting the momentum carry him until he looks like he's spinning -- a twirling pillar of death!");
 			
 			var managedAHit:Boolean = false;
@@ -623,6 +642,8 @@ package classes.GameData
 		
 		private function battlecry(attacker:Creature, target:Creature = null):void
 		{
+			attacker.createStatusEffect("BattlecryCooldown", 5, 0, 0, 0, true, "", "", true, 0);
+			
 			output("\n\nTarik lets out a howling battlecry that echoes through the corridor, drawing everyone's attention solely to the berserking cat-snake.");
 			attacker.createStatusEffect("Focus Fire", 3, 0, 0, 0, false, "Focus", "Focus Fire", true, 0);
 			attacker.createStatusEffect("Damage Reduction", 3, 75.0, 0, 0, true, "", "", true, 0);
@@ -630,6 +651,8 @@ package classes.GameData
 		
 		private function stunningStrike(attacker:Creature, target:Creature):void
 		{
+			attacker.createStatusEffect("StunStrikeCooldown", 3, 0, 0, 0, true, "", "", true, 0);
+			
 			// (Normal dmg, stuns for 1-2 turns. Phys save negates
 			output("\n\nTarik leaps at " + target.a + target.short + ", bringing his greataxe up for an overhead strike.");
 			if (calculateMiss(attacker, target, true))
@@ -662,6 +685,8 @@ package classes.GameData
 		
 		private function flamethrower(attacker:Creature, target:Creature):void
 		{
+			attacker.createStatusEffect("F.ThrowerCooldown", 3, 0, 0, 0, true, "", "", true, 0);
+			
 			output("\n\nPyra pulls a nozzle from her bulky backpack and levels it at " + target.a + target.short + ". She giggles maniacally before unleashing a huge gout of flame, bathing " + target.mfn("him", "her", "it") +" in roiling fire.");
 			
 			calculateDamage(attacker, target, 15, GLOBAL.THERMAL, "special", false);
@@ -672,6 +697,8 @@ package classes.GameData
 		
 		private function paralyticDarts(attacker:Creature, target:Creature):void
 		{
+			attacker.createStatusEffect("ParaDartsCooldown", 3, 0, 0, 0, true, "", "", true, 0);
+			
 			output("\n\nPyra levels her wrist-launcher at " + target.a + target.short + " and fires all three barrels, launching a trio of tiny, venom-laced darts downrange.");
 			
 			if (target.originalRace == "Machine")
@@ -709,6 +736,8 @@ package classes.GameData
 		
 		private function shieldBoost(attacker:Creature, target:Creature):void
 		{
+			attacker.createStatusEffect("ShieldBoostCooldown", 0, 1, 0, 0, true, "", "", true, 0);
+			
 			output("\n\nPyra brings up her tiny holoband screen and starts typing furiously, trying to boost the crew's shield generators. Shields restored!");
 			
 			for (var i:int = 0; i < _friendlies.length; i++)
@@ -724,12 +753,15 @@ package classes.GameData
 				{
 					if (_friendlies[i] is PlayerCharacter) output("\nYou gained " + sGain + " shields!");
 					else output("\n" + _friendlies[i].short + " gained " + sGain + " shields!");
+					_friendlies[i].shieldsRaw += sGain;
 				}
 			}
 		}
 		
 		private function selectSpecialAttack(args:Array):void
 		{
+			clearMenu();
+			
 			var func:Function = args[0];
 			var caster:Creature = args[1];
 			var label:String = args[2];
@@ -831,15 +863,20 @@ package classes.GameData
 			
 			applyPlayerActions();
 			updateStatusEffects(_friendlies);
+			updateCooldowns(_friendlies);
 			
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
 				if (_hostiles[i].isDefeated() && _hostiles[i].alreadyDefeated == false)
 				{
-					_hostiles[i].alreadyDefeated == true;
+					_hostiles[i].alreadyDefeated = true;
 					output("\n\n" + _hostiles[i].capitalA + _hostiles[i].short + " falls to the ground,");
 					if (_hostiles[i].HP() <= 0) output(" defeated.");
 					else output(" stricken with lust.");
+				}
+				else if (_hostiles[i].isDefeated() && _hostiles[i].alreadyDefeated == true)
+				{
+					output("\n\n" + _hostiles[i].capitalA + _hostiles[i].short + " lies on the ground, defeated.");
 				}
 			}
 			
@@ -870,6 +907,8 @@ package classes.GameData
 				}
 			}
 			
+			showCombatUI();
+			
 			_roundCounter++;
 			
 			clearMenu();
@@ -899,7 +938,43 @@ package classes.GameData
 		{
 			for (var i:int = 0; i < _hostiles.length; i++)
 			{
-				_hostiles[i].generateAIActions(_hostiles, _friendlies);
+				if (!_hostiles[i].isDefeated()) _hostiles[i].generateAIActions(_hostiles, _friendlies);
+			}
+		}
+		
+		private function updateCooldowns(group:Array):void
+		{
+			for (var i:int = 0; i < group.length; i++)
+			{
+				updateCooldownEffectsFor(group[i]);
+			}
+		}
+		
+		private function updateCooldownEffectsFor(target:Creature):void
+		{
+			var remove:Array = [];
+			
+			for (var i:int = 0; i < target.statusEffects.length; i++)
+			{
+				var se:StorageClass = target.statusEffects[i];
+				
+				if (se.storageName.indexOf("Cooldown") != -1)
+				{
+					if (se.value2 == 0) // V2 != 0 == till-end-of-combat cooldown
+					{
+						se.value1--; // Only decrement cooldowns we actually want here.
+						
+						if (se.value1 < 0)
+						{
+							remove.push(se.storageName);
+						}
+					}
+				}
+			}
+			
+			for (i = 0; i < remove.length; i++)
+			{
+				target.removeStatusEffect(remove[i]);
 			}
 		}
 		

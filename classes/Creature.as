@@ -3436,7 +3436,7 @@
 				}
 				else if (target is PlayerCharacter)
 				{
-					output("\n\nYou manage to avoid " + a + possessive(short) + " " + rangedWeapon.attackVerb + ".");
+					output("\n\nYou manage to avoid " + a + possessive(short) + " attack.");
 				}
 				else
 				{

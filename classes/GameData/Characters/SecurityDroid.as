@@ -5,10 +5,13 @@ package classes.GameData.Characters
 	import classes.Engine.Combat.calculateDamage;
 	import classes.GameData.Items.Apparel.ProtectiveJacket;
 	import classes.GameData.Items.Guns.Handaxes;
+	import classes.GameData.Items.Guns.LaserRifle;
 	import classes.GameData.Items.Guns.PlasmaPistol;
 	import classes.GameData.Items.Melee.ForceEdge;
 	import classes.GameData.Items.Melee.Greataxe;
-	import classes.GameData.Items.Protection.DecentShield;
+	import classes.GameData.Items.Miscellaneous.EmptySlot;
+	import classes.GameData.Items.Protection.BasicShield;
+	import classes.GameData.Items.Apparel.DroidPlating;
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
@@ -39,22 +42,22 @@ package classes.GameData.Characters
 			this.plural = false;
 			this.lustVuln = 1.0;
 			
-			this.meleeWeapon = new ForceEdge();
-			this.rangedWeapon = new PlasmaPistol();
-			this.armor = new ProtectiveJacket();
-			this.shield = new DecentShield();
+			this.meleeWeapon = new EmptySlot();
+			this.rangedWeapon = new LaserRifle();
+			this.armor = new DroidPlating();
+			this.shield = new BasicShield();
 			
 			this.INDEX = "SECURITYDROID";
 			this.bustT = StaticRenders.MISSING;
 			this.isUniqueInFight = false;
 			this.btnTargetText = "SecDroid";
 			
-			this.level = 5;
-			this.physiqueRaw = 18;
-			this.reflexesRaw = 18;
-			this.aimRaw = 18;
-			this.intelligenceRaw = 18;
-			this.willpowerRaw = 18;
+			this.level = 3;
+			this.physiqueRaw = 10;
+			this.reflexesRaw = 8;
+			this.aimRaw = 11;
+			this.intelligenceRaw = 11;
+			this.willpowerRaw = 11;
 			this.libidoRaw = 60;
 			this.shieldsRaw = 0;
 			this.energyRaw = 100;
@@ -62,7 +65,7 @@ package classes.GameData.Characters
 			this.resistances = [1, 1, 1, 1, 1, 1, 1, 1];
 			this.XPRaw = 0;
 			this.credits = 7875;
-			this.HPMod = 15;
+			this.HPMod = 0;
 			this.HPRaw = this.HPMax();
 			this.shieldsRaw = this.shieldsMax();
 			
@@ -268,11 +271,14 @@ package classes.GameData.Characters
 		public function shieldWall():void
 		{
 			//Recharge 25% shields. 1/encounter.
-			output("\n\nA drone reaches down and taps on its shield generator, activating an emergency generator to harden its defenses. Shields restored!");
+			output("\n\n" + this.short + " reaches down and taps on its shield generator, activating an emergency generator to harden its defenses.");
 			
 			createStatusEffect("Shieldwall Cooldown", 0, 0, 0, 0, true, "", "", true, 0);
 			
-			shieldsRaw = shieldsMax() * 0.25;
+			var sGain:int = shieldsMax() * 0.25;
+			shieldsRaw += sGain;
+			
+			output(" " + sGain + " shields restored!");
 		}
 		
 	}
