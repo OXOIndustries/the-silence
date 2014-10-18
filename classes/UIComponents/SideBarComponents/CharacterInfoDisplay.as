@@ -28,6 +28,14 @@ package classes.UIComponents.SideBarComponents
 		private var _circleStats:CircularStatBar;
 		private var _statusEffects:Sprite;
 		
+		private var _defEffect:Sprite;
+		private var _offEffect:Sprite;
+		private var _accEffect:Sprite;
+		
+		private var _impEffect:Sprite;
+		private var _dotEffect:Sprite;
+		private var _misEffect:Sprite;
+		
 		public function CharacterInfoDisplay(alignment:String = "left") 
 		{
 			_alignment = alignment;

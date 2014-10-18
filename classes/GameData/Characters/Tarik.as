@@ -10,6 +10,7 @@ package classes.GameData.Characters
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
+	import classes.Engine.Interfaces.*;
 	
 	/**
 	 * ...
@@ -167,7 +168,7 @@ package classes.GameData.Characters
 			this._isLoading = false;
 		}
 		
-		override public function doStunRecoverForTarget(target:Creature):void
+		override public function doStunRecoverFor(target:Creature):void
 		{
 			output("\n\n" + target.a + target.short + " final recovers from the effects of Tarik's stunning strike!");
 		}

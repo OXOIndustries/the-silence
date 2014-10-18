@@ -16,6 +16,7 @@ package classes.GameData.Characters
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
 	import classes.Engine.Interfaces.*;
+	import classes.Engine.Utility.possessive;
 	
 	/**
 	 * ...

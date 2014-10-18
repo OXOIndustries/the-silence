@@ -155,12 +155,13 @@ package classes.GameData
 				}
 			}
 			
+			showCombatUI();
+			
 			if (checkForVictory()) return;
 			if (checkForLoss()) return;
 			
 			generateCombatMenu();
 			showCombatDescriptions();
-			showCombatUI();
 			
 			_initForRound = _roundCounter;
 		}
@@ -684,7 +685,7 @@ package classes.GameData
 			}
 		}
 		
-		private function stimulantBoost(attacker:Creature, target:Creature = null):void
+		private function stimulantBoost(attacker:Creature):void
 		{
 			attacker.createStatusEffect("StimBoostCooldown", 0, 1, 0, 0, true, "", "", true, 0);
 			
@@ -708,7 +709,7 @@ package classes.GameData
 			}
 		}
 		
-		private function cleave(attacker:Creature, target:Creature = null):void
+		private function cleave(attacker:Creature):void
 		{
 			attacker.createStatusEffect("CleaveCooldown", 2, 0, 0, 0, true, "", "", true, 0);
 			
@@ -731,7 +732,7 @@ package classes.GameData
 			}
 		}
 		
-		private function battlecry(attacker:Creature, target:Creature = null):void
+		private function battlecry(attacker:Creature):void
 		{
 			attacker.createStatusEffect("BattlecryCooldown", 5, 0, 0, 0, true, "", "", true, 0);
 			
@@ -825,7 +826,7 @@ package classes.GameData
 			}
 		}
 		
-		private function shieldBoost(attacker:Creature, target:Creature):void
+		private function shieldBoost(attacker:Creature):void
 		{
 			attacker.createStatusEffect("ShieldBoostCooldown", 0, 1, 0, 0, true, "", "", true, 0);
 			
@@ -871,7 +872,11 @@ package classes.GameData
 			]
 			
 			if (reqTarget.indexOf(label) != -1) targetSelectionMenu(caster);
-			else generateCombatMenu();
+			else 
+			{
+				delete _attackSelections[caster.INDEX].target;
+				generateCombatMenu();
+			}
 		}
 		
 		private function showCombatUI():void
@@ -921,9 +926,12 @@ package classes.GameData
 		{
 			for (var i:int = 0; i < _friendlies.length; i++)
 			{
-				if (_friendlies[i].isDefeated() == false)
+				if (_friendlies[i].isDefeated() == false && !_friendlies[i].hasStatusEffect("Stunned") && !_friendlies[i].hasStatusEffect("Grappled"))
 				{
-					if (_attackSelections[_friendlies[i].INDEX].type == undefined) return true;
+					if (_attackSelections[_friendlies[i].INDEX].type == undefined) 
+					{
+						return true;
+					}
 				}
 			}
 			return false;
@@ -1057,6 +1065,17 @@ package classes.GameData
 							func(_friendlies[i]);
 						}
 					}
+					else
+					{
+						if (_friendlies[i].hasStatusEffect("Stunned"))
+						{
+							doStunRecover(_friendlies[i]);
+						}
+						if (_friendlies[i].hasStatusEffect("Grappled"))
+						{
+							doStruggleRecover(_friendlies[i]);
+						}
+					}
 				}
 			}
 		}
@@ -1134,6 +1153,8 @@ package classes.GameData
 		
 		private function updateStatusEffectsFor(target:Creature):void
 		{
+			if (target.isDefeated()) return;
+			
 			if (target.hasStatusEffect("Plasma Burn"))
 			{
 				output("\n\nFirey green plasma continues to wear down " + ((target is PlayerCharacter) ? "your" : target.a + possessive(target.short)) + " defenses");
