@@ -7,14 +7,14 @@ package classes.UIComponents.SideBarComponents
 	 * ...
 	 * @author Gedan
 	 */
-	public class EffetContainer extends Sprite
+	public class EffectContainer extends Sprite
 	{
 		private var _body:Sprite;
-		private var _mIcon:Sprite;
+		protected var _mIcon:Sprite;
 		private var _mPlus:Sprite;
 		private var _mNeg:Sprite;
 		
-		public function EffetContainer() 
+		public function EffectContainer() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
@@ -23,6 +23,7 @@ package classes.UIComponents.SideBarComponents
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			Build();
+			BuildIcon();
 		}
 		
 		private function Build():void
@@ -31,7 +32,29 @@ package classes.UIComponents.SideBarComponents
 			_body.graphics.beginFill(UIStyleSettings.gBackgroundColour, 1);
 			_body.graphics.drawRoundRect(0, 0, 33, 33, 4, 4);
 			_body.graphics.endFill();
-			this.addChild(_body);			
+			this.addChild(_body);
+			
+			_mPlus = new Sprite();
+			_mPlus.graphics.beginFill(UIStyleSettings.gStatusGoodColour);
+			_mPlus.graphics.drawRect(4, 0, 4, 12);
+			_mPlus.graphics.drawRect(0, 4, 12, 4);
+			_mPlus.graphics.endFill();
+			_mPlus.x = 5;
+			_mPlus.y = 24;
+			this.addChild(_mPlus);
+			
+			_mNeg = new Sprite();
+			_mNeg.graphics.beginFill(UIStyleSettings.gStatusBadColour);
+			_mNeg.graphics.drawRect(0, 4, 12, 4);
+			_mNeg.graphics.endFill();
+			_mNeg.x = 20;
+			_mNeg.y = 27;
+			this.addChild(_mNeg);
+		}
+		
+		public function BuildIcon():void
+		{
+			throw new Error("Override plx");
 		}
 		
 		public function setInactive():void

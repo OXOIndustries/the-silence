@@ -1,6 +1,12 @@
 package classes.UIComponents.SideBarComponents 
 {
 	import classes.Creature;
+	import classes.UIComponents.SideBarComponents.Effects.AccEffect;
+	import classes.UIComponents.SideBarComponents.Effects.ControlEffect;
+	import classes.UIComponents.SideBarComponents.Effects.DefEffect;
+	import classes.UIComponents.SideBarComponents.Effects.DoTEffect;
+	import classes.UIComponents.SideBarComponents.Effects.MiscEffect;
+	import classes.UIComponents.SideBarComponents.Effects.OffEffect;
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
@@ -28,13 +34,13 @@ package classes.UIComponents.SideBarComponents
 		private var _circleStats:CircularStatBar;
 		private var _statusEffects:Sprite;
 		
-		private var _defEffect:Sprite;
-		private var _offEffect:Sprite;
-		private var _accEffect:Sprite;
+		private var _defEffect:EffectContainer;
+		private var _offEffect:EffectContainer;
+		private var _accEffect:EffectContainer;
 		
-		private var _impEffect:Sprite;
-		private var _dotEffect:Sprite;
-		private var _misEffect:Sprite;
+		private var _impEffect:EffectContainer;
+		private var _dotEffect:EffectContainer;
+		private var _misEffect:EffectContainer;
 		
 		public function CharacterInfoDisplay(alignment:String = "left") 
 		{
@@ -58,9 +64,47 @@ package classes.UIComponents.SideBarComponents
 			BuildHeader();
 			BuildStatBars();
 			BuildBustContainer();
+			BuildEffectContainers();
 			
 			// Default testing data for devwork.
 			ShowDebugInfo();
+		}
+		
+		private function BuildEffectContainers():void
+		{
+			_defEffect = new DefEffect();
+			_offEffect = new OffEffect();
+			_accEffect = new AccEffect();
+			
+			_impEffect = new ControlEffect();
+			_dotEffect = new DoTEffect();
+			_misEffect = new MiscEffect();
+			
+			this.addChild(_defEffect);
+			this.addChild(_offEffect);
+			this.addChild(_accEffect);
+			
+			this.addChild(_impEffect);
+			this.addChild(_dotEffect);
+			this.addChild(_misEffect);
+			
+			_defEffect.x = 2;
+			_defEffect.y = _nameHeaderUnderline.y + _nameHeaderUnderline.height + 2;
+			
+			_offEffect.x = _defEffect.x;
+			_offEffect.y = _defEffect.y + _defEffect.height + 3;
+			
+			_accEffect.x = _offEffect.x;
+			_accEffect.y = _offEffect.y + _offEffect.height + 3;
+			
+			_impEffect.x = _defEffect.x + _defEffect.width + 3;
+			_impEffect.y = _nameHeaderUnderline.y + _nameHeaderUnderline.height + 2;
+			
+			_dotEffect.x = _impEffect.x;
+			_dotEffect.y = _impEffect.y + _impEffect.height + 3;
+			
+			_misEffect.x = _dotEffect.x;
+			_misEffect.y = _dotEffect.y + _dotEffect.height + 3;
 		}
 		
 		private function BuildDebugBackground():void
@@ -115,7 +159,7 @@ package classes.UIComponents.SideBarComponents
 			_bustImage = new Sprite();
 			this.addChild(_bustImage);
 			
-			_bustImage.x = 100;
+			_bustImage.x = 136;
 			_bustImage.y = 85;
 			
 			bustBackground.x = _bustImage.x;
@@ -137,7 +181,7 @@ package classes.UIComponents.SideBarComponents
 			_circleStats = new CircularStatBar();
 			this.addChild(_circleStats);
 			
-			_circleStats.x = 100;
+			_circleStats.x = 136;
 			_circleStats.y = 85;
 		}
 		
