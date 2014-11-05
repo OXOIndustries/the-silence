@@ -39,7 +39,6 @@ package classes.GameData.Map.EnemyEncounters
 				if (num <= GameState.flags["SECURITY_DROIDS_STEPS"])
 				{
 					var numDroids:int = rand(2) + 2;
-					//var numDroids:int = 1;
 					
 					output("\n\nAhead, you hear heavy mechanical footfalls marching in unison, stomping towards you down the corridor. A group of " + num2Text(numDroids) + " gray, steel droids march around the corner!");
 					
