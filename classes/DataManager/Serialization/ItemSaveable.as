@@ -199,27 +199,6 @@
 					}
 				}
 			}
-			else
-			{
-				var _dl:XMLList = _d..variable;
-				var _da:XMLList = _d..accessor;
-				
-				for each (prop in _dl)
-				{
-					if (this[prop.@name] != null && this[prop.@name] != undefined)
-					{
-						this[prop.@name] = dataObject[prop.@name];
-					}
-				}
-				
-				for each (var accs in _da)
-				{
-					if (accs.@name != "prototype" && accs.@name != "neverSerialize")
-					{
-						this[accs.@name] = dataObject[accs.@name];
-					}
-				}
-			}
 		}
 		
 		/**

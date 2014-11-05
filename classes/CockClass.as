@@ -113,8 +113,8 @@
 			return Math.round(temp * 100) / 100;
 		}
 		//FLAG CHECKIN!
-		public function hasFlag(arg = undefined):Boolean {
-			if(arg == undefined) {
+		public function hasFlag(arg:int = int.MIN_VALUE):Boolean {
+			if(arg == int.MIN_VALUE) {
 				if(cockFlags.length > 0) return true;
 				else return false;
 			}
@@ -123,7 +123,7 @@
 			}
 			return false;
 		}
-		public function addFlag(arg):void {
+		public function addFlag(arg:int):void {
 			if(!hasFlag(arg)) cockFlags[cockFlags.length] = arg;
 			else trace("Attempted to add flag " + arg + " to cock of type " + cType + ".");
 		}

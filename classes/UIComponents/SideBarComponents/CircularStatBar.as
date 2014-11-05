@@ -159,7 +159,7 @@ package classes.UIComponents.SideBarComponents
 			_shieldMask.graphics.beginFill(0x0000FF, 0.5);
 			_shieldMask.graphics.moveTo(0, 0);
 			
-			var drawPieMask:Function = function(graphics:Graphics, percentage:Number, radius:Number = 50, x:Number = 0, y:Number = 0, rotation:Number = 0, sides:int = 6)
+			var drawPieMask:Function = function(graphics:Graphics, percentage:Number, radius:Number = 50, x:Number = 0, y:Number = 0, rotation:Number = 0, sides:int = 6):void
 			{
 				// graphics should have its beginFill function already called by now
 				graphics.moveTo(x, y);
@@ -190,7 +190,7 @@ package classes.UIComponents.SideBarComponents
 			_hpMask.graphics.beginFill(0x00FF00, 0.5);
 			_hpMask.graphics.moveTo(0, 0);
 			
-			var drawPieMask:Function = function(graphics:Graphics, percentage:Number, radius:Number = 50, x:Number = 0, y:Number = 0, rotation:Number = 0, sides:int = 6)
+			var drawPieMask:Function = function(graphics:Graphics, percentage:Number, radius:Number = 50, x:Number = 0, y:Number = 0, rotation:Number = 0, sides:int = 6):void
 			{
 				// graphics should have its beginFill function already called by now
 				graphics.moveTo(x, y);

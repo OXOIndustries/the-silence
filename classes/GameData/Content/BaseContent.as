@@ -61,7 +61,7 @@ package classes.GameData.Content
 		
 		protected function removeButton(slot:int):void
 		{
-			classes.Engine.Interfaces.removeButton
+			classes.Engine.Interfaces.removeButton(slot);
 		}
 		
 		protected function get userInterface():GUI

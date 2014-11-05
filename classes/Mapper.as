@@ -81,7 +81,7 @@
 		// that means I can recurse without getting bogged down in issues related to the fact that arrays are pass
 		// by reference.
 		// also: RECURSION
-		private function processRoom(targetRoom:String, map:Vector.<Vector.<Vector.<int>>>, x:int, y:int, z:int)
+		private function processRoom(targetRoom:String, map:Vector.<Vector.<Vector.<int>>>, x:int, y:int, z:int):void
 		{
 			// clamp to map size
 			if ((x < 0 || x >= this._mapSz) || (y < 0 || y >= this._mapSz) || (z < 0 || z >= this._mapSz))
@@ -112,7 +112,7 @@
 
 			if (room.NorthExit)
 			{
-				if (room.NorthCondition == undefined || room.NorthCondition() == true) map[x][y][z] |= y_pos_exit_mask;
+				if (room.NorthCondition == null || room.NorthCondition() == true) map[x][y][z] |= y_pos_exit_mask;
 				else map[x][y][z] |= y_pos_lock_mask;
 				
 				if (this.mapDebug) trace("Have exit - northExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].northExit);
@@ -120,7 +120,7 @@
 			}
 			if (roomsObj[targetRoom].SouthExit)
 			{
-				if (room.SouthCondition == undefined || room.SouthCondition() == true) map[x][y][z] |= y_neg_exit_mask;
+				if (room.SouthCondition == null || room.SouthCondition() == true) map[x][y][z] |= y_neg_exit_mask;
 				else map[x][y][z] |= y_neg_lock_mask;
 				
 				if (this.mapDebug) trace("Have exit - southExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].southExit);
@@ -128,7 +128,7 @@
 			}
 			if (roomsObj[targetRoom].EastExit)
 			{
-				if (room.EastCondition == undefined || room.EastCondition() == true) map[x][y][z] |= x_pos_exit_mask;
+				if (room.EastCondition == null || room.EastCondition() == true) map[x][y][z] |= x_pos_exit_mask;
 				else map[x][y][z] |= x_pos_lock_mask;
 				
 				if (this.mapDebug) trace("Have exit - eastExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].eastExit);
@@ -136,7 +136,7 @@
 			}
 			if (roomsObj[targetRoom].WestExit)
 			{
-				if (room.WestCondition == undefined || room.WestCondition() == true) map[x][y][z] |= x_neg_exit_mask;
+				if (room.WestCondition == null || room.WestCondition() == true) map[x][y][z] |= x_neg_exit_mask;
 				else map[x][y][z] |= x_neg_lock_mask;
 				
 				if (this.mapDebug) trace("Have exit - westExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].westExit);
@@ -144,14 +144,14 @@
 			}
 			if (roomsObj[targetRoom].InExit)
 			{
-				if (room.InCondition == undefined || room.InCondition() == true) map[x][y][z] |= z_pos_exit_mask;
+				if (room.InCondition == null || room.InCondition() == true) map[x][y][z] |= z_pos_exit_mask;
 				
 				if (this.mapDebug) trace("Have exit - inExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].inExit);
 				processRoom(roomsObj[targetRoom].InExit, map, x, y, z+1)
 			}
 			if (roomsObj[targetRoom].OutExit)
 			{
-				if (room.OutCondition == undefined || room.OutCondition() == true) map[x][y][z] |= z_neg_exit_mask;
+				if (room.OutCondition == null || room.OutCondition() == true) map[x][y][z] |= z_neg_exit_mask;
 				
 				if (this.mapDebug) trace("Have exit - outExit. In room ",targetRoom, " Exit target = ", roomsObj[targetRoom].outExit);
 				processRoom(roomsObj[targetRoom].OutExit, map, x, y, z-1)
@@ -223,7 +223,7 @@
 			if (this.mapDebug) trace("Finished room ", targetRoom)
 		}
 
-		private function processRoomsIntoMap(startRoom:String, map:Vector.<Vector.<Vector.<int>>>)
+		private function processRoomsIntoMap(startRoom:String, map:Vector.<Vector.<Vector.<int>>>):void
 		{
 			var x:int;
 			var y:int;

@@ -344,16 +344,6 @@
 		{
 			this.userInterface.leftBarClear();
 		}
-
-		public function updateNPCStats():void 
-		{
-
-		}
-		
-		public function updateStatBar(arg:StatBar , value = undefined, max = undefined):void 
-		{
-
-		}
 		
 		public function CharacterCreation():void
 		{

@@ -72,7 +72,7 @@ package classes.GameData
 				addDisabledButton(14, "Rest");
 			}
 			
-			if (room.EntryFunction != undefined)
+			if (room.EntryFunction != null)
 			{
 				if (room.EntryFunction()) return;
 			}
@@ -113,7 +113,7 @@ package classes.GameData
 			{
 				var shipP:classes.GameData.Ships.Ship = ShipIndex.Ships[room.ParentLocation.LocationName];
 				
-				if (shipP != undefined && shipP.hasConnection() == true)
+				if (shipP != null && shipP.hasConnection() == true)
 				{
 					addButton(0, "Exit Airlock", Move, (ShipIndex.Ships[room.ParentLocation.LocationName] as classes.GameData.Ships.Ship).airlockConnectsTo());
 				}
@@ -154,11 +154,11 @@ package classes.GameData
 		{
 			if (tarRoom)
 			{
-				if (lockFunc && lockFunc())
+				if (lockFunc != null && lockFunc())
 				{
 					return true;
 				}
-				if (lockFunc && !lockFunc())
+				if (lockFunc != null && !lockFunc())
 				{
 					return false;
 				}

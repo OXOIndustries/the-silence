@@ -51,11 +51,11 @@
 	//Build the bottom drawer
 	public class GUI extends MovieClip
 	{
-		var textBuffer:Array;
+		public var textBuffer:Array;
 		
 		//Used for temp buffer stuff
-		var tempText:String;
-		var tempAuthor:String;
+		public var tempText:String;
+		public var tempAuthor:String;
 		public var currentPCNotes:String;
 		
 		// Location caching so we can temp hide the location texts and shift them back to proper
@@ -67,13 +67,13 @@
 		public var outputBuffer:String;
 		public var outputBuffer2:String;
 		public var outputCodexBuffer:String
-		var textPage:int;
+		public var textPage:int;
 
 		//Lazy man state checking
 		public var showingPCAppearance:Boolean;
 
 		//temporary nonsense variables.
-		var temp:int;
+		public var temp:int;
 		
 		private var titsPurple:*;
 		private var titsBlue:*;
@@ -82,8 +82,8 @@
 		//private var miniMap:MiniMap;
 		//private var displayMinimap:Boolean;
 
-		var titsClassPtr:*;
-		var stagePtr:*;
+		private var titsClassPtr:*;
+		private var stagePtr:*;
 		
 		// REFACTORED SHIT BELOW THIS LINE YO
 		private var _rightSideBar:RightSideBar;
@@ -725,7 +725,7 @@
 		 * Once we've shored everything up and made sure there are no inadvertant calls to output being made, I'm REASONABLY happy to
 		 * throw some indirection in here, and redirect output() to codexOutput() if the codex is the active module. Maybe.
 		 */
-		public function output()
+		public function output():void
 		{
 			if (_currentModule is GameTextModule && _currentModule.moduleName == "PrimaryOutput")
 			{
@@ -807,7 +807,7 @@
 			_buttonTray.addButton(slot, cap, func, arg, ttHeader, ttBody);
 		}
 		
-		public function addItemButton(slot:int, cap:String = "", quantity:int = 0, func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null, ttCompare:String = null)
+		public function addItemButton(slot:int, cap:String = "", quantity:int = 0, func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null, ttCompare:String = null):void
 		{
 			_buttonTray.addItemButton(slot, cap, quantity, func, arg, ttHeader, ttBody, ttCompare);
 		}
@@ -823,7 +823,7 @@
 		}
 		
 		//Returns the position of the last used buttonData spot.
-		function lastButton():int 
+		public function lastButton():int 
 		{
 			return _buttonTray.lastButton();
 		}
@@ -834,7 +834,7 @@
 		}
 		
 		//Ghost button - used for menu buttons that overlay the normal buttons. 
-		public function addGhostButton(slot:int, cap:String = "", func = undefined, arg = undefined, ttHeader:String = null, ttBody:String = null):void 
+		public function addGhostButton(slot:int, cap:String = "", func:Function = undefined, arg:* = undefined, ttHeader:String = null, ttBody:String = null):void 
 		{
 			_buttonTray.addGhostButton(slot, cap, func, arg, ttHeader, ttBody);
 		}
@@ -1042,7 +1042,7 @@
 
 		//2. DISPLAY STUFF
 		//EXAMPLE: setupStatBar(monsterSex,"SEX","Genderless");
-		function setupStatBar(arg:MovieClip, title:String = "", value = undefined, max = undefined):void 
+		public function setupStatBar(arg:MovieClip, title:String = "", value:* = undefined, max:* = undefined):void 
 		{
 			if(title != "" && title is String) arg.masks.labels.text = title;
 			if(max is Number && value is Number) {

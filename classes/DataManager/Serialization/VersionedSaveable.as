@@ -29,7 +29,7 @@
 			_ignoredFields.push(fieldName);
 		}
 		
-		protected var _isLoading = true;
+		protected var _isLoading:Boolean = true;
 		
 		private function isBasicType(obj:*):Boolean
 		{
@@ -222,29 +222,6 @@
 						{
 							this[prop] = dataObject[prop];
 						}
-					}
-				}
-			}
-			// This is some workaround code that probably won't work or be called ever.
-			else
-			{
-				// "AMF Metadata" classed objects, ie, not dynamic.
-				var _dl:XMLList = _d..variable;
-				var _da:XMLList = _d..accessor;
-				
-				for each (prop in _dl)
-				{
-					if (this[prop.@name] != undefined && this[prop.@name] != null)
-					{
-						this[prop.@name] = dataObject[prop.@name];
-					}
-				}
-				
-				for each (var accs in _da)
-				{
-					if (accs.@name != "prototype" && accs.@name != "neverSerialize")
-					{
-						this[accs.@name] = dataObject[accs.@name];
 					}
 				}
 			}

@@ -86,7 +86,7 @@ package classes.GameData
 			return CombatManager.inSpaceCombat;
 		}
 		
-		public var flags = new Dictionary();
+		public var flags:Dictionary = new Dictionary();
 		
 		public function get characters():Object
 		{

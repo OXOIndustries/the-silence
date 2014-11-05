@@ -23,6 +23,7 @@
 	import classes.Engine.Combat.calculateMiss;
 	import classes.Engine.Combat.calculateDamage;
 	import classes.Engine.Utility.possessive;
+	import classes.Engine.Utility.num2Text;
 
 	/**
 	 * I cannot yet implement "smart" detection of which characters (or furthermore, what *properties* of which characters)
@@ -326,7 +327,7 @@
 		}
 		
 		public var eyeType: Number = 0;
-		public function eyeTypeUnlocked(newEyeType):Boolean 
+		public function eyeTypeUnlocked(newEyeType:int):Boolean 
 		{
 			return true;
 		}
@@ -1154,28 +1155,12 @@
 		//The rate at which you produce milk. Scales from 0 to INFINITY.
 		public var milkRate: Number = 10;
 
-		public var ass = new VaginaClass(false);
+		public var ass:VaginaClass = new VaginaClass(false);
 		public var analVirgin: Boolean = true;
 		public var perks: Array;
 		public var statusEffects: Array;		
 
-		//Used for misc shit
-		var list: Array = new Array();
-
 		public var sexualPreferences: SexualPreferences;
-
-		//Functions
-		//UTILITIES
-		public function num2Text(number: Number): String {
-			var returnVar: String = null;
-			var numWords = new Array("zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten");
-			if (number > 10 || int(number) != number) {
-				returnVar = "" + number;
-			} else {
-				returnVar = numWords[number];
-			}
-			return (returnVar);
-		}
 
 		public function buysType(arg: int): Boolean {
 			for (var x: int = 0; x < typesBought.length; x++) {
@@ -1643,22 +1628,6 @@
 			// trace("BUFFER OUT: " + buffer);
 			return buffer;
 		}
-		public function Num2Text(number: int): String {
-			return upperCase(num2Text(number));
-		}
-		public function numTwoText(number: int): String {
-			var returnVar: String = null;
-			var numWords = new Array("zero", "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth", "tenth");
-			if (number > 10) {
-				returnVar = "" + number + "th";
-			} else {
-				returnVar = numWords[number];
-			}
-			return (returnVar);
-		}
-		public function NumTwoText(number: int): String {
-			return upperCase(numTwoText(number));
-		}
 		public function upperCase(str: String): String {
 			var firstChar: String = str.substr(0, 1);
 			var restOfString: String = str.substr(1, str.length);
@@ -1771,13 +1740,13 @@
 			return isChestCovered();
 		}
 		//XP!
-		function XP(arg: int = 0): Number {
+		public function XP(arg: int = 0): Number {
 			XPRaw += arg;
 			if (XPRaw >= XPMax()) XPRaw = XPMax();
 			else if (XPRaw <= 0) XPRaw = 0;
 			return XPRaw;
 		}
-		function XPMax(): Number {
+		public function XPMax(): Number {
 			return level * level * 100;
 		}
 		//HP
@@ -2298,7 +2267,7 @@
 			total -= resist;
 			return Math.round(total * 10) / 10;
 		}
-		public function hasSkinFlag(arg): Boolean {
+		public function hasSkinFlag(arg:int): Boolean {
 			var temp: int = 0;
 			while (temp < skinFlags.length) {
 				if (skinFlags[temp] == arg) return true;
@@ -2306,13 +2275,13 @@
 			}
 			return false;
 		}
-		public function addSkinFlag(arg): void {
+		public function addSkinFlag(arg:int): void {
 			if (!hasSkinFlag(arg)) skinFlags[skinFlags.length] = arg;
 		}
 		public function clearSkinFlags(): void {
 			skinFlags = new Array();
 		}
-		public function hasFaceFlag(arg): Boolean {
+		public function hasFaceFlag(arg:int): Boolean {
 			var temp: int = 0;
 			while (temp < faceFlags.length) {
 				if (faceFlags[temp] == arg) return true;
@@ -2320,31 +2289,31 @@
 			}
 			return false;
 		}
-		public function addFaceFlag(arg): void {
+		public function addFaceFlag(arg:int): void {
 			if (!hasFaceFlag(arg)) faceFlags[faceFlags.length] = arg;
 		}
 		public function clearFaceFlags(): void {
 			faceFlags = new Array();
 		}
-		public function hasTailFlag(arg): Boolean {
+		public function hasTailFlag(arg:int): Boolean {
 			for (var temp: int = 0; temp < tailFlags.length; temp++) {
 				if (tailFlags[temp] == arg) return true;
 			}
 			return false;
 		}
-		public function addTailFlag(arg): void {
+		public function addTailFlag(arg:int): void {
 			if (!hasTailFlag(arg)) tailFlags[tailFlags.length] = arg;
 		}
 		public function clearTailFlags(): void {
 			tailFlags = new Array();
 		}
-		public function hasLegFlag(arg): Boolean {
+		public function hasLegFlag(arg:int): Boolean {
 			for (var temp: int = 0; temp < legFlags.length; temp++) {
 				if (legFlags[temp] == arg) return true;
 			}
 			return false;
 		}
-		public function addLegFlag(arg): void {
+		public function addLegFlag(arg:int): void {
 			if (!hasLegFlag(arg)) legFlags[legFlags.length] = arg;
 		}
 		public function clearLegFlags(): void {
@@ -2357,7 +2326,7 @@
 		public function hasLegs(): Boolean {
 			return (hasLeg() && legCount > 1);
 		}
-		public function hasTongueFlag(arg): Boolean {
+		public function hasTongueFlag(arg:int): Boolean {
 			var temp: int = 0;
 			while (temp < tongueFlags.length) {
 				if (tongueFlags[temp] == arg) return true;
@@ -2365,7 +2334,7 @@
 			}
 			return false;
 		}
-		public function addTongueFlag(arg): void {
+		public function addTongueFlag(arg:int): void {
 			if (!hasTongueFlag(arg)) tongueFlags[tongueFlags.length] = arg;
 		}
 		public function displayTallness(): String {
@@ -2663,7 +2632,7 @@
 			if (hasBeard()) return "beard";
 			else return "ERROR: NO BEARD! <b>YOU ARE NOT A VIKING AND SHOULD TELL FEN IMMEDIATELY.</b>";
 		}
-		public function modThickness(change: Number) {
+		public function modThickness(change: Number):String {
 			var oldN: Number = thickness;
 			//Lose weight fatty!
 			//Check bounds.
@@ -2678,7 +2647,7 @@
 			else return "\n\nEach movement feels a tiny bit easier than the last.  Did you just lose a little weight!? (" + Math.round(change * 10) / 10 + " body thickness)";
 			return "";
 		}
-		public function modTone(change: Number) {
+		public function modTone(change: Number):String {
 			var oldN: Number = tone;
 			//Check bounds
 			if (change > 0 && change + tone > 100) change = 100 - tone;
@@ -2692,27 +2661,26 @@
 			return "";
 		}
 		public function skinFurScales(forceTone: Boolean = false, forceAdjective: Boolean = false, skin: Boolean = false): String {
-			var output: String = "";
-			var temp;
+			var s: String = "";
 			//33% of the time, add an adjective.
 			if (forceAdjective || this.rand(3) == 0) {
-				if (hasSkinFlag(GLOBAL.FLAG_SMOOTH)) output += "smooth";
-				else if (hasSkinFlag(GLOBAL.FLAG_THICK)) output += "thick";
-				else if (hasSkinFlag(GLOBAL.FLAG_STICKY)) output += "sticky";
-				else if (hasSkinFlag(GLOBAL.FLAG_FLUFFY) && !skin && skinType == GLOBAL.SKIN_TYPE_FUR) output += "fluffy";
+				if (hasSkinFlag(GLOBAL.FLAG_SMOOTH)) s += "smooth";
+				else if (hasSkinFlag(GLOBAL.FLAG_THICK)) s += "thick";
+				else if (hasSkinFlag(GLOBAL.FLAG_STICKY)) s += "sticky";
+				else if (hasSkinFlag(GLOBAL.FLAG_FLUFFY) && !skin && skinType == GLOBAL.SKIN_TYPE_FUR) s += "fluffy";
 			}
 			//25% of time, describe skin tone.
 			if (forceTone || this.rand(4) == 0) {
-				if (output != "") output += ", ";
-				if (skinType == GLOBAL.SKIN_TYPE_FUR && !skin) output += furColor;
-				else if (skinType == GLOBAL.SKIN_TYPE_SCALES && !skin) output += scaleColor;
-				else output += skinTone;
+				if (s != "") s += ", ";
+				if (skinType == GLOBAL.SKIN_TYPE_FUR && !skin) s += furColor;
+				else if (skinType == GLOBAL.SKIN_TYPE_SCALES && !skin) s += scaleColor;
+				else s += skinTone;
 			}
 			//Setup for words
-			if (output != "") output += " ";
+			if (s != "") s += " ";
 			//Set skin words.
-			output += skinNoun(skin);
-			return output;
+			s += skinNoun(skin);
+			return s;
 		}
 		public function skinNoun(skin: Boolean = false): String {
 			var output: String = "";
@@ -2989,7 +2957,7 @@
 			}
 			return output;
 		}
-		public function footAdjectives(forceType: Boolean = false, forceAdjective: Boolean = false) {
+		public function footAdjectives(forceType: Boolean = false, forceAdjective: Boolean = false):String {
 			var output: String = "";
 			var select: int;
 			//Type! 1/5 times
@@ -3248,7 +3216,7 @@
 			
 			return sBuilder;
 		}
-		public function alphabetize(array, newKeyItem): void {
+		public function alphabetize(array:Array, newKeyItem:StorageClass): void {
 			//used to denote that the array has already had its new spot pushed on.
 			var arrayed: Boolean = false;
 			//used to store where the array goes
@@ -3311,7 +3279,7 @@
 		}
 		//Create a perk
 		public function createPerk(keyName: String, value1: Number, value2: Number, value3: Number, value4: Number, desc: String = ""): void {
-			var newKeyItem = new StorageClass();
+			var newKeyItem:StorageClass = new StorageClass();
 			newKeyItem.storageName = keyName;
 			newKeyItem.value1 = value1;
 			newKeyItem.value2 = value2;
@@ -3328,7 +3296,7 @@
 				return;
 			}
 
-			var newStatusEffect = new StorageClass();
+			var newStatusEffect:StorageClass = new StorageClass();
 			newStatusEffect.storageName = statusName;
 			newStatusEffect.value1 = value1;
 			newStatusEffect.value2 = value2;
@@ -3345,7 +3313,7 @@
 		}
 		//Create a keyItem
 		public function createKeyItem(keyName: String, value1: Number, value2: Number, value3: Number, value4: Number, description: String = ""): void {
-			var newKeyItem = new StorageClass();
+			var newKeyItem:StorageClass = new StorageClass();
 			newKeyItem.storageName = keyName;
 			newKeyItem.value1 = value1;
 			newKeyItem.value2 = value2;
@@ -3540,7 +3508,7 @@
 			removeStorage(keyItems);
 		}
 		//remove all of a stored array
-		public function removeStorage(array): void {
+		public function removeStorage(array:Array): void {
 			var counter: Number = array.length;
 			while (counter > 0) {
 				counter--;
@@ -3548,7 +3516,7 @@
 			}
 		}
 		//General function used by all
-		public function removeStorageSlot(array, storageName): void {
+		public function removeStorageSlot(array:Array, storageName:String): void {
 			trace("Removing storage slot...");
 			var counter: Number = array.length;
 			//Various Errors preventing action
@@ -3589,7 +3557,7 @@
 			return hasStorageName(keyItems, keyName);
 		}
 		//General function.
-		public function hasStorageName(array, storageName: String): Boolean {
+		public function hasStorageName(array:Array, storageName: String): Boolean {
 			var counter: Number = array.length;
 			if (array.length <= 0) return false;
 			while (counter > 0) {
@@ -3600,14 +3568,14 @@
 		}
 
 		//MODIFYING STORAGE VARIABLES WITH SET OR ADD.
-		public function setStatusValue(storageName: String, storageValueNum: int, newValue) {
+		public function setStatusValue(storageName: String, storageValueNum: int, newValue:*):void {
 			setStorageValue(statusEffects, storageName, storageValueNum, newValue);
 		}
-		public function getStatusMinutes(storageName: String)
+		public function getStatusMinutes(storageName: String):int
 		{
 			var counter: Number = statusEffects.length;
 			//Various Errors preventing action
-			if (statusEffects.length <= 0) return;
+			if (statusEffects.length <= 0) return -1;
 			while (counter > 0) {
 				counter--;
 				//Find it, report it.
@@ -3627,7 +3595,7 @@
 			}
 			return false;
 		}
-		public function setStatusMinutes(storageName: String, newMinutes:int)
+		public function setStatusMinutes(storageName: String, newMinutes:int):void
 		{
 			var counter: Number = statusEffects.length;
 			//Various Errors preventing action
@@ -3647,7 +3615,7 @@
 			trace("ERROR: Looking for status '" + storageName + "' to change minutes, and " + short + " does not have the status affect.");
 			return;
 		}
-		public function setStatusTooltip(storageName: String, newTooltip:String)
+		public function setStatusTooltip(storageName: String, newTooltip:String):void
 		{
 			var counter: Number = statusEffects.length;
 			//Various Errors preventing action
@@ -3663,7 +3631,7 @@
 			trace("ERROR: Looking for status '" + storageName + "' to change tooltip but couldn't find it.");
 			return;
 		}
-		public function addStatusMinutes(storageName: String, newMinutes:int)
+		public function addStatusMinutes(storageName: String, newMinutes:int):void
 		{
 			var counter: Number = statusEffects.length;
 			//Various Errors preventing action
@@ -3683,10 +3651,10 @@
 			trace("ERROR: Looking for status '" + storageName + "' to add minutes, and " + short + " does not have the status affect.");
 			return;
 		}
-		public function setKeyItemValue(storageName: String, storageValueNum: int, newValue) {
+		public function setKeyItemValue(storageName: String, storageValueNum: int, newValue:*):void {
 			setStorageValue(keyItems, storageName, storageValueNum, newValue);
 		}
-		public function setPerkValue(perkName: String, perkValueNum: Number = 1, newNum: Number = 0) {
+		public function setPerkValue(perkName: String, perkValueNum: Number = 1, newNum: Number = 0):void {
 			setStorageValue(perks, perkName, perkValueNum, newNum);
 		}
 		public function setPerkTooltip(perkName: String, perkTooltip: String):void
@@ -3705,7 +3673,7 @@
 			trace("ERROR: Looking for status '" + perkName + "' to change value " + perkTooltip + ", and " + short + " does not have the status affect.");
 			return;
 		}
-		public function setStorageValue(array: Array, storageName: String, storageValueNum: int, newValue) {
+		public function setStorageValue(array: Array, storageName: String, storageValueNum: int, newValue:*):void {
 			var counter: Number = array.length;
 			//Various Errors preventing action
 			if (array.length <= 0) return;
@@ -3728,16 +3696,16 @@
 			trace("ERROR: Looking for status '" + storageName + "' to change value " + storageValueNum + ", and " + short + " does not have the status affect.");
 			return;
 		}
-		public function addStatusValue(statusName: String, statusValueNum: Number = 1, newNum: Number = 0) {
+		public function addStatusValue(statusName: String, statusValueNum: Number = 1, newNum: Number = 0):void {
 			addStorageValue(statusEffects, statusName, statusValueNum, newNum);
 		}
-		public function addPerkValue(perkName: String, perkValueNum: Number = 1, newNum: Number = 0) {
+		public function addPerkValue(perkName: String, perkValueNum: Number = 1, newNum: Number = 0):void {
 			addStorageValue(perks, perkName, perkValueNum, newNum);
 		}
-		public function addKeyValue(statusName: String, statusValueNum: Number = 1, newNum: Number = 0) {
+		public function addKeyValue(statusName: String, statusValueNum: Number = 1, newNum: Number = 0):void {
 			addStorageValue(keyItems, statusName, statusValueNum, newNum);
 		}
-		public function addStorageValue(array, storageName: String, storageValueNum: Number = 1, newNum: Number = 0) {
+		public function addStorageValue(array:Array, storageName: String, storageValueNum: Number = 1, newNum: Number = 0):void {
 			var counter: Number = statusEffects.length;
 			//Various Errors preventing action
 			if (array.length <= 0) {
@@ -3763,7 +3731,7 @@
 			return;
 		}
 
-		private function storageValue(array, storageName, targetValue): Number {
+		private function storageValue(array:Array, storageName:String, targetValue:int): Number {
 			//trace("Finding storage value.");
 			if (array.length == 0) return 0;
 			if (!hasStorageName(array, storageName)) return 0;
@@ -4932,7 +4900,7 @@
 		public function boostLactation(amount:Number = 1):void
 		{
 			//Record this for tracking change
-			var originalMultiplier = milkMultiplier;
+			var originalMultiplier:Number = milkMultiplier;
 			//If below 100...
 			if(milkMultiplier < 100) {
 				//If we cross 100 threshold, set to 100 & go for slow grow.
@@ -5555,7 +5523,7 @@
 		//Create a cock
 		public function createCock(clength: Number = 5.5, cthickness: Number = 1): Boolean {
 			if (cocks.length >= 10) return false;
-			var newCock = new CockClass();
+			var newCock:CockClass = new CockClass();
 			cocks.push(newCock);
 			cocks[cocks.length - 1].cThicknessRatioRaw = cthickness;
 			cocks[cocks.length - 1].cLengthRaw = clength;
@@ -5573,7 +5541,7 @@
 		//create vagoo
 		public function createVagina(): Boolean {
 			if (vaginas.length >= 3) return false;
-			var newVagina = new VaginaClass();
+			var newVagina:VaginaClass = new VaginaClass();
 			vaginas.push(newVagina);
 			return true;
 		}
@@ -5589,8 +5557,7 @@
 		//create a row of breasts
 		public function createBreastRow(): Boolean {
 			if (breastRows.length >= 10) return false;
-			var newBreastRow = new BreastRowClass();
-			breastRows.push(newBreastRow);
+			breastRows.push(new BreastRowClass());
 			return true;
 		}
 		public function createBreastRowUnlocked(numRows:int = 1):Boolean
@@ -5602,7 +5569,7 @@
 			return "";
 		}
 		
-		public function removeJunk(array, arraySpot, totalRemoved): void {
+		public function removeJunk(array:Array, arraySpot:int, totalRemoved:int): void {
 			//Various Errors preventing action
 			if (arraySpot < 0 || totalRemoved <= 0) {
 				return;
@@ -5638,7 +5605,7 @@
 		}
 		
 		//Remove cock
-		public function removeCock(arraySpot, totalRemoved): void {
+		public function removeCock(arraySpot:int, totalRemoved:int): void {
 			removeJunk(cocks, arraySpot, totalRemoved);
 		}
 		public function removeCockUnlocked(arraySpot:int = 0, totalRemoved:int = 1):Boolean
@@ -5685,7 +5652,7 @@
 		}
 
 		//Remove a breast row
-		public function removeBreastRow(arraySpot, totalRemoved): void {
+		public function removeBreastRow(arraySpot:int, totalRemoved:int): void {
 			removeJunk(breastRows, arraySpot, totalRemoved);
 		}
 		public function removeBreastRowUnlocked(arraySpot:int = 0, totalRemoved:int = 1):Boolean
@@ -6413,7 +6380,7 @@
 			//if(rando == 2) desc += "cheeks";
 			return desc;
 		}
-		public function nipplesDescript(rowNum = 0, forceLactation:Boolean = false): String {
+		public function nipplesDescript(rowNum:int = 0, forceLactation:Boolean = false): String {
 			return nippleDescript(rowNum, true, forceLactation);
 		}
 		public function nippleDescript(rowNum: Number = 0, plural: Boolean = false, forceLactation:Boolean = false): String {
@@ -7418,39 +7385,34 @@
 			}
 			return true;
 		}
-		private function clearList(): void {
-			list = new Array();
-		}
-		private function addToList(arg): void {
-			list[list.length] = arg;
-		}
-		private function formatList(): String {
-			var stuff: String = "";
+		
+		public function formatList(list:Array):String
+		{
 			if (list.length == 1) return list[0];
-			for (var x: int = 0; x < list.length; x++) {
-				stuff += list[x];
-				if (list.length == 2 && x == 0) {
-					stuff += " and ";
-				} else if (x < list.length - 2) {
-					stuff += ", ";
-				} else if (x < list.length - 1) {
-					stuff += ", and ";
-				}
+			
+			var s:String = "";
+			
+			for (var i:int = 0; i < list.length; i++)
+			{
+				s += list[i];
+				if (list.length == 2 && i == 0) s += " and ";
+				else if (i < list.length - 2) s += ", ";
+				else if (i < list.length < 1) s += ", and ";
 			}
-			list = new Array();
-			return stuff;
+			return s;
 		}
+		
 		public function gearDescript(): String {
-			clearList();
-			if (armor.shortName != "") addToList(armor.longName);
-			if (upperUndergarment.shortName != "") addToList(upperUndergarment.longName);
-			if (lowerUndergarment.shortName != "") addToList(lowerUndergarment.longName);
-			if (isNude()) addToList("gear");
-			return formatList();
+			var list:Array = [];
+			if (armor.shortName != "") list.push(armor.longName);
+			if (upperUndergarment.shortName != "") list.push(upperUndergarment.longName);
+			if (lowerUndergarment.shortName != "") list.push(lowerUndergarment.longName);
+			if (isNude()) list.push("gear");
+			return formatList(list);
 		}
 		public function crotchDescript():String {
 
-			clearList();
+			var list:Array = []
 			
 			//Nothing to talk about? K
 			if(!hasCock() && !hasVagina()) 
@@ -7459,11 +7421,11 @@
 				else return "bare groin";
 			}
 			//Make da list!
-			if(hasCock()) addToList(cocksDescript());
-			if(balls > 0) addToList(ballsDescript());
-			if(hasVagina()) addToList(vaginasDescript());
+			if(hasCock()) list.push(cocksDescript());
+			if (balls > 0) list.push(ballsDescript());
+			if(hasVagina()) list.push(vaginasDescript());
 			
-			return formatList();
+			return formatList(list);
 		}
 		public function lowerGarmentDescript(): String {
 			if (lowerUndergarment.shortName != "") return lowerUndergarment.longName;
@@ -7901,7 +7863,7 @@
 			return descript + noun;
 		}
 		//New cock adjectives.  The old one sucked dicks
-		public function cockAdjective(cockNum: Number = -1) {
+		public function cockAdjective(cockNum: Number = -1):String {
 			var descript: String = "";
 			var rando: Number = 0;
 			var multi: Boolean = false;
@@ -8124,7 +8086,7 @@
 			return descript;
 		}
 		//New cock adjectives.  The old one sucked dicks
-		public function statCockAdjective(l: int, w: int, type: int = 0) {
+		public function statCockAdjective(l: int, w: int, type: int = 0):String {
 			var descript: String = "";
 			var rando: Number = 0;
 			var multi: Boolean = false;
@@ -8323,7 +8285,7 @@
 			else return nippleWidthRatio * .5 * ((10 + breastRows[row].breastRating()) / 10)
 		}
 		//New cock adjectives.  The old one sucked dicks
-		public function nippleCockAdjective(plural: Boolean = false) {
+		public function nippleCockAdjective(plural: Boolean = false):String {
 			var descript: String = "";
 			var rando: Number = 0;
 			var l: Number = nippleLength(0) * dickNippleMultiplier;
@@ -9127,17 +9089,17 @@
 			return bellyRatingRaw + bellyRatingMod;
 		}
 			
-		function cuntChange(arg:int, volume:Number, display:Boolean = true, spacingsF:Boolean = true, spacingsB:Boolean = false):Boolean 
+		public function cuntChange(arg:int, volume:Number, display:Boolean = true, spacingsF:Boolean = true, spacingsB:Boolean = false):Boolean 
 		{
 			return holeChange(arg,volume,display,spacingsF,spacingsB);
 		}
 		
-		function buttChange(volume:Number, display:Boolean = true, spacingsF:Boolean = true, spacingsB:Boolean = false):Boolean 
+		public function buttChange(volume:Number, display:Boolean = true, spacingsF:Boolean = true, spacingsB:Boolean = false):Boolean 
 		{
 			return holeChange(-1,volume,display,spacingsF,spacingsB);
 		}
 		
-		function cockChange(spacingsF:Boolean = true, spacingsB:Boolean = false):Boolean 
+		public function cockChange(spacingsF:Boolean = true, spacingsB:Boolean = false):Boolean 
 		{
 			if (cockVirgin && hasCock())
 			{
@@ -9163,7 +9125,7 @@
 			return false;
 		}
 		
-		function holeChange(hole:int, volume:Number, display:Boolean = true, spacingsF:Boolean = true, spacingsB:Boolean = false):Boolean 
+		public function holeChange(hole:int, volume:Number, display:Boolean = true, spacingsF:Boolean = true, spacingsB:Boolean = false):Boolean 
 		{
 			var stretched:Boolean = false;
 			var devirgined:Boolean = false;

@@ -754,7 +754,7 @@ package classes.GameData
 			else
 			{ 
 				output(" The blow connects with bone-crunching force,");
-				var damage = calculateDamage(attacker, target, attacker.meleeWeapon.damage, attacker.meleeWeapon.damageType, "melee", true);
+				var damage:Number = calculateDamage(attacker, target, attacker.meleeWeapon.damage, attacker.meleeWeapon.damageType, "melee", true);
 				if (target.HP() <= 0)
 				{
 					output(" cleaving right into " + target.a + target.short + ", throwing it lifelessly to the ground");
@@ -1012,12 +1012,12 @@ package classes.GameData
 				}
 			}
 			
-			if (checkForLoss());
+			if (checkForLoss()) return;
 			
 			showCombatUI();
 			
 			// Special handler mechanics
-			for (var i:int = 0; i < _hostiles.length; i++)
+			for (i = 0; i < _hostiles.length; i++)
 			{
 				if (_hostiles[i] is BlackVoidPirate)
 				{

@@ -14,28 +14,28 @@
 	 */
 	public class MiniMap extends Sprite
 	{
-		public static const DISPLAY_MODE_SMALL = 0;
-		public static const DISPLAY_MODE_LARGE = 1;
-		public static const DISPLAY_MODE_HYBRID = 2;
-		private static const MAX_DISPLAY_MODES = 2;
+		public static const DISPLAY_MODE_SMALL:int = 0;
+		public static const DISPLAY_MODE_LARGE:int = 1;
+		public static const DISPLAY_MODE_HYBRID:int = 2;
+		private static const MAX_DISPLAY_MODES:int = 2;
 		
-		public static const SCALE_MODE_FIXED = 0;
-		public static const SCALE_MODE_NUMBER = 1;
-		public static const SCALE_MODE_SIZE = 2;
-		private static const MAX_SCALE_MODES = 2;
+		public static const SCALE_MODE_FIXED:int = 0;
+		public static const SCALE_MODE_NUMBER:int = 1;
+		public static const SCALE_MODE_SIZE:int = 2;
+		private static const MAX_SCALE_MODES:int = 2;
 		
-		public static const ICON_SHIP = 0;
-		public static const ICON_QUEST = 1;
-		public static const ICON_OBJECTIVE = 2;
-		public static const ICON_NPC = 3;
-		public static const ICON_MEDICAL = 4;
-		public static const ICON_DOWN = 5;
-		public static const ICON_UP = 6;
-		public static const ICON_COMMERCE = 7;
-		public static const ICON_BAR = 8;
-		public static const ICON_ELEVATOR = 9;
-		public static const ICON_AIRLOCK = 10;
-		public static const ICONS_MAX = 11;
+		public static const ICON_SHIP:int = 0;
+		public static const ICON_QUEST:int = 1;
+		public static const ICON_OBJECTIVE:int = 2;
+		public static const ICON_NPC:int = 3;
+		public static const ICON_MEDICAL:int = 4;
+		public static const ICON_DOWN:int = 5;
+		public static const ICON_UP:int = 6;
+		public static const ICON_COMMERCE:int = 7;
+		public static const ICON_BAR:int = 8;
+		public static const ICON_ELEVATOR:int = 9;
+		public static const ICON_AIRLOCK:int = 10;
+		public static const ICONS_MAX:int = 11;
 		
 		// I've spied rumblings of a way to search through an SWF class definitions to build a list like this completely dynamically... but the code I found to do it looks a) awful b) is russian... maybe later? maybe.
 		// Basically, this is the list of linkage class names for the icons symbols in the FLA's library, which we're going to use to build icons in the correct order -- you might notice that they're in the same order as the integer flags up ^ there... the integer flags are used as array indexes to find the proper classname.
@@ -45,11 +45,11 @@
 		/* Each room only deals with the links it has to neighbours in the East + South direction (Right + Down)
 		 * Ergo, we need to work out which directionality a one way link is; target to neighbour or vice versa, hence the 2 flags for directionality.
 		 */
-		public static const LINK_PASSAGE = 0; // 2 way connection
-		public static const LINK_TARGET2NEIGHBOUR = 1; // 1 Way connection from current room to other
-		public static const LINK_NEIGHBOUR2TARGET = 2; // 1 Way connection from other to current room
-		public static const LINK_LOCKED = 3; // A "locked" type of link -- no engine support, but the map is configured for it... technically speaking.
-		public static const LINKS_MAX = 4;
+		public static const LINK_PASSAGE:int = 0; // 2 way connection
+		public static const LINK_TARGET2NEIGHBOUR:int = 1; // 1 Way connection from current room to other
+		public static const LINK_NEIGHBOUR2TARGET:int = 2; // 1 Way connection from other to current room
+		public static const LINK_LOCKED:int = 3; // A "locked" type of link -- no engine support, but the map is configured for it... technically speaking.
+		public static const LINKS_MAX:int = 4;
 		
 		public static const LINK_NAMES:Array = new Array("Map_Passage", "Map_Oneway", "Map_Oneway_Invert", "Map_Lock");
 		public static const LINK_ROTATE:Array = new Array(true, true, true, false);
@@ -263,7 +263,7 @@
 				for (numY = 0; numY < childNumY; numY++)
 				{
 					// ... Build the sprite
-					var childSprite = new MinimapRoom(childSizeX, childSizeY);
+					var childSprite:MinimapRoom = new MinimapRoom(childSizeX, childSizeY);
 					childSprite.name = String(numX) + "." + String(numY);
 					
 					_childElements[numX][numY] = childSprite;
@@ -290,7 +290,7 @@
 				
 				for (numY = 0; numY < childNumY; numY++)
 				{
-					var linkObjX = new MinimapLink(false);
+					var linkObjX:MinimapLink = new MinimapLink(false);
 					_childContainer.addChild(linkObjX);
 					
 					linkObjX.x = _childElements[numX][numY].x + (childSizeX + (childSpacing / 2));
@@ -309,7 +309,7 @@
 				
 				for (numY = 0; numY < (childNumY - 1); numY++)
 				{
-					var linkObjY = new MinimapLink(true);
+					var linkObjY:MinimapLink = new MinimapLink(true);
 					_childContainer.addChild(linkObjY);
 					
 					linkObjY.x = _childElements[numX][numY].x + (childSizeX / 2);
