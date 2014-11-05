@@ -19,7 +19,6 @@ package classes.GameData.Map.Data.Ships
 			LocationName = "CONSTELLATION";
 			
 			var droidFights:SecurityDroidsFight = new SecurityDroidsFight();
-			var breachFight:
 			
 			// Command Deck "Airlock"
 			var breach:Room = new Room();

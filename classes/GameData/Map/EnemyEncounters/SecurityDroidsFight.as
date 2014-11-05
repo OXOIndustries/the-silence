@@ -7,6 +7,7 @@ package classes.GameData.Map.EnemyEncounters
 	import classes.GameData.CombatManager;
 	import classes.GameData.GameState;
 	import classes.GameData.CodexManager;
+	import flash.utils.Dictionary;
 	
 	/**
 	 * ...
@@ -30,6 +31,8 @@ package classes.GameData.Map.EnemyEncounters
 		{
 			if (IsEnabled())
 			{
+				var f:Dictionary = GameState.flags;
+				
 				if (GameState.flags["SECURITY_DROIDS_STEPS"] == undefined) GameState.flags["SECURITY_DROIDS_STEPS"] = 0;
 				GameState.flags["SECURITY_DROIDS_STEPS"]++;
 				

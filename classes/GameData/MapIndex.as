@@ -54,6 +54,11 @@ package classes.GameData
 				setLocation(room.RoomName, room.ParentLocation.LocationName, room.ParentLocation.ParentSystem.SystemName);
 			}
 			
+			// Show the minimap too!
+			userInterface().showMinimap();
+			var map:* = mapper.generateMap(GameState.pc.currentLocation);
+			userInterface().setMapData(map);
+			
 			clearMenu();
 			
 			GameState.inSceneBlockSaving = false;
@@ -122,11 +127,6 @@ package classes.GameData
 					addDisabledButton(0, "Exit Airlock", "Exit via Airlock", "Use of the airlock requires that the ship be properly docked to another vessel or boarding system.");
 				}
 			}
-				
-			// Show the minimap too!
-			userInterface().showMinimap();
-			var map:* = mapper.generateMap(GameState.pc.currentLocation);
-			userInterface().setMapData(map);
 			
 			// Enable the perk list button
 			//(userInterface as GUI).perkDisplayButton.Activate();
@@ -172,7 +172,6 @@ package classes.GameData
 			var room:Room = FindRoom(name);
 			
 			trace("Entering room", name);
-			MapIndex.displayRoom(GameState.pc.currentLocation);
 			
 			if (room != null)
 			{
