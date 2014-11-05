@@ -20,7 +20,7 @@ package classes.UIComponents.SideBarComponents.Effects
 			_mIcon = new StatusIcons.Icon_MindcontrolledMindbroke();
 			this.addChild(_mIcon);
 			
-			if (_mIcon.width != (29) || _mIcon.height != (29))
+			if (_mIcon.width != 29 || _mIcon.height != 29)
 			{
 				var ratio:Number;
 				if (_mIcon.width > _mIcon.height)
@@ -37,8 +37,8 @@ package classes.UIComponents.SideBarComponents.Effects
 				}
 			}
 			
-			_mIcon.x = Math.floor((33 - 29) / 2);
-			_mIcon.y = Math.floor((33 - 29) / 2);
+			_mIcon.x = Math.floor((33 - _mIcon.width) / 2);
+			_mIcon.y = Math.floor((33 - _mIcon.height) / 2);
 			var whtT:ColorTransform = new ColorTransform();
 			whtT.color = 0xFFFFFF;
 			_mIcon.transform.colorTransform = whtT;

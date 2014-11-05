@@ -38,8 +38,8 @@ package classes.UIComponents.SideBarComponents.Effects
 				}
 			}
 			
-			_mIcon.x = Math.floor((33 - 29) / 2);
-			_mIcon.y = Math.floor((33 - 29) / 2);
+			_mIcon.x = Math.floor((33 - _mIcon.width) / 2);
+			_mIcon.y = Math.floor((33 - _mIcon.height) / 2);
 			var whtT:ColorTransform = new ColorTransform();
 			whtT.color = 0xFFFFFF;
 			_mIcon.transform.colorTransform = whtT;

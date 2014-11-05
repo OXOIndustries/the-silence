@@ -95,8 +95,9 @@ package classes.UIComponents
 		public static var gPaleColour:uint					= 0x862C2A;
 		
 		// VALUES I PULLED OUTTA MY ASS THAT SOMEBODY WHO CAN ACTUALLY DO UI DESIGN SHOULD PROBABLY LOOK AT
-		public static var gStatusGoodColour:uint			= 0x0CD71C;
+		public static var gStatusGoodColour:uint			= 0x61FF3A;
 		public static var gStatusBadColour:uint				= 0xFF0000;
+		public static var gStatusGoodBadColor:uint			= 0xFF7191;
 		public static var gTheColourOfDebug:uint 			= 0xFFA90A;
 		
 		// RANDOM VALUES I STOLE FROM BAD SHIT I WROTE IN THE PAST etc

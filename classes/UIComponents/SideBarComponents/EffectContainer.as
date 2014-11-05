@@ -3,6 +3,8 @@ package classes.UIComponents.SideBarComponents
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import classes.UIComponents.UIStyleSettings;
+	import flash.geom.ColorTransform;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -11,8 +13,8 @@ package classes.UIComponents.SideBarComponents
 	{
 		private var _body:Sprite;
 		protected var _mIcon:Sprite;
-		private var _mPlus:Sprite;
-		private var _mNeg:Sprite;
+		private var _isBuff:Boolean = false
+		private var _isDebuff:Boolean = false;
 		
 		public function EffectContainer() 
 		{
@@ -23,7 +25,6 @@ package classes.UIComponents.SideBarComponents
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
 			Build();
-			BuildIcon();
 		}
 		
 		private function Build():void
@@ -34,22 +35,7 @@ package classes.UIComponents.SideBarComponents
 			_body.graphics.endFill();
 			this.addChild(_body);
 			
-			_mPlus = new Sprite();
-			_mPlus.graphics.beginFill(UIStyleSettings.gStatusGoodColour);
-			_mPlus.graphics.drawRect(4, 0, 4, 12);
-			_mPlus.graphics.drawRect(0, 4, 12, 4);
-			_mPlus.graphics.endFill();
-			_mPlus.x = 5;
-			_mPlus.y = 24;
-			this.addChild(_mPlus);
-			
-			_mNeg = new Sprite();
-			_mNeg.graphics.beginFill(UIStyleSettings.gStatusBadColour);
-			_mNeg.graphics.drawRect(0, 4, 12, 4);
-			_mNeg.graphics.endFill();
-			_mNeg.x = 20;
-			_mNeg.y = 27;
-			this.addChild(_mNeg);
+			BuildIcon();
 		}
 		
 		public function BuildIcon():void
@@ -57,50 +43,45 @@ package classes.UIComponents.SideBarComponents
 			throw new Error("Override plx");
 		}
 		
-		public function setInactive():void
+		public function clearState():void
 		{
+			_isBuff = false;
+			_isDebuff = false;
+			
+			var whtT:ColorTransform = new ColorTransform();
+			whtT.color = 0xFFFFFF;
+			_mIcon.transform.colorTransform = whtT;
+			
 			this.alpha = 0.3;
-			this._mPlus.visible = false;
-			this._mNeg.visible = false;
+			this.mouseEnabled = false;
 		}
 		
-		public function setActive():void
+		public function addBuff():void
+		{
+			_isBuff = true;
+			setIconColorState();
+		}
+		
+		public function addDebuff():void
+		{
+			_isDebuff = true;
+			setIconColorState();
+		}
+		
+		private function setIconColorState():void
 		{
 			this.alpha = 1.0;
+			this.mouseEnabled = true;
+			
+			var ct:ColorTransform = new ColorTransform();
+			
+			if (!_isBuff && !_isDebuff) ct.color = 0xFFFFFF;
+			if (_isBuff && !_isDebuff) ct.color = UIStyleSettings.gStatusGoodColour;
+			if (!_isBuff && _isDebuff) ct.color = UIStyleSettings.gStatusBadColour;
+			if (_isBuff && _isDebuff) ct.color = UIStyleSettings.gStatusGoodBadColor;
+			
+			_mIcon.transform.colorTransform = ct;
 		}
-		
-		public function setDebuff():void
-		{
-			this._mNeg.visible = true;
-		}
-		
-		public function hideDebuff():void
-		{
-			this._mNeg.visible = false;
-		}
-		
-		public function setBuff():void
-		{
-			this._mPlus.visible = true;
-		}
-		
-		public function hideBuff():void
-		{
-			this._mPlus.visible = false;
-		}
-		
-		public function setBuffDebuff():void
-		{
-			this._mPlus.visible = true;
-			this._mNeg.visible = true;
-		}
-		
-		public function hideBuffDebuff():void
-		{
-			this._mPlus.visible = false;
-			this._mNeg.visible = false;
-		}
-		
 	}
 
 }

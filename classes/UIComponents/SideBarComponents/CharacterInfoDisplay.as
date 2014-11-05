@@ -1,6 +1,7 @@
 package classes.UIComponents.SideBarComponents 
 {
 	import classes.Creature;
+	import classes.StorageClass;
 	import classes.UIComponents.SideBarComponents.Effects.AccEffect;
 	import classes.UIComponents.SideBarComponents.Effects.ControlEffect;
 	import classes.UIComponents.SideBarComponents.Effects.DefEffect;
@@ -223,6 +224,37 @@ package classes.UIComponents.SideBarComponents
 			_nameHeader.text = tar.long.toUpperCase();
 			_circleStats.setShield(tar.shields(), tar.shieldsMax());
 			_circleStats.setHP(tar.HP(), tar.HPMax());
+			setStatusEffects(tar.statusEffects);
+		}
+		
+		private function setStatusEffects(effects:Array):void
+		{
+			_dotEffect.clearState();
+			_offEffect.clearState();
+			_defEffect.clearState();
+			_accEffect.clearState();
+			_impEffect.clearState();
+			_misEffect.clearState();
+			
+			for (var i:int = 0; i < effects.length; i++)
+			{
+				var ef:StorageClass = effects[i];
+				
+				if (ef.storageName == "Plasma Burn") this._dotEffect.addDebuff();
+				if (ef.storageName == "Flamethrower  Burn") this._dotEffect.addDebuff();
+				if (ef.storageName == "Damage Reduction") this._offEffect.addDebuff();
+				if (ef.storageName == "Focus Fire") this._misEffect.addBuff();
+				if (ef.storageName == "Paralytic Venom")
+				{
+					this._accEffect.addDebuff();
+					this._offEffect.addDebuff();
+				}
+				if (ef.storageName == "Aim Reduction") this._accEffect.addDebuff();
+				if (ef.storageName == "Grappled") this._impEffect.addDebuff();
+				if (ef.storageName == "Stunned") this._impEffect.addDebuff();
+				if (ef.storageName == "Targeting Shot") this._accEffect.addBuff();
+				if (ef.storageName == "Sensor Link") this._accEffect.addBuff();
+			}
 		}
 	}
 }
