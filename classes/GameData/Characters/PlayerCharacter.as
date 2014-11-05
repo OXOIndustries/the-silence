@@ -7,6 +7,7 @@ package classes.GameData.Characters
 	import classes.GameData.Items.Protection.DecentShield;
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
+	import classes.Resources.Busts.StaticRenders;
 	
 	/**
 	 * Yeah this is kinda bullshit, but it also means we can version the PC data structure like NPCs.
@@ -37,6 +38,7 @@ package classes.GameData.Characters
 			this.shield = new DecentShield();
 			
 			this.INDEX = "PC";
+			this.bustT = StaticRenders.CREW_KARA;
 			
 			this.level = 5;
 			this.physiqueRaw = 18;

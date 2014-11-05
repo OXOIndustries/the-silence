@@ -44,7 +44,7 @@ package classes.GameData.Characters
 			this.shield = new DecentShield();
 			
 			this.INDEX = "TARIK";
-			this.bustT = StaticRenders.MISSING;
+			this.bustT = StaticRenders.CREW_TARIK;
 			
 			this.level = 5;
 			this.physiqueRaw = 18;
