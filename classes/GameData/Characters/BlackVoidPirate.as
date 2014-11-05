@@ -25,8 +25,6 @@ package classes.GameData.Characters
 	 */
 	public class BlackVoidPirate extends Creature
 	{
-		public var respawn:Boolean = false;
-		
 		public function BlackVoidPirate() 
 		{
 			this._latestVersion = 1;
@@ -175,6 +173,12 @@ package classes.GameData.Characters
 		
 		override public function generateAIActions(sameTeam:Array, otherTeam:Array):void
 		{
+			if (HP() <= 0 && respawn)
+			{
+				replacePirate();
+				return;
+			}
+			
 			var target:Creature = selectTarget(otherTeam);
 			
 			var attacks:Array = [rangedAttack, rangedAttack, rangedAttack, threeRoundBurst];
@@ -192,6 +196,14 @@ package classes.GameData.Characters
 			var sel:Function = attacks[rand(attacks.length)];
 			if (sel is String) sel(otherTeam);
 			else sel(target);
+		}
+		
+		private function replacePirate():void
+		{
+			output("\n\nAnother pirate swoops in to replace one of his defeated bretheren, falling into line aside his compatriots.");
+			this.HP(this.HPMax());
+			this.shieldsRaw = this.shieldsMax();
+			this.statusEffects = [];
 		}
 		
 		public function threeRoundBurst(target:Creature):void

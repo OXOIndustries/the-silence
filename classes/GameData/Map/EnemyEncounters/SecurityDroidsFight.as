@@ -51,7 +51,6 @@ package classes.GameData.Map.EnemyEncounters
 					clearMenu();
 					addButton(0, "Fight!", actualEncounterFunction, numDroids);
 					
-					
 					return true;
 				}
 			}

@@ -127,6 +127,7 @@
 		public var isUniqueInFight:Boolean = true;
 		public var btnTargetText:String = "";
 		public var arrayIdx:int = -1;
+		public var respawn:Boolean = false;
 
 		//Is a creature a 'pluralize' encounter - mob, etc. 
 		public var plural: Boolean = false;
@@ -3335,6 +3336,7 @@
 		
 		public function isDefeated():Boolean
 		{
+			if (respawn) return false;
 			if (HP() <= 0) return true;
 			return false;
 		}

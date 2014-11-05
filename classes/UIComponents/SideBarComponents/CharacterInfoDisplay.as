@@ -90,7 +90,7 @@ package classes.UIComponents.SideBarComponents
 			this.addChild(_misEffect);
 			
 			_defEffect.x = 2;
-			_defEffect.y = _nameHeaderUnderline.y + _nameHeaderUnderline.height + 2;
+			_defEffect.y = _nameHeaderUnderline.y + _nameHeaderUnderline.height + 9;
 			
 			_offEffect.x = _defEffect.x;
 			_offEffect.y = _defEffect.y + _defEffect.height + 3;
@@ -99,7 +99,7 @@ package classes.UIComponents.SideBarComponents
 			_accEffect.y = _offEffect.y + _offEffect.height + 3;
 			
 			_impEffect.x = _defEffect.x + _defEffect.width + 3;
-			_impEffect.y = _nameHeaderUnderline.y + _nameHeaderUnderline.height + 2;
+			_impEffect.y = _nameHeaderUnderline.y + _nameHeaderUnderline.height + 9;
 			
 			_dotEffect.x = _impEffect.x;
 			_dotEffect.y = _impEffect.y + _impEffect.height + 3;
