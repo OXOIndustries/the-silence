@@ -10,6 +10,7 @@ package classes.GameData.Characters
 	import classes.GameData.Items.Melee.ForceEdge;
 	import classes.GameData.Items.Miscellaneous.EmptySlot;
 	import classes.GameData.Items.Protection.DecentShield;
+	import classes.GameData.Items.Protection.BasicShield;
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
@@ -44,7 +45,7 @@ package classes.GameData.Characters
 			this.meleeWeapon = new EmptySlot();
 			this.rangedWeapon = new HeavyAR();
 			this.armor = new BlackVoidArmor();
-			this.shield = new DecentShield();
+			this.shield = new BasicShield();
 			
 			this.INDEX = "VOIDPIRATE";
 			this.bustT = StaticRenders.MISSING;
@@ -52,7 +53,7 @@ package classes.GameData.Characters
 			this.isUniqueInFight = false;
 			
 			this.level = 3;
-			this.physiqueRaw = 12;
+			this.physiqueRaw = 6;
 			this.reflexesRaw = 10;
 			this.aimRaw = 15;
 			this.intelligenceRaw = 8;
@@ -64,7 +65,7 @@ package classes.GameData.Characters
 			this.resistances = [1, 1, 1, 1, 1, 1, 1, 1];
 			this.XPRaw = 0;
 			this.credits = 7875;
-			this.HPMod = 10;
+			this.HPMod = 0;
 			this.HPRaw = this.HPMax();
 			this.shieldsRaw = this.shieldsMax();
 			
@@ -232,7 +233,7 @@ package classes.GameData.Characters
 				
 				var dmg:Number = (damage(false) + (aim() / 2)) * numHits;
 				
-				calculateDamage(this, target, dmg * 0.66, rangedWeapon.damageType, "ranged");
+				calculateDamage(this, target, dmg * 0.33, rangedWeapon.damageType, "ranged");
 			}
 		}
 		
