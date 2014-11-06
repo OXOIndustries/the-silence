@@ -74,7 +74,7 @@ package classes.GameData.Content
 			CombatManager.newGroundCombat();
 			CombatManager.setPlayers(PlayerParty.getCombatParty());
 			CombatManager.setEnemies(enemies);
-			CombatManager.victoryCondition(CombatManager.SURVIVE_WAVES, 10);
+			CombatManager.victoryCondition(CombatManager.SURVIVE_WAVES, 15);
 			CombatManager.victoryScene(pirateBreachVictory);
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
 			CombatManager.lossScene(pirateBreachLoss);

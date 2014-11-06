@@ -502,6 +502,8 @@ package classes.GameData
 				
 				if (!target.hasStatusEffect("StimBoostCooldown")) addButton(2, "StimBoost", selectSpecialAttack, [stimulantBoost, target, "StimBoost"], "Stimulant Boost", "Release a localised cloud of emergency doctor nanomachines, healing you and your companions. Can only be used once per combat encounter.");
 				else addDisabledButton(2, "StimBoost", "Stimulant Boost", "You've already used the only container of nanomachines you had to hand!");
+				if (!target.hasStatusEffect("ForceEdgeCooldown")) addButton(3, "Force Edge", selectSpecialAttack, [forceEdge, target, "Force Edge"], "Force Edge", "Make a devestating melee attack with your hard-light force edge.");
+				else addDisabledButton(3, "Force Edge", "Force Edge", "Your hard-light blade requires 3 rounds to recharge after use.");
 			}
 			else if (target is Tarik)
 			{
@@ -513,6 +515,8 @@ package classes.GameData
 				
 				if (!target.hasStatusEffect("StunStrikeCooldown")) addButton(2, "StunStrike", selectSpecialAttack, [stunningStrike, target, "StunStrike"], "Stunning Strike", "A savage attack that has a chance to stun the target for 2 rounds. 3 round cooldown.");
 				else addDisabledButton(2, "StunStrike", "Stunning Strike", "Tarik cannot make another stun attempt yet!");
+				if (!target.hasStatusEffect("Throwing Axes Used") || target.statusEffectv1("Throwing Axes Used") < 4) addButton(3, "ThrowAxe", selectSpecialAttack, [throwingAxe, target, "ThrowAxe"], "Throwing Axe", "Hucks one of Tarik's throwing axes at the target.");
+				else addDisabledButton(3, "ThrowAxe", "Throwing Axes", "Tarik only has 4 throwing axes per encounter.");
 			}
 			else if (target is Pyra)
 			{
@@ -524,6 +528,9 @@ package classes.GameData
 				
 				if (!target.hasStatusEffect("ShieldBoostCooldown")) addButton(2, "S.Boost", selectSpecialAttack, [shieldBoost, target, "S.Boost"], "Shield Boost", "Boosts the parties shield generators, restoring shields in the process. Can only be used once per combat encounter.");
 				else addDisabledButton(2, "S.Boost", "Shield Boost", "Attempting to overcharge the parties shield generators again so soon only risks burning them out!");
+				
+				if (!target.hasStatusEffect("ShotgunReload")) addButton(3, "Shotgun", selectSpecialAttack, [shotgunBlast, target, "Shotgun"], "Shotgun", "Peppers the target with a devestating shotgun blast.");
+				else addButton(3, "ReloadShotty", selectSpecialAttack, [reloadShotgun, target, "Reload"], "Reload Shotgun", "Pyra has to spend a round reloading her shotgun before she can fire it again.");
 			}
 			
 			addButton(14, "Back", showCombatMenu, undefined, "Back", "Added in Specials Menu");
@@ -717,6 +724,12 @@ package classes.GameData
 			}
 		}
 		
+		private function forceEdge(attacker:Creature, target:Creature):void
+		{
+			attacker.createStatusEffect("ForceEdgeCooldown", 3, 0, 0, 0, true, "", "", true, 0);
+			doMeleeAttack(attacker, target);
+		}
+		
 		private function cleave(attacker:Creature):void
 		{
 			attacker.createStatusEffect("CleaveCooldown", 2, 0, 0, 0, true, "", "", true, 0);
@@ -781,6 +794,14 @@ package classes.GameData
 					output(" staggered by the sheet weight of the impact. (<b>" + damage + "</b>)");
 				}
 			}		
+		}
+		
+		private function throwingAxe(attacker:Creature, target:Creature):void
+		{
+			if (!attacker.hasStatusEffect("Throwing Axes Used")) attacker.createStatusEffect("Throwing Axes Used", 0, 0, 0, 0, true, "", "", true, 0);
+			attacker.addStatusValue("Throwing Axes Used", 1, 1);
+			
+			doRangedAttack(attacker, target);
 		}
 		
 		private function flamethrower(attacker:Creature, target:Creature):void
@@ -858,6 +879,18 @@ package classes.GameData
 			}
 		}
 		
+		private function shotgunBlast(attacker:Creature, target:Creature):void
+		{
+			attacker.createStatusEffect("ShotgunReload", 0, 0, 0, 0, true, "", "", true, 0);
+			doRangedAttack(attacker, target);
+		}
+		
+		private function reloadShotgun(attacker:Creature):void
+		{
+			attacker.removeStatusEffect("ShotgunReload");
+			output("\n\nPyra fumbles with her oversized shotgun, the huge shells compared to her tiny fingers taking every ounce of effort she can muster in order to slide a replacement into the weapons breach.");
+		}
+		
 		private function selectSpecialAttack(args:Array):void
 		{
 			clearMenu();
@@ -876,7 +909,10 @@ package classes.GameData
 				"TargetShot",
 				"StunStrike",
 				"ParaDarts",
-				"F.Thrower"
+				"F.Thrower",
+				"Shotgun",
+				"ThrowAxe",
+				"Force Edge"
 			]
 			
 			if (reqTarget.indexOf(label) != -1) targetSelectionMenu(caster);
