@@ -236,7 +236,8 @@ package classes.GameData
 			
 			if (_attackSelections[target.INDEX].type != "attack")
 			{
-				addButton(1 + (offset * 5), "Attack", attackMenu, target);
+				if (target.defaultsToMelee) addButton(1 + (offset * 5), StringUtil.toTitleCase(target.meleeWeapon.attackVerb), selectMeleeAttack, target);
+				else addButton(1 + (offset * 5), StringUtil.toTitleCase(target.rangedWeapon.attackVerb), selectRangedAttack, target);
 			}
 			else
 			{
@@ -368,7 +369,14 @@ package classes.GameData
 				{
 					if (target.statusEffectv2("Grappled") == 0)
 					{
-						output("\n\n" + target.a + target.short + " wriggles out of the grapple. <b>" + target.a + target.short + " is no longer grappled!</b>");
+						if (target is PlayerCharacter)
+						{
+							output("\n\nYou wriggle out of the grapple. <b>You are no longer grappled!</b>");
+						}
+						else
+						{
+							output("\n\n" + target.a + target.short + " wriggles out of the grapple. <b>" + target.a + target.short + " is no longer grappled!</b>");
+						}
 					}
 					else
 					{

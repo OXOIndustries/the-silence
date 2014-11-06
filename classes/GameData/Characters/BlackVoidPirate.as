@@ -11,6 +11,7 @@ package classes.GameData.Characters
 	import classes.GameData.Items.Miscellaneous.EmptySlot;
 	import classes.GameData.Items.Protection.DecentShield;
 	import classes.GameData.Items.Protection.BasicShield;
+	import classes.GameData.Items.Protection.WeakShield;
 	import classes.kGAMECLASS;
 	import classes.GLOBAL;
 	import classes.Resources.Busts.StaticRenders;
@@ -47,7 +48,7 @@ package classes.GameData.Characters
 			this.meleeWeapon = new EmptySlot();
 			this.rangedWeapon = new HeavyAR();
 			this.armor = new BlackVoidArmor();
-			this.shield = new BasicShield();
+			this.shield = new WeakShield();
 			
 			this.INDEX = "VOIDPIRATE";
 			this.bustT = StaticRenders.MOB_BVP;
@@ -55,9 +56,9 @@ package classes.GameData.Characters
 			this.isUniqueInFight = false;
 			
 			this.level = 3;
-			this.physiqueRaw = 6;
-			this.reflexesRaw = 10;
-			this.aimRaw = 15;
+			this.physiqueRaw = 4;
+			this.reflexesRaw = 7;
+			this.aimRaw = 12;
 			this.intelligenceRaw = 8;
 			this.willpowerRaw = 8;
 			this.libidoRaw = 60;
@@ -211,10 +212,17 @@ package classes.GameData.Characters
 		
 		private function replacePirate():void
 		{
-			output("\n\nAnother pirate swoops in to replace one of his defeated bretheren, falling into line aside his compatriots.");
-			this.HP(this.HPMax());
-			this.shieldsRaw = this.shieldsMax();
-			this.statusEffects = [];
+			if (this.hasStatusEffect("Respawn Countdown"))
+			{
+				output("\n\nAnother pirate swoops in to replace one of his defeated bretheren, falling into line aside his compatriots.");
+				this.HP(this.HPMax());
+				this.shieldsRaw = this.shieldsMax();
+				this.statusEffects = [];
+			}
+			else
+			{
+				this.createStatusEffect("Respawn Countdown");
+			}
 		}
 		
 		public function threeRoundBurst(target:Creature):void
