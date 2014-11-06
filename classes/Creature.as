@@ -128,6 +128,7 @@
 		public var btnTargetText:String = "";
 		public var arrayIdx:int = -1;
 		public var respawn:Boolean = false;
+		public var entersCombat:Boolean = true;
 
 		//Is a creature a 'pluralize' encounter - mob, etc. 
 		public var plural: Boolean = false;

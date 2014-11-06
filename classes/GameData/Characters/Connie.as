@@ -18,14 +18,14 @@ package classes.GameData.Characters
 		
 		public function Connie() 
 		{
-			this._latestVersion = 1;
+			this._latestVersion = 2;
 			this.version = _latestVersion;
 			this._neverSerialize = false;
 			
-			this.short = "Logan";
-			this.long = "Logan";
-			this.originalRace = "Human";
-			this.description = "Logan's the best pilot you've ever seen. She was also the best starfighter ace the Coalition fleet had, until they busted her for mod abuse and theft. She's an addict, hooked on Throbb and reptilian genetic modifications, but you've never seen it get in the way of her job... so long as you keep the cash coming in so she can keep getting at her needles. Logan is your closest friend on the Silence's crew, and frequent lover. She's a bit twitchy, and can be downright ruthless at times... and you'd never call her <i>reliable</i>... but Logan's proved a capable executive officer during your command, and continues to get you out of even the most desperate scrapes in one piece. ";
+			this.short = "Connie";
+			this.long = "Connie";
+			this.originalRace = "Machine";
+			this.description = "";
 			
 			this.customBlock = "";
 			this.customDodge = "";
@@ -37,8 +37,9 @@ package classes.GameData.Characters
 			this.armor = new ProtectiveJacket();
 			this.shield = new DecentShield();
 			
-			this.INDEX = "LOGAN";
-			this.bustT = StaticRenders.CREW_LOGAN;
+			this.INDEX = "CONNIE";
+			this.bustT = StaticRenders.MISSING;
+			this.entersCombat = false;
 			
 			this.level = 5;
 			this.physiqueRaw = 18;
@@ -164,6 +165,13 @@ package classes.GameData.Characters
 			this.ass.bonusCapacity += 15;
 			
 			this._isLoading = false;
+		}
+		
+		public function UpgradeVersion1(dataObject:Object):void
+		{
+			this.short = "Connie";
+			this.long = "Connie";
+			this.INDEX = "CONNIE";
 		}
 		
 	}

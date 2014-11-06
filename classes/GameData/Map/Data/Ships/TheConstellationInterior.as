@@ -226,7 +226,7 @@ package classes.GameData.Map.Data.Ships
 			EngineeringDeckL33.RoomIndex = "EngineeringDeckL33";
 			EngineeringDeckL33.RoomName = "Engineering Deck: Corridor";
 			EngineeringDeckL33.ShortName = "Eng.Dk Crrdr";
-			EngineeringDeckL33.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorGeneralFunction;
+			EngineeringDeckL33.EntryFunction = ContentIndex.theConstellation.engineeringDeckCorridorL33Function;
 			EngineeringDeckL33.MoveTime = 1;
 			EngineeringDeckL33.EnemyEncounterContainers.push(droidFights);
 			EngineeringDeckL33.AddFlag(GLOBAL.INDOOR);

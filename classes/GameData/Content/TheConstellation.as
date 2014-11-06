@@ -20,13 +20,6 @@ package classes.GameData.Content
 		public function breachFunction():Boolean
 		{
 			clearOutput();
-			output("Some kind of ungodly powerful weapon blew a hole straight through the <i>Constellation</i>. Debris floats listlessly through open space, drifting in the gaping wound blasted through the hull. Lucky for you, that gives you easy access between the main decks.");
-			return false;
-		}
-		
-		public function breachEngineeringFunction():Boolean
-		{
-			clearOutput();
 			if (flags["CONSTELLATION_PIRATES_ARRIVED"] != 1)
 			{
 				output("Some kind of ungodly powerful weapon blew a hole straight through the <i>Constellation</i>. Debris floats listlessly through open space, drifting in the gaping wound blasted through the hull. Lucky for you, that gives you easy access between the main decks.");
@@ -44,10 +37,17 @@ package classes.GameData.Content
 			}
 		}
 		
+		public function breachEngineeringFunction():Boolean
+		{
+			clearOutput();
+			output("Some kind of ungodly powerful weapon blew a hole straight through the <i>Constellation</i>. Debris floats listlessly through open space, drifting in the gaping wound blasted through the hull. Lucky for you, that gives you easy access between the main decks.");
+			return false;
+		}
+		
 		private function breachPirateHoldoutFight():void
 		{
 			clearOutput();
-			output("\n\nYou run for the breach, pushing your body as hard as you can. One foot ahead of the other, clutching your case of platinum tight against yourself, hurtling towards the gaping wound in the <i>Constellation</i>’s belly. Almost there... almost there...");
+			output("You run for the breach, pushing your body as hard as you can. One foot ahead of the other, clutching your case of platinum tight against yourself, hurtling towards the gaping wound in the <i>Constellation</i>’s belly. Almost there... almost there...");
 			
 			output("\n\nJust seconds from the edge, you see a flash of light as several jetpacks flare, bringing several figures into view: black-armored pirates leap onto the deck, weapons leveled at you. Others climb into view from the lower and upper decks, tumbling into the corridor ahead of you. Pyra screams, and behind you, you see even more rushing towards you. Surrounded on all sides! ");
 			
@@ -71,7 +71,7 @@ package classes.GameData.Content
 			}
 			
 			CombatManager.newGroundCombat();
-			CombatManager.setPlayers(PlayerParty.getParty());
+			CombatManager.setPlayers(PlayerParty.getCombatParty());
 			CombatManager.setEnemies(enemies);
 			CombatManager.victoryCondition(CombatManager.SURVIVE_WAVES, 10);
 			CombatManager.victoryScene(pirateBreachVictory);
@@ -321,13 +321,13 @@ package classes.GameData.Content
 			}
 			else if (flags["GOT_THE_BRIEFCASE"] == 1)
 			{
-				addButton(0, "Briefcase", takeBriefcase, "Take Briefcase", "Take the briefcase full of platinum 190.");
+				addButton(0, "Briefcase", takeBriefcase, undefined, "Take Briefcase", "Take the briefcase full of platinum 190.");
 			}
 			else addDisabledButton(0, "Briefcase");
 
 			if (flags["GOT_GRAVITY_AXE"] == undefined && flags["GOT_THE_BRIEFCASE"] >= 1)
 			{
-				addButton(1, "Gravity Axe", takeGravityAxe, "Take Gravity Axe", "Offer up the huge Gravity Axe to your equally enormous companion Tarik.");
+				addButton(1, "Gravity Axe", takeGravityAxe, undefined, "Take Gravity Axe", "Offer up the huge Gravity Axe to your equally enormous companion Tarik.");
 			}
 			else addDisabledButton(1, "Gravity Axe");
 
@@ -337,7 +337,7 @@ package classes.GameData.Content
 			if (flags["INSPECTED_DROID"] == undefined && flags["GOT_THE_BRIEFCASE"] >= 1) addButton(3, "Take Droid", takeCompanionDroid);
 			else addDisabledButton(3, "Droid");
 
-			if (flags["CONNIE_VI_HACKED"] == 1)
+			if (flags["CONNIE_VI_HACKED"] == 1 && !PlayerParty.isInParty(connie))
 			{
 				addButton(4, "Connie", reapproachConnie);
 			}
@@ -472,16 +472,17 @@ package classes.GameData.Content
 		private function connieMenu():void
 		{
 			clearMenu();
-			addButton(0, "Ship Status", connieShipStatus, "Ship System Status", "What's the <i>Constellation</i>'s current status?");
-			if (flags["GOT_THE_BRIEFCASE"] == undefined) addButton(1, "Security Field", connieSecurityField, "Cargo Security Field", "Ask about the security field.");
+			addButton(0, "Ship Status", connieShipStatus, undefined, "Ship System Status", "What's the <i>Constellation</i>'s current status?");
+			if (flags["GOT_THE_BRIEFCASE"] == undefined) addButton(1, "Security Field", connieSecurityField, undefined, "Cargo Security Field", "Ask about the security field.");
 			else addDisabledButton(1, "Security Field", "Cargo Security Field", "With the security field disabled, there's no need to talk to Connie about it.");
-			if (flags["GOT_THE_BRIEFCASE"] != 2) addButton(2, "Cargo", connieCargo, "Briefcase", "Ask what's behind the security field.");
+			if (flags["GOT_THE_BRIEFCASE"] != 2) addButton(2, "Cargo", connieCargo, undefined, "Briefcase", "Ask what's behind the security field.");
 			else addDisabledButton(2, "Cargo", "Briefcase", "Having already pilfered the briefcase, there's no need to talk to Connie about it.");
-			addButton(3, "Crew Status", connieCrewStatus, "Crew Status", "Ask the V.I. what the status of the <i>Constellation</i>'s crew is");
-			if (flags["INSPECTED_DROID"] == 1) addButton(4, "V.I. Status", connieVIStatus, "V.I. Status", "Talk to Connie about her own status, and what she is able to do.");
+			addButton(3, "Crew Status", connieCrewStatus, undefined, "Crew Status", "Ask the V.I. what the status of the <i>Constellation</i>'s crew is");
+			if (flags["INSPECTED_DROID"] == 1) addButton(4, "V.I. Status", connieVIStatus, undefined, "V.I. Status", "Talk to Connie about her own status, and what she is able to do.");
 			else addDisabledButton(4, "V.I. Status", "V.I. Status", "Maybe you should take a look around the secured cargo first.");
-			if (flags["CONNIE_ASKED_STATUS"] == 1) addButton(5, "Download", connieDownload, "Download Connie", "Save Connie from the ships failing systems.");
+			if (flags["CONNIE_ASKED_STATUS"] == 1) addButton(5, "Download", connieDownload, undefined, "Download Connie", "Save Connie from the ships failing systems.");
 			else addDisabledButton(5, "Download", "Download Connie", "You should get a clear picture of the V.I's current status first.");
+			addButton(14, "Back", mainGameMenu);
 		}
 
 		private function connieShipStatus():void
@@ -489,7 +490,16 @@ package classes.GameData.Content
 			clearOutput();
 			output("<i>“What’s the ship’s status, Connie?”</i>");
 			
-			output("\n\nThe A.I. cocks her head to the side, the code streams on her accelerating considerably as she pulls in data. <i>“I am detecting critical battle damage across all decks. The <i>Constellation</i> is suffering from massive power loss and loss of atmosphere. Main guns are currently " + ((flags["CONSTELLATION_GUNS_ACTIVE"] == 1) ?"active" : "inactive") + ". Combat shields are " + ((flags["CONSTELLATION_MAIN_SHIELDS_ACTIVE"] == 1) ? "up" : "down") + ". Internal shielding is up. Internal security is " ((flags["CONSTELLATION_DRONES_DEACTIVATED"] == undefined) ? "active": "inactive") + ". Hull integrity is critical across multiple decks.”</i>");
+			output("\n\nThe A.I. cocks her head to the side, the code streams on her accelerating considerably as she pulls in data. <i>“I am detecting critical battle damage across all decks. The <i>Constellation</i> is suffering from massive power loss and loss of atmosphere. Main guns are currently ");
+			if (flags["CONSTELLATION_GUNS_ACTIVE"] == 1) output("active");
+			else output("inactive");
+			output(". Combat shields are ");
+			if (flags["CONSTELLATION_MAIN_SHIELDS_ACTIVE"] == 1) output("up");
+			else output("down");
+			output(". Internal shielding is up. Internal security is ");
+			if (flags["CONSTELLATION_DRONES_DEACTIVATED"] == undefined) output("active");
+			else output("inactive")
+			output(". Hull integrity is critical across multiple decks.”</i>");
 			
 			output("\n\n<i>“Do we still have engines? Any flight ability?”</i>");
 			

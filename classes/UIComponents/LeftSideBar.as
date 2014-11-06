@@ -49,7 +49,7 @@ package classes.UIComponents
 			this.BuildBackground();
 			
 			// Player party display
-			_playerParty = new PartyBlock(3, "left");
+			_playerParty = new PartyBlock(4, "left");
 			this.addChild(_playerParty);
 			_playerParty.x = 0;
 			_playerParty.y = 0;

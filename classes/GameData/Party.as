@@ -66,6 +66,18 @@ package classes.GameData
 			return _charactersInParty;
 		}
 		
+		public function getCombatParty():Array
+		{
+			var party:Array = [];
+			
+			for (var i:int = 0; i < _charactersInParty.length; i++)
+			{
+				if (_charactersInParty[i].entersCombat) party.push(_charactersInParty[i]);
+			}
+			
+			return party;
+		}
+		
 		public function setParty(party:Array):void
 		{
 			_charactersInParty = party;

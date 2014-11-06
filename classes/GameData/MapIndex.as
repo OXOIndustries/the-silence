@@ -127,9 +127,6 @@ package classes.GameData
 					addDisabledButton(0, "Exit Airlock", "Exit via Airlock", "Use of the airlock requires that the ship be properly docked to another vessel or boarding system.");
 				}
 			}
-			
-			// Enable the perk list button
-			//(userInterface as GUI).perkDisplayButton.Activate();
 		}
 		
 		private static function liftControls(room:Room):void

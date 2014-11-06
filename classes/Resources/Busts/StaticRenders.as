@@ -15,7 +15,7 @@ package classes.Resources.Busts
 		[Embed(source = "../../../assets/models/kara/kara_paint.png", mimeType = "image/png")]
 		public static const CREW_KARA:Class;
 		
-		// [Embed(source = "../../../assets/models/tarik/swole_mcdudebro.png", mimeType = "image/png")]
+		//[Embed(source = "../../../assets/models/tarik/swole_mcdudebro.png", mimeType = "image/png")]
 		[Embed(source = "../../../assets/models/tarik/tarik_paint.png", mimeType = "image/png")]
 		public static const CREW_TARIK:Class;
 	}

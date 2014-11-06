@@ -242,7 +242,7 @@ package classes.UIComponents.SideBarComponents
 				
 				if (ef.storageName == "Plasma Burn") this._dotEffect.addDebuff();
 				if (ef.storageName == "Flamethrower  Burn") this._dotEffect.addDebuff();
-				if (ef.storageName == "Damage Reduction") this._offEffect.addDebuff();
+				if (ef.storageName == "Damage Reduction") this._defEffect.addBuff();
 				if (ef.storageName == "Focus Fire") this._misEffect.addBuff();
 				if (ef.storageName == "Paralytic Venom")
 				{
