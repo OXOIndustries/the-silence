@@ -45,6 +45,7 @@
 	import classes.GameData.StatTracking;
 	import classes.GUI;
 	import classes.Mapper;
+	import classes.GameData.CombatManager;
 	
 	// Game classes
 	import classes.GameData.Items.Miscellaneous.NoItem;
@@ -247,8 +248,12 @@
 		public function updateUI():void
 		{
 			userInterface.time = timeText();
-			userInterface.showPlayerParty();
-			userInterface.setPlayerPartyData(GameState.playerParty.getParty());
+			
+			if (!CombatManager.inGroundCombat)
+			{
+				userInterface.showPlayerParty();
+				userInterface.setPlayerPartyData(GameState.playerParty.getParty());
+			}
 		}
 		
 		private function timeText():String

@@ -63,7 +63,7 @@ package classes.GameData
 			{
 				if (args[0] is Party)
 				{
-					_friendlies = (args[0] as Party).getParty();
+					_friendlies = (args[0] as Party).getCombatParty();
 				}
 				else if (args[0] is Array)
 				{
@@ -91,7 +91,7 @@ package classes.GameData
 			{
 				if (args[0] is Party)
 				{
-					_hostiles = (args[0] as Party).getParty();
+					_hostiles = (args[0] as Party).getCombatParty();
 				}
 				else if (args[0] is Array)
 				{

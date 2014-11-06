@@ -29,7 +29,7 @@ package classes.GameData.Characters
 		{
 			this._latestVersion = 1;
 			this.version = _latestVersion;
-			this._neverSerialize = false;
+			this._neverSerialize = true;
 			
 			this.short = "Black Void Pirate";
 			this.long = "Black Void Priate";
@@ -48,6 +48,8 @@ package classes.GameData.Characters
 			
 			this.INDEX = "VOIDPIRATE";
 			this.bustT = StaticRenders.MISSING;
+			this.btnTargetText = "VoidPirate";
+			this.isUniqueInFight = false;
 			
 			this.level = 3;
 			this.physiqueRaw = 12;
@@ -185,7 +187,7 @@ package classes.GameData.Characters
 			
 			if (!hasStatusEffect("Flashbang Used"))
 			{
-				attacks.push("flashbang");
+				attacks.push(flashbang);
 			}
 			
 			if (!hasStatusEffect("Net Used"))
@@ -194,7 +196,7 @@ package classes.GameData.Characters
 			}
 			
 			var sel:Function = attacks[rand(attacks.length)];
-			if (sel is String) sel(otherTeam);
+			if (sel == flashbang) sel(otherTeam);
 			else sel(target);
 		}
 		

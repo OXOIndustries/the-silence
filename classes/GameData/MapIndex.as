@@ -8,6 +8,7 @@ package classes.GameData
 	import classes.GameData.Map.Sector;
 	import classes.GameData.Map.Ship;
 	import classes.GameData.Map.System;
+	import classes.GameData.Ships.Constellation;
 	import classes.GameData.Ships.Ship;
 	import classes.Mapper;
 	import flash.geom.Point;
@@ -118,6 +119,13 @@ package classes.GameData
 			{
 				var shipP:classes.GameData.Ships.Ship = ShipIndex.Ships[room.ParentLocation.LocationName];
 				
+				// This is awful but I'm not refactoring a bunch of stuff just to handle this shit.
+				if (shipP is Constellation && GameState.flags["GOT_THE_BRIEFCASE"] != 2)
+				{
+					addDisabledButton(0, "Exit Airlock", "Exit via Airlock", "You should probably complete your objective before you head back to The Silence.");
+					return;
+				}
+				
 				if (shipP != null && shipP.hasConnection() == true)
 				{
 					addButton(0, "Exit Airlock", Move, (ShipIndex.Ships[room.ParentLocation.LocationName] as classes.GameData.Ships.Ship).airlockConnectsTo());
@@ -136,7 +144,9 @@ package classes.GameData
 			for (var i:int = 0; i < room.ElevatorRooms.length; i++)
 			{
 				if (room.ElevatorRooms[i] == room.RoomIndex)
+				{
 					addDisabledButton(i, room.ShortName);
+				}
 				else
 				{
 					var tarRoom:Room = room.ParentLocation.Rooms[room.ElevatorRooms[i]];

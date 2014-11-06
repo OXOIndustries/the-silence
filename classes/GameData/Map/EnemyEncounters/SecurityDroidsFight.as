@@ -36,7 +36,7 @@ package classes.GameData.Map.EnemyEncounters
 				if (GameState.flags["SECURITY_DROIDS_STEPS"] == undefined) GameState.flags["SECURITY_DROIDS_STEPS"] = 0;
 				GameState.flags["SECURITY_DROIDS_STEPS"]++;
 				
-				if (GameState.flags["SECURITY_DROIDS_STEPS"] < 5) return false;
+				if (GameState.flags["SECURITY_DROIDS_STEPS"] < 50) return false;
 	
 				var num:int = rand(15);
 				if (num <= GameState.flags["SECURITY_DROIDS_STEPS"])
