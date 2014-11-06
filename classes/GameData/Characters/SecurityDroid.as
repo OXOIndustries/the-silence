@@ -49,7 +49,7 @@ package classes.GameData.Characters
 			this.shield = new BasicShield();
 			
 			this.INDEX = "SECURITYDROID";
-			this.bustT = StaticRenders.MISSING;
+			this.bustT = StaticRenders.MOB_BOT;
 			this.isUniqueInFight = false;
 			this.btnTargetText = "SecDroid";
 			

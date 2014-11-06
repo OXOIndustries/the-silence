@@ -35,7 +35,7 @@ package classes.GameData.Characters
 			this.a = "";
 			this.capitalA = ""
 			this.short = "Black Void Pirate";
-			this.long = "Black Void Priate";
+			this.long = "Black Void Pirate";
 			this.originalRace = "Human";
 			this.description = "The Black Void pirates are the nastiest, biggest group of rogues on the frontier -- and the core, for that matter. They've sunk their talons into damn near everything, from gambling and prostitution on high-wealth Confederate worlds to outright space lane piracy out on the rush worlds. You've dealt with them before -- smugglers and pirates have a natural sort of codependance -- though you'd never work for them again if you could help it. The Void is ruthless, and they hold a grudge across all the stars. They usually hunt in wolf packs of small ships, corvettes and re-purposed heavy freighters, to take down cargo craft. Lone ships attacking an armed convoy? What the hell is going on?";
 			
@@ -50,7 +50,7 @@ package classes.GameData.Characters
 			this.shield = new BasicShield();
 			
 			this.INDEX = "VOIDPIRATE";
-			this.bustT = StaticRenders.MISSING;
+			this.bustT = StaticRenders.MOB_BVP;
 			this.btnTargetText = "VoidPirate";
 			this.isUniqueInFight = false;
 			

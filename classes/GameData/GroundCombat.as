@@ -1235,7 +1235,7 @@ package classes.GameData
 			}
 			else if (victoryCondition == CombatManager.SURVIVE_WAVES)
 			{
-				if (victoryArgument == Number.NaN) throw new Error("Wave survival declared as a win condition, with no target waves defined.");
+				if (victoryArgument <= 0) throw new Error("Wave survival declared as a win condition, with no target waves defined.");
 				if (_roundCounter >= victoryArgument) return true;
 				return false;
 			}
