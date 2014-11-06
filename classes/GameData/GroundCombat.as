@@ -335,7 +335,7 @@ package classes.GameData
 			{
 				target.addStatusValue("Stunned", 1, -1);
 				
-				if (target.statusEffectv1("Stunned") < 0)
+				if (target.statusEffectv1("Stunned") <= 0)
 				{
 					if (target.statusEffectv2("Stunned") == 0)
 					{
@@ -364,7 +364,7 @@ package classes.GameData
 			{
 				target.addStatusValue("Grappled", 1, -1);
 				
-				if (target.hasStatusEffect("Grappled") < 0)
+				if (target.statusEffectv1("Grappled") <= 0)
 				{
 					if (target.statusEffectv2("Grappled") == 0)
 					{
@@ -1035,6 +1035,9 @@ package classes.GameData
 			}
 			
 			_roundCounter++;
+			trace("Roundcount:", _roundCounter);
+			
+			if (checkForVictory()) return;
 			
 			clearMenu();
 			removeAllButtonHighlights();
@@ -1205,7 +1208,7 @@ package classes.GameData
 			if (target.hasStatusEffect("Aim Reduction"))
 			{
 				target.addStatusValue("Aim Reduction", 1, -1)
-				if (target.statusEffectv1("Aim Reduction") < 0)
+				if (target.statusEffectv1("Aim Reduction") <= 0)
 				{
 					output("\n\nThe blinding flash that was disorienting ");
 					if (target is PlayerCharacter) output("you");
@@ -1232,6 +1235,7 @@ package classes.GameData
 			}
 			else if (victoryCondition == CombatManager.SURVIVE_WAVES)
 			{
+				if (victoryArgument == Number.NaN) throw new Error("Wave survival declared as a win condition, with no target waves defined.");
 				if (_roundCounter >= victoryArgument) return true;
 				return false;
 			}

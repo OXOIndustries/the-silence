@@ -60,7 +60,7 @@ package classes.GameData
 		public static function lossCondition(condition:String, arg:Number = Number.NaN):void 
 		{
 			combatContainer.lossCondition = condition;
-			combatContainer.victoryArgument = arg;
+			combatContainer.lossArgument = arg;
 		}
 		
 		public static function lossScene(func:Function):void

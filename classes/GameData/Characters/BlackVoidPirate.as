@@ -28,10 +28,12 @@ package classes.GameData.Characters
 	{
 		public function BlackVoidPirate() 
 		{
-			this._latestVersion = 1;
+			this._latestVersion = 2;
 			this.version = _latestVersion;
 			this._neverSerialize = true;
 			
+			this.a = "";
+			this.capitalA = ""
 			this.short = "Black Void Pirate";
 			this.long = "Black Void Priate";
 			this.originalRace = "Human";
@@ -172,6 +174,12 @@ package classes.GameData.Characters
 			this.ass.bonusCapacity += 15;
 			
 			this._isLoading = false;
+		}
+		
+		public function UpgradeVersion1(dataObject:Object):void
+		{
+			dataObject.a = "";
+			dataObject.capitalA = "";
 		}
 		
 		override public function generateAIActions(sameTeam:Array, otherTeam:Array):void
