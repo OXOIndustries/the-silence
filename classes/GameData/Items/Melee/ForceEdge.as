@@ -43,8 +43,8 @@ package classes.GameData.Items.Melee
 			
 			//Information
 			this.basePrice = 1450;
-			this.attack = 0;
-			this.damage = 12;
+			this.attack = 2;
+			this.damage = 15;
 			this.damageType = GLOBAL.SLASHING;
 			this.defense = 0;
 			this.shieldDefense = 0;

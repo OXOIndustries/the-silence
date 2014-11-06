@@ -232,7 +232,7 @@ package classes.GameData.Characters
 				
 				var dmg:Number = (damage(false) + (aim() / 2)) * numHits;
 				
-				calculateDamage(this, target, dmg, rangedWeapon.damageType, "ranged");
+				calculateDamage(this, target, dmg * 0.66, rangedWeapon.damageType, "ranged");
 			}
 		}
 		

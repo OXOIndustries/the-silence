@@ -39,8 +39,8 @@ package classes.GameData.Items.Guns
 			
 			//Information
 			this.basePrice = 2000;
-			this.attack = 0;
-			this.damage = 9;
+			this.attack = 2;
+			this.damage = 15;
 			this.damageType = GLOBAL.KINETIC;
 			this.defense = 0;
 			this.shieldDefense = 0;
