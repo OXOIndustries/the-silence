@@ -495,36 +495,43 @@ package classes.GameData
 			if (target is PlayerCharacter)
 			{
 				if (!target.hasStatusEffect("ChargeShotCooldown")) addButton(0, "ChargeShot", selectSpecialAttack, [chargeShot, target, "ChargeShot"], "Charge Shot", "A charged shot dealing increased damage. Requires a three-round cooldown before you can risk overloading your pistols plasma emitters again.");
-				else addDisabledButton(0, "ChargeShot", "Charged Shot", "Overcharging your plasma pistol again so quickly runs the risk over overloading the emitter!");
+				else addDisabledButton(0, "ChargeShot", "Charged Shot", "Overcharging your plasma pistol again so quickly runs the risk over overloading the emitter!\n\nCooldown remaining: " + target.statusEffectv1("ChargeShotCooldown") + " rounds.");
 				
 				if (!target.hasStatusEffect("TargetShotCooldown")) addButton(1, "TargetShot", selectSpecialAttack, [targetingShot, target, "TargetShot"], "Targeting Shot", "Fire a specialised energy marker signal, improving your companions accuracy against the marked target for a single round. Requires two rounds to regenerate the marker-particles.");
-				else addDisabledButton(1, "TargetShot", "Targeting Shot", "Your plasma caster is gradually regenerating the unique particles required to mark a target.");
+				else addDisabledButton(1, "TargetShot", "Targeting Shot", "Your plasma caster is gradually regenerating the unique particles required to mark a target.\n\nCooldown remaining: " + target.statusEffectv1("TargetShotCooldown") + " rounds.");
 				
 				if (!target.hasStatusEffect("StimBoostCooldown")) addButton(2, "StimBoost", selectSpecialAttack, [stimulantBoost, target, "StimBoost"], "Stimulant Boost", "Release a localised cloud of emergency doctor nanomachines, healing you and your companions. Can only be used once per combat encounter.");
 				else addDisabledButton(2, "StimBoost", "Stimulant Boost", "You've already used the only container of nanomachines you had to hand!");
 				if (!target.hasStatusEffect("ForceEdgeCooldown")) addButton(3, "Force Edge", selectSpecialAttack, [forceEdge, target, "Force Edge"], "Force Edge", "Make a devestating melee attack with your hard-light force edge.");
-				else addDisabledButton(3, "Force Edge", "Force Edge", "Your hard-light blade requires 3 rounds to recharge after use.");
+				else addDisabledButton(3, "Force Edge", "Force Edge", "Your hard-light blade requires 3 rounds to recharge after use.\n\nCooldown remaining: " + target.statusEffectv1("ForceEdgeCooldown") + " rounds.");
 			}
 			else if (target is Tarik)
 			{
 				if (!target.hasStatusEffect("CleaveCooldown")) addButton(0, "Cleave", selectSpecialAttack, [cleave, target, "Cleave"], "Cleave", "A sweeping strike that will hit all enemies present. Requires two-rounds for Tarik to recuperate after his last cleave attack.");
-				else addDisabledButton(0, "Cleave", "Cleave", "Tarik needs some time to recuperate after his last furiously cleave.");
+				else addDisabledButton(0, "Cleave", "Cleave", "Tarik needs some time to recuperate after his last furiously cleave.\n\nCooldown remaining: " + target.statusEffectv1("CleaveCooldown") + " rounds.");
 				
 				if (!target.hasStatusEffect("BattlecryCooldown")) addButton(1, "Battlecry", selectSpecialAttack, [battlecry, target, "Battlecry"], "Battlecry", "Draw the ire of all hostiles present for 3 rounds, additionally increases defense for the duration. Requires 4 rounds for Tariks shield generator to recharge adequately to provide a defensive buff for the duration.");
-				else addDisabledButton(1, "Battlecry", "Battlecry", "Tariks shield generator is still recharging!");
+				else addDisabledButton(1, "Battlecry", "Battlecry", "Tariks shield generator is still recharging!\n\nCooldown remaining: " + target.statusEffectv1("BattlecryCooldown") + " rounds.");
 				
 				if (!target.hasStatusEffect("StunStrikeCooldown")) addButton(2, "StunStrike", selectSpecialAttack, [stunningStrike, target, "StunStrike"], "Stunning Strike", "A savage attack that has a chance to stun the target for 2 rounds. 3 round cooldown.");
-				else addDisabledButton(2, "StunStrike", "Stunning Strike", "Tarik cannot make another stun attempt yet!");
-				if (!target.hasStatusEffect("Throwing Axes Used") || target.statusEffectv1("Throwing Axes Used") < 4) addButton(3, "ThrowAxe", selectSpecialAttack, [throwingAxe, target, "ThrowAxe"], "Throwing Axe", "Hucks one of Tarik's throwing axes at the target.");
-				else addDisabledButton(3, "ThrowAxe", "Throwing Axes", "Tarik only has 4 throwing axes per encounter.");
+				else addDisabledButton(2, "StunStrike", "Stunning Strike", "Tarik cannot make another stun attempt yet!\n\nCooldown remaining: " + target.statusEffectv1("StunStrikeCooldown") + " rounds.");
+				
+				if (!target.hasStatusEffect("Throwing Axes Used") || target.statusEffectv1("Throwing Axes Used") < 4)
+				{
+					var axesLeft:int = 4;
+					if (target.hasStatusEffect("Throwing Axes Used")) axesLeft -= target.statusEffectv1("Throwing Axes Used");
+					
+					addButton(3, "ThrowAxe", selectSpecialAttack, [throwingAxe, target, "ThrowAxe"], "Throwing Axe", "Hucks one of Tarik's throwing axes at the target.\n\nAxes remaining: " + axesLeft);
+				}
+				else addDisabledButton(3, "ThrowAxe", "Throwing Axes", "Tarik only has 4 throwing axes per encounter.\n\nAxes remaining: 0");
 			}
 			else if (target is Pyra)
 			{
 				if (!target.hasStatusEffect("F.ThrowerCooldown")) addButton(0, "F.Thrower", selectSpecialAttack, [flamethrower, target, "F.Thrower"], "Flamethrower", "Single-target fire damage, inflicting a burning damage over time effect to it's target. Requires 3 rounds to cool off after each attack.");
-				else addDisabledButton(0, "F.Thrower", "Flamethrower", "Pyras flamethrower is still cooling down from the last attack.");
+				else addDisabledButton(0, "F.Thrower", "Flamethrower", "Pyras flamethrower is still cooling down from the last attack.\n\nCooldown remaining: " + target.statusEffectv1("F.ThrowerCooldown") + " rounds.");
 				
 				if (!target.hasStatusEffect("ParaDartsCooldown")) addButton(1, "ParaDarts", selectSpecialAttack, [paralyticDarts, target, "ParaDarts"], "Paralytic Darts", "Venom-tipped darts that reduces the targets combat capabilities. Has no effect on mechanical targets. 3 round cooldown to reset a new set of venom-tipped darts.");
-				else addDisabledButton(1, "ParaDarts", "Paralytic Darts", "Pyra is still trying to load another set of darts into her wrist-mounted launcher!");
+				else addDisabledButton(1, "ParaDarts", "Paralytic Darts", "Pyra is still trying to load another set of darts into her wrist-mounted launcher!\n\nCooldown remaining: " + target.statusEffectv1("ParaDartsCooldown") + " rounds.");
 				
 				if (!target.hasStatusEffect("ShieldBoostCooldown")) addButton(2, "S.Boost", selectSpecialAttack, [shieldBoost, target, "S.Boost"], "Shield Boost", "Boosts the parties shield generators, restoring shields in the process. Can only be used once per combat encounter.");
 				else addDisabledButton(2, "S.Boost", "Shield Boost", "Attempting to overcharge the parties shield generators again so soon only risks burning them out!");
