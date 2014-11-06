@@ -43,6 +43,7 @@ package classes.GameData.Characters
 			
 			this.INDEX = "PYRA";
 			this.bustT = StaticRenders.MISSING;
+			this.defaultsToMelee = true;
 			
 			this.level = 5;
 			this.physiqueRaw = 18;

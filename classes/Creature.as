@@ -129,6 +129,7 @@
 		public var arrayIdx:int = -1;
 		public var respawn:Boolean = false;
 		public var entersCombat:Boolean = true;
+		public var defaultsToMelee:Boolean = false;
 
 		//Is a creature a 'pluralize' encounter - mob, etc. 
 		public var plural: Boolean = false;

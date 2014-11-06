@@ -2,6 +2,7 @@ package classes.GameData.Content
 {
 	import classes.GameData.Characters.BlackVoidPirate;
 	import classes.GameData.Content.BaseContent;
+	import classes.GameData.Items.Guns.ModifiedPlasmaPistol;
 	import classes.GameData.Items.Melee.GravityAxe;
 	import classes.GameData.CombatManager;
 	
@@ -246,8 +247,7 @@ package classes.GameData.Content
 			output("You pick up the plasma gun lying out on the captain’s desk. It looks to be in good condition, and it’s loaded. Look like the <i>Constellation</i>’s captain was working on it when shit hit the fan. It’s ID-locked, of course, but you're able to quickly yank the bolt focus off the captain’s gun and apply it to your own.");
 
 			output("\n\n<b>Your ranged damage has increased!</b>");
-			
-			pc.createStatusEffect("Constellation Captains Weapon Modification", 0, 0, 0, 0, true, "", "", false, 0);
+			pc.rangedWeapon = new ModifiedPlasmaPistol();
 			
 			clearMenu();
 			addButton(0, "Next", mainGameMenu);
