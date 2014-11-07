@@ -14,6 +14,13 @@ package classes.GameData.Items.ShipModules
 		public static const TYPE_NAVIGATION:String = "navigation";
 		public static const TYPE_UTILITY:String = "utility";
 		
+		// Specialised modules, of which only one may be present on a ship at a time.
+		public static const TYPE_LIGHTDRIVE:String = "lightdrive";
+		public static const TYPE_SHIELD:String = "shield";
+		public static const TYPE_ENGINE:String = "engine";
+		public static const TYPE_REACTOR:String = "reactor";
+		public static const TYPE_CAPACITOR:String = "capacitor";
+		
 		public function ShipModule() 
 		{
 			
@@ -21,6 +28,7 @@ package classes.GameData.Items.ShipModules
 		
 		public var type:String = TYPE_UTILITY;
 		public var powergrid:int = 100;
+		public var powerconsumption:Number = 10;
 		public var moduleRemovable:Boolean = true;
 		
 		public var moduleShortName:String = "";

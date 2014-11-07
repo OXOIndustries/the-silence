@@ -6,6 +6,13 @@ package classes.GameData
 	 */
 	public class SpaceCombat extends CombatContainer
 	{
+		private var _initForRound:int = -1;
+		public function doneRoundActions():Boolean
+		{
+			if (!_initForRound == _roundCounter) return true;
+			return false;
+		}
+		
 		public function SpaceCombat() 
 		{
 			_combatMode = CombatContainer.COMBAT_SPACE;

@@ -1,6 +1,9 @@
 package classes.GameData.Ships 
 {
 	import classes.DataManager.Serialization.VersionedSaveable;
+	import classes.GameData.Items.ShipModules.EngineModule;
+	import classes.GameData.Items.ShipModules.LightdriveModule;
+	import classes.GameData.Items.ShipModules.ShieldModule;
 	import classes.Resources.Busts.StaticRenders;
 	import flash.geom.Point;
 	import classes.GameData.Items.ShipModules.ShipModule;
@@ -96,9 +99,9 @@ package classes.GameData.Ships
 		
 		public var maxEquipmentSlots:int = 3;
 		
-		public var lightDriveModule:ShipModule = null;
-		public var engineModule:ShipModule = null;
-		public var shieldModule:ShipModule = null;
+		public var lightDriveModule:LightdriveModule = null;
+		public var engineModule:EngineModule = null;
+		public var shieldModule:ShieldModule = null;
 		
 		public var equippedModules:Array = [];
 		
