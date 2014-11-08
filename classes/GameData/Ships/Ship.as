@@ -1,9 +1,17 @@
 package classes.GameData.Ships 
 {
 	import classes.DataManager.Serialization.VersionedSaveable;
+	import classes.GameData.Items.ShipModules.Capacitor.IECapbankXVI;
+	import classes.GameData.Items.ShipModules.CapacitorModule;
+	import classes.GameData.Items.ShipModules.DefensiveModule;
 	import classes.GameData.Items.ShipModules.EngineModule;
 	import classes.GameData.Items.ShipModules.LightdriveModule;
+	import classes.GameData.Items.ShipModules.Offensive.Lasers.ReaperLightLaserTurret;
+	import classes.GameData.Items.ShipModules.OffensiveModule;
+	import classes.GameData.Items.ShipModules.ReactorModule;
 	import classes.GameData.Items.ShipModules.ShieldModule;
+	import classes.GameData.Items.ShipModules.UtilityModule;
+	import classes.GameData.StatusEffect;
 	import classes.Resources.Busts.StaticRenders;
 	import flash.geom.Point;
 	import classes.GameData.Items.ShipModules.ShipModule;
@@ -102,6 +110,8 @@ package classes.GameData.Ships
 		public var lightDriveModule:LightdriveModule = null;
 		public var engineModule:EngineModule = null;
 		public var shieldModule:ShieldModule = null;
+		public var reactorModule:ReactorModule = null;
+		public var capacitorModule:CapacitorModule = null;
 		
 		public var equippedModules:Array = [];
 		
@@ -141,13 +151,30 @@ package classes.GameData.Ships
 			{
 				total += equippedModules[i].powergrid;
 			}
+			
+			total += lightDriveModule.powergrid;
+			total += engineModule.powergrid;
+			total += shieldModule.powergrid;
+			total += reactorModule.powergrid;
+			total += capacitorModule.powergrid;
+			
 			return total;
 		}
 		
 		public var baseMaxCrewComplement:int = 7;
 		public function maxCrewComplement():int
 		{
-			return baseMaxCrewComplement;
+			var total:int = 0;
+			for (var i:int = 0; i < equippedModules.length; i++)
+			{
+				if (equippedModules[i] is UtilityModule)
+				{
+					var um:UtilityModule = equippedModules[i] as UtilityModule;
+					total += um.bonusCrewComplement;
+				}
+			}
+			
+			return total + baseMaxCrewComplement;
 		}
 		
 		// Stats -- Combat
@@ -156,7 +183,20 @@ package classes.GameData.Ships
 		
 		public function maxHullHP():int
 		{
-			return baseHullHP;
+			var total:int = 0;
+			var multi:int = 1.0;
+			
+			for (var i:int = 0; i < equippedModules.length; i++)
+			{
+				if (equippedModules[i] is DefensiveModule)
+				{
+					var dm:DefensiveModule = equippedModules[i] as DefensiveModule;
+					total += dm.bonusHull;
+					multi += dm.bonusHullMultiplier;
+				}
+			}
+			
+			return (total + baseHullHP) * multi;
 		}
 		public function currentHullHP():int
 		{
@@ -167,6 +207,83 @@ package classes.GameData.Ships
 		public function agility():int
 		{
 			return baseAgility;
+		}
+		
+		// Combat Status
+		public var statusEffects:Object = { };
+		
+		public function addStatusEffect(se:StatusEffect):void
+		{
+			if (statusEffects[se.name] == undefined)
+			{
+				statusEffects[se.name] = se;
+				if (se.onCreate != null)
+					se.onCreate(se, this);
+			}
+			else
+				throw new Error("Status effect with this name already exists!");
+		}
+		public function getStatusEffect(n:String):StatusEffect
+		{
+			return statusEffects[n];
+		}
+		public function updateStatusEffects(delta:int):void
+		{
+			var remove:Array = [];
+			
+			for (var prop:String in statusEffects)
+			{
+				var se:StatusEffect = statusEffects[prop];
+				
+				if (se.durationMode != StatusEffect.DURATION_PERM)
+				{
+					se.duration -= delta;
+					if (se.duration < 0)  remove.push(prop);
+				}
+			}
+			
+			removeStatusEffects(remove);
+		}
+		public function removeStatusEffect(n:String):void
+		{
+			if (statusEffects[n] != undefined)
+			{
+				if (statusEffects[n].onRemove != null)
+					statusEffects[n].onRemove(statusEffects[n], this);
+					
+				delete statusEffects[n];
+			}
+		}
+		public function removeStatusEffects(a:Array):void
+		{
+			for (var i:int = 0; i < a.length; i++)
+			{
+				removeStatusEffect(a[i]);
+			}
+		}
+		
+		
+		// Weapons -- Type availability
+		private function hasWeaponType(t:String):Boolean
+		{
+			for (var i:int = 0; i < equippedModules.length; i++)
+			{
+				if (equippedModules[i] is OffensiveModule)
+				{
+					if (equippedModules[i].weaponType == t) return true;
+				}
+			}
+			return false;
+		}
+		
+		public function hasLasers():Boolean
+		{
+			return hasWeaponType(OffensiveModule.WEAPON_TYPE_LASER);
+		}
+		
+		public function hasMissiles():Boolean
+		{
+			return hasWeaponType(OffensiveModule.WEAPON_TYPE_MISSILE);
 		}
 	}
 

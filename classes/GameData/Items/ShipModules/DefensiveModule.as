@@ -15,6 +15,7 @@ package classes.GameData.Items.ShipModules
 		public static const DEF_SBATTERY:String = "sbattery";
 		public static const DEF_SRECHARGER:String = "srecharger";
 		public static const DEF_HULLREP:String = "hullrep";
+		public static const DEF_PLATING:String = "plating";
 		
 		public function DefensiveModule() 
 		{
@@ -23,6 +24,15 @@ package classes.GameData.Items.ShipModules
 		
 		public var defensiveType:String = DEF_UNDEFINED;
 		
+		public var bonusHull:Number = 0;
+		public var bonusHullMultiplier:Number = 0.0;
+		public var bonusHullResistances:ResistanceCollection = new ResistanceCollection(0.0, 0.0, 0.0, 0.0);
+		
+		public var bonusShield:Number = 0;
+		public var bonusShieldMultiplier:Number = 0.0;
+		public var bonusShieldResistances:ResistanceCollection = new ResistanceCollection(0.0, 0.0, 0.0, 0.0);
+		public var bonusShieldRecharge:Number = 0.0;
+		public var bonusShieldRechargeMultiplier:Number = 0.0;
 	}
 
 }

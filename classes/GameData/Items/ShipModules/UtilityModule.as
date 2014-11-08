@@ -11,6 +11,7 @@ package classes.GameData.Items.ShipModules
 		public static const UTIL_HOLODECK:String = "holodeck";
 		public static const UTIL_JAIL:String = "jail";
 		public static const UTIL_SCANNER:String = "scanner";
+		public static const UTIL_MEDICAL:String = "medical"
 		
 		public function UtilityModule() 
 		{
@@ -18,6 +19,8 @@ package classes.GameData.Items.ShipModules
 		}
 		
 		public var utililtyType:String = UTIL_UNDEF;
+		
+		public var bonusCrewComplement:int = 0;
 	}
 
 }
