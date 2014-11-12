@@ -13,6 +13,8 @@ package classes.GameData
 			return false;
 		}
 		
+		private var _attackSelections:Object = { };
+		
 		public function SpaceCombat() 
 		{
 			_combatMode = CombatContainer.COMBAT_SPACE;

@@ -30,6 +30,8 @@ package classes.GameData.Items.ShipModules
 		public var powergrid:int = 100;
 		public var powerconsumption:Number = 10;
 		public var moduleRemovable:Boolean = true;
+		public var moduleBaseHealth:Number = 20;
+		public var moduleCurrentHealth:Number = 20;
 		
 		public var moduleShortName:String = "";
 		public var moduleFullName:String = "";

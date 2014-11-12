@@ -9,6 +9,7 @@ package classes.GameData.Ships
 	import classes.GameData.Items.ShipModules.Offensive.Lasers.ReaperLightLaserTurret;
 	import classes.GameData.Items.ShipModules.OffensiveModule;
 	import classes.GameData.Items.ShipModules.ReactorModule;
+	import classes.GameData.Items.ShipModules.ResistanceCollection;
 	import classes.GameData.Items.ShipModules.ShieldModule;
 	import classes.GameData.Items.ShipModules.UtilityModule;
 	import classes.GameData.StatusEffect;
@@ -124,26 +125,52 @@ package classes.GameData.Ships
 			}
 			return total;		
 		}
+		private function getModulesOfType(t:String):Array
+		{
+			var mods:Array = [];
+			for (var i:int = 0; i < equippedModules.length; i++)
+			{
+				if (equippedModules[i].type == t) mods.push(equippedModules[i]);
+			}
+			return mods;
+		}
 		
-		public function equippedOffensiveModules():int
+		public function offensiveModulesTotal():int
 		{
 			return numModulesOfType(ShipModule.TYPE_WEAPON);	
 		}
-		public function equippedDefensiveModules():int
+		public function defensiveModulesTotal():int
 		{
 			return numModulesOfType(ShipModule.TYPE_DEFENSIVE);
 		}
-		public function equippedNavigationModules():int
+		public function navigationModulesTotal():int
 		{
 			return numModulesOfType(ShipModule.TYPE_NAVIGATION);
 		}
-		public function equippedUtilityModules():int
+		public function utilityModulesTotal():int
 		{
 			return numModulesOfType(ShipModule.TYPE_UTILITY);
 		}
 		
+		public function offensiveModulesEquipped():Array
+		{
+			return getModulesOfType(ShipModule.TYPE_WEAPON);
+		}
+		public function defensiveModulesEquipped():Array
+		{
+			return getModulesOfType(ShipModule.TYPE_DEFENSIVE);
+		}
+		public function navigationModulesEquipped():Array
+		{
+			return getModulesOfType(ShipModule.TYPE_NAVIGATION);
+		}
+		public function utilityModulesEquipped():Array
+		{
+			return getModulesOfType(ShipModule.TYPE_UTILITY);
+		}
+		
 		// Stats -- Fitting
-		public var maxPowergrid:int = 1000;
+		public var maxPowergrid:Number = 1000;
 		public function currentPowergrid():int
 		{
 			var total:int = 0;
@@ -177,10 +204,9 @@ package classes.GameData.Ships
 			return total + baseMaxCrewComplement;
 		}
 		
-		// Stats -- Combat
-		public var baseHullHP:int = 100;
-		public var actualHullHP:int = 100;
-		
+		// Stats -- Health/Operation
+		public var baseHullHP:Number = 100;
+		public var actualHullHP:Number = 100;
 		public function maxHullHP():int
 		{
 			var total:int = 0;
@@ -202,12 +228,83 @@ package classes.GameData.Ships
 		{
 			return actualHullHP;
 		}
+			
+		public var actualShieldHP:Number = 0;
+		public function maxShieldHP():Number
+		{
+			return shieldModule.baseShield;
+		}
+		public function currentShieldHP():Number
+		{
+			return actualShieldHP;
+		}
 		
+		public var actualCapacitorCharge:Number = 0;
+		public function maxCapacitorCharge():Number
+		{
+			return capacitorModule.powerStorage;
+		}
+		public function currentCapacitorCharge():Number
+		{
+			return actualCapacitorCharge;
+		}
+		
+		// Stats -- Resistances
+		public var hullResistances:ResistanceCollection = new ResistanceCollection(40.0, 15.0, 0.0, 25.0);
+		public function actualHullResistances():Array
+		{
+			return hullResistances;
+		}
+		
+		public function actualShieldResistances():Array
+		{
+			return shieldModule.shieldResistances;
+		}
+		
+		// Stats -- Modifiers etc.
 		public var baseAgility:int = 10;
 		public function agility():int
 		{
 			return baseAgility;
 		}
+		
+		// Stats - Subsystem Health
+		private function getMaxHealthForType(t:String):Number
+		{
+			var mods:Array = getModulesOfType(t);
+			var hp:Number = 0;
+			
+			for (var i:int = 0; i < mods.length; i++)
+			{
+				hp += mods[i].moduleBaseHealth;
+			}
+			
+			hp /= mods.length;
+			
+			return hp;
+		}
+		
+		public function offensiveModuleMaxHealth():Number
+		{
+			return getMaxHealthForType(ShipModule.TYPE_WEAPON);
+		}
+		public function defensiveModuleMaxHealth():Number
+		{
+			return getMaxHealthForType(ShipModule.TYPE_DEFENSIVE);
+		}
+		public function navigationModuleMaxHealth():Number
+		{
+			return getMaxHealthForType(ShipModule.TYPE_NAVIGATION);
+		}
+		public function utilityModuleMaxHealth():Number
+		{
+			return getMaxHealthForType(ShipModule.TYPE_UTILITY);
+		}
+		
+		public var offensiveModuleCurrentHealth:Number;
+		public var defensivemoduleCurrentHealth:Number;
+		public var navigationModuleCurrentHealth:Number;
+		public var utilityModuleCurrentHealth:Number;
 		
 		// Combat Status
 		public var statusEffects:Object = { };
@@ -262,7 +359,6 @@ package classes.GameData.Ships
 			}
 		}
 		
-		
 		// Weapons -- Type availability
 		private function hasWeaponType(t:String):Boolean
 		{
@@ -284,6 +380,45 @@ package classes.GameData.Ships
 		public function hasMissiles():Boolean
 		{
 			return hasWeaponType(OffensiveModule.WEAPON_TYPE_MISSILE);
+		}
+		
+		// Operational Functions
+		public function getPowerGenerated():Number
+		{
+			return reactorModule.powerGenerated;
+		}
+		public function applyRecharge(powerUsed:Number = 0):void
+		{
+			var gen:Number = getPowerGenerated();
+			gen -= powerUsed;
+			
+			if (gen > 0) handleRemainingPower(gen);
+		}
+		private function handleRemainingPower(remains:Number):void
+		{
+			var shieldRegen:Number = remains * shieldModule.shieldRecharge;
+			var capGen:Number = remains - shieldRegen;
+			
+			actualShieldHP += shieldRegen;
+			
+			if (actualShieldHP >= maxShieldHP())
+			{
+				capGen += (actualShieldHP - maxShieldHP()) * (1 / shieldModule.shieldRecharge); // Should invert the value so we get "cap gen scale" spillover
+				actualShieldHP = maxShieldHP();
+			}
+			
+			actualCapacitorCharge += capGen;
+			if (actualCapacitorCharge >= maxCapacitorCharge())
+			{
+				var leftover:Number = actualCapacitorCharge - maxCapacitorCharge();
+				actualCapacitorCharge = maxCapacitorCharge();
+				
+				if (actualShieldHP < maxShieldHP())
+				{
+					actualShieldHP += leftover * shieldModule.shieldRecharge;
+					if (actualShieldHP > maxShieldHP()) actualShieldHP = maxShieldHP();
+				}
+			}
 		}
 	}
 
