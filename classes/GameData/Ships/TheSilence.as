@@ -51,7 +51,7 @@ package classes.GameData.Ships
 				new SteeleTechVanguardXXVIIMissileSystem(),
 				new StalwartDefenseCoLightPlating(),
 				new RourkeBlackstarsModifiedEmissionMasker()
-			]
+			];
 		}	
 	}
 }

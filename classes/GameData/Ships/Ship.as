@@ -253,11 +253,17 @@ package classes.GameData.Ships
 		public var hullResistances:ResistanceCollection = new ResistanceCollection(40.0, 15.0, 0.0, 25.0);
 		public function actualHullResistances():Array
 		{
+			// TODO: Hook in defensive modules to increase returned ResistanceCollection.
+			// Resistances should be added in the form of:
+			// (100 - currentResistance) * addedResistance, ergo reducing the effectiveness of stacking.
 			return hullResistances;
 		}
 		
 		public function actualShieldResistances():Array
 		{
+			// TODO: Hook in defensive modules to increase returned ResistanceCollection.
+			// Resistances should be added in the form of:
+			// (100 - currentResistance) * addedResistance, ergo reducing the effectiveness of stacking.
 			return shieldModule.shieldResistances;
 		}
 		
@@ -269,6 +275,14 @@ package classes.GameData.Ships
 		}
 		
 		// Stats - Subsystem Health
+		
+		/**
+		 * Returns the average max health of all modules of a given type.
+		 * The average will be used to keep this as simple as possible.
+		 * if (currentDamage > targetModule.maxHealth) module is unavailable effectively.
+		 * @param	t
+		 * @return
+		 */
 		private function getMaxHealthForType(t:String):Number
 		{
 			var mods:Array = getModulesOfType(t);
@@ -383,10 +397,20 @@ package classes.GameData.Ships
 		}
 		
 		// Operational Functions
+		
+		/**
+		 * Calculate and return how much power the reactor can generate this turn.
+		 * @return
+		 */
 		public function getPowerGenerated():Number
 		{
 			return reactorModule.powerGenerated;
 		}
+		/**
+		 * Execute Reactor Recharge- take the generated power, remove the used power, apply charge
+		 * to shields + capacitor.
+		 * @param	powerUsed
+		 */
 		public function applyRecharge(powerUsed:Number = 0):void
 		{
 			var gen:Number = getPowerGenerated();
@@ -419,6 +443,33 @@ package classes.GameData.Ships
 					if (actualShieldHP > maxShieldHP()) actualShieldHP = maxShieldHP();
 				}
 			}
+		}
+		
+		// Combat Engagement Functions
+		/**
+		 * Execute an attack against a target ship.
+		 * This is a grouped attack handler- the combat system selects the weapons to use, and passes module references
+		 * to this function as an array.
+		 * @param	targetShip
+		 * @param	weaponSelection
+		 */
+		public function attackTarget(targetShip:Ship, weaponSelection:Array):void
+		{
+			for (var i:int = 0; i < weaponSelection.length; i++)
+			{
+				var weapon:OffensiveModule = weaponSelection[i];
+				weapon.attackTarget(targetShip, this);
+			}
+		}
+		
+		/**
+		 * Apply damage to the ship from the provided damage split collection.
+		 * More advanced effects will be handled in the attacking weapons code, rather than here.
+		 * @param	damage
+		 */
+		public function applyDamage(damage:ResistanceCollection):void
+		{
+			
 		}
 	}
 

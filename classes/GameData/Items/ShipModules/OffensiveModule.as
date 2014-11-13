@@ -1,5 +1,6 @@
 package classes.GameData.Items.ShipModules 
 {
+	import classes.GameData.Ships.Ship;
 	/**
 	 * ...
 	 * @author Gedan
@@ -37,6 +38,18 @@ package classes.GameData.Items.ShipModules
 		
 		// System will activate when a "fire all" signal is recieved
 		public var autoFires:Boolean = true;
+		
+		/**
+		 * Perform an attack using this weapon against a target ship.
+		 * This handles all of the output text for a given weapon system as well as damage calculations etc.
+		 * Utility functions to make this possible will be lifted into package level functions (things like hit-chance calculation), but the intention is for this function to be overriden by weapon systems to generate text, and then super.attackTarget() to actually /apply/ damage.
+		 * @param	target
+		 * @param	attacker
+		 */
+		public function attackTarget(target:Ship, attacker:Ship):void
+		{
+			
+		}
 	}
 
 }
