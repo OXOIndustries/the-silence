@@ -268,10 +268,15 @@ package classes.GameData.Ships
 		}
 		
 		// Stats -- Modifiers etc.
-		public var baseAgility:int = 10;
+		public var baseAgility:Number = 5;
 		public function agility():int
 		{
-			return baseAgility;
+			return baseAgility * engineModule.agilityMultiplier;
+		}
+		
+		public function maneuveringSpeed():Number
+		{
+			return engineModule.maneuveringSpeed;
 		}
 		
 		// Stats - Subsystem Health
@@ -394,6 +399,17 @@ package classes.GameData.Ships
 		public function hasMissiles():Boolean
 		{
 			return hasWeaponType(OffensiveModule.WEAPON_TYPE_MISSILE);
+		}
+		
+		// Weapons -- Bonuses
+		public function trackingModifierMultiplier():Number
+		{
+			return 1.0;
+		}
+		
+		public function trackingModifierBonus():Number
+		{
+			return 0.0;
 		}
 		
 		// Operational Functions
