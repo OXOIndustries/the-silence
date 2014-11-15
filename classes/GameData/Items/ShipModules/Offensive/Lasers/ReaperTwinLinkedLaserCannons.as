@@ -20,7 +20,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 			weaponType = OffensiveModule.WEAPON_TYPE_LASER;
 			damage = new ResistanceCollection(6.5, 0.0, 0.0, 3.5);
 			trackingModifier = 3.0;
-			critcalChance = 5.0;
+			criticalChance = 5.0;
 			autoFires = true;
 		}
 		

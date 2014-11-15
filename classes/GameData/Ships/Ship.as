@@ -238,6 +238,10 @@ package classes.GameData.Ships
 		{
 			return actualShieldHP;
 		}
+		public function shieldPercent():Number
+		{
+			return actualShieldHP / maxShieldHP();
+		}
 		
 		public var actualCapacitorCharge:Number = 0;
 		public function maxCapacitorCharge():Number
@@ -410,6 +414,50 @@ package classes.GameData.Ships
 		public function trackingModifierBonus():Number
 		{
 			return 0.0;
+		}
+		
+		/**
+		 * This is an /additional/ multiplier applied to the existing weapon crit damage multiplier.
+		 * ie they are additive, so no bonus here is 0, not 1.
+		 * @return
+		 */
+		public function criticalDamageMultiplier():Number
+		{
+			return 0.0;
+		}
+		
+		public function emDamageBonus():Number
+		{
+			return 0.0;
+		}
+		public function kinDamageBonus():Number
+		{
+			return 0.0;
+		}
+		public function expDamageBonus():Number
+		{
+			return 0.0;
+		}
+		public function thermDamageBonus():Number
+		{
+			return 0.0;
+		}
+		
+		public function emDamageMultiplier():Number
+		{
+			return 1.0;
+		}
+		public function kinDamageMultiplier():Number
+		{
+			return 1.0;
+		}
+		public function expDamageMultiplier():Number
+		{
+			return 1.0;
+		}
+		public function thermDamageMultiplier():Number
+		{
+			return 1.0;
 		}
 		
 		// Operational Functions

@@ -34,7 +34,10 @@ package classes.GameData.Items.ShipModules
 		public var trackingModifier:Number = 3.0;
 		
 		// Chance of a critical shot occuring.
-		public var critcalChance:Number = 5.0;
+		public var criticalChance:Number = 5.0;
+		
+		// Damage modifier of the weapon when critical
+		public var criticalMultiplier:Number = 2.0;
 		
 		// System will activate when a "fire all" signal is recieved
 		public var autoFires:Boolean = true;
