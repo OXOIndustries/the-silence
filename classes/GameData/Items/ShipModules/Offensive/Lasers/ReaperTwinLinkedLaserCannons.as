@@ -56,7 +56,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 				else if (outputForWeaponCount == 1) output(" The shaft of light connects with its target, closely followed by the targeting computer pumping a much larger burst of energy into the emitters. The beam enlarges in response,");
 				else if (outputForWeaponCount == 2) output(" The other shaft of light connects with its target, closely followed by the targeting computer pumping a much larger burst of energy into the emitter. The beam enlarges in response,");
 				
-				if (damageOutcome.shieldDamage > target.maxShieldHP() * 0.05 && damageOutcome.hullDamage == 0)
+				if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage == 0)
 				{
 					output(" threatening to overload " + possessive(target.shipName) + " shield emitters through raw power.");
 					if (damageOutcome.numCrits > 0)
@@ -66,7 +66,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 						output(" of pure power smashing into them, fighting back against the incoming fire.");
 					}
 				}
-				else if (damageOutcome.shieldDamage > target.maxShieldHP() * 0.05 && damageOutcome.hullDamage > 0)
+				else if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage > 0)
 				{
 					output(" the energy field starting to wane against the sustained burst of laser energy as");
 					if (damageOutcome.numHits + damageOutcome.numCrits == 2) output(" twinned");

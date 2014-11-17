@@ -64,7 +64,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 				if (damageOutcome.numHits + damageOutcome.numCrits == 2) output(" Both bolts strike true,");
 				if (damageOutcome.numHits + damageOutcome.numCrits == 1 && outputForWeaponCount == 1) output(" The bolt strikes true,");
 			
-				if (damageOutcome.shieldDamage > target.maxShieldHP() * 0.05 && damageOutcome.hullDamage == 0)
+				if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage == 0)
 				{
 					output(" splashing against " + possessive(target.shipName) + "shields.");
 					if (damageOutcome.numCrits > 0)
@@ -76,7 +76,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 					}
 				}
 				// Only show shieldbreak message if more than 5% of shields was available to wreck
-				else if (damageOutcome.shieldDamage > target.maxShieldHP() * 0.05 && damageOutcome.hullDamage > 0)
+				else if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage > 0)
 				{
 					output(" annihilating");
 					if (damageOutcome.numCrits + damageOutcome.numHits == 1) output(" itself");

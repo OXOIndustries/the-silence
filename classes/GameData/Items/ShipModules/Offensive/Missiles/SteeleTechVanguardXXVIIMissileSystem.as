@@ -49,11 +49,11 @@ package classes.GameData.Items.ShipModules.Offensive.Missiles
 			{
 				output(" The missile slams into");
 				
-				if (damageOutcome.shieldDamage > target.maxShieldHP() * 0.05 && damageOutcome.hullDamage == 0)
+				if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage == 0)
 				{
 					output(" the shimmering protective field, exploding into a blindingly intense flash of light as it's warhead triggers");
 				}
-				else if (damageOutcome.shieldDamage > target.maxShieldHP() * 0.05 && damageOutcome.hullDamage > 0)
+				else if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage > 0)
 				{
 					output(" the shimmering protective field. The resulting explosion of the warheads detonation sets a wave rolling through the shield bubble encircling the other ships hull, the shockwave travelling along the energy-bound particle field as the emitters fail to resist the explosive force. Your targets shields have failed!");
 				}
