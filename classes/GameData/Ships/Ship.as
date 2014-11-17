@@ -17,6 +17,7 @@ package classes.GameData.Ships
 	import flash.geom.Point;
 	import classes.GameData.Items.ShipModules.ShipModule;
 	import classes.GameData.ShipIndex;
+	import flash.utils.getQualifiedClassName;
 	
 	/**
 	 * ...
@@ -519,21 +520,29 @@ package classes.GameData.Ships
 		 */
 		public function attackTarget(targetShip:Ship, weaponSelection:Array):void
 		{
+			var calledTypes:Array = [];
+			
+			// For all weapons indicated...
 			for (var i:int = 0; i < weaponSelection.length; i++)
 			{
-				var weapon:OffensiveModule = weaponSelection[i];
-				weapon.attackTarget(targetShip, this);
+				// Determine if we've already actively fired this type of weapon
+				if (calledTypes.indexOf(getQualifiedClassName(weaponSelection[i])) == -1)
+				{
+					// If we havent, determine how many instances of this weapon are actively being fired in this turn
+					var numOfType:int = 0;
+					
+					for (var ii:int = 0; ii < weaponSelection.length; ii++)
+					{
+						if (getQualifiedClassName(weaponSelection[i]) == getQualifiedClassName(weaponSelection[ii])) numOfType++;
+					}
+					
+					// And fire them "once" with all the output enabled, indicating the number of weapons involved.
+					(weaponSelection[i] as OffensiveModule).attackTarget(targetShip, this, numOfType);
+					
+					// Then mark this type as having been fired
+					calledTypes.push(getQualifiedClassName(weaponSelection[i]));
+				}
 			}
-		}
-		
-		/**
-		 * Apply damage to the ship from the provided damage split collection.
-		 * More advanced effects will be handled in the attacking weapons code, rather than here.
-		 * @param	damage
-		 */
-		public function applyDamage(damage:ResistanceCollection):void
-		{
-			
 		}
 	}
 

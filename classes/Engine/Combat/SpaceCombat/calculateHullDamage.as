@@ -24,7 +24,7 @@ package classes.Engine.Combat.SpaceCombat
 			damageResult.typedHullDamage = damageToHull;
 			damageResult.hullDamage = damageAfterResistances;
 			
-			damageResult.typedTotalDamage.add(
+			damageResult.typedTotalDamage.add(damageToHull);
 			
 			damageResult.remainingDamage = new ResistanceCollection();
 			

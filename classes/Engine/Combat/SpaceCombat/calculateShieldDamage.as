@@ -29,7 +29,7 @@ package classes.Engine.Combat.SpaceCombat
 			damageResult.typedShieldDamage = damageToShields;
 			damageResult.shieldDamage = damageAfterResistances;
 			
-			damageResult.typedTotalDamage = damageAfterResistances;
+			damageResult.typedTotalDamage = damageToShields.getCopy();
 			damageResult.totalDamage = damageToShields;
 			
 			damageResult.remainingDamage = new ResistanceCollection();
@@ -53,7 +53,7 @@ package classes.Engine.Combat.SpaceCombat
 			damageResult.typedShieldDamage.multiply(damDiff);
 			
 			damageResult.totalDamage = target.actualShieldHP;
-			damageResult.typedTotalDamage = damageResult.typedShieldDamage;
+			damageResult.typedTotalDamage = damageResult.typedShieldDamage.getCopy();
 			
 			target.actualShieldHP = 0;
 		}

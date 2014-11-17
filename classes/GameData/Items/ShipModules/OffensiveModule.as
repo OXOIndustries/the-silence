@@ -1,6 +1,8 @@
 package classes.GameData.Items.ShipModules 
 {
+	import classes.Engine.Combat.SpaceCombat.*;
 	import classes.GameData.Ships.Ship;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -46,12 +48,33 @@ package classes.GameData.Items.ShipModules
 		 * Perform an attack using this weapon against a target ship.
 		 * This handles all of the output text for a given weapon system as well as damage calculations etc.
 		 * Utility functions to make this possible will be lifted into package level functions (things like hit-chance calculation), but the intention is for this function to be overriden by weapon systems to generate text, and then super.attackTarget() to actually /apply/ damage.
-		 * @param	target
-		 * @param	attacker
+		 * @param	target		Target ship that is being attacked.
+		 * @param	attacker	Ship that is performing the attack.
+		 * @param	outputForWeaponCount Number of weapon instances that are being fired as one unit.
 		 */
-		public function attackTarget(target:Ship, attacker:Ship):void
+		public function attackTarget(target:Ship, attacker:Ship, outputForWeaponCount:int = 1):AttackDamageResult
 		{
+			var dResult:AttackDamageResult = new AttackDamageResult();
 			
+			for (var i:int = 0; i < outputForWeaponCount; i++)
+			{
+				dResult.totalAttacks++;
+				
+				if (calculateMiss(target, attacker, this))
+				{
+					// Miss
+					dResult.numMisses++;
+				}
+				else
+				{
+					// Hit
+					var aResult:AttackDamageResult = calculateDamage(target, attacker, this);
+					
+					dResult.addResult(aResult);
+				}
+			}
+			
+			return dResult;
 		}
 	}
 
