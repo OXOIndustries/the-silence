@@ -1,7 +1,11 @@
 package classes.GameData.Items.ShipModules.Offensive.Lasers 
 {
+	import classes.Engine.Combat.SpaceCombat.AttackDamageResult;
 	import classes.GameData.Items.ShipModules.OffensiveModule;
 	import classes.GameData.Items.ShipModules.ResistanceCollection;
+	import classes.GameData.Ships.Ship;
+	
+	import classes.Engine.
 	/**
 	 * ...
 	 * @author Gedan
@@ -24,6 +28,14 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 			autoFires = true;
 		}
 		
+		override public function attackTarget(target:Ship, attacker:Ship, outputForWeaponCount:int = 1):AttackDamageResult
+		{
+			
+			
+			
+			// Calculate actual damage by calling the base implementor of attackTarget
+			var damageOutcome:AttackDamageResult = super.attackTarget(target, attacker, outputForWeaponCount);
+		}
 	}
 
 }
