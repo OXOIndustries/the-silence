@@ -101,6 +101,8 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 				
 				if (damageOutcome.totalDamage > 0) output(formatDamageOutput(damageOutcome));
 			}
+			
+			return damageOutcome;
 		}
 	}
 
