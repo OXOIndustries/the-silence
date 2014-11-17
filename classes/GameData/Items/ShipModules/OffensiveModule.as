@@ -19,6 +19,7 @@ package classes.GameData.Items.ShipModules
 		public static const WEAPON_TYPE_ECM:String = "ecm";
 		public static const WEAPON_TYPE_PULSED_SHIELD:String = "smartbomb";
 		public static const WEAPON_TYPE_SPECIAL:String = "special";
+		public static const WEAPON_TYPE_IMMOBILISE:String = "immob";
 		
 		public function OffensiveModule() 
 		{

@@ -33,6 +33,12 @@ package classes.GameData.Items.ShipModules
 		public var bonusShieldResistances:ResistanceCollection = new ResistanceCollection(0.0, 0.0, 0.0, 0.0);
 		public var bonusShieldRecharge:Number = 0.0;
 		public var bonusShieldRechargeMultiplier:Number = 0.0;
+		
+		public var canRegenInCombat:Boolean = false;
+		public var canRegenOutOfCombat:Boolean = false;
+		
+		public var regenRateInCombat:Number = 0.07;		
+		public var regenRateOutOfCombat:Number = 0.03;
 	}
 
 }
