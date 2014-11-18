@@ -344,6 +344,10 @@ package classes.GameData.Ships
 			else
 				throw new Error("Status effect with this name already exists!");
 		}
+		public function hasStatusEffect(n:String):Boolean
+		{
+			return (statusEffects[n] != undefined);
+		}
 		public function getStatusEffect(n:String):StatusEffect
 		{
 			return statusEffects[n];
