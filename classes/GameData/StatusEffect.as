@@ -67,6 +67,10 @@ package classes.GameData
 				{
 					return EffectFunctionLibrary[onRemoveFuncLookup];
 				}
+				else
+				{
+					trace("Couldn't find the associated function name for the declared effect '" + onRemoveFuncLookup + "'");
+				}
 			}
 		}
 		public function get onCreate():Function 
@@ -77,26 +81,32 @@ package classes.GameData
 				{
 					return EffectFunctionLibrary[onCreateFuncLookup];
 				}
+				else
+				{
+					trace("Couldn't find the associated function name for the declared function '" + onCreateFuncLookup + "'");
+				}
 			}
 		}
 				
 		public static const DURATION_TIME:String = "time";
-		public static const DURATION_ROUNDS:String = "rounds"; // Implies combat only.
+		public static const DURATION_ROUNDS:String = "rounds";
 		public static const DURATION_PERM:String = "perm";
+		public var combatOnly:Boolean = false;
 		public var durationMode:String = DURATION_PERM;
 		public var duration:int = -1;
 		
 		public var iconClass:Class = null;
 		
-		public function StatusEffect(n:String, o:Object, d:int = -1, dT:String = DURATION_PERM, i:Class = null, onR:String = "", onC:String = "") 
+		public function StatusEffect(seName:String, sePayload:Object, seDuration:int = -1, seDurationType:String = DURATION_PERM, seIconClass:Class = null, removeAfterCombat:Boolean = false, seOnRemove:String = "", seOnCreate:String = "") 
 		{
-			name = n;
-			payload = o;
-			duration = d;
-			durationMode = dT;
-			iconClass = i;
-			onRemoveFuncLookup = onR;
-			onCreateFuncLookup = onC;
+			name = seName;
+			payload = sePayload;
+			duration = seDuration;
+			durationMode = seDurationType;
+			iconClass = seIconClass;
+			combatOnly = removeAfterCombat;
+			onRemoveFuncLookup = seOnRemove;
+			onCreateFuncLookup = seOnCreate;
 		}
 	}
 }
