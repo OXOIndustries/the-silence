@@ -23,7 +23,7 @@ package classes.UIComponents.SideBarComponents
 		private var _bustImage:Sprite;
 		private var _healthStatus:CircularStatBar;
 		private var _capacitorStatus:MiniCircularStatBar;
-		private var _reactorStatus:MiniCirularStatBar;
+		private var _reactorStatus:MiniCircularStatBar;
 		
 		private var _statusEffectContainer:Sprite;	
 		
@@ -86,6 +86,15 @@ package classes.UIComponents.SideBarComponents
 			_healthStatus.x = 90;
 			_healthStatus.y = 85;
 			
+			_capacitorStatus = new MiniCircularStatBar();
+			addChild(_capacitorStatus);
+			_capacitorStatus.x = 40;
+			_capacitorStatus.y = 180;
+			
+			_reactorStatus = new MiniCircularStatBar();
+			addChild(_reactorStatus);
+			_reactorStatus.x = 120;
+			_reactorStatus.y = 180;
 		}
 	}
 
