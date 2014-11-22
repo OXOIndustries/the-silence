@@ -7,7 +7,7 @@ package classes.Engine.Combat.SpaceCombat
 	 * ...
 	 * @author Gedan
 	 */
-	public function calculateShieldDamage(target:Ship, attacker:Ship, weapon:OffensiveModule, damage:ResistanceCollection, damageResult:AttackDamageResult):void
+	public function calculateShieldDamage(target:Ship, attacker:Ship, weapon:OffensiveModule, damageResult:AttackDamageResult):void
 	{
 		// early exit if the target has zero shields.
 		if (target.shieldPercent() <= 0.0) return;
@@ -30,7 +30,7 @@ package classes.Engine.Combat.SpaceCombat
 			damageResult.shieldDamage = damageAfterResistances;
 			
 			damageResult.typedTotalDamage = damageToShields.getCopy();
-			damageResult.totalDamage = damageToShields;
+			damageResult.totalDamage = damageToShields.getTotal();
 			
 			damageResult.remainingDamage = new ResistanceCollection();
 			

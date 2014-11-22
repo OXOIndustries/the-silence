@@ -72,6 +72,7 @@ package classes.GameData
 					trace("Couldn't find the associated function name for the declared effect '" + onRemoveFuncLookup + "'");
 				}
 			}
+			return null;
 		}
 		public function get onCreate():Function 
 		{
@@ -86,6 +87,7 @@ package classes.GameData
 					trace("Couldn't find the associated function name for the declared function '" + onCreateFuncLookup + "'");
 				}
 			}
+			return null;
 		}
 				
 		public static const DURATION_TIME:String = "time";

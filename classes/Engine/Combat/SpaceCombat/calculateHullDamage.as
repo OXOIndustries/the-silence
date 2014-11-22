@@ -9,7 +9,7 @@ package classes.Engine.Combat.SpaceCombat
 	 */
 	public function calculateHullDamage(target:Ship, attacker:Ship, weapon:OffensiveModule, damageResult:AttackDamageResult):void
 	{
-		if (target.actualHullHP <= 0) return false;
+		if (target.actualHullHP <= 0) return;
 		
 		var damageToHull:ResistanceCollection = damageResult.remainingDamage.getCopy();
 		

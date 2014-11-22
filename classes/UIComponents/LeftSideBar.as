@@ -1,6 +1,8 @@
 package classes.UIComponents 
 {
+	import classes.GameData.Ships.Ship;
 	import classes.UIComponents.SideBarComponents.PartyBlock;
+	import classes.UIComponents.SideBarComponents.ShipInfoDisplay;
 	import classes.UIComponents.StatBar;
 	import classes.UIComponents.MiniMap.MiniMap;
 	import classes.UIComponents.SideBarComponents.LocationHeader;
@@ -21,6 +23,7 @@ package classes.UIComponents
 		private var _playerParty:PartyBlock;
 		private var _genInfoBlock:GeneralInfoBlock;
 		private var _menuButtonBlock:SideBarButtonBlock;
+		private var _playerShipDisplay:ShipInfoDisplay;
 				
 		public function get timeText():TextField { return _genInfoBlock.time; }
 		
@@ -36,6 +39,7 @@ package classes.UIComponents
 		public function get partyBlock():PartyBlock { return _playerParty; }
 		public function get generalInfoBlock():GeneralInfoBlock { return _genInfoBlock; }
 		public function get menuButtonBlock():SideBarButtonBlock { return _menuButtonBlock; }
+		public function get playerShipDisplay():ShipInfoDisplay { return _playerShipDisplay; }
 		
 		public function LeftSideBar() 
 		{			
@@ -53,6 +57,12 @@ package classes.UIComponents
 			this.addChild(_playerParty);
 			_playerParty.x = 0;
 			_playerParty.y = 0;
+			
+			// Player ship display
+			_playerShipDisplay = new ShipInfoDisplay("left");
+			this.addChild(_playerShipDisplay);
+			_playerShipDisplay.x = 0;
+			_playerShipDisplay.y = 0;
 			
 			// Time/day display shit
 			_genInfoBlock = new GeneralInfoBlock();
@@ -83,6 +93,11 @@ package classes.UIComponents
 			_playerParty.showParty(party);
 		}
 		
+		public function setShipData(ship:Ship):void
+		{
+			_playerShipDisplay.showShip(ship);
+		}
+		
 		public function hideAll():void
 		{
 			_playerParty.visible = false;
@@ -96,6 +111,11 @@ package classes.UIComponents
 		public function hideParty():void
 		{
 			_playerParty.visible = false;
+		}
+		
+		public function showPlayerShip():void
+		{
+			_playerShipDisplay.visible = true;
 		}
 	}
 }

@@ -99,7 +99,7 @@ package classes.UIComponents.SideBarComponents
 			
 			drawPieMask(_barMask.graphics, percentage, 61, 0, 0, 90 * (Math.PI/360), 8);
 			
-			_shieldMask.graphics.endFill();
+			_barMask.graphics.endFill();
 		}
 		
 		private function drawPieMask(graphics:Graphics, percentage:Number, radius:Number = 50, x:Number = 0, y:Number = 0, rotation:Number = 0, sides:int = 6):void

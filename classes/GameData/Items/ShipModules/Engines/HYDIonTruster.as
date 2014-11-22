@@ -14,7 +14,7 @@ package classes.GameData.Items.ShipModules.Engines
 			moduleFullName = "Hayden Drive Yards Ion Thrusters";
 			moduleDescription = "";
 			
-			agilityModifier = 1.25;
+			agilityMultiplier = 1.25;
 			maneuveringSpeed = 7.5;
 		}
 		

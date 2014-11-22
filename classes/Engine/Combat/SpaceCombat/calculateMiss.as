@@ -2,6 +2,8 @@ package classes.Engine.Combat.SpaceCombat
 {
 	import classes.GameData.Items.ShipModules.OffensiveModule;
 	import classes.GameData.Ships.Ship;
+	import classes.Engine.Interfaces.rand;
+	
 	/**
 	 * @author Gedan
 	 */

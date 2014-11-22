@@ -25,36 +25,36 @@ package classes.GameData.Items.ShipModules
 		
 		public function getCopy():ResistanceCollection
 		{
-			var ret:ResistanceCollection = new ResistanceCollection(em, kin, exp, therm);
+			return new ResistanceCollection(em.ResistAmount, kin.ResistAmount, exp.ResistAmount, therm.ResistAmount);
 		}
 		
 		public function multiply(m:Number = 2.0):void 
 		{
-			if (em > 0) em *= m;
-			if (kin > 0) kin *= m;
-			if (exp > 0) exp *= m;
-			if (therm > 0) therm *= m;
+			if (em.ResistAmount > 0) em.ResistAmount *= m;
+			if (kin.ResistAmount > 0) kin.ResistAmount *= m;
+			if (exp.ResistAmount > 0) exp.ResistAmount *= m;
+			if (therm.ResistAmount > 0) therm.ResistAmount *= m;
 		}
 		
 		public function add(rc:ResistanceCollection):void
 		{
-			em += rc.em;
-			kin += rc.kin;
-			exp += rc.exp;
-			therm += rc.therm;
+			em.ResistAmount += rc.em.ResistAmount;
+			kin.ResistAmount += rc.kin.ResistAmount;
+			exp.ResistAmount += rc.exp.ResistAmount;
+			therm.ResistAmount += rc.therm.ResistAmount;
 		}
 		
 		public function applyResistances(resistance:ResistanceCollection):void
 		{
-			if (em > 0) em *= ((100.0 - resistance.em) / 100.0);
-			if (kin > 0) kin *= ((100 - resistance.kin) / 100.0);
-			if (exp > 0) exp *= ((100 - resistance.exp) / 100.0);
-			if (therm > 0) therm *= ((100 - resistance.therm) / 100.0);
+			if (em.ResistAmount > 0) em.ResistAmount *= ((100.0 - resistance.em.ResistAmount) / 100.0);
+			if (kin.ResistAmount > 0) kin.ResistAmount *= ((100 - resistance.kin.ResistAmount) / 100.0);
+			if (exp.ResistAmount > 0) exp.ResistAmount *= ((100 - resistance.exp.ResistAmount) / 100.0);
+			if (therm.ResistAmount > 0) therm.ResistAmount *= ((100 - resistance.therm.ResistAmount) / 100.0);
 		}
 		
 		public function getTotal():Number
 		{
-			return em + kin + exp + therm;
+			return (em.ResistAmount + kin.ResistAmount + exp.ResistAmount + therm.ResistAmount);
 		}
 		
 	}

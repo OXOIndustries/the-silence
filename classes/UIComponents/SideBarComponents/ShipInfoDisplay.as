@@ -1,5 +1,6 @@
 package classes.UIComponents.SideBarComponents 
 {
+	import classes.GameData.Ships.Ship;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
@@ -73,7 +74,7 @@ package classes.UIComponents.SideBarComponents
 			_nameHeader.defaultTextFormat = UIStyleSettings.gStatBlockHeaderFormatter;
 			_nameHeader.embedFonts = true;
 			_nameHeader.antiAliasType = AntiAliasType.ADVANCED;
-			_nameHader.text = "SHIP NAME";
+			_nameHeader.text = "SHIP NAME";
 			_nameHeader.mouseEnabled = false;
 			_nameHeader.mouseWheelEnabled = false;
 			this.addChild(_nameHeader);
@@ -95,6 +96,21 @@ package classes.UIComponents.SideBarComponents
 			addChild(_reactorStatus);
 			_reactorStatus.x = 120;
 			_reactorStatus.y = 180;
+		}
+		
+		public function showShip(ship:Ship):void
+		{
+			// HANDLE ME PLS
+		}
+		
+		private function showDebug():void
+		{
+			_nameHeader.text = "TEST SHIP";
+			_healthStatus.setShield(75, 100);
+			_healthStatus.setHP(75, 100);
+			
+			_reactorStatus.setValue(70, 140);
+			_capacitorStatus.setValue(70, 140);
 		}
 	}
 

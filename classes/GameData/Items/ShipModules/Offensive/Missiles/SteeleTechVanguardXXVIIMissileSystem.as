@@ -7,6 +7,8 @@ package classes.GameData.Items.ShipModules.Offensive.Missiles
 	
 	import classes.Engine.Interfaces.output;
 	import classes.Engine.Combat.SpaceCombat.formatDamageOutput;
+	import classes.Engine.Utility.possessive;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -34,7 +36,7 @@ package classes.GameData.Items.ShipModules.Offensive.Missiles
 		{
 			var damageOutcome:AttackDamageResult = super.attackTarget(target, attacker, outputForWeaponCount);
 			
-			output("\n\nYour tactical display indicates that the Vanguard launcher has finished preparing a missile. No sooner has the message been displayed, " + possessive(attacker.shipName) + " targeting computers takes over, interfacing with the launchers system and issuing the order to fire.");
+			output("\n\nYour tactical display indicates that the Vanguard launcher has finished preparing a missile. No sooner has the message been displayed, " + possessive(attacker.longName) + " targeting computers takes over, interfacing with the launchers system and issuing the order to fire.");
 
 			output("\n\nThe launcher door slides open with a clang, reverberating across the hull of your ship- the distinctive sound of an old school liquid-proppellant powered engine engaging soon follows, a single missile streaking out of the ejection port and towards its target. It filters into the camera drones field of view.");
 			

@@ -256,7 +256,7 @@ package classes.GameData.Ships
 		
 		// Stats -- Resistances
 		public var hullResistances:ResistanceCollection = new ResistanceCollection(40.0, 15.0, 0.0, 25.0);
-		public function actualHullResistances():Array
+		public function actualHullResistances():ResistanceCollection
 		{
 			// TODO: Hook in defensive modules to increase returned ResistanceCollection.
 			// Resistances should be added in the form of:
@@ -264,7 +264,7 @@ package classes.GameData.Ships
 			return hullResistances;
 		}
 		
-		public function actualShieldResistances():Array
+		public function actualShieldResistances():ResistanceCollection
 		{
 			// TODO: Hook in defensive modules to increase returned ResistanceCollection.
 			// Resistances should be added in the form of:

@@ -7,6 +7,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 	import classes.Engine.Combat.SpaceCombat.AttackDamageResult;
 	import classes.Engine.Combat.SpaceCombat.formatDamageOutput;
 	import classes.Engine.Interfaces.output;
+	import classes.Engine.Utility.possessive;
 	
 	/**
 	 * ...
@@ -39,12 +40,12 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 			// how and what we can display!
 			var damageOutcome:AttackDamageResult = super.attackTarget(target, attacker, outputForWeaponCount);
 			
-			output("\n\nYour tactical display flashes a handful of times; " + possessive(attacker.shipName) + " targeting computers are finalizing it's calculations. It pips once, indicating the analysis is complete, before a subtle hum builds somewhere deep within the bowels of your ship. A moment later, a");
+			output("\n\nYour tactical display flashes a handful of times; " + possessive(attacker.longName) + " targeting computers are finalizing it's calculations. It pips once, indicating the analysis is complete, before a subtle hum builds somewhere deep within the bowels of your ship. A moment later, a");
 			if (outputForWeaponCount == 2) output(" pair of");
 			output(" brilliant luminescent bolt");
 			if (outputForWeaponCount == 2) output("s");
 			output(" track");
-			if (outputForWeaponCount == 1) outputText("s");
+			if (outputForWeaponCount == 1) output("s");
 			output(" into your camera drones view of the enemy ship, fired from your");
 			if (outputForWeaponCount == 2) output(" matched pair of");
 			output(" light laser turret");
@@ -66,7 +67,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 			
 				if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage == 0)
 				{
-					output(" splashing against " + possessive(target.shipName) + "shields.");
+					output(" splashing against " + possessive(target.longName) + "shields.");
 					if (damageOutcome.numCrits > 0)
 					{
 						output(" The energy shell surrounding the ship seems to ripple against");
@@ -86,7 +87,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 				// Against hull- ignore shields if < 5% shield HP was removed
 				else
 				{
-					output(" scorching " + possessive(target.shipName) + " exterior.");
+					output(" scorching " + possessive(target.longName) + " exterior.");
 					if (damageOutcome.numCrits > 0) 
 					{
 						output(" A split second after the bolt");

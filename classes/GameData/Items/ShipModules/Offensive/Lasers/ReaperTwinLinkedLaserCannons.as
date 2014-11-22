@@ -7,6 +7,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 	import classes.GameData.Ships.Ship;
 	
 	import classes.Engine.Interfaces.output;
+	import classes.Engine.Utility.possessive;
 	
 	/**
 	 * ...
@@ -37,7 +38,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 			output("\n\nA groan filters through your ships hull, permeating the interior space with an ominous rumble, as");
 			if (outputForWeaponCount == 1) output(" one of");
 			else output(" both of");
-			output(" " + possessive(attacker.shipName) + " laser cannons cycle through their firing sequence. The sound comes to a stop, only to be replaced with a new rumble, a much higher pitched almost-whine, coupled with a");
+			output(" " + possessive(attacker.longName) + " laser cannons cycle through their firing sequence. The sound comes to a stop, only to be replaced with a new rumble, a much higher pitched almost-whine, coupled with a");
 			if (outputForWeaponCount == 2) output(" pair of");
 			output(" fat, iridescent shaft");
 			if (outputForWeaponCount == 2) output("s");
@@ -58,7 +59,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 				
 				if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage == 0)
 				{
-					output(" threatening to overload " + possessive(target.shipName) + " shield emitters through raw power.");
+					output(" threatening to overload " + possessive(target.longName) + " shield emitters through raw power.");
 					if (damageOutcome.numCrits > 0)
 					{
 						output(" The targets shields ripple against the beam");
@@ -74,7 +75,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 				}
 				else
 				{
-					output(" overheating " + possessive(target.shipName) + " armored exterior with an intense burst of power.");
+					output(" overheating " + possessive(target.longName) + " armored exterior with an intense burst of power.");
 					if (damageOutcome.numCrits > 0)
 					{
 						output(" Once the targeting computer cuts power to the beams, the camera drones view of the targets hull clearly shows the");
