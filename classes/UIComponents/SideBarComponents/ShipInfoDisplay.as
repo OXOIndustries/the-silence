@@ -46,12 +46,16 @@ package classes.UIComponents.SideBarComponents
 			BuildBackground();
 			BuildHeader();
 			BuildStatBars();
+			BuildBustContainer();
+			
+			showDebug();
 		}
 		
 		private function BuildBackground():void
 		{
 			_debugBackground = new Sprite();
-			_debugBackground.graphics.beginFill(UIStyleSettings.gForegroundColour);
+			//_debugBackground.graphics.beginFill(UIStyleSettings.gForegroundColour);
+			_debugBackground.graphics.beginFill(0xFF0000);
 			_debugBackground.graphics.drawRect(0, 0, 190, 300);
 			_debugBackground.graphics.endFill();
 			this.addChild(_debugBackground);
@@ -111,6 +115,20 @@ package classes.UIComponents.SideBarComponents
 			
 			_reactorStatus.setValue(70, 140);
 			_capacitorStatus.setValue(70, 140);
+		}
+		
+		private function BuildBustContainer():void
+		{
+			var bustBackground:Sprite = new Sprite();
+			bustBackground.graphics.beginFill(UIStyleSettings.gForegroundColour);
+			bustBackground.graphics.drawCircle(0, 0, 48);
+			bustBackground.graphics.endFill();
+			addChild(bustBackground);
+			
+			_bustImage = new Sprite();
+			addChild(_bustImage);
+			_bustImage.x = 136;
+			_bustImage.y = 85;
 		}
 	}
 
