@@ -3,6 +3,9 @@ package classes.UIComponents.SideBarComponents
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.display.Graphics;
+	import flash.text.TextField;
+	import classes.UIComponents.UIStyleSettings;
+	import flash.text.AntiAliasType;
 	
 	/**
 	 * I made the "big" version scalable properly.......... but it's designed to nest two bars together, which isn't
@@ -13,6 +16,7 @@ package classes.UIComponents.SideBarComponents
 	{
 		private var _radius:int;
 		private var _thickness:int;
+		private var _color:uint;
 		
 		private var _bar:Sprite;
 		private var _barMask:Sprite;
@@ -21,11 +25,15 @@ package classes.UIComponents.SideBarComponents
 		
 		private var _valueCurrent:Number;
 		private var _valueTarget:int;
-		private var _valueMax:int;		
+		private var _valueMax:int;
 		
-		public function MiniCircularStatBar(radius:int = 59) 
+		private var _barText:TextField;
+		
+		public function MiniCircularStatBar(radius:int = 35, thickness:int = 5, color:uint = 0xFF0000) 
 		{
 			_radius = radius;
+			_thickness = thickness;
+			_color = color;
 			
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
@@ -36,12 +44,19 @@ package classes.UIComponents.SideBarComponents
 			addEventListener(Event.ENTER_FRAME, UpdateDisplay);
 			
 			Build();
+			BuildMiddle();
 		}
 		
 		private function Build():void
 		{
+			var barBack:Sprite = new Sprite();
+			barBack.graphics.beginFill(UIStyleSettings.gBackgroundColour);
+			barBack.graphics.drawCircle(0, 0, _radius);
+			barBack.graphics.endFill();
+			addChild(barBack);
+			
 			_bar = new Sprite();
-			_bar.graphics.beginFill(0x3FA9F5);
+			_bar.graphics.beginFill(_color);
 			_bar.graphics.drawCircle(0, 0, _radius);
 			_bar.graphics.endFill();
 			addChild(_bar);
@@ -49,6 +64,27 @@ package classes.UIComponents.SideBarComponents
 			_barMask = new Sprite();
 			addChild(_barMask);
 			_bar.mask = _barMask;
+		}
+		
+		private function BuildMiddle():void
+		{
+			var bkg:Sprite = new Sprite();
+			bkg.graphics.beginFill(UIStyleSettings.gForegroundColour);
+			bkg.graphics.drawCircle(0, 0, _radius - (_thickness * 2));
+			bkg.graphics.endFill();
+			addChild(bkg);
+			
+			_barText = new TextField();
+			_barText.width = (_radius * 2) - (_thickness * 2);
+			_barText.defaultTextFormat = UIStyleSettings.gShipSystemFormatter;
+			_barText.embedFonts = true;
+			_barText.antiAliasType = AntiAliasType.ADVANCED;
+			_barText.text = "SYS";
+			_barText.mouseEnabled = false;
+			_barText.mouseWheelEnabled = false;
+			addChild(_barText);
+			_barText.x = -(_barText.width / 2);
+			_barText.y = -(_bar.height / 2 ) + (_barText.textHeight / 2);
 		}
 		
 		public function setValue(current:int, max:int):void
@@ -61,7 +97,7 @@ package classes.UIComponents.SideBarComponents
 		
 		private function UpdateDisplay(e:Event):void
 		{
-			var newValueP:Number = (_valueTarget / _valueMax);
+			var newValueP:Number = (_valueTarget / _valueMax) * 0.75;
 			
 			if (newValueP != _valueCurrent)
 			{
@@ -97,7 +133,7 @@ package classes.UIComponents.SideBarComponents
 			_barMask.graphics.clear();
 			_barMask.graphics.beginFill(0x0000FF, 0.5);
 			
-			drawPieMask(_barMask.graphics, percentage, 61, 0, 0, 90 * (Math.PI/360), 8);
+			drawPieMask(_barMask.graphics, percentage, 61, 0, 0, 135 * (Math.PI/180), 8);
 			
 			_barMask.graphics.endFill();
 		}
@@ -120,6 +156,11 @@ package classes.UIComponents.SideBarComponents
 			// Draw the last fractioned side
 			if (percentage * sides != sidesToDraw)
 			lineToRadians(percentage * (Math.PI * 2) + rotation);
+		}
+		
+		public function setLabel(v:String):void
+		{
+			_barText.text = v;
 		}
 	}
 }

@@ -7,6 +7,8 @@ package classes.UIComponents.SideBarComponents
 	import flash.text.AntiAliasType;
 	
 	import classes.UIComponents.UIStyleSettings;
+	import classes.Resources.Busts.StaticRenders;
+	import flash.display.Bitmap;
 	
 	/**
 	 * ...
@@ -26,7 +28,7 @@ package classes.UIComponents.SideBarComponents
 		private var _capacitorStatus:MiniCircularStatBar;
 		private var _reactorStatus:MiniCircularStatBar;
 		
-		private var _statusEffectContainer:Sprite;	
+		private var _statusEffectDisplay:StatusEffectsBlock;
 		
 		public function ShipInfoDisplay(alignment:String = "left") 
 		{
@@ -47,6 +49,7 @@ package classes.UIComponents.SideBarComponents
 			BuildHeader();
 			BuildStatBars();
 			BuildBustContainer();
+			BuildStatusEffects();
 			
 			showDebug();
 		}
@@ -54,8 +57,8 @@ package classes.UIComponents.SideBarComponents
 		private function BuildBackground():void
 		{
 			_debugBackground = new Sprite();
-			//_debugBackground.graphics.beginFill(UIStyleSettings.gForegroundColour);
-			_debugBackground.graphics.beginFill(0xFF0000);
+			_debugBackground.graphics.beginFill(UIStyleSettings.gForegroundColour);
+			//_debugBackground.graphics.beginFill(0xFF0000);
 			_debugBackground.graphics.drawRect(0, 0, 190, 300);
 			_debugBackground.graphics.endFill();
 			this.addChild(_debugBackground);
@@ -88,18 +91,27 @@ package classes.UIComponents.SideBarComponents
 		{
 			_healthStatus = new CircularStatBar();
 			this.addChild(_healthStatus);
-			_healthStatus.x = 90;
+			_healthStatus.x = 100;
 			_healthStatus.y = 85;
 			
-			_capacitorStatus = new MiniCircularStatBar();
+			_capacitorStatus = new MiniCircularStatBar(35, 5, UIStyleSettings.gHighlightColour);
 			addChild(_capacitorStatus);
-			_capacitorStatus.x = 40;
-			_capacitorStatus.y = 180;
+			_capacitorStatus.x = 37;
+			_capacitorStatus.y = 161;
+			_capacitorStatus.setLabel("CAP");
 			
-			_reactorStatus = new MiniCircularStatBar();
+			_reactorStatus = new MiniCircularStatBar(35, 5, UIStyleSettings.gHighlightColour);
 			addChild(_reactorStatus);
-			_reactorStatus.x = 120;
-			_reactorStatus.y = 180;
+			_reactorStatus.x = 163;
+			_reactorStatus.y = 161;
+			_reactorStatus.setLabel("RCT");
+		}
+		
+		private function BuildStatusEffects():void
+		{
+			_statusEffectDisplay = new StatusEffectsBlock(false);
+			_statusEffectDisplay.y = 210;
+			addChild(_statusEffectDisplay);
 		}
 		
 		public function showShip(ship:Ship):void
@@ -113,8 +125,10 @@ package classes.UIComponents.SideBarComponents
 			_healthStatus.setShield(75, 100);
 			_healthStatus.setHP(75, 100);
 			
-			_reactorStatus.setValue(70, 140);
-			_capacitorStatus.setValue(70, 140);
+			_reactorStatus.setValue(140, 140);
+			_capacitorStatus.setValue(140, 140);
+			
+			ShowBust(StaticRenders.MISSING);
 		}
 		
 		private function BuildBustContainer():void
@@ -127,9 +141,46 @@ package classes.UIComponents.SideBarComponents
 			
 			_bustImage = new Sprite();
 			addChild(_bustImage);
-			_bustImage.x = 136;
+			_bustImage.x = 100;
 			_bustImage.y = 85;
+			
+			bustBackground.x = _bustImage.x;
+			bustBackground.y = _bustImage.y;
+			
+			var bustMask:Sprite = new Sprite();
+			bustMask.graphics.beginFill(0xFFFFFF);
+			bustMask.graphics.drawCircle(0, 0, 45);
+			bustMask.graphics.endFill();
+			bustMask.x = _bustImage.x;
+			bustMask.y = _bustImage.y;
+			
+			addChild(bustMask);
+			_bustImage.mask = bustMask;
+		}
+		
+		private function ShowBust(bustT:Class):void
+		{
+			if (_bustImage == null) return;
+			
+			if (_bustImage.numChildren == 1)
+			{
+				if (_bustImage.getChildAt(0) is bustT)
+				{
+					return;
+				}
+				else
+				{
+					_bustImage.removeChildAt(0);
+				}
+			}
+			
+			var bust:Bitmap = new bustT();
+			bust.smoothing = true;
+			
+			_bustImage.addChild(bust);
+			
+			bust.x -= bust.width / 2;
+			bust.y -= bust.height / 2;
 		}
 	}
-
 }

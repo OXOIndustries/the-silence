@@ -168,6 +168,21 @@ package classes.UIComponents
 			return UIStyleSettings._gStatBlockHeaderFormatter;
 		}
 		
+		private static var _gShipSystemFormatter:TextFormat;
+		public static function get gShipSystemFormatter():TextFormat
+		{
+			if (UIStyleSettings._gShipSystemFormatter == null)
+			{
+				UIStyleSettings._gShipSystemFormatter = new TextFormat();
+				UIStyleSettings._gShipSystemFormatter.size = 28;
+				UIStyleSettings._gShipSystemFormatter.color = 0xFFFFFF;
+				UIStyleSettings._gShipSystemFormatter.align = TextFormatAlign.CENTER;
+				UIStyleSettings._gShipSystemFormatter.font = "Univers UltraCondensed";
+				UIStyleSettings._gShipSystemFormatter.bold = true;
+			}
+			return UIStyleSettings._gShipSystemFormatter;
+		}
+		
 		private static var _gTooltipHeaderFormatter:TextFormat;
 		public static function get gTooltipHeaderFormatter():TextFormat 
 		{

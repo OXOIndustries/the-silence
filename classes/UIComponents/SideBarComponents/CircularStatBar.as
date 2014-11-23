@@ -3,6 +3,8 @@ package classes.UIComponents.SideBarComponents
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.display.Graphics;
+	import classes.UIComponents.UIStyleSettings;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -45,6 +47,12 @@ package classes.UIComponents.SideBarComponents
 		
 		private function Build():void
 		{
+			var barBack:Sprite = new Sprite();
+			barBack.graphics.beginFill(UIStyleSettings.gBackgroundColour);
+			barBack.graphics.drawCircle(0, 0, _radius);
+			barBack.graphics.endFill();
+			addChild(barBack);
+			
 			_shieldsHalf = new Sprite();
 			_shieldsHalf.graphics.beginFill(0x3FA9F5);
 			_shieldsHalf.graphics.drawCircle(0, 0, _radius);

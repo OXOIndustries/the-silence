@@ -44,20 +44,20 @@ package classes.UIComponents.SideBarComponents
 		{
 			_statusHeaderUnderline = new Sprite();
 			_statusHeaderUnderline.x = (_rightAlign) ? 10 : 0;
-			_statusHeaderUnderline.y = 17;
+			_statusHeaderUnderline.y = 22;
 			_statusHeaderUnderline.graphics.beginFill(UIStyleSettings.gHighlightColour, 1);
 			_statusHeaderUnderline.graphics.drawRect(0, 0, 190, 1);
 			_statusHeaderUnderline.graphics.endFill();
 			this.addChild(_statusHeaderUnderline);
 			
 			_statusHeaderText = new TextField();
-			_statusHeaderText.x = 10;
+			_statusHeaderText.x = (_rightAlign) ? 10 : 0;
 			_statusHeaderText.y = 0;
 			_statusHeaderText.width = 190;
 			_statusHeaderText.defaultTextFormat = UIStyleSettings.gStatBlockHeaderFormatter;
 			_statusHeaderText.embedFonts = true;
 			_statusHeaderText.antiAliasType = AntiAliasType.ADVANCED;
-			_statusHeaderText.text = "YOUR STATUS";
+			_statusHeaderText.text = "STATUS EFFECTS";
 			_statusHeaderText.mouseEnabled = false;
 			_statusHeaderText.mouseWheelEnabled = false;
 			this.addChild(_statusHeaderText);
