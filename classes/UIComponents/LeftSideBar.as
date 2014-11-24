@@ -101,6 +101,7 @@ package classes.UIComponents
 		public function hideAll():void
 		{
 			_playerParty.visible = false;
+			_playerShipDisplay.visible = false;
 		}
 		
 		public function showParty():void
@@ -116,6 +117,11 @@ package classes.UIComponents
 		public function showPlayerShip():void
 		{
 			_playerShipDisplay.visible = true;
+		}
+		
+		public function hidePlayerShip():void
+		{
+			_playerShipDisplay.visible = false;
 		}
 	}
 }

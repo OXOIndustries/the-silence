@@ -252,6 +252,11 @@
 			if (!CombatManager.inGroundCombat)
 			{
 				userInterface.showPlayerParty();
+				userInterface.hidePlayerShip();
+				
+				userInterface.hideNPCStats();
+				userInterface.hideHostileShip();
+				
 				userInterface.setPlayerPartyData(GameState.playerParty.getParty());
 			}
 		}

@@ -54,7 +54,7 @@ package classes.UIComponents.SideBarComponents
 			BuildBustContainer();
 			BuildStatusEffects();
 			
-			showDebug();
+			//showDebug();
 		}
 		
 		private function BuildBackground():void
@@ -112,7 +112,7 @@ package classes.UIComponents.SideBarComponents
 		
 		private function BuildStatusEffects():void
 		{
-			_statusEffectDisplay = new StatusEffectsBlock(false);
+			_statusEffectDisplay = new StatusEffectsBlock((_alignment == "right") ? true : false);
 			_statusEffectDisplay.y = 210;
 			addChild(_statusEffectDisplay);
 		}
@@ -126,6 +126,14 @@ package classes.UIComponents.SideBarComponents
 			_capacitorStatus.setValue(ship.actualCapacitorCharge, ship.capacitorModule.powerStorage);
 			
 			_statusEffectDisplay.statusDisplay.updateDisplay(ship.statusEffects);
+		}
+		
+		public function updateShip(ship:Ship, modShield:Number = 0, modHull:Number = 0, modReactor:Number = 0, modCap:Number = 0):void
+		{
+			_healthStatus.setShield(ship.actualShieldHP + modShield, ship.maxShieldHP());
+			_healthStatus.setHP(ship.actualHullHP + modHull, ship.maxHullHP());
+			_reactorStatus.setValue(ship.reactorModule.powerGenerated + modReactor, ship.reactorModule.powerGenerated);
+			_capacitorStatus.setValue(ship.actualCapacitorCharge + modCap, ship.capacitorModule.powerStorage);
 		}
 		
 		private function showDebug():void
@@ -142,7 +150,6 @@ package classes.UIComponents.SideBarComponents
 			var testEffects:Object = { }
 			testEffects["TestEffect"] = new StatusEffect("TestEffect", { }, 100, StatusEffect.DURATION_TIME, StatusIcons.DefenseUp, false, false, "", "");
 			_statusEffectDisplay.statusDisplay.updateDisplay(testEffects);
-			
 		}
 		
 		private function BuildBustContainer():void

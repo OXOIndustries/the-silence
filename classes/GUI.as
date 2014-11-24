@@ -3,6 +3,7 @@
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.CodexManager;
 	import classes.GameData.Party;
+	import classes.GameData.Ships.Ship;
 	import classes.UIComponents.ButtonTooltips;
 	import classes.UIComponents.ButtonTray;
 	import classes.UIComponents.ContentModule;
@@ -1038,6 +1039,52 @@
 		public function hideMinimap():void
 		{
 			_rightSideBar.hideMinimap();
+		}
+		
+		public function hidePlayerShip():void
+		{
+			_leftSideBar.hidePlayerShip();
+		}
+		
+		public function hideHostileShip():void
+		{
+			_rightSideBar.hideShipInfo();
+		}
+		
+		public function showPlayerShip():void
+		{
+			_leftSideBar.showPlayerShip();
+		}
+		
+		public function showHostileShip():void
+		{
+			_rightSideBar.showShipInfo();
+		}
+		
+		public function setPlayerShipData(ship:Ship):void
+		{
+			_leftSideBar.playerShipDisplay.showShip(ship);
+		}
+		
+		public function setHostileShipData(ship:Ship):void
+		{
+			_rightSideBar.hostileShipInfo.showShip(ship);
+		}
+		
+		/**
+		 * Minor mechanical difference between set and update.
+		 * Set does a *full* update of all UI state for the ship display- including status effects.
+		 * Update only updates the circular bars, and will probably have some extra shit layered in there
+		 * just for that (ie display with this modded into reactorStatus etc)
+		 */
+		public function updatePlayerShipData(ship:Ship):void
+		{
+			_leftSideBar.playerShipDisplay.updateShip(ship);
+		}
+		
+		public function updateHostileShipData(ship:Ship):void
+		{
+			_rightSideBar.hostileShipInfo.updateShip(ship);
 		}
 
 		//2. DISPLAY STUFF

@@ -3,6 +3,7 @@ package classes.UIComponents
 	import classes.UIComponents.MiniMap.MiniMap;
 	import classes.UIComponents.SideBarComponents.LocationHeader;
 	import classes.UIComponents.SideBarComponents.MiniMapBlock;
+	import classes.UIComponents.SideBarComponents.ShipInfoDisplay;
 	import classes.UIComponents.StatBar;
 	import classes.UIComponents.SideBarComponents.StatusEffectsBlock;
 	import classes.UIComponents.StatusEffectComponents.StatusEffectsDisplay;
@@ -24,6 +25,7 @@ package classes.UIComponents
 		private var _locationHeader:LocationHeader;
 		private var _enemyParty:PartyBlock;
 		private var _minimapBlock:MiniMapBlock;
+		private var _shipDisplay:ShipInfoDisplay;
 		
 		public function get minimap():MiniMap { return _minimapBlock.miniMap; }
 		
@@ -32,6 +34,8 @@ package classes.UIComponents
 		public function get systemText():TextField { return _locationHeader.systemText; }
 		
 		public function get locationBlock():LocationHeader { return _locationHeader; }
+		
+		public function get hostileShipInfo():ShipInfoDisplay { return _shipDisplay; }
 				
 		/**
 		 * Config for lazy init.
@@ -70,6 +74,12 @@ package classes.UIComponents
 			this.addChild(_minimapBlock);
 			_minimapBlock.x = 0;
 			_minimapBlock.y = _locationHeader.y + _locationHeader.height;
+			
+			// Ship info display
+			_shipDisplay = new ShipInfoDisplay("right");
+			addChild(_shipDisplay);
+			_shipDisplay.x = 0;
+			_shipDisplay.y = _locationHeader.y + _locationHeader.height + 5;
 		}
 		
 		/**
@@ -113,11 +123,22 @@ package classes.UIComponents
 			_minimapBlock.visible = false;
 		}
 		
+		public function showShipInfo():void
+		{
+			_shipDisplay.visible = true;
+		}
+		
+		public function hideShipInfo():void
+		{
+			_shipDisplay.visible = false;
+		}
+		
 		public function hideAll():void 
 		{
 			_locationHeader.hideLocationText();
 			_enemyParty.visible = false;
 			_minimapBlock.visible = false;
+			_shipDisplay.visible = false;
 		}
 		
 		public function hideLocation():void
