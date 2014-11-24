@@ -67,7 +67,7 @@ package classes.UIComponents.SideBarComponents
 		{
 			_statusDisplay = new StatusEffectsDisplay(_rightAlign);
 			_statusDisplay.targetX = 10;
-			_statusDisplay.targetY = 20;
+			_statusDisplay.targetY = 27;
 			_statusDisplay.paddingTop = 3;
 			_statusDisplay.paddingBottom = 3;
 			_statusDisplay.childSizeX = 35;

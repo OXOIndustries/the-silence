@@ -96,10 +96,13 @@ package classes.GameData
 		public var combatOnly:Boolean = false;
 		public var durationMode:String = DURATION_PERM;
 		public var duration:int = -1;
+		public var hidden:Boolean = false;
 		
 		public var iconClass:Class = null;
 		
-		public function StatusEffect(seName:String, sePayload:Object, seDuration:int = -1, seDurationType:String = DURATION_PERM, seIconClass:Class = null, removeAfterCombat:Boolean = false, seOnRemove:String = "", seOnCreate:String = "") 
+		public var tooltip:String = "";
+		
+		public function StatusEffect(seName:String, sePayload:Object, seDuration:int = -1, seDurationType:String = DURATION_PERM, seIconClass:Class = null, removeAfterCombat:Boolean = false, hideFromDisplay:Boolean = false, seOnRemove:String = "", seOnCreate:String = "") 
 		{
 			name = seName;
 			payload = sePayload;
@@ -107,6 +110,7 @@ package classes.GameData
 			durationMode = seDurationType;
 			iconClass = seIconClass;
 			combatOnly = removeAfterCombat;
+			hidden = hideFromDisplay;
 			onRemoveFuncLookup = seOnRemove;
 			onCreateFuncLookup = seOnCreate;
 		}

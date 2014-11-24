@@ -1,6 +1,7 @@
 package classes.UIComponents.SideBarComponents 
 {
 	import classes.GameData.Ships.Ship;
+	import classes.GameData.StatusEffect;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.text.TextField;
@@ -9,6 +10,8 @@ package classes.UIComponents.SideBarComponents
 	import classes.UIComponents.UIStyleSettings;
 	import classes.Resources.Busts.StaticRenders;
 	import flash.display.Bitmap;
+	
+	import classes.Resources.StatusIcons;
 	
 	/**
 	 * ...
@@ -116,7 +119,13 @@ package classes.UIComponents.SideBarComponents
 		
 		public function showShip(ship:Ship):void
 		{
-			// HANDLE ME PLS
+			_healthStatus.setShield(ship.actualShieldHP, ship.maxShieldHP());
+			_healthStatus.setHP(ship.actualHullHP, ship.maxHullHP());
+			
+			_reactorStatus.setValue(ship.reactorModule.powerGenerated, ship.reactorModule.powerGenerated);
+			_capacitorStatus.setValue(ship.actualCapacitorCharge, ship.capacitorModule.powerStorage);
+			
+			_statusEffectDisplay.statusDisplay.updateDisplay(ship.statusEffects);
 		}
 		
 		private function showDebug():void
@@ -129,6 +138,11 @@ package classes.UIComponents.SideBarComponents
 			_capacitorStatus.setValue(140, 140);
 			
 			ShowBust(StaticRenders.MISSING);
+			
+			var testEffects:Object = { }
+			testEffects["TestEffect"] = new StatusEffect("TestEffect", { }, 100, StatusEffect.DURATION_TIME, StatusIcons.DefenseUp, false, false, "", "");
+			_statusEffectDisplay.statusDisplay.updateDisplay(testEffects);
+			
 		}
 		
 		private function BuildBustContainer():void

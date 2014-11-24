@@ -1,5 +1,6 @@
 ﻿package classes.UIComponents.StatusEffectComponents 
 {
+	import classes.GameData.StatusEffect;
 	import classes.UIComponents.StatusEffectComponents.StatusEffectElement;
 	import flash.display.DisplayObject;
 	import flash.display.Graphics;
@@ -146,20 +147,9 @@
 		 * Create a new child and push it into the storage array
 		 * @param	iconClass
 		 */
-		private function BuildNewChild(effectName:String, iconClass:String, tooltipText:String, durationRemaining:int):StatusEffectElement
-		{
-			var iconT:Class;
-
-			if (StatusIcons[iconClass] !== undefined)
-			{
-				iconT = StatusIcons[iconClass];
-			}
-			else
-			{
-				iconT = StatusIcons.Icon_Missing;
-			}
-			
-			return new StatusEffectElement(_childSizeX, _childSizeY, effectName, iconT, tooltipText, durationRemaining, this.mouseHandlerFunc);
+		private function BuildNewChild(effectName:String, iconClass:Class, tooltipText:String, durationRemaining:int):StatusEffectElement
+		{			
+			return new StatusEffectElement(_childSizeX, _childSizeY, effectName, iconClass, tooltipText, durationRemaining, this.mouseHandlerFunc);
 		}
 
 		/**
@@ -209,7 +199,8 @@
 			_tooltipElement.x = (_rightAlign) ? tPt.x - (_tooltipElement.width + 35) : 215;
 			
 			// Vertical position
-			_tooltipElement.y = 635 - _tooltipElement.height;
+			//_tooltipElement.y = 635 - _tooltipElement.height;
+			_tooltipElement.y = 240;
 		}
 		
 		/**
@@ -335,8 +326,18 @@
 		 * Update the displayed list of status effects.
 		 * @param	statusEffects	Array of status effects to search through for displayable elements.
 		 */
-		public function updateDisplay(statusEffects:Array):void
+		public function updateDisplay(seo:Object):void
 		{
+			// Convert incoming object into an array because lazy
+			var statusEffects:Array = [];
+			
+			for (var prop:String in seo)
+			{
+				var se:StatusEffect = seo[prop];
+				
+				if (!se.hidden) statusEffects.push(se);
+			}
+			
 			// Shift current elements into a working vector and clear the primary vector
 			_workElems = _workElems.concat(_childElements);
 			_childElements.splice(0, _childElements.length);
@@ -348,7 +349,7 @@
 				// the total number of effects we're liable to be displaying.
 				
 				// If an effect is a valid, displayable effect...
-				if (statusEffects[seElem].hidden != true && statusEffects[seElem].iconName.length > 0)
+				if (statusEffects[seElem].hidden != true && statusEffects[seElem].iconClass != null)
 				{
 					var gotMatch:Boolean = false;
 					
@@ -358,15 +359,15 @@
 						for (var vecElem:int = 0; vecElem < _workElems.length; vecElem++)
 						{
 							// If we do, shift the element in question back to the primary vector, and update it's duration.
-							if (_workElems[vecElem].name == statusEffects[seElem].storageName.toLowerCase())
+							if (_workElems[vecElem].name == statusEffects[seElem].name.toLowerCase())
 							{
-								_workElems[vecElem].durationRemaining = statusEffects[seElem].minutesLeft;
+								_workElems[vecElem].durationRemaining = statusEffects[seElem].duration;
 								_workElems[vecElem].tooltipText = statusEffects[seElem].tooltip;
 								
 								// Force through an update of the timer if we're looking at the active tooltip element!
 								if (_workElems[vecElem] == _lastActiveElement)
 								{
-									_tooltipElement.UpdateDurationText(statusEffects[seElem].minutesLeft);
+									_tooltipElement.UpdateDurationText(statusEffects[seElem].duration);
 									_tooltipElement.UpdateTooltip(statusEffects[seElem].tooltip);
 								}
 								
@@ -379,7 +380,7 @@
 					// No match? It must be a new effect, so we need to create the displayable element
 					if (!gotMatch)
 					{
-						_childElements.push(this.BuildNewChild(statusEffects[seElem].storageName, statusEffects[seElem].iconName, statusEffects[seElem].tooltip, statusEffects[seElem].minutesLeft));
+						_childElements.push(this.BuildNewChild(statusEffects[seElem].name, statusEffects[seElem].iconClass, statusEffects[seElem].tooltip, statusEffects[seElem].duration));
 					}
 				}
 			}
