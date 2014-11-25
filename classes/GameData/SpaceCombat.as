@@ -114,7 +114,6 @@ package classes.GameData
 			
 			if (_attackSelections.weapons.length > 0 || _lastAttackSelections != null && _lastAttackSelections.weapons.length > 0) addButton(0, "Fire", fireWeapons);
 			else addDisabledButton(0, "Fire");
-			addButton(5, "Wait", wait);
 			
 			addButton(1, "Offensive", selectOffensiveOrder);
 			addDisabledButton(6, getOffensiveOrderText());
@@ -127,6 +126,7 @@ package classes.GameData
 			
 			addButton(4, "Specials", specialsMenu);
 			
+			/*
 			if (!playerShip.hasStatusEffect("LDrive Disabled"))
 			{
 				if (playerShip.hasStatusEffect("LDrive Spooling"))
@@ -150,6 +150,8 @@ package classes.GameData
 			{
 				addDisabledButton(14, "Escape", "Engage Lightdrive", "You can't use your lightdrive to escape this fight!");
 			}
+			*/
+			addDisabledButton(14, "Escape");
 		}
 		
 		private function escapeAttempt():void
@@ -158,11 +160,6 @@ package classes.GameData
 		}
 		
 		private function chargeLightDrive():void
-		{
-			
-		}
-		
-		private function wait():void
 		{
 			
 		}
@@ -354,6 +351,24 @@ package classes.GameData
 			}
 		}
 		
+		private function getDefensivePowerCost():Number
+		{
+			switch (getDefensiveOrderText())
+			{
+				case "frequencymodulation":
+					return 35;
+					break;
+					
+				case "capacitordump":
+					return 20;
+					break;
+					
+				default:
+					return 0;
+					break;
+			}
+		}
+		
 		private function selDefensiveOrder(arg:String):void
 		{
 			if (arg == "none")
@@ -435,6 +450,24 @@ package classes.GameData
 			generateCombatMenu();
 		}
 		
+		private function getNavigationOrderPowerCost():Number
+		{
+			switch (getNavigationOrderText())
+			{
+				case "evasive":
+					return 20;
+					break;
+					
+				case "undertheirguns":
+					return 40;
+					break;
+					
+				default:
+					return 0;
+					break;
+			}
+		}
+		
 		private function cheatKillEverything():void
 		{
 			_hostiles[0].actualHullHP = 0;
@@ -459,14 +492,20 @@ package classes.GameData
 				var modReactor:Number = 0;
 				var modCap:Number = 0;
 				
-				userInterface().updatePlayerShipData(_friendlies[i]);
+				modReactor -= getWeaponCost();
+				modReactor -= getOffensivePowerCost();
+				modReactor -= getDefensivePowerCost();
+				modReactor -= getNavigationOrderPowerCost();
+				
+				userInterface().updatePlayerShipData(_friendlies[i], modShield, modHull, modReactor, modCap);
 				userInterface().updateHostileShipData(_hostiles[i]);
 			}
 		}
 		
 		private function showCombatDescriptions():void
 		{
-			
+			output("You're engaged in space combat with a hostile ship!\n\n");
+			output(hostileShip.description);
 		}
 		
 		private function checkForVictory():Boolean
@@ -524,5 +563,41 @@ package classes.GameData
 			
 			return false;
 		}
+		
+		private function processCombat():void
+		{
+			
+		}
+		
+		private function processPlayerActions():void
+		{
+			
+		}
+		
+		private function applyPlayerActions():void
+		{
+			
+		}
+		
+		private function processAIActions():void
+		{
+			
+		}
+		
+		private function generateAIActions():void
+		{
+			
+		}
+		
+		private function returnToCombatMenu():void
+		{
+			
+		}
+		
+		private function updateCooldowns(target:Ship):void
+		{
+			
+		}
+		
 	}
 }
