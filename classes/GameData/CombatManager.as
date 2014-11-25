@@ -45,6 +45,7 @@ package classes.GameData
 		// Victory & Loss Condition indicators
 		public static const ENTIRE_PARTY_DEFEATED:String = "all_defeated";
 		public static const SURVIVE_WAVES:String = "survival";
+		public static const ESCAPE:String = "escape";
 		
 		public static function victoryCondition(condition:String, arg:Number = Number.NaN):void
 		{

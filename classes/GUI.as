@@ -1077,9 +1077,9 @@
 		 * Update only updates the circular bars, and will probably have some extra shit layered in there
 		 * just for that (ie display with this modded into reactorStatus etc)
 		 */
-		public function updatePlayerShipData(ship:Ship):void
+		public function updatePlayerShipData(ship:Ship, modShield:Number = 0, modHull:Number = 0, modReactor:Number = 0, modCap:Number = 0):void
 		{
-			_leftSideBar.playerShipDisplay.updateShip(ship);
+			_leftSideBar.playerShipDisplay.updateShip(ship, modShield, modHull, modReactor, modCap);
 		}
 		
 		public function updateHostileShipData(ship:Ship):void
