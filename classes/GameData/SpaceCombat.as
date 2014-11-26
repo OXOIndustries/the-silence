@@ -154,11 +154,17 @@ package classes.GameData
 			addDisabledButton(14, "Escape");
 		}
 		
+		/**
+		 * Make an actual escape chance calculation to end combat.
+		 */
 		private function escapeAttempt():void
 		{
-			
+			throw new Error("Not Implemented Yet.");
 		}
 		
+		/**
+		 * Start the charging (spoolup) process that the ships equipped lightdrive requires before it can be activated.
+		 */
 		private function chargeLightDrive():void
 		{
 			
