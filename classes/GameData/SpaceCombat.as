@@ -112,9 +112,8 @@ package classes.GameData
 		{
 			removeAllButtonHighlights();
 			
-			if (_attackSelections.weapons.length > 0 || _lastAttackSelections != null && _lastAttackSelections.weapons.length > 0) addButton(0, "Fire", fireWeapons);
-			else addDisabledButton(0, "Fire");
-			
+			addButton(0, "Fire", processCombat);
+						
 			addButton(1, "Offensive", selectOffensiveOrder);
 			addDisabledButton(6, getOffensiveOrderText());
 						
@@ -167,7 +166,7 @@ package classes.GameData
 		 */
 		private function chargeLightDrive():void
 		{
-			
+			throw new Error("Not Implemented Yet.");
 		}
 		
 		private function selectOffensiveOrder():void
@@ -572,17 +571,31 @@ package classes.GameData
 		
 		private function processCombat():void
 		{
+			// Hook any pre-action shit here
 			
+			processPlayerActions();
 		}
 		
 		private function processPlayerActions():void
 		{
+			applyPlayerActions();
+			updateStatusEffects(playerShip);
+			updateCooldowns(playerShip);
 			
+			if (checkForVictory()) return;
+			
+			showCombatUI();
+			
+			clearMenu();
+			removeAllButtonHighlights();
+			addButton(0, "Next", processAIActions);
 		}
 		
 		private function applyPlayerActions():void
 		{
+			var powerChange:Number = playerShip.getPowerGenerated();
 			
+			// Do shooty shoot
 		}
 		
 		private function processAIActions():void
@@ -600,10 +613,9 @@ package classes.GameData
 			
 		}
 		
-		private function updateCooldowns(target:Ship):void
+		private function updateStatusEffects(target:Ship):void
 		{
 			
-		}
-		
+		}		
 	}
 }
