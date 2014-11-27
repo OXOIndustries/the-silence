@@ -428,41 +428,170 @@ package classes.GameData.Ships
 		 */
 		public function criticalDamageMultiplier():Number
 		{
-			return 0.0;
+			var multi:Number = 0.0;
+			
+			if (hasStatusEffect("Critical Damage Mod"))
+			{
+				multi += statusEffects["Critical Damage Mod"].payload.value;
+			}
+			
+			return multi;
 		}
 		
 		public function emDamageBonus():Number
 		{
-			return 0.0;
+			var bonus:Number = 0.0;
+			
+			if (hasStatusEffect("EM Damage Bonus"))
+			{
+				bonus += statusEffects["EM Damage Bonus"].payload.value;
+			}
+			
+			return bonus;
 		}
 		public function kinDamageBonus():Number
 		{
-			return 0.0;
+			var bonus:Number = 0.0;
+			
+			if (hasStatusEffect("Kin Damage Bonus"))
+			{
+				bonus += statusEffects["Kin Damage Bonus"].payload.value;
+			}
+			
+			return bonus;
 		}
 		public function expDamageBonus():Number
 		{
-			return 0.0;
+			var bonus:Number = 0.0;
+			
+			if (hasStatusEffect("Exp Damage Bonus"))
+			{
+				bonus += statusEffects["Exp Damage Bonus"].payload.value;
+			}
+			
+			return bonus;
 		}
 		public function thermDamageBonus():Number
 		{
-			return 0.0;
+			var bonus:Number = 0.0;
+			
+			if (hasStatusEffect("Therm Damage Bonus"))
+			{
+				bonus += statusEffects["Therm Damage Bonus"].payload.value;
+			}
+			
+			return bonus;
 		}
 		
 		public function emDamageMultiplier():Number
 		{
-			return 1.0;
+			var multi:Number = 1.0;
+			
+			if (hasStatusEffect("EM Damage Multi"))
+			{
+				multi += statusEffects["EM Damage Multi"].payload.value;
+			}
+			
+			return multi;
 		}
 		public function kinDamageMultiplier():Number
 		{
-			return 1.0;
+			var multi:Number = 1.0;
+			
+			if (hasStatusEffect("Kin Damage Multi"))
+			{
+				multi += statusEffects["Kin Damage Multi"].payload.value;
+			}
+			
+			return multi;
 		}
 		public function expDamageMultiplier():Number
 		{
-			return 1.0;
+			var multi:Number = 1.0;
+			
+			if (hasStatusEffect("Exp Damage Multi"))
+			{
+				multi += statusEffects["Exp Damage Multi"].payload.value;
+			}
+			
+			return multi;
 		}
 		public function thermDamageMultiplier():Number
 		{
-			return 1.0;
+			var multi:Number = 1.0;
+			
+			if (hasStatusEffect("Therm Damage Multi"))
+			{
+				multi += statusEffects["Therm Damage Multi"].payload.value;
+			}
+			
+			return multi;
+		}
+		
+		public function getModifiedDamageForWeapon(w:OffensiveModule):ResistanceCollection
+		{
+			var multi:Number = 1.0;
+			
+			if (hasStatusEffect("Weapon Damage Mod"))
+			{
+				multi += statusEffects["Weapon Damage Mod"].payload.value;
+			}
+			
+			if (w.weaponType == OffensiveModule.WEAPON_TYPE_LASER)
+			{
+				if (hasStatusEffect("Laser Damage Mod"))
+				{
+					multi += statusEffects["Laser Damage Mod"].payload.value;
+				}
+			}
+			
+			var newDamage:ResistanceCollection = w.damage.getCopy();
+			
+			newDamage.em.ResistAmount += emDamageBonus();
+			newDamage.kin.ResistAmount += kinDamageBonus();
+			newDamage.exp.ResistAmount += expDamageBonus();
+			newDamage.therm.ResistAmount += thermDamageBonus();
+			
+			newDamage.em.ResistAmount *= emDamageMultiplier();
+			newDamage.kin.ResistAmount *= kinDamageMultiplier();
+			newDamage.exp.ResistAmount *= expDamageMultiplier();
+			newDamage.therm.ResistAmount *= thermDamageMultiplier();
+			
+			newDamage.multiply(multi);
+			
+			return newDamage;
+		}
+		
+		public function getModifiedPowerCostForWeapon(w:OffensiveModule):Number
+		{
+			var multi:Number = 1.0;
+			
+			if (hasStatusEffect("Weapon Cost Mod"))
+			{
+				multi += statusEffects["Weapon Cost Mod"].payload.value;
+			}
+			
+			if (w.weaponType == OffensiveModule.WEAPON_TYPE_LASER)
+			{
+				if (hasStatusEffect("Laser Cost Mod"))
+				{
+					multi += statusEffects["Laser Cost Mod"].payload.value;
+				}
+			}
+			
+			return multi;
+		}
+		
+		public function getModifiedCriticalChanceForWeapon(w:OffensiveModule):Number
+		{
+			var multi:Number = 1.0;
+			
+			if (hasStatusEffect("Critical Chance Mod"))
+			{
+				multi += statusEffects["Critical Chance Mod"].payload.value;
+			}
+			
+			return multi;
 		}
 		
 		// Operational Functions

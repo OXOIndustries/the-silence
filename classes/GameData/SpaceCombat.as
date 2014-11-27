@@ -595,6 +595,32 @@ package classes.GameData
 		{
 			var powerChange:Number = playerShip.getPowerGenerated();
 			
+			if (_attackSelections.offensiveOrder != undefined)
+			{
+				if (_attackSelections.offensiveOrder == "overcharge")
+				{
+					playerShip.addStatusEffect(new StatusEffect("Laser Damage Mod", { value: 0.25 }, -1, StatusEffect.DURATION_ROUNDS, null, true, true));
+					playerShip.addStatusEffect(new StatusEffect("Laser Cost Mod", { value: 1.0 }, -1, StatusEffect.DURATION_ROUNDS, null, true, true));
+					powerChange -= 20;
+				}
+				else if (_attackSelections.offensiveOrder == "surgicalstrike")
+				{
+					playerShip.addStatusEffect(new StatusEffect("Critical Chance Mod", { value: 0.1 }, -1, StatusEffect.DURATION_ROUNDS, null, true, true));
+					playerShip.addStatusEffect(new StatusEffect("Weapon Cost Mod", { value: 1.0 }, -1, StatusEffect.DURATION_ROUNDS, null,  false, false));
+					powerChange -= 20;
+				}
+				else if (_attackSelections.offensiveOrder == "controlledbursts")
+				{
+					playerShip.addStatusEffect(new StatusEffect("Weapon Cost Mod", { value: -0.25 }, -1, StatusEffect.DURATION_ROUNDS, null, false, false));
+					playerShip.addStatusEffect(new StatusEffect("Weapon Damage Mod", { value: -0.1 }, -1, StatusEffect.DURATION_ROUNDS, null, false, false));
+				}
+			}
+			
+			if (_attackSelections.defensiveOrder != undefined)
+			{
+				
+			}
+			
 			// Do shooty shoot
 		}
 		
