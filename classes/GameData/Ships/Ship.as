@@ -333,6 +333,37 @@ package classes.GameData.Ships
 		// Combat Status
 		public var statusEffects:Object = { };
 		
+		/**
+		 * Create or merge values into an existing status effect.
+		 * This is designed for single-round modifiers to the player ship, declared via order functions.
+		 * Orders are implemented by stacking many simple status effects to change properties on the ship, that can be immediately cleared in the round after.
+		 * This way, many effects can share implementation details, and numerous mods can be applied in a single check.
+		 * @param	mName
+		 * @param	payload
+		 */
+		public function addTemporaryModifier(mName:String, payload:Object):void
+		{
+			if (statusEffects[mName] == undefined)
+			{
+				addStatusEffect(new StatusEffect(mName, payload, -1, StatusEffect.DURATION_ROUNDS, null, true, true));
+			}
+			else
+			{
+				var se:StatusEffect = statusEffects[mName];
+				
+				for (var prop:String in payload)
+				{
+					if (se.payload[prop] == undefined)
+					{
+						se.payload[prop] = payload[prop];
+					}
+					else
+					{
+						se.payload[prop] += payload[prop];
+					}
+				}
+			}
+		}
 		public function addStatusEffect(se:StatusEffect):void
 		{
 			if (statusEffects[se.name] == undefined)
@@ -650,10 +681,12 @@ package classes.GameData.Ships
 		 * to this function as an array.
 		 * @param	targetShip
 		 * @param	weaponSelection
+		 * @return	powerConsumed
 		 */
-		public function attackTarget(targetShip:Ship, weaponSelection:Array):void
+		public function attackTarget(targetShip:Ship, weaponSelection:Array):Number
 		{
 			var calledTypes:Array = [];
+			var powerConsumed:Number = 0;
 			
 			// For all weapons indicated...
 			for (var i:int = 0; i < weaponSelection.length; i++)
@@ -671,11 +704,14 @@ package classes.GameData.Ships
 					
 					// And fire them "once" with all the output enabled, indicating the number of weapons involved.
 					(weaponSelection[i] as OffensiveModule).attackTarget(targetShip, this, numOfType);
+					powerConsumed += (getModifiedPowerCostForWeapon((weaponSelection[i] as OffensiveModule)) * numOfType)
 					
 					// Then mark this type as having been fired
 					calledTypes.push(getQualifiedClassName(weaponSelection[i]));
 				}
 			}
+			
+			return powerConsumed;
 		}
 	}
 

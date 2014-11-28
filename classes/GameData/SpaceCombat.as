@@ -593,35 +593,63 @@ package classes.GameData
 		
 		private function applyPlayerActions():void
 		{
-			var powerChange:Number = playerShip.getPowerGenerated();
+			var powerUsed:Number = 0;
 			
 			if (_attackSelections.offensiveOrder != undefined)
 			{
 				if (_attackSelections.offensiveOrder == "overcharge")
 				{
-					playerShip.addStatusEffect(new StatusEffect("Laser Damage Mod", { value: 0.25 }, -1, StatusEffect.DURATION_ROUNDS, null, true, true));
-					playerShip.addStatusEffect(new StatusEffect("Laser Cost Mod", { value: 1.0 }, -1, StatusEffect.DURATION_ROUNDS, null, true, true));
-					powerChange -= 20;
+					playerShip.addTemporaryModifier("Laser Damage Mod", { value: 0.25 } );
+					playerShip.addTemporaryModifier("Laser Cost Mod", { value: 1.0 } );
+					powerUsed += 20;
 				}
 				else if (_attackSelections.offensiveOrder == "surgicalstrike")
 				{
-					playerShip.addStatusEffect(new StatusEffect("Critical Chance Mod", { value: 0.1 }, -1, StatusEffect.DURATION_ROUNDS, null, true, true));
-					playerShip.addStatusEffect(new StatusEffect("Weapon Cost Mod", { value: 1.0 }, -1, StatusEffect.DURATION_ROUNDS, null,  false, false));
-					powerChange -= 20;
+					playerShip.addTemporaryModifier("Critical Chance Mod", { value: 0.1 } );
+					playerShip.addTemporaryModifier("Weapon Cost Mod", { value: 1.0 } );
+					powerUsed += 20;
 				}
 				else if (_attackSelections.offensiveOrder == "controlledbursts")
 				{
-					playerShip.addStatusEffect(new StatusEffect("Weapon Cost Mod", { value: -0.25 }, -1, StatusEffect.DURATION_ROUNDS, null, false, false));
-					playerShip.addStatusEffect(new StatusEffect("Weapon Damage Mod", { value: -0.1 }, -1, StatusEffect.DURATION_ROUNDS, null, false, false));
+					playerShip.addTemporaryModifier("Weapon Cost Mod", { value: -0.25 } );
+					playerShip.addTemporaryModifier("Weapon Damage Mod", { value: -0.1 } );
 				}
 			}
 			
 			if (_attackSelections.defensiveOrder != undefined)
 			{
-				
+				if (_attackSelections.defensiveOrder == "frequencymodulation")
+				{
+					playerShip.addTemporaryModifier("Shield Resistance Bonus", { value: 0.1 } );
+					playerShip.addTemporaryModifier("Shield Recharge Multiplier", { value: -0.25 } );
+					powerUsed += 35;
+				}
+				else if (_attackSelections.defensiveOrder == "capacitordump")
+				{
+					playerShip.addTemporaryModifier("CapDump", { } );
+					powerUsed += 20;
+				}
+			}
+			
+			if (_attackSelections.navigationOrder != undefined)
+			{
+				if (_attackSelections.navigationOrder == "evasive")
+				{
+					playerShip.addTemporaryModifier("Evasion Multiplier", { value: 0.1 } );
+					playerShip.addTemporaryModifier("Weapon Cost Mod", { value: 0.25 } );
+					powerUsed += 20;
+				}
+				else if (_attackSelections.navigationOrder == "undertheirguns")
+				{
+					playerShip.addTemporaryModifier("Evasion Multiplier", { value: 0.25 } );
+					playerShip.addTemporaryModifier("Damage Taken Multiplier", { value: 0.5 } );
+					powerUsed += 40;
+				}
 			}
 			
 			// Do shooty shoot
+			powerUsed += playerShip.attackTarget(hostileShip, playerShip.offensiveModulesEquipped());
+			playerShip.applyRecharge(powerUsed);
 		}
 		
 		private function processAIActions():void

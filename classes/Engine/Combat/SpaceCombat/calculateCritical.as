@@ -19,6 +19,16 @@ package classes.Engine.Combat.SpaceCombat
 		// calculate the base crit chance of the weapon
 		var critChance:Number = weapon.criticalChance * chanceModifier;
 		
+		if (attacker.hasStatusEffect("Critical Chance Mod"))
+		{
+			critChance *= 1 + attacker.statusEffects["Critical Chance Mod"].payload.value;
+		}
+		
+		if (target.hasStatusEffect("Critical Chance Taken Mod"))
+		{
+			critChance *= 1 + target.statusEffects["Critical Chance Taken Mod"].payload.value;
+		}
+		
 		// Modify the weapons tracking based on agility difference between the ships.
 		if (target.agility() != attacker.agility()) tracking *= (target.agility() - attacker.agility());
 		

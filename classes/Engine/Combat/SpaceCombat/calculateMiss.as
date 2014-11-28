@@ -9,6 +9,11 @@ package classes.Engine.Combat.SpaceCombat
 	 */
 	public function calculateMiss(target:Ship, attacker:Ship, weapon:OffensiveModule, chanceModifier:Number = 5.0):Boolean
 	{
+		if (target.hasStatusEffect("Immobilise"))
+		{
+			return false;
+		}
+		
 		var tracking:Number = (weapon.trackingModifier * attacker.trackingModifierMultiplier()) + attacker.trackingModifierBonus();
 		
 		// Evasion chance starts at 5%
@@ -22,6 +27,11 @@ package classes.Engine.Combat.SpaceCombat
 		// cap chance to 15
 		if (evasionChance > 15.0) evasionChance = 15.0;
 		evasionChance -= tracking;
+		
+		if (target.hasStatusEffect("Evasion Multiplier"))
+		{
+			evasionChance *= 1 + target.statusEffects["Evasion Multiplier"].payload.value;
+		}
 		
 		// Any evasion = BRING ME YOUR RAND
 		if (evasionChance > 0)

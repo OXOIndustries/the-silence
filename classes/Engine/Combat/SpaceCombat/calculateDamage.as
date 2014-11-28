@@ -13,7 +13,12 @@ package classes.Engine.Combat.SpaceCombat
 		var damageResult:AttackDamageResult = new AttackDamageResult();
 		
 		// Calculate the actual damage of the weapon
-		damageResult.remainingDamage = weapon.damage.getCopy();
+		damageResult.remainingDamage = attacker.getModifiedDamageForWeapon(weapon);
+		
+		if (target.hasStatusEffect("Damage Taken Multiplier"))
+		{
+			damageResult.remainingDamage.multiply(1 + target.statusEffects["Damage Taken Multiplier"].payload.value);
+		}
 		
 		if (calculateCritical(target, attacker, weapon, critChanceMulti))
 		{
