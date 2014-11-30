@@ -44,6 +44,14 @@ package classes.GameData.Items.ShipModules
 			therm.ResistAmount += rc.therm.ResistAmount;
 		}
 		
+		public function combineResistances(rc:ResistanceCollection):void
+		{
+			em.ResistAmount += ((100.0 - em.ResistAmount) / 100) * rc.em.ResistAmount;
+			kin.ResistAmount += ((100.0 - kin.ResistAmount) / 100) * rc.kin.ResistAmount;
+			exp.ResistAmount += ((100.0 - exp.ResistAmount) / 100) * rc.exp.ResistAmount
+			therm.ResistAmount += ((100.0 - therm.ResistAmount) / 100) * rc.therm.ResistAmount;
+		}
+		
 		public function applyResistances(resistance:ResistanceCollection):void
 		{
 			if (em.ResistAmount > 0) em.ResistAmount *= ((100.0 - resistance.em.ResistAmount) / 100.0);

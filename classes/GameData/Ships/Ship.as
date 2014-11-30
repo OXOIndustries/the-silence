@@ -261,7 +261,39 @@ package classes.GameData.Ships
 			// TODO: Hook in defensive modules to increase returned ResistanceCollection.
 			// Resistances should be added in the form of:
 			// (100 - currentResistance) * addedResistance, ergo reducing the effectiveness of stacking.
-			return hullResistances;
+			
+			var defModules:Array = defensiveModulesEquipped();
+			
+			var resistances:ResistanceCollection = hullResistances.getCopy();
+			
+			for (var i:int = 0; i < defModules.length; i++)
+			{
+				var defModule:DefensiveModule = defModules[i];
+				resistances.combineResistances(defModule.bonusHullResistances);
+			}
+			
+			if (hasStatusEffect("Hull Resistance Bonus"))
+			{
+				var se:StatusEffect = statusEffects["Hull Resistance Bonus"];
+				var bonusR:ResistanceCollection = new ResistanceCollection();
+				
+				if (se.payload.value != undefined)
+				{
+					bonusR.em.ResistAmount = se.payload.value;
+					bonusR.exp.ResistAmount = se.payload.value;
+					bonusR.kin.ResistAmount = se.payload.value;
+					bonusR.therm.ResistAmount = se.payload.value;
+				}
+				
+				if (se.payload.em != undefined) bonusR.em.ResistAmount += se.payload.em;
+				if (se.payload.exp != undefined) bonusR.exp.ResistAmount += se.payload.exp;
+				if (se.payload.kin != undefined) bonusR.kin.ResistAmount += se.payload.kin;
+				if (se.payload.therm != undefined) bonusR.therm.ResistAmount += se.payload.therm;
+				
+				resistances.combineResistances(bonusR);
+			}
+			
+			return resistances;
 		}
 		
 		public function actualShieldResistances():ResistanceCollection
@@ -269,7 +301,39 @@ package classes.GameData.Ships
 			// TODO: Hook in defensive modules to increase returned ResistanceCollection.
 			// Resistances should be added in the form of:
 			// (100 - currentResistance) * addedResistance, ergo reducing the effectiveness of stacking.
-			return shieldModule.shieldResistances;
+			
+			var defModules:Array = defensiveModulesEquipped();
+			
+			var resistances:ResistanceCollection = shieldModule.shieldResistances.getCopy();
+			
+			for (var i:int = 0; i < defModules.length; i++)
+			{
+				var defModule:DefensiveModule = defModules[i];
+				resistances.combineResistances(defModule.bonusShieldResistances);
+			}
+			
+			if (hasStatusEffect("Shield Resistance Bonus"))
+			{
+				var se:StatusEffect = statusEffects["Hull Resistance Bonus"];
+				var bonusR:ResistanceCollection = new ResistanceCollection();
+				
+				if (se.payload.value != undefined)
+				{
+					bonusR.em.ResistAmount = se.payload.value;
+					bonusR.exp.ResistAmount = se.payload.value;
+					bonusR.kin.ResistAmount = se.payload.value;
+					bonusR.therm.ResistAmount = se.payload.value;
+				}
+				
+				if (se.payload.em != undefined) bonusR.em.ResistAmount += se.payload.em;
+				if (se.payload.exp != undefined) bonusR.exp.ResistAmount += se.payload.exp;
+				if (se.payload.kin != undefined) bonusR.kin.ResistAmount += se.payload.kin;
+				if (se.payload.therm != undefined) bonusR.therm.ResistAmount += se.payload.therm;
+				
+				resistances.combineResistances(bonusR);
+			}
+			
+			return resistances;
 		}
 		
 		// Stats -- Modifiers etc.
@@ -635,6 +699,17 @@ package classes.GameData.Ships
 		{
 			return reactorModule.powerGenerated;
 		}
+		public function getShieldRechargeMultiplier():Number
+		{
+			var base:Number = shieldModule.shieldRecharge;
+			
+			if (hasStatusEffect("Shield Recharge Multiplier"))
+			{
+				base *= statusEffects["Shield Recharge Multiplier"].payload.value;
+			}
+			
+			return base;
+		}
 		/**
 		 * Execute Reactor Recharge- take the generated power, remove the used power, apply charge
 		 * to shields + capacitor.
@@ -649,14 +724,14 @@ package classes.GameData.Ships
 		}
 		private function handleRemainingPower(remains:Number):void
 		{
-			var shieldRegen:Number = remains * shieldModule.shieldRecharge;
+			var shieldRegen:Number = remains * getShieldRechargeMultiplier();
 			var capGen:Number = remains - shieldRegen;
 			
 			actualShieldHP += shieldRegen;
 			
 			if (actualShieldHP >= maxShieldHP())
 			{
-				capGen += (actualShieldHP - maxShieldHP()) * (1 / shieldModule.shieldRecharge); // Should invert the value so we get "cap gen scale" spillover
+				capGen += (actualShieldHP - maxShieldHP()) * (1 / getShieldRechargeMultiplier()); // Should invert the value so we get "cap gen scale" spillover
 				actualShieldHP = maxShieldHP();
 			}
 			
@@ -668,7 +743,7 @@ package classes.GameData.Ships
 				
 				if (actualShieldHP < maxShieldHP())
 				{
-					actualShieldHP += leftover * shieldModule.shieldRecharge;
+					actualShieldHP += leftover * getShieldRechargeMultiplier();
 					if (actualShieldHP > maxShieldHP()) actualShieldHP = maxShieldHP();
 				}
 			}
@@ -699,7 +774,7 @@ package classes.GameData.Ships
 					
 					for (var ii:int = 0; ii < weaponSelection.length; ii++)
 					{
-						if (getQualifiedClassName(weaponSelection[i]) == getQualifiedClassName(weaponSelection[ii])) numOfType++;
+						if (getQualifiedClassName(weaponSelection[i]) == getQualifiedClassName(weaponSelection[ii])) numOfType++; // I would store the typeof() but typeof() in AS3 is retarded, and only returns base type info (ie string, object, number etc)
 					}
 					
 					// And fire them "once" with all the output enabled, indicating the number of weapons involved.
