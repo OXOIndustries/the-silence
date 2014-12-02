@@ -31,7 +31,6 @@ package classes.GameData.Ships
 			currentLocation = "SilenceSystem";
 			shipInterior = "TheSilence.Airlock";
 			
-			// TODO: Actual modules
 			maxOffensiveModules = 5;
 			maxDefensiveModules = 2;
 			maxNavigationModules = 2;

@@ -1,5 +1,6 @@
 package classes.GameData.Items.ShipModules 
 {
+	import classes.DataManager.Serialization.UnversionedSaveable;
 
 	/**
 	 * ResistanceCollection is a dual-purpose storage class.
@@ -7,7 +8,7 @@ package classes.GameData.Items.ShipModules
 	 * Secondly, it is actually used to define weapon damage-type splits. Rather than stating a raw damage value, weapons define damage as a ResistanceCollection- the value of each "Resistance" is actually the damage of the weapon of that damage type. Neat, right?
 	 * @author Gedan
 	 */
-	public class ResistanceCollection 
+	public class ResistanceCollection extends UnversionedSaveable
 	{
 		
 		public function ResistanceCollection(emR:Number = 0, kinR:Number = 0, expR:Number = 0, thermR:Number = 0) 
