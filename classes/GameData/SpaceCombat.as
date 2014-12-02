@@ -123,7 +123,7 @@ package classes.GameData
 			addButton(3, "Defensive", selectDefensiveOrder);
 			addDisabledButton(8, getDefensiveOrderText());
 			
-			addButton(4, "Specials", specialsMenu);
+			//addButton(4, "Specials", specialsMenu);
 			
 			/*
 			if (!playerShip.hasStatusEffect("LDrive Disabled"))
@@ -232,6 +232,7 @@ package classes.GameData
 						break;
 				}
 			}
+			return "None";
 		}
 		
 		private function getOffensivePowerCost():Number
@@ -354,6 +355,7 @@ package classes.GameData
 						break;
 				}
 			}
+			return "None";
 		}
 		
 		private function getDefensivePowerCost():Number
@@ -372,6 +374,7 @@ package classes.GameData
 					return 0;
 					break;
 			}
+			return 0;
 		}
 		
 		private function selDefensiveOrder(arg:String):void
@@ -441,6 +444,7 @@ package classes.GameData
 						break;
 				}
 			}
+			return "None";
 		}
 		
 		private function selNavigationOrder(arg:String):void
@@ -484,11 +488,11 @@ package classes.GameData
 			{
 				userInterface().showPlayerShip();
 				userInterface().hidePlayerParty();
-				userInterface().setPlayerShipData(_friendlies[i]);
+				userInterface().setPlayerShipData(playerShip);
 				
 				userInterface().hideMinimap();
 				userInterface().showHostileShip();
-				userInterface().setHostileShipData(_hostiles[i]);
+				userInterface().setHostileShipData(hostileShip);
 			}
 			else
 			{
@@ -502,8 +506,8 @@ package classes.GameData
 				modReactor -= getDefensivePowerCost();
 				modReactor -= getNavigationOrderPowerCost();
 				
-				userInterface().updatePlayerShipData(_friendlies[i], modShield, modHull, modReactor, modCap);
-				userInterface().updateHostileShipData(_hostiles[i]);
+				userInterface().updatePlayerShipData(playerShip, modShield, modHull, modReactor, modCap);
+				userInterface().updateHostileShipData(hostileShip);
 			}
 		}
 		
@@ -528,7 +532,7 @@ package classes.GameData
 		{
 			if (victoryCondition == CombatManager.ENTIRE_PARTY_DEFEATED)
 			{
-				if (_hostiles[i].isDefeated()) return true;
+				if (hostileShip.isDefeated()) return true;
 				return false;
 			}
 			else if (victoryCondition == CombatManager.SURVIVE_WAVES)
@@ -556,13 +560,13 @@ package classes.GameData
 		{
 			if (lossCondition == CombatManager.ENTIRE_PARTY_DEFEATED)
 			{
-				if (_friendlies[i].isDefeated()) return true;
+				if (playerShip.isDefeated()) return true;
 				return false;
 			}
 			else if (lossCondition == CombatManager.SURVIVE_WAVES)
 			{
 				if (lossArgument <= 0) throw new Error("Wave survival declared as loss condition, with no target wave count defined.");
-				if (_roundCounter >= lossCondition) return true;
+				if (_roundCounter >= lossArgument) return true;
 				return false;
 			}
 			
@@ -663,6 +667,11 @@ package classes.GameData
 		}
 		
 		private function returnToCombatMenu():void
+		{
+			
+		}
+		
+		private function updateCooldowns(target:Ship):void
 		{
 			
 		}

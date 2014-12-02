@@ -229,6 +229,11 @@ package classes.GameData.Ships
 		{
 			return actualHullHP;
 		}
+		
+		public function isDefeated():Boolean
+		{
+			return currentHullHP() <= 0;
+		}
 			
 		public var actualShieldHP:Number = 0;
 		public function maxShieldHP():Number
