@@ -452,7 +452,7 @@ package classes.GameData.Ships
 		{
 			return statusEffects[n];
 		}
-		public function updateStatusEffects(delta:int):void
+		public function updateStatusEffects(delta:int, durationType:String):void
 		{
 			var remove:Array = [];
 			
@@ -460,7 +460,7 @@ package classes.GameData.Ships
 			{
 				var se:StatusEffect = statusEffects[prop];
 				
-				if (se.durationMode != StatusEffect.DURATION_PERM)
+				if (se.durationMode == durationType)
 				{
 					se.duration -= delta;
 					if (se.duration < 0)  remove.push(prop);
@@ -485,6 +485,12 @@ package classes.GameData.Ships
 			{
 				removeStatusEffect(a[i]);
 			}
+		}
+		
+		// Handy status effect API for certain base actions
+		public function get isImmobilised():Boolean
+		{
+			return hasStatusEffect("Immobilise");
 		}
 		
 		// Weapons -- Type availability
@@ -792,6 +798,16 @@ package classes.GameData.Ships
 			}
 			
 			return powerConsumed;
+		}
+		
+		/**
+		 * Generate attack against a specified target ship.
+		 * Override this in child ship classes.
+		 * @param	targetShip
+		 */
+		public function generateAIAction(targetShip:Ship):void
+		{
+			
 		}
 	}
 

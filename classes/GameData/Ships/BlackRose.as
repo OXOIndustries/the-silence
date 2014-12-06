@@ -1,5 +1,17 @@
 package classes.GameData.Ships 
 {
+	import classes.GameData.Items.ShipModules.Capacitor.IECapbankXX;
+	import classes.GameData.Items.ShipModules.Defensive.StalwartDefenseCoAblativePlating;
+	import classes.GameData.Items.ShipModules.Defensive.StalwartDefenseCoReactivePlating;
+	import classes.GameData.Items.ShipModules.Defensive.VoidworksRegenerativeHullAlloy;
+	import classes.GameData.Items.ShipModules.Engines.IonRXEngines;
+	import classes.GameData.Items.ShipModules.Lightdrives.VWInterceptorLDrive;
+	import classes.GameData.Items.ShipModules.Offensive.Lasers.QuadPumpedBeamArray;
+	import classes.GameData.Items.ShipModules.Offensive.Special.SingularityAnchor;
+	import classes.GameData.Items.ShipModules.Offensive.Spinal.VW490TMassDriver;
+	import classes.GameData.Items.ShipModules.Reactor.VWFNIR90Reactor;
+	import classes.GameData.Items.ShipModules.Shields.VWInverseHarmonicShield;
+	import classes.GameData.Items.ShipModules.Offensive.Projectile.GoblinAutocannon;
 	/**
 	 * ...
 	 * @author Gedan
@@ -21,6 +33,47 @@ package classes.GameData.Ships
 			
 			currentLocation = "SilenceSystem";
 			shipInterior = "TheBlackRose.Airlock";
+			
+			maxOffensiveModules = 10;
+			maxDefensiveModules = 10;
+			maxNavigationModules = 10;
+			
+			lightDriveModule = new VWInterceptorLDrive();
+			engineModule = new IonRXEngines();
+			shieldModule = new VWInverseHarmonicShield();
+			reactorModule = new VWFNIR90Reactor();
+			capacitorModule = new IECapbankXX();
+			
+			equippedModules = 
+			[
+				 new VW490TMassDriver(),
+				 new QuadPumpedBeamArray(),
+				 new QuadPumpedBeamArray(),
+				 new GoblinAutocannon(),
+				 new GoblinAutocannon(),
+				 new SingularityAnchor(),
+				 new StalwartDefenseCoReactivePlating(),
+				 new StalwartDefenseCoAblativePlating(),
+				 new VoidworksRegenerativeHullAlloy()
+			]
+		}
+		
+		override public function generateAIAction(target:Ship):void
+		{
+			if (target.isImmobilised)
+			{
+				// DOOOOOMSDAAAAAAAAY
+				return;
+			}
+			else if (this.shieldPercent() < 0.75)
+			{
+				// "You fuggen scratched muh paint. Ima fuckin punch you now.
+				return;
+			}
+			else
+			{
+				// Broadside motherfucker.
+			}
 		}
 		
 	}

@@ -578,13 +578,13 @@ package classes.GameData
 			// Hook any pre-action shit here
 			
 			processPlayerActions();
+			processAIActions();
 		}
 		
 		private function processPlayerActions():void
 		{
 			applyPlayerActions();
 			updateStatusEffects(playerShip);
-			updateCooldowns(playerShip);
 			
 			if (checkForVictory()) return;
 			
@@ -658,12 +658,14 @@ package classes.GameData
 		
 		private function processAIActions():void
 		{
-			
+			updateStatusEffects(hostileShip);
+			updateCooldowns(hostileShip);
+			generateAIActions();
 		}
 		
 		private function generateAIActions():void
 		{
-			
+			hostileShip.generateAIAction(playerShip);
 		}
 		
 		private function returnToCombatMenu():void
@@ -671,14 +673,9 @@ package classes.GameData
 			
 		}
 		
-		private function updateCooldowns(target:Ship):void
-		{
-			
-		}
-		
 		private function updateStatusEffects(target:Ship):void
 		{
-			
+			target.updateStatusEffects(1, StatusEffect.DURATION_ROUNDS);
 		}		
 	}
 }
