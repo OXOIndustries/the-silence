@@ -23,7 +23,7 @@ package classes.GameData.Ships
 			
 			INDEX = "SILENCE";
 			shortName = "silence";
-			longName = "The Silence";
+			longName = "the Silence";
 			description = "Some description";
 			a = "the ";
 			A = "The ";

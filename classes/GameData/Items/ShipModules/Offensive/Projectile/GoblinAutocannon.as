@@ -6,7 +6,7 @@ package classes.GameData.Items.ShipModules.Offensive.Projectile
 	import classes.GameData.Ships.Ship;
 	import classes.Engine.Interfaces.output;
 	import classes.Engine.Combat.SpaceCombat.formatDamageOutput;
-	
+	import classes.Engine.Utility.possessive;
 	/**
 	 * ...
 	 * @author Gedan
@@ -34,14 +34,16 @@ package classes.GameData.Items.ShipModules.Offensive.Projectile
 		{
 			var damageOutcome:AttackDamageResult = super.attackTarget(target, attacker, outputForWeaponCount);
 			
-			output("\n\nA stream of yellow-orange spews from the two turrets perched on either side of possessive(attacker.shipName) hull in your ships direction. The perfect line issuing from the rotating barrels of the twinned autocannons begins to split and fragment as it nears, the turrets attempting to compensate for the trajectories of both ships.");
+			output("\n\nA stream of yellow-orange spews from the two turrets perched on either side of " + possessive(attacker.longName) + " hull in your ships direction. The perfect line issuing from the rotating barrels of the twinned autocannons begins to split and fragment as it nears, the turrets attempting to compensate for the trajectories of both ships.");
 
 			// Misses
 			if (damageOutcome.numMisses > 0)
 			{
 				if (damageOutcome.numMisses == 1) output(" One of");
 				else output(" Both of");
-				output(" the streams whiff entirely, the comparatively low velocity of the expended projectiles making");
+				output(" the streams whiff");
+				if (damageOutcome.numMisses == 1) output("s")
+				output(" entirely, the comparatively low velocity of the expended projectiles making");
 				if (damageOutcome.numMisses == 1) output(" a good portion of");
 				output(" them easy to evade for a pilot as seasoned as Logan.");
 			}

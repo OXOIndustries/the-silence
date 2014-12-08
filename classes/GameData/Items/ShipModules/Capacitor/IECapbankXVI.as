@@ -14,7 +14,7 @@ package classes.GameData.Items.ShipModules.Capacitor
 			moduleFullName = "IntekEngineering Capacitorbank XVI";
 			moduleDescription = "";
 			
-			powerStorage = 650;
+			powerStorage = 250;
 		}
 		
 	}

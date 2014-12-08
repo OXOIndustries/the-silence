@@ -134,8 +134,6 @@ package classes.GameData
 			if (_attackSelections.defensiveOrder != undefined) highlightButton(3);
 			addDisabledButton(8, getDefensiveOrderText());
 			
-			//addButton(4, "Specials", specialsMenu);
-			
 			/*
 			if (!playerShip.hasStatusEffect("LDrive Disabled"))
 			{
@@ -161,7 +159,7 @@ package classes.GameData
 				addDisabledButton(14, "Escape", "Engage Lightdrive", "You can't use your lightdrive to escape this fight!");
 			}
 			*/
-			addDisabledButton(14, "Escape");
+			addDisabledButton(14, "Escape", "Escape", "With as much debris as there is floating around the wreck of the constellation, making an attempt to activate your ships Light Drive would probably not be advisable.");
 		}
 		
 		/**
@@ -186,8 +184,8 @@ package classes.GameData
 			removeAllButtonHighlights();
 			
 			addButton(0, "None", selOffensiveOrder, "none", "Clear Order", "Clear any selected orders.");
-			addButton(1, "Overcharge", selOffensiveOrder, "overcharge", "Overcharged Emitters", "Overcharge your laser emitters, increasing damage by 25% but increasing powercost by 100%.\n\nActivation Cost: 20 Power");
-			addButton(2, "S.Strikes", selOffensiveOrder, "surgicalstrike", "Surgical Strikes", "Engage manual fire control of your ships weapons systems, and make each shot count. Increases critical shot chance by 10%, but increases power cost by 100%.\n\nActivation Cost: 20 Power");
+			addButton(1, "Overcharge", selOffensiveOrder, "overcharge", "Overcharged Emitters", "Overcharge your laser emitters, increasing damage by 25% but increasing powercost by 100%.\n\nActivation Cost: 80 Power");
+			addButton(2, "S.Strikes", selOffensiveOrder, "surgicalstrike", "Surgical Strikes", "Engage manual fire control of your ships weapons systems, and make each shot count. Increases critical shot chance by 10%, but increases power cost by 100%.\n\nActivation Cost: 60 Power");
 			addButton(3, "C.Bursts", selOffensiveOrder, "controlledbursts", "Aim for peak optimisation of your ships weapons systems, reducing power cost by 25% but decreasing damage by 10%.\n\nActivation Cost: 0 Power");
 			
 			if (_attackSelections.offensiveOrder != undefined)
@@ -250,15 +248,15 @@ package classes.GameData
 		{
 			switch (getOffensiveOrderText())
 			{
-				case "overcharge":
-					return 20;
+				case "Overcharge":
+					return 80;
 					break;
 					
-				case "surgicalstrike":
-					return 20;
+				case "S.Strike":
+					return 60;
 					break;
 					
-				case "controlledbursts":
+				case "C.Bursts":
 					return 0;
 					break;
 				
@@ -289,7 +287,7 @@ package classes.GameData
 			
 			for (var i:int = 0; i < playerShip.equippedModules.length; i++)
 			{
-				if (playerShip.equippedModules[i].type == ShipModule.TYPE_WEAPON)
+				if (playerShip.equippedModules[i].type == ShipModule.TYPE_WEAPON && playerShip.equippedModules[i].autoFires == true)
 				{
 					var mod:OffensiveModule = playerShip.equippedModules[i] as OffensiveModule;
 					
@@ -320,8 +318,8 @@ package classes.GameData
 			removeAllButtonHighlights();
 			
 			addButton(0, "None", selDefensiveOrder, "none", "Clear Order", "Clear any selected orders.");
-			addButton(1, "Freq.Mod", selDefensiveOrder, "frequencymodulation", "Frequency Modulation", "Initiate a rotating shield harmonic frequency. Increases shield resistances by 10% but reduces shield recharge rate by 25%.\n\nActivation Cost: 35 Power");
-			addButton(2, "CapDump", selDefensiveOrder, "capacitordump", "Capacitor Dump", "Initiate an emergency recharge of the ships shield emitters, dumping all available power from the capacitor into the shield emitters at 40% of the normal recharge rate.\n\nActivation Cost: 20 Power");
+			addButton(1, "Freq.Mod", selDefensiveOrder, "frequencymodulation", "Frequency Modulation", "Initiate a rotating shield harmonic frequency. Increases shield resistances by 10% but reduces shield recharge rate by 25%.\n\nActivation Cost: 55 Power");
+			addButton(2, "CapDump", selDefensiveOrder, "capacitordump", "Capacitor Dump", "Initiate an emergency recharge of the ships shield emitters, dumping all available power from the capacitor into the shield emitters at 40% of the normal recharge rate.\n\nActivation Cost: 60 Power");
 			
 			if (_attackSelections.defensiveOrder != undefined)
 			{
@@ -375,12 +373,12 @@ package classes.GameData
 		{
 			switch (getDefensiveOrderText())
 			{
-				case "frequencymodulation":
-					return 35;
+				case "Freq.Mod":
+					return 55;
 					break;
 					
-				case "capacitordump":
-					return 20;
+				case "CapDump":
+					return 60;
 					break;
 					
 				default:
@@ -411,8 +409,8 @@ package classes.GameData
 			
 			addButton(0, "None", selNavigationOrder, "none", "Clear Order", "Clear any selected orders.");
 			
-			addButton(1, "E.Maneuvers", selNavigationOrder, "evasive", "Evasive Maneuvers", "Maximise your ships chances to avoid incoming hostile fire. Reduces chance to be hit by 10% but increases weapon power usage by 25% to compensate.\n\nActivation Cost: 20 Power");
-			addButton(2, "UnderGuns", selNavigationOrder, "undertheirguns", "Under Their Guns", "Close in on the hostile ship in an attempt to avoid their weapon systems firing arcs.\n\nReduces chance to be hit by 25% but increases all damage taken by 50%.\n\nActivation Cost: 40 Power");
+			addButton(1, "E.Maneuvers", selNavigationOrder, "evasive", "Evasive Maneuvers", "Maximise your ships chances to avoid incoming hostile fire. Reduces chance to be hit by 10% but increases weapon power usage by 25% to compensate.\n\nActivation Cost: 60 Power");
+			addButton(2, "UnderGuns", selNavigationOrder, "undertheirguns", "Under Their Guns", "Close in on the hostile ship in an attempt to avoid their weapon systems firing arcs.\n\nReduces chance to be hit by 25% but increases all damage taken by 50%.\n\nActivation Cost: 80 Power");
 			
 			if (_attackSelections.navigationOrder != undefined)
 			{
@@ -480,12 +478,12 @@ package classes.GameData
 		{
 			switch (getNavigationOrderText())
 			{
-				case "evasive":
-					return 20;
+				case "E.Maneuvers":
+					return 60;
 					break;
 					
-				case "undertheirguns":
-					return 40;
+				case "UnderGuns":
+					return 80;
 					break;
 					
 				default:
@@ -623,13 +621,13 @@ package classes.GameData
 				{
 					playerShip.addTemporaryModifier("Laser Damage Mod", { value: 0.25 } );
 					playerShip.addTemporaryModifier("Laser Cost Mod", { value: 1.0 } );
-					powerUsed += 20;
+					powerUsed += getOffensivePowerCost();
 				}
 				else if (_attackSelections.offensiveOrder == "surgicalstrike")
 				{
 					playerShip.addTemporaryModifier("Critical Chance Mod", { value: 0.1 } );
 					playerShip.addTemporaryModifier("Weapon Cost Mod", { value: 1.0 } );
-					powerUsed += 20;
+					powerUsed += getOffensivePowerCost();
 				}
 				else if (_attackSelections.offensiveOrder == "controlledbursts")
 				{
@@ -644,12 +642,12 @@ package classes.GameData
 				{
 					playerShip.addTemporaryModifier("Shield Resistance Bonus", { value: 0.1 } );
 					playerShip.addTemporaryModifier("Shield Recharge Multiplier", { value: -0.25 } );
-					powerUsed += 35;
+					powerUsed += getDefensivePowerCost();
 				}
 				else if (_attackSelections.defensiveOrder == "capacitordump")
 				{
 					playerShip.addTemporaryModifier("CapDump", { } );
-					powerUsed += 20;
+					powerUsed += getDefensivePowerCost();
 				}
 			}
 			
@@ -659,23 +657,30 @@ package classes.GameData
 				{
 					playerShip.addTemporaryModifier("Evasion Multiplier", { value: 0.1 } );
 					playerShip.addTemporaryModifier("Weapon Cost Mod", { value: 0.25 } );
-					powerUsed += 20;
+					powerUsed += getNavigationOrderPowerCost();
 				}
 				else if (_attackSelections.navigationOrder == "undertheirguns")
 				{
 					playerShip.addTemporaryModifier("Evasion Multiplier", { value: 0.25 } );
 					playerShip.addTemporaryModifier("Damage Taken Multiplier", { value: 0.5 } );
-					powerUsed += 40;
+					powerUsed += getNavigationOrderPowerCost();
 				}
 			}
 			
+			playerShip.actualCapacitorCharge -= powerUsed;
+			
 			// Do shooty shoot
-			powerUsed += playerShip.attackTarget(hostileShip, playerShip.autofireOffensiveModulesEquipped());
+			powerUsed = playerShip.attackTarget(hostileShip, playerShip.autofireOffensiveModulesEquipped());
 			playerShip.applyRecharge(powerUsed);
 		}
 		
 		private function processAIActions():void
 		{
+			clearOutput();
+			removeAllButtonHighlights();
+			
+			output("Your tactical display focuses on " + hostileShip.longName + " as it gracefully sweeps around to bring its guns to bear."); 
+			
 			updateStatusEffects(hostileShip);
 			generateAIActions();
 		}
@@ -683,11 +688,20 @@ package classes.GameData
 		private function generateAIActions():void
 		{
 			hostileShip.generateAIAction(playerShip);
+			
+			showCombatUI();
+			
+			if (checkForVictory()) return;
+			if (checkForLoss()) return;
+			
+			clearMenu();
+			addButton(0, "Next", returnToCombatMenu);
 		}
 		
 		private function returnToCombatMenu():void
 		{
-			
+			_roundCounter++;
+			showCombatMenu();
 		}
 		
 		private function updateStatusEffects(target:Ship):void

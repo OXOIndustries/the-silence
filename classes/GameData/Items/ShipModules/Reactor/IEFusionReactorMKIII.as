@@ -13,7 +13,7 @@ package classes.GameData.Items.ShipModules.Reactor
 			moduleFullName = "IntekEngineering Fusion Reactor Mk. III";
 			moduleDescription = "";
 			
-			powerGenerated = 120;
+			powerGenerated = 80;
 		}
 	}
 }

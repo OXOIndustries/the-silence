@@ -26,7 +26,7 @@ package classes.GameData.Ships
 			
 			INDEX = "BLACKROSE";
 			shortName = "black rose";
-			longName = "The Black Rose";
+			longName = "the Black Rose";
 			description = "You're locked in battle with the <i>Black Rose</i>, a sleek pirate ship armed to the teeth, proudly flying the skull and crossbones emblazoned upon its curvaceous hull. The Rose bristles with weapons, as you'd expect from a pirate frigate: cannons and point-defense guns poking up from hardened turrets across the bow and back, leading back to a large launch bay on its starboard flank. Missile launches dot the prow, leveled menacingly at you.\n\nThe most distinctive feature of your enemy's ship, however, is the single huge cannon barrel that seems to run the full length of the Black Rose, wide enough to look like it'd be throwing shells the size of hover trucks. You do not want to get hit by whatever that shoots.";
 			
 			a = "the ";
