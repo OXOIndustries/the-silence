@@ -17,7 +17,7 @@ package classes.GameData
 		private var _initForRound:int = -1;
 		public function doneRoundActions():Boolean
 		{
-			if (!_initForRound == _roundCounter) return true;
+			if (_initForRound == _roundCounter) return true;
 			return false;
 		}
 		
@@ -45,26 +45,34 @@ package classes.GameData
 		
 		override public function setPlayers(... args):void
 		{
-			if (args.length > 1) throw new Error("SpaceCombat only supports single ships!");
-			else _friendlies = args;
+			var aArgs:*;
 			
-			for (var i:int = 0; i < _friendlies.length; i++)
+			if (args[0] is Array)
 			{
-				if (!(_friendlies[i] is Ship)) throw new Error("SpaceCombat requires ships!");
-				_friendlies[i].arrayIdx = i;
+				aArgs = args[0];
 			}
+			else
+			{
+				aArgs = args;
+			}
+			
+			_friendlies = aArgs;
 		}
 		
 		override public function setEnemies(... args):void
 		{
-			if (args.length > 1) throw new Error("SpaceCombat only supports single ships!");
-			else _hostiles = args;
+						var aArgs:*;
 			
-			for (var i:int = 0; i < _hostiles.length; i++)
+			if (args[0] is Array)
 			{
-				if (!(_hostiles[i] is Ship)) throw new Error("SpaceCombat requires ships!");
-				_hostiles[i].arrayIdx = i;
+				aArgs = args[0];
 			}
+			else
+			{
+				aArgs = args;
+			}
+			
+			_hostiles = aArgs;
 		}
 		
 		override public function beginCombat():void
@@ -114,13 +122,16 @@ package classes.GameData
 			
 			addButton(0, "Fire", processCombat);
 						
-			addButton(1, "Offensive", selectOffensiveOrder);
+			addButton(1, "Offense", selectOffensiveOrder);
+			if (_attackSelections.offensiveOrder != undefined) highlightButton(1);
 			addDisabledButton(6, getOffensiveOrderText());
 						
 			addButton(2, "Navigation", selectNavigationOrder);
+			if (_attackSelections.navigationOrder != undefined) highlightButton(2);
 			addDisabledButton(7, getNavigationOrderText());
 			
-			addButton(3, "Defensive", selectDefensiveOrder);
+			addButton(3, "Defense", selectDefensiveOrder);
+			if (_attackSelections.defensiveOrder != undefined) highlightButton(3);
 			addDisabledButton(8, getDefensiveOrderText());
 			
 			//addButton(4, "Specials", specialsMenu);
@@ -294,10 +305,12 @@ package classes.GameData
 			if (arg == "none") 
 			{
 				delete _attackSelections.offensiveOrder;
-				return;
+			}
+			else
+			{
+				_attackSelections.offensiveOrder = arg;
 			}
 			
-			_attackSelections.offensiveOrder = arg;
 			generateCombatMenu();
 		}
 		
@@ -382,10 +395,12 @@ package classes.GameData
 			if (arg == "none")
 			{
 				delete _attackSelections.defensiveOrder;
-				return;
+			}
+			else
+			{
+				_attackSelections.defensiveOrder = arg;
 			}
 			
-			_attackSelections.defensiveOrder = arg;
 			generateCombatMenu();
 		}
 		
@@ -452,10 +467,12 @@ package classes.GameData
 			if (arg == "none")
 			{
 				delete _attackSelections.navigationOrder;
-				return;
+			}
+			else
+			{
+				_attackSelections.navigationOrder = arg;
 			}
 			
-			_attackSelections.navigationOrder = arg;
 			generateCombatMenu();
 		}
 		
@@ -576,9 +593,10 @@ package classes.GameData
 		private function processCombat():void
 		{
 			// Hook any pre-action shit here
+			clearOutput();
+			output("Systems across the ship hum and whirr in unison, hardware and crew alike coming together in your shared time of need.");
 			
 			processPlayerActions();
-			processAIActions();
 		}
 		
 		private function processPlayerActions():void

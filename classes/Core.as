@@ -249,7 +249,7 @@
 		{
 			userInterface.time = timeText();
 			
-			if (!CombatManager.inGroundCombat)
+			if (!CombatManager.inCombat)
 			{
 				userInterface.showPlayerParty();
 				userInterface.hidePlayerShip();

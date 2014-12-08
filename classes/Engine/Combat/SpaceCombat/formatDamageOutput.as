@@ -9,7 +9,7 @@ package classes.Engine.Combat.SpaceCombat
 		var str:String = " <b>(";
 		
 		if (dResult.wasCrit) str += "Critical! ";
-		str += dResult.totalDamage;
+		str += Math.round(dResult.totalDamage);
 		
 		str += ")</b>";
 		

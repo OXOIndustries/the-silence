@@ -13,6 +13,8 @@ package classes.UIComponents.SideBarComponents
 	
 	import classes.Resources.StatusIcons;
 	
+	import classes.StringUtil;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -119,6 +121,8 @@ package classes.UIComponents.SideBarComponents
 		
 		public function showShip(ship:Ship):void
 		{
+			_nameHeader.text = ship.longName.toUpperCase();
+			
 			_healthStatus.setShield(ship.actualShieldHP, ship.maxShieldHP());
 			_healthStatus.setHP(ship.actualHullHP, ship.maxHullHP());
 			

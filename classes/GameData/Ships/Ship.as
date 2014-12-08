@@ -45,6 +45,10 @@ package classes.GameData.Ships
 			this.addIgnoredField("currentHullHP");
 			this.addIgnoredField("agility");
 			this.addIgnoredField("bustT");
+			this.addIgnoredField("isImmobilised");
+			this.addIgnoredField("description");
+			this.addIgnoredField("longName");
+			this.addIgnoredField("shortName");
 		}
 		
 		// Identification/display
@@ -828,6 +832,13 @@ package classes.GameData.Ships
 		public function generateAIAction(targetShip:Ship):void
 		{
 			
+		}
+		
+		public function initCombat():void
+		{
+			this.actualShieldHP = this.maxShieldHP();
+			this.actualHullHP = this.maxHullHP();
+			this.actualCapacitorCharge = this.maxCapacitorCharge();
 		}
 	}
 

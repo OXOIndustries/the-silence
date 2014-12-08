@@ -21,6 +21,8 @@ package classes.UIComponents.SideBarComponents
 		private var _bar:Sprite;
 		private var _barMask:Sprite;
 		
+		private var _chunk:Sprite;
+		
 		private var _speed:Number = 0.01;
 		
 		private var _valueCurrent:Number;
@@ -64,6 +66,20 @@ package classes.UIComponents.SideBarComponents
 			_barMask = new Sprite();
 			addChild(_barMask);
 			_bar.mask = _barMask;
+			
+			_chunk = new Sprite();
+			_chunk.graphics.beginFill(UIStyleSettings.gForegroundColour);
+			_chunk.graphics.drawCircle(0, 0, _radius);
+			_chunk.graphics.endFill();
+			addChild(_chunk);
+			
+			var chunkMask:Sprite = new Sprite();
+			addChild(chunkMask);
+			_chunk.mask = chunkMask;
+			chunkMask.graphics.clear();
+			chunkMask.graphics.beginFill(0x00FF00, 0.5);
+			drawPieMask(chunkMask.graphics, 0.25, 61, 0, 0, (135 - 90) * (Math.PI / 180), 8);
+			chunkMask.graphics.endFill();
 		}
 		
 		private function BuildMiddle():void

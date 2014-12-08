@@ -8,6 +8,11 @@ package classes.GameData
 	{
 		private static var combatContainer:CombatContainer = null;
 		
+		public static function get inCombat():Boolean
+		{
+			return (inGroundCombat || inSpaceCombat);
+		}
+		
 		public static function get inGroundCombat():Boolean
 		{
 			if (combatContainer == null) return false;
@@ -35,13 +40,15 @@ package classes.GameData
 		public static function setPlayers(... args):void
 		{
 			if (args.length == 0) throw new Error("Invalid Arguments");
-			combatContainer.setPlayers(args);
+			if (args[0] is Array) combatContainer.setPlayers(args[0]);
+			else combatContainer.setPlayers(args);
 		}
 		
 		public static function setEnemies(... args):void
 		{
 			if (args.length == 0) throw new Error("Invalid Arguments");
-			combatContainer.setEnemies(args);
+			if (args[0] is Array) combatContainer.setEnemies(args[0]);
+			else combatContainer.setEnemies(args);
 		}
 		
 		// Victory & Loss Condition indicators
