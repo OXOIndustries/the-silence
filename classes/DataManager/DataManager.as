@@ -29,8 +29,8 @@
 	public class DataManager 
 	{
 		// Define the current version of save games.
-		private static const LATEST_SAVE_VERSION:int = 2;
-		private static const MINIMUM_SAVE_VERSION:int = 2;
+		private static const LATEST_SAVE_VERSION:int = 3;
+		private static const MINIMUM_SAVE_VERSION:int = 3;
 		
 		private var _autoSaveEnabled:Boolean = false;
 		private var _lastManualDataSlot:int = -1;
@@ -219,7 +219,7 @@
 				return (String(slotNumber) + ": <b>EMPTY</b>\n\n");
 			}
 			
-			if (dataFile.data.minVersion > DataManager.LATEST_SAVE_VERSION)
+			if (dataFile.data.minVersion > DataManager.LATEST_SAVE_VERSION || dataFile.data.version < DataManager.MINIMUM_SAVE_VERSION)
 			{
 				return (String(slotNumber) + ": <b>INCOMPATIBLE</b>\n\n");
 			}
@@ -484,6 +484,10 @@
 			else if (dataFile.data.minVersion == undefined) // Special case for V1 saves
 			{
 				return true;
+			}
+			else if (dataFile.data.version < DataManager.MINIMUM_SAVE_VERSION)
+			{
+				return false;
 			}
 			else if (dataFile.data.minVersion > DataManager.LATEST_SAVE_VERSION)
 			{

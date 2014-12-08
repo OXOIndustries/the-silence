@@ -8,6 +8,8 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 	import classes.Engine.Interfaces.output;
 	import classes.Engine.Combat.SpaceCombat.formatDamageOutput;
 	
+	import classes.Engine.Utility.possessive;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -35,7 +37,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 		{
 			var damageOutcome:AttackDamageResult = super.attackTarget(target, attacker, outputForWeaponCount);
 			
-			output("\n\nYour tactical display flashes a brief warning, alerting you and your crew of a buildup of power in " + possessive(attacker.shipName) + " weapon systems.");
+			output("\n\nYour tactical display flashes a brief warning, alerting you and your crew of a buildup of power in " + possessive(attacker.longName) + " weapon systems.");
 
 			output(" Logan reacts on instinct almost immediately, throwing " + target.longName + " into an evasive roll just as two bright green shafts of light appear from the hull of the hostile ship");
 			

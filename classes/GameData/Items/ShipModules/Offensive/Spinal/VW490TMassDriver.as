@@ -8,6 +8,9 @@ package classes.GameData.Items.ShipModules.Offensive.Spinal
 	import classes.Engine.Combat.SpaceCombat.formatDamageOutput;
 	import classes.Engine.Combat.SpaceCombat.calculateDamage;
 	import classes.Engine.Interfaces.output;
+	
+	import classes.Engine.Utility.possessive;
+	
 	/**
 	 * ...
 	 * @author Gedan

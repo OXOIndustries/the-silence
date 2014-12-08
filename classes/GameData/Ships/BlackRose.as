@@ -60,20 +60,28 @@ package classes.GameData.Ships
 		
 		override public function generateAIAction(target:Ship):void
 		{
+			var powerUsed:Number = 0;
+			
 			if (target.isImmobilised)
 			{
 				// DOOOOOMSDAAAAAAAAY
-				return;
+				var dgun:VW490TMassDriver = getModuleByClass(VW490TMassDriver) as VW490TMassDriver;
+				powerUsed += attackTarget(target, [dgun]);
 			}
 			else if (this.shieldPercent() < 0.75)
 			{
 				// "You fuggen scratched muh paint. Ima fuckin punch you now.
-				return;
+				var sMissile:SingularityAnchor = getModuleByClass(SingularityAnchor) as SingularityAnchor;
+				powerUsed += attackTarget(target, [sMissile]);
 			}
 			else
 			{
 				// Broadside motherfucker.
+				var weapons:Array = autofireOffensiveModulesEquipped();
+				powerUsed += attackTarget(target, weapons);
 			}
+			
+			applyRecharge(powerUsed);
 		}
 		
 	}

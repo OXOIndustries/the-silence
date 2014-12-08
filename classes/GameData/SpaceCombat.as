@@ -652,14 +652,13 @@ package classes.GameData
 			}
 			
 			// Do shooty shoot
-			powerUsed += playerShip.attackTarget(hostileShip, playerShip.offensiveModulesEquipped());
+			powerUsed += playerShip.attackTarget(hostileShip, playerShip.autofireOffensiveModulesEquipped());
 			playerShip.applyRecharge(powerUsed);
 		}
 		
 		private function processAIActions():void
 		{
 			updateStatusEffects(hostileShip);
-			updateCooldowns(hostileShip);
 			generateAIActions();
 		}
 		

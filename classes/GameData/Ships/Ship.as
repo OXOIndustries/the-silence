@@ -117,7 +117,7 @@ package classes.GameData.Ships
 		
 		public var equippedModules:Array = [];
 		
-		private function numModulesOfType(t:String):int
+		protected function numModulesOfType(t:String):int
 		{
 			var total:int = 0;
 			for (var i:int = 0; i < equippedModules.length; i++)
@@ -126,7 +126,7 @@ package classes.GameData.Ships
 			}
 			return total;		
 		}
-		private function getModulesOfType(t:String):Array
+		protected function getModulesOfType(t:String):Array
 		{
 			var mods:Array = [];
 			for (var i:int = 0; i < equippedModules.length; i++)
@@ -134,6 +134,14 @@ package classes.GameData.Ships
 				if (equippedModules[i].type == t) mods.push(equippedModules[i]);
 			}
 			return mods;
+		}
+		protected function getModuleByClass(t:Class):ShipModule
+		{
+			for (var i:int = 0; i < equippedModules.length; i++)
+			{
+				if (equippedModules[i] is t) return equippedModules[i];
+			}
+			return null;
 		}
 		
 		public function offensiveModulesTotal():int
@@ -156,6 +164,18 @@ package classes.GameData.Ships
 		public function offensiveModulesEquipped():Array
 		{
 			return getModulesOfType(ShipModule.TYPE_WEAPON);
+		}
+		public function autofireOffensiveModulesEquipped():Array
+		{
+			var w:Array = getModulesOfType(ShipModule.TYPE_WEAPON);
+			var ws:Array = [];
+			
+			for (var i:int = 0; i < w.length; i++)
+			{
+				if ((w[i] as OffensiveModule).autoFires == true) ws.push(w[i]);
+			}
+			
+			return ws;
 		}
 		public function defensiveModulesEquipped():Array
 		{
