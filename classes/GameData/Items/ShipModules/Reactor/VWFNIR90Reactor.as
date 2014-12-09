@@ -14,7 +14,7 @@ package classes.GameData.Items.ShipModules.Reactor
 			moduleFullName = "Voidworks Full Neutron Immersion Reactor v90";
 			moduleDescription = "";
 			
-			powerGenerated = 140;
+			powerGenerated = 100;
 		}
 		
 	}

@@ -15,7 +15,7 @@ package classes.GameData.Items.ShipModules.Shields
 			moduleDescription = "";
 			
 			baseShield = 140;
-			shieldRecharge = 0.45;
+			shieldRecharge = 0.1;
 			
 			shieldResistances = new ResistanceCollection(10.0, 40.0, 80.0, 30.0);
 		}	

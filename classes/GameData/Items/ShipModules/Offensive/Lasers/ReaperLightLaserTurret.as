@@ -29,7 +29,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 			trackingModifier = 3.5;
 			criticalChance = 5.0;
 			autoFires = true;
-			damage = new ResistanceCollection(3.0, 0.0, 0.0, 1.0);
+			damage = new ResistanceCollection(5.0, 0.0, 0.0, 1.0);
 		}
 		
 		override public function attackTarget(target:Ship, attacker:Ship, outputForWeaponCount:int = 1):AttackDamageResult
@@ -67,7 +67,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 			
 				if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage == 0)
 				{
-					output(" splashing against " + possessive(target.longName) + "shields.");
+					output(" splashing against " + possessive(target.longName) + " shields.");
 					if (damageOutcome.numCrits > 0)
 					{
 						output(" The energy shell surrounding the ship seems to ripple against");

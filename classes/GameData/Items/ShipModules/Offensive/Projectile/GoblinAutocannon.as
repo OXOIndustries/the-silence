@@ -27,7 +27,7 @@ package classes.GameData.Items.ShipModules.Offensive.Projectile
 			trackingModifier = 3.0;
 			criticalChance = 8.0;
 			autoFires = true;
-			damage = new ResistanceCollection(0, 2, 7, 2);
+			damage = new ResistanceCollection(0, 2, 9, 2);
 		}
 		
 		override public function attackTarget(target:Ship, attacker:Ship, outputForWeaponCount:int = 1):AttackDamageResult

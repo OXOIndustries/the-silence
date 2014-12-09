@@ -178,14 +178,29 @@ package classes.GameData
 			throw new Error("Not Implemented Yet.");
 		}
 		
+		private function getOrderPowerUsage():Number
+		{
+			var usage:Number = 0;
+			usage += getOffensivePowerCost();
+			usage += getDefensivePowerCost();
+			usage += getNavigationOrderPowerCost();
+			return usage;
+		}
+		
 		private function selectOffensiveOrder():void
 		{
 			clearMenu();
 			removeAllButtonHighlights();
 			
 			addButton(0, "None", selOffensiveOrder, "none", "Clear Order", "Clear any selected orders.");
-			addButton(1, "Overcharge", selOffensiveOrder, "overcharge", "Overcharged Emitters", "Overcharge your laser emitters, increasing damage by 25% but increasing powercost by 100%.\n\nActivation Cost: 80 Power");
+			
+			if (getOrderPowerUsage() - getOffensivePowerCost() + 80 <= playerShip.actualCapacitorCharge) addButton(1, "Overcharge", selOffensiveOrder, "overcharge", "Overcharged Emitters", "Overcharge your laser emitters, increasing damage by 25% but increasing powercost by 100%.\n\nActivation Cost: 80 Power");
+			else addDisabledButton(1, "Overcharge", "Overcharged Emitters", "Overcharge your laser emitters, increasing damage by 25% but increasing powercost by 100%.\n\nActivation Cost: 80 Power\n\nYou do not have enough power!");
+			
+			if (getOrderPowerUsage() - getOffensivePowerCost() + 60 <= playerShip.actualCapacitorCharge)
 			addButton(2, "S.Strikes", selOffensiveOrder, "surgicalstrike", "Surgical Strikes", "Engage manual fire control of your ships weapons systems, and make each shot count. Increases critical shot chance by 10%, but increases power cost by 100%.\n\nActivation Cost: 60 Power");
+			else addDisabledButton(2, "S.Strikes", "Surgical Strikes", "Engage manual fire control of your ships weapons systems, and make each shot count. Increases critical shot chance by 10%, but increases power cost by 100%.\n\nActivation Cost: 60 Power\n\nYou do not have enough power!");
+			
 			addButton(3, "C.Bursts", selOffensiveOrder, "controlledbursts", "Aim for peak optimisation of your ships weapons systems, reducing power cost by 25% but decreasing damage by 10%.\n\nActivation Cost: 0 Power");
 			
 			if (_attackSelections.offensiveOrder != undefined)
@@ -318,8 +333,11 @@ package classes.GameData
 			removeAllButtonHighlights();
 			
 			addButton(0, "None", selDefensiveOrder, "none", "Clear Order", "Clear any selected orders.");
-			addButton(1, "Freq.Mod", selDefensiveOrder, "frequencymodulation", "Frequency Modulation", "Initiate a rotating shield harmonic frequency. Increases shield resistances by 10% but reduces shield recharge rate by 25%.\n\nActivation Cost: 55 Power");
-			addButton(2, "CapDump", selDefensiveOrder, "capacitordump", "Capacitor Dump", "Initiate an emergency recharge of the ships shield emitters, dumping all available power from the capacitor into the shield emitters at 40% of the normal recharge rate.\n\nActivation Cost: 60 Power");
+			if (getOrderPowerUsage() - getDefensivePowerCost() + 55 <= playerShip.actualCapacitorCharge) addButton(1, "Freq.Mod", selDefensiveOrder, "frequencymodulation", "Frequency Modulation", "Initiate a rotating shield harmonic frequency. Increases shield resistances by 10% but reduces shield recharge rate by 25%.\n\nActivation Cost: 55 Power");
+			else addDisabledButton(1, "Freq.Mod", "Frequency Modulation", "Initiate a rotating shield harmonic frequency. Increases shield resistances by 10% but reduces shield recharge rate by 25%.\n\nActivation Cost: 55 Power\n\nYou do not have enough power!");
+			
+			if (getOrderPowerUsage() - getDefensivePowerCost() - 61 <= playerShip.actualCapacitorCharge) addButton(2, "CapDump", selDefensiveOrder, "capacitordump", "Capacitor Dump", "Initiate an emergency recharge of the ships shield emitters, dumping all available power from the capacitor into the shield emitters at 40% of the normal recharge rate.\n\nActivation Cost: 60 Power");
+			else addDisabledButton(2, "CapDump", "Capacitor Dump", "Initiate an emergency recharge of the ships shield emitters, dumping all available power from the capacitor into the shield emitters at 40% of the normal recharge rate.\n\nActivation Cost: 60 Power\n\nYou do not have enough power!");
 			
 			if (_attackSelections.defensiveOrder != undefined)
 			{
@@ -409,8 +427,11 @@ package classes.GameData
 			
 			addButton(0, "None", selNavigationOrder, "none", "Clear Order", "Clear any selected orders.");
 			
-			addButton(1, "E.Maneuvers", selNavigationOrder, "evasive", "Evasive Maneuvers", "Maximise your ships chances to avoid incoming hostile fire. Reduces chance to be hit by 10% but increases weapon power usage by 25% to compensate.\n\nActivation Cost: 60 Power");
-			addButton(2, "UnderGuns", selNavigationOrder, "undertheirguns", "Under Their Guns", "Close in on the hostile ship in an attempt to avoid their weapon systems firing arcs.\n\nReduces chance to be hit by 25% but increases all damage taken by 50%.\n\nActivation Cost: 80 Power");
+			if (getOrderPowerUsage() - getNavigationOrderPowerCost() + 60 <= playerShip.actualCapacitorCharge) addButton(1, "E.Maneuvers", selNavigationOrder, "evasive", "Evasive Maneuvers", "Maximise your ships chances to avoid incoming hostile fire. Reduces chance to be hit by 10% but increases weapon power usage by 25% to compensate.\n\nActivation Cost: 60 Power");
+			else addDisabledButton(1, "E.Maneuvers", "Evasive Maneuvers", "Maximise your ships chances to avoid incoming hostile fire. Reduces chance to be hit by 10% but increases weapon power usage by 25% to compensate.\n\nActivation Cost: 60 Power\n\nYou do not have enough power!");
+			
+			if (getOrderPowerUsage() - getNavigationOrderPowerCost() + 80 <= playerShip.actualCapacitorCharge) addButton(2, "UnderGuns", selNavigationOrder, "undertheirguns", "Under Their Guns", "Close in on the hostile ship in an attempt to avoid their weapon systems firing arcs.\n\nReduces chance to be hit by 25% but increases all damage taken by 50%.\n\nActivation Cost: 80 Power");
+			else addDisabledButton(2, "UnderGuns", "Under Their Guns", "Close in on the hostile ship in an attempt to avoid their weapon systems firing arcs.\n\nReduces chance to be hit by 25% but increases all damage taken by 50%.\n\nActivation Cost: 80 Power\n\nYou do not have enough power!");
 			
 			if (_attackSelections.navigationOrder != undefined)
 			{

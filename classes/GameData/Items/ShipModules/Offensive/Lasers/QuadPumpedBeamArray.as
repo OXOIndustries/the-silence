@@ -30,7 +30,7 @@ package classes.GameData.Items.ShipModules.Offensive.Lasers
 			trackingModifier = 3;
 			criticalChance = 7;
 			autoFires = true;
-			damage = new ResistanceCollection(11, 0, 0, 2);
+			damage = new ResistanceCollection(14, 0, 0, 2);
 		}
 		
 		override public function attackTarget(target:Ship, attacker:Ship, outputForWeaponCount:int = 1):AttackDamageResult

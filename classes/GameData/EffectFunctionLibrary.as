@@ -63,7 +63,7 @@ package classes.GameData
 			// Otherwise init to count of 1
 			else
 			{
-				iEffect = new StatusEffect("Immobilise", { count: 1 }, -1, StatusEffect.DURATION_ROUNDS, StatusIcons.Constrict, true);
+				iEffect = new StatusEffect("Immobilise", { count: 1 }, 0, StatusEffect.DURATION_PERM, null, true, true, "", "");
 				ship.addStatusEffect(iEffect);
 			}
 		}

@@ -25,7 +25,7 @@ package classes.GameData.Items.ShipModules.Offensive.Special
 			moduleFullName = "KihaCorp Singularity Anchor";
 			moduleDescription = "";
 			
-			powerconsumption = 10;
+			powerconsumption = 100;
 			powergrid = 150;
 			moduleRemovable = true;
 			weaponType = OffensiveModule.WEAPON_TYPE_IMMOBILISE;
@@ -51,7 +51,7 @@ package classes.GameData.Items.ShipModules.Offensive.Special
 				// Hit
 				output(" The missile detonates just off of your ships starboard bow and you lurch forward in your command seat. You were expecting something more... forceful given the size of the missile- and it's with a terrible, dawning realisation that you come to truly appreciate just what it was that " + attacker.longName + " launched as you lurch forward in your command chair. Your ship is caught in the gravity of a micro-singularity, effectively immobile!");
 				
-				target.addStatusEffect(new StatusEffect("Singularity Anchor", { }, 3, StatusEffect.DURATION_ROUNDS, StatusIcons.Constrict, true, "applyImmobilise", "removeImmobilise"));
+				target.addStatusEffect(new StatusEffect("Singularity Anchor", { }, 3, StatusEffect.DURATION_ROUNDS, StatusIcons.Constrict, true, false, "removeImmobilise", "applyImmobilise"));
 			}
 			
 			return damageOutcome;
