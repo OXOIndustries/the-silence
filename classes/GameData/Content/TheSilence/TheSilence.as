@@ -238,7 +238,6 @@ package classes.GameData.Content.TheSilence
 			{
 				if (flags["INITIAL_RETURN_DURING_SPESS_COMBAT"] == undefined)
 				{
-					flags["INITIAL_RETURN_DURING_SPESS_COMBAT"] = 1;
 					ohShitMiriGonnaFuckYouUp();
 					return true;
 				}
@@ -264,7 +263,7 @@ package classes.GameData.Content.TheSilence
 			CombatManager.victoryScene(waitWhatHowFuckYouCheater); // The function reference that will be called when the player achieves the victory condition
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
 			CombatManager.lossScene(rammingSpeedLogan); // The function reference that will be called if the player is defeated
-
+			CombatManager.entryScene(startSpessFightAgainstMiri);
 			CombatManager.beginCombat();
 		}
 
@@ -275,7 +274,7 @@ package classes.GameData.Content.TheSilence
 		}
 
 		private function rammingSpeedLogan():void
-		{
+		{			
 			clearOutput();
 			output("<i>“She can’t take much more, captain!”</i> Logan shouts over the din of emergency klaxons and overloading equipment. Even the emergency shields are buckling, straining to keep the Silence from tearing itself apart. ");
 			

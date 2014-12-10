@@ -1055,10 +1055,10 @@ package classes.GameData
 			{
 				if ((_friendlies[i] as Creature).isDefeated() && _friendlies[i].alreadyDefeated == false)
 				{
-					_friendlies[i].alreadyDefeated == true;
+					_friendlies[i].alreadyDefeated = true;
 					if (_friendlies[i] is PlayerCharacter) output("\n\nYou fall to the ground,");
 					else output("\n\n" + _friendlies[i].capitalA + _friendlies[i].short + " falls to the ground,");
-					if (_hostiles[i].HP() <= 0) output(" defeated.");
+					if (_friendlies[i].HP() <= 0) output(" defeated.");
 					else output(" stricken with lust.");
 				}
 			}

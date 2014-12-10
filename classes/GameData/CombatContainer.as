@@ -1,6 +1,9 @@
 package classes.GameData 
 {
 	import classes.StorageClass;
+	import flash.utils.getDefinitionByName;
+	import flash.utils.getQualifiedClassName;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -20,6 +23,11 @@ package classes.GameData
 		protected var _roundCounter:int = 0;
 		public function get roundCounter():int { return _roundCounter; }
 		
+		protected var _entryFunction:Function;
+		
+		public function get entryFunction():Function { return _entryFunction; }
+		public function set entryFunction(v:Function):void { _entryFunction = v; }
+		
 		protected var _victoryFunction:Function;
 		protected var _lossFunction:Function;
 		public function victoryScene(func:Function):void
@@ -38,6 +46,8 @@ package classes.GameData
 		
 		protected var _friendlies:Array = null;
 		protected var _hostiles:Array = null;
+		
+		public var noImportProcess:Boolean = false;
 		
 		public function setPlayers(... args):void
 		{

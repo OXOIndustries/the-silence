@@ -1,5 +1,8 @@
 package classes.GameData 
 {
+	import classes.Creature;
+	import classes.GameData.Ships.TheSilence;
+	import classes.Engine.Interfaces.clearOutput;
 	/**
 	 * ...
 	 * @author Gedan
@@ -78,6 +81,11 @@ package classes.GameData
 			combatContainer.lossScene(func);
 		}
 		
+		public static function entryScene(func:Function):void
+		{
+			combatContainer.entryFunction = func;
+		}
+		
 		public static function beginCombat():void
 		{
 			combatContainer.beginCombat();
@@ -87,6 +95,32 @@ package classes.GameData
 		{
 			combatContainer.doCombatCleanup();
 			combatContainer = null;
+		}
+		
+		public static function resetCombat():void
+		{
+			clearOutput();
+			
+			var exec:Function = combatContainer.entryFunction;
+			combatContainer.doCombatCleanup();
+			combatContainer = null;
+			
+			var players:Array = CharacterIndex.PlayerGroup.getParty();
+			for (var i:int = 0; i < players.length; i++)
+			{
+				var char:Creature = players[i];
+				char.HP(char.HPMax());
+				char.shieldsRaw = char.shieldsMax();
+				
+				char.clearCombatStatuses();
+			}
+			
+			var ship:TheSilence = ShipIndex.theSilence;
+			ship.actualShieldHP = ship.maxShieldHP();
+			ship.actualHullHP = ship.maxHullHP();
+			ship.actualCapacitorCharge = ship.maxCapacitorCharge();
+			
+			exec();
 		}
 		
 		public static function get GenericVictory():Function

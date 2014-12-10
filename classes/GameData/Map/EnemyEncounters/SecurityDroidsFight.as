@@ -8,6 +8,7 @@ package classes.GameData.Map.EnemyEncounters
 	import classes.GameData.GameState;
 	import classes.GameData.CodexManager;
 	import flash.utils.Dictionary;
+	import classes.GameData.ContentIndex;
 	
 	/**
 	 * ...
@@ -41,24 +42,28 @@ package classes.GameData.Map.EnemyEncounters
 				var num:int = rand(15);
 				if (num <= GameState.flags["SECURITY_DROIDS_STEPS"])
 				{
-					var numDroids:int = rand(2) + 2;
-					
-					output("\n\nAhead, you hear heavy mechanical footfalls marching in unison, stomping towards you down the corridor. A group of " + num2Text(numDroids) + " gray, steel droids march around the corner!");
-					
-					if (!CodexManager.entryUnlocked("Security Droids"))
-					{
-						CodexManager.unlockEntry("Security Droids");
-						output("\n\n(<b>Codex entry: 'Security Droids' unlocked!</b>)");
-					}
-					
-					clearMenu();
-					addButton(0, "Fight!", actualEncounterFunction, numDroids);
-					
+					initialEncounterFunction();
 					return true;
 				}
 			}
 			
 			return false;
+		}
+		
+		private function initialEncounterFunction():void
+		{
+			var numDroids:int = rand(2) + 2;
+			
+			output("\n\nAhead, you hear heavy mechanical footfalls marching in unison, stomping towards you down the corridor. A group of " + num2Text(numDroids) + " gray, steel droids march around the corner!");
+			
+			if (!CodexManager.entryUnlocked("Security Droids"))
+			{
+				CodexManager.unlockEntry("Security Droids");
+				output("\n\n(<b>Codex entry: 'Security Droids' unlocked!</b>)");
+			}
+			
+			clearMenu();
+			addButton(0, "Fight!", actualEncounterFunction, numDroids);
 		}
 		
 		private function actualEncounterFunction(numDroids:int):void
@@ -77,6 +82,7 @@ package classes.GameData.Map.EnemyEncounters
 			CombatManager.victoryScene(droidsVictory);
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
 			CombatManager.lossScene(droidsLoss);
+			CombatManager.entryScene(initialEncounterFunction);
 
 			CombatManager.beginCombat();
 			
@@ -98,13 +104,8 @@ package classes.GameData.Map.EnemyEncounters
 		
 		private function droidsLoss():void
 		{
-			clearOutput();
+			ContentIndex.shared.combatLossScene();
 			setLocation("DEFEAT: SECURITY DROIDS");
-			
-			output("The last of your party falls to the ground, defeated: the Constellations internal defenses proving overwhelming to your rag-tag band of compatriots...");
-			output("\n\n<b>GAME OVER</b>");
-			
-			clearMenu();
 		}
 		
 	}

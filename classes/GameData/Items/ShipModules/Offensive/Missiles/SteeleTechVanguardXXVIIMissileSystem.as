@@ -53,7 +53,7 @@ package classes.GameData.Items.ShipModules.Offensive.Missiles
 				
 				if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage == 0)
 				{
-					output(" the shimmering protective field, exploding into a blindingly intense flash of light as it's warhead triggers");
+					output(" the shimmering protective field, exploding into a blindingly intense flash of light as the warhead triggers.");
 				}
 				else if (damageOutcome.shieldDamage > 0 && damageOutcome.hullDamage > 0)
 				{
@@ -61,7 +61,7 @@ package classes.GameData.Items.ShipModules.Offensive.Missiles
 				}
 				else
 				{
-					output(" the glimmering metallic hull, exploding into a blindingly intense flash of light as it's warhead triggers on impact, stripping away layer after layer of carefully crafted protective armor with nuclear-powered force.");
+					output(" the glimmering metallic hull, exploding into a blindingly intense flash of light as the warhead triggers on impact, stripping away layer after layer of carefully crafted protective armor with nuclear-powered force.");
 				}
 				
 				output(formatDamageOutput(damageOutcome));

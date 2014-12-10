@@ -4,12 +4,15 @@ package classes.GameData
 	import classes.GameData.Content.Chapter2;
 	import classes.GameData.Content.Chapter3;
 	import classes.GameData.Content.Creation;
+	import classes.GameData.Content.SharedContent;
 	import classes.GameData.Content.TheBlackRose;
 	import classes.GameData.Content.TheConstellation;
 	import classes.GameData.Content.TheSilence.TheSilence;
 	
 	public class ContentIndex 
 	{
+		public static var shared:SharedContent;
+		
 		public static var appearance:Appearance;
 		public static var creation:Creation;
 		public static var chapter2:Chapter2;
@@ -42,6 +45,7 @@ package classes.GameData
 		*/
 		
 		{
+			shared = new SharedContent();
 			appearance = new Appearance();
 				
 			// Room content
