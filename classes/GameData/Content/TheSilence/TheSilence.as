@@ -260,7 +260,7 @@ package classes.GameData.Content.TheSilence
 			// TODO: Hook the bonuses into state from the Constellation into Black Rose here.
 			CombatManager.setEnemies(theBlackRose); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
 			CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED); // Set the victory condition and optional argument
-			CombatManager.victoryScene(waitWhatHowFuckYouCheater); // The function reference that will be called when the player achieves the victory condition
+			CombatManager.victoryScene(ContentIndex.shared.combatLossScene); // The function reference that will be called when the player achieves the victory condition
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
 			CombatManager.lossScene(rammingSpeedLogan); // The function reference that will be called if the player is defeated
 			CombatManager.entryScene(startSpessFightAgainstMiri);

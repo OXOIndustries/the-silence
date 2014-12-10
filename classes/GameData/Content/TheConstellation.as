@@ -6,7 +6,7 @@ package classes.GameData.Content
 	import classes.GameData.Items.Melee.GravityAxe;
 	import classes.GameData.CombatManager;
 	import classes.GameData.Items.Protection.EnhancedShield;
-	
+	import classes.GameData.ContentIndex;
 	/**
 	 * ...
 	 * @author Gedan
@@ -78,7 +78,7 @@ package classes.GameData.Content
 			CombatManager.victoryCondition(CombatManager.SURVIVE_WAVES, 15);
 			CombatManager.victoryScene(pirateBreachVictory);
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
-			CombatManager.lossScene(pirateBreachLoss);
+			CombatManager.lossScene(ContentIndex.shared.combatLossScene);
 			CombatManager.entryScene(breachPirateHoldoutFight);
 			CombatManager.beginCombat();
 		}

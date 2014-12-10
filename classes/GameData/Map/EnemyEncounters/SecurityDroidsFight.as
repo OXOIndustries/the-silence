@@ -81,7 +81,7 @@ package classes.GameData.Map.EnemyEncounters
 			CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
 			CombatManager.victoryScene(droidsVictory);
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
-			CombatManager.lossScene(droidsLoss);
+			CombatManager.lossScene(ContentIndex.shared.combatLossScene);
 			CombatManager.entryScene(initialEncounterFunction);
 
 			CombatManager.beginCombat();
