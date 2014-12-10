@@ -554,7 +554,17 @@ package classes.GameData
 				else addDisabledButton(2, "TailSlap", "Tail Slap", "Logan needs a moment to recover!\n\nCooldown remaining: " + target.statusEffectv1("TailSlapCooldown") + " rounds.");
 			}
 			
+			addButton(13, "None", clearSpecialAttack, target, "Clear Selection", "Clear any existing special attack selection.");
 			addButton(14, "Back", showCombatMenu, undefined, "Back", "Added in Specials Menu");
+		}
+		
+		private function clearSpecialAttack(target:Creature):void
+		{
+			if (_attackSelections[target.INDEX] != undefined && _attackSelections[target.INDEX].type == "special")
+			{
+				_attackSelections[target.INDEX] = { };
+			}
+			showCombatMenu();
 		}
 		
 		public function doMeleeAttack(attacker:Creature, target:Creature):void
@@ -1024,8 +1034,11 @@ package classes.GameData
 				"F.Thrower",
 				"Shotgun",
 				"ThrowAxe",
-				"Force Edge"
-			]
+				"Force Edge",
+				"Burst Fire",
+				"Tease",
+				"TailSlap"
+			];
 			
 			if (reqTarget.indexOf(label) != -1) targetSelectionMenu(caster);
 			else 
