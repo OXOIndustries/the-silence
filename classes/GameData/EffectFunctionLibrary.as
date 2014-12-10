@@ -79,6 +79,7 @@ package classes.GameData
 			else
 			{
 				trace("Warning: The Immobilise status effect has already been removed! (Possibly removed by Effect Cleanup)");
+				return;
 			}
 			
 			if (iEffect.payload.count <= 0)

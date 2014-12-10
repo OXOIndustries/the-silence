@@ -1,5 +1,6 @@
 package classes.GameData.Map.Data.Ships 
 {
+	import classes.GameData.Map.EnemyEncounters.BlackVoidPiratesEncounter;
 	import classes.GameData.Map.Room;
 	import classes.GameData.Map.Ship;
 	import classes.GameData.ContentIndex;
@@ -16,6 +17,8 @@ package classes.GameData.Map.Data.Ships
 			LocationIndex = "TheSilence";
 			LocationName = "SILENCE";
 			
+			var pFites:BlackVoidPiratesEncounter = new BlackVoidPiratesEncounter();
+			
 			// CREW DECK
 			var airlock:Room = new Room();
 			airlock.RoomIndex = "Airlock";
@@ -26,6 +29,7 @@ package classes.GameData.Map.Data.Ships
 			airlock.AddFlag(GLOBAL.AIRLOCK);
 			airlock.AddFlag(GLOBAL.INDOOR);
 			airlock.NorthExit = "CrewDeckK21";
+			airlock.EnemyEncounterContainers.push(pFites);
 			AddRoom(airlock);
 			
 			var crewDeckK21:Room = new Room();
@@ -36,6 +40,7 @@ package classes.GameData.Map.Data.Ships
 			crewDeckK21.AddFlag(GLOBAL.INDOOR);
 			crewDeckK21.SouthExit = "Airlock";
 			crewDeckK21.EastExit = "CrewDeckL21";
+			crewDeckK21.EnemyEncounterContainers.push(pFites);
 			AddRoom(crewDeckK21);
 			
 			var crewDeckL21:Room = new Room();
@@ -48,6 +53,7 @@ package classes.GameData.Map.Data.Ships
 			crewDeckL21.EastExit = "CrewDeckM21";
 			crewDeckL21.SouthExit = "CrewL22";
 			crewDeckL21.SouthCondition = function():Boolean { return false; }
+			crewDeckL21.EnemyEncounterContainers.push(pFites);
 			crewDeckL21.WestExit = "CrewDeckK21";
 			crewDeckL21.AddFlag(GLOBAL.INDOOR);
 			AddRoom(crewDeckL21);
@@ -79,6 +85,7 @@ package classes.GameData.Map.Data.Ships
 			crewDeckM21.SouthExit = "CrewM22";
 			crewDeckM21.SouthCondition = function():Boolean { return false; }
 			crewDeckM21.WestExit = "CrewDeckL21";
+			crewDeckM21.EnemyEncounterContainers.push(pFites);
 			crewDeckM21.AddFlag(GLOBAL.INDOOR);
 			AddRoom(crewDeckM21);
 
@@ -106,6 +113,7 @@ package classes.GameData.Map.Data.Ships
 			crewDeckN21.EastExit = "ConferenceRoom";
 			crewDeckN21.SouthExit = "CrewDeckN22";
 			crewDeckN21.WestExit = "CrewDeckM21";
+			crewDeckN21.EnemyEncounterContainers.push(pFites);
 			crewDeckN21.AddFlag(GLOBAL.INDOOR);
 			AddRoom(crewDeckN21);
 
@@ -116,6 +124,7 @@ package classes.GameData.Map.Data.Ships
 			crewDeckN22.MoveTime = 1;
 			crewDeckN22.NorthExit = "CrewDeckN21";
 			crewDeckN22.SouthExit = "CaptainsQuarters";
+			crewDeckN22.EnemyEncounterContainers.push(pFites);
 			crewDeckN22.AddFlag(GLOBAL.INDOOR);
 			AddRoom(crewDeckN22);
 
@@ -124,6 +133,7 @@ package classes.GameData.Map.Data.Ships
 			captainsQuarters.RoomName = "CAPTAINS QUARTERS";
 			captainsQuarters.EntryFunction = ContentIndex.theSilence.captainsQuartersRoomFunction;
 			captainsQuarters.NorthExit = "CrewDeckN22";
+			captainsQuarters.EnemyEncounterContainers.push(pFites);
 			captainsQuarters.AddFlag(GLOBAL.INDOOR);
 			AddRoom(captainsQuarters);
 
@@ -133,6 +143,7 @@ package classes.GameData.Map.Data.Ships
 			conferenceRoom.EntryFunction = ContentIndex.theSilence.conferenceRoomFunction;
 			conferenceRoom.WestExit = "CrewDeckN21";
 			conferenceRoom.EastExit = "CrewDeckElevator";
+			conferenceRoom.EnemyEncounterContainers.push(pFites);
 			conferenceRoom.AddFlag(GLOBAL.INDOOR);
 			AddRoom(conferenceRoom);
 

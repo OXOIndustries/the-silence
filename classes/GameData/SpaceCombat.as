@@ -728,6 +728,11 @@ package classes.GameData
 		private function updateStatusEffects(target:Ship):void
 		{
 			target.updateStatusEffects(1, StatusEffect.DURATION_ROUNDS);
-		}		
+		}
+		
+		override public function doCombatCleanup():void
+		{
+			playerShip.clearCombatStatuses();
+		}
 	}
 }

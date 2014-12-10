@@ -238,6 +238,7 @@ package classes.GameData.Content.TheSilence
 			{
 				if (flags["INITIAL_RETURN_DURING_SPESS_COMBAT"] == undefined)
 				{
+					flags["INITIAL_RETURN_DURING_SPESS_COMBAT"] = 1;
 					ohShitMiriGonnaFuckYouUp();
 					return true;
 				}
@@ -310,7 +311,7 @@ package classes.GameData.Content.TheSilence
 			output("\n\nMight as well go down with one great big <i>“fuck you.”</i>");
 
 			clearMenu();
-			addButton(0, "Ramming Speed", rammingSpeedLoganIII);
+			addButton(0, "R.Speed", rammingSpeedLoganIII, undefined, "Ramming Speed", "Might as well go out in a blaze of glory, right?");
 		}
 
 		private function rammingSpeedLoganIII():void
@@ -358,18 +359,22 @@ package classes.GameData.Content.TheSilence
 			
 			output("\n\nPyra groans. <i>“You all go. I’ve gotta go make sure the fucking engines don’t explode. Or worse, turn back on. Shoot us out of here like a rocket. And THEN we explode.”</i>");
 			
-			output("\n\nCan’t argue with that. <i>“Right. Logan, grab your gun. You’re with me.”</i> ");
+			output("\n\nCan’t argue with that. <i>“Right. Logan, grab your gun. You’re with me.");
+			if (PlayerParty.isInParty(connie)) output(" Connie, stick with Pyra and give her a hand if you can.");
+			output("”</i>");
 
 			//Pirate gangs can now be fought on the Silence's deck. 
 			//Logan joins the party, Pyra leaves
 			flags["DEFEATED_MIRI_SPESSCOMBAT"] = 1;
 			PlayerParty.removeFromParty(pyra);
+			if (PlayerParty.isInParty(connie)) PlayerParty.removeFromParty(connie);
 			PlayerParty.addToParty(logan);
 
 			logan.currentLocation = "";
 			pyra.currentLocation = "";
 
-			doNext(mainGameMenu);
+			CombatManager.GenericLoss();
+			CombatManager.postCombat();
 		}
 
 		private function ohShitMiriGonnaFuckYouUp():void

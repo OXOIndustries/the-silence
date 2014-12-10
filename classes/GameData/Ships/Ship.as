@@ -840,6 +840,23 @@ package classes.GameData.Ships
 			this.actualHullHP = this.maxHullHP();
 			this.actualCapacitorCharge = this.maxCapacitorCharge();
 		}
+		
+		public function clearCombatStatuses():void
+		{
+			var keys:Array = [];
+			
+			for (var prop:String in statusEffects)
+			{
+				var se:StatusEffect = statusEffects[prop];
+				
+				if (se.combatOnly == true)
+				{
+					keys.push(prop);
+				}
+			}
+			
+			removeStatusEffects(keys);
+		}
 	}
 
 }

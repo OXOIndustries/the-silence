@@ -986,7 +986,7 @@ package classes.GameData
 			}
 			else
 			{
-				output(" visibly stunned by the display!");
+				output("visibly stunned by the display!");
 				target.createStatusEffect("Stunned", 3, 0, 0, 0, true, "", "", true, 0);
 			}
 			
@@ -1035,7 +1035,7 @@ package classes.GameData
 				"Shotgun",
 				"ThrowAxe",
 				"Force Edge",
-				"Burst Fire",
+				"BurstFire",
 				"Tease",
 				"TailSlap"
 			];
