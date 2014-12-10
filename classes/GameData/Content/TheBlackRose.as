@@ -1,5 +1,7 @@
 package classes.GameData.Content 
 {
+	import classes.GameData.Characters.BlackVoidPirate;
+	import classes.GameData.Characters.MirianBragga;
 	import classes.GameData.CombatManager;
 	import classes.GameData.ContentIndex;
 	
@@ -84,9 +86,20 @@ package classes.GameData.Content
 			//	Start Final Boss fight. Captain Bragga + max number of Pirates possible. The turn after any pirate drops, add:
 			// "Another pirate rushes up the stairs behind you, firing wildly!"
 			// And replace with new pirate.
+			
+			var enemies:Array = [];
+			enemies.push(new MirianBragga());
+			
+			for (var i:int = 0; i < 3; i++)
+			{
+				var e:BlackVoidPirate = new BlackVoidPirate();
+				e.respawn = true;
+				enemies.push(e);
+			}
 
 			CombatManager.newGroundCombat(); // Setup for a new combat phase.
-			CombatManager.setPlayers(PlayerParty.getParty()); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
+			CombatManager.setPlayers(PlayerParty.getCombatParty()); // Set the "friendly" players that will be fighting - could be a single char, or the party reference
+			CombatManager.setEnemies(enemies);
 			//CombatManager.setEnemies(EnemyParty); // Set the "hostile" characters that will be fighting - could be a single char, or the party reference
 			CombatManager.victoryCondition(CombatManager.ENTIRE_PARTY_DEFEATED); // Set the victory condition and optional argument
 			CombatManager.victoryScene(ContentIndex.shared.combatLossScene); // The function reference that will be called when the player achieves the victory condition

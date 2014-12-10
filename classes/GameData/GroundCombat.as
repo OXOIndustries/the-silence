@@ -237,16 +237,12 @@ package classes.GameData
 				
 			}
 			
-			if (_attackSelections[target.INDEX].type != "attack")
-			{
-				if (target.defaultsToMelee) addButton(1 + (offset * 5), StringUtil.toTitleCase(target.meleeWeapon.attackVerb), selectMeleeAttack, target);
-				else addButton(1 + (offset * 5), StringUtil.toTitleCase(target.rangedWeapon.attackVerb), selectRangedAttack, target);
-			}
-			else
+			if (target.defaultsToMelee) addButton(1 + (offset * 5), StringUtil.toTitleCase(target.meleeWeapon.attackVerb), selectMeleeAttack, target);
+			else addButton(1 + (offset * 5), StringUtil.toTitleCase(target.rangedWeapon.attackVerb), selectRangedAttack, target);
+				
+			if (_attackSelections[target.INDEX].type == "attack")
 			{
 				highlightButton(1 + (offset * 5));
-				
-				addButton(1 + (offset * 5), _attackSelections[target.INDEX].label, attackMenu, target);
 				
 				if (_attackSelections[target.INDEX].target != undefined)
 				{

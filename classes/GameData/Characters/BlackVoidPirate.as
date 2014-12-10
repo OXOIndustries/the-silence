@@ -227,7 +227,7 @@ package classes.GameData.Characters
 		
 		public function threeRoundBurst(target:Creature):void
 		{
-			output("\n\nThe pirate lets loose, spraying lead at");
+			output("\n\n" + capitalA + short + " lets loose, spraying lead at");
 			if (target is PlayerCharacter) output(" you.");
 			else output(" " + target.a + target.short +".");
 			
@@ -255,7 +255,7 @@ package classes.GameData.Characters
 		
 		public function flashbang(otherTeam:Array):void
 		{
-			output("\n\nThe pirate grabs a grenade from his belt and tosses at your crew! You all cover your eyes as best you can, but the flash still leaves you slightly disoriented. AIM lowered for a turn!");
+			output("\n\n" + capitalA + short + " grabs a grenade from his belt and tosses it at your crew! You all cover your eyes as best you can, but the flash still leaves you slightly disoriented. AIM lowered for a turn!");
 			createStatusEffect("Flashbang Used");
 			
 			for (var i:int = 0; i < otherTeam.length; i++)
@@ -267,7 +267,7 @@ package classes.GameData.Characters
 		
 		public function lightNet(target:Creature):void
 		{
-			output("\n\nThe pirate grabs what looks like a fishing net from a pouch on his belt. The net starts glowing as the pirate pulls his arm back and hucks it at");
+			output("\n\n" + capitalA + short + " grabs what looks like a fishing net from a pouch on his belt. The net starts glowing as the pirate pulls his arm back and hucks it at");
 			if (target is PlayerCharacter) output(" you.");
 			else output(" " + target.a + target.short + ".");
 			

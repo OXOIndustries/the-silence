@@ -22,6 +22,8 @@ package classes.GameData.Characters
 			this.version = _latestVersion;
 			this._neverSerialize = false;
 			
+			this.a = "";
+			this.capitalA = "";
 			this.short = "Logan";
 			this.long = "Logan";
 			this.originalRace = "Human";

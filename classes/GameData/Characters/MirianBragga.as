@@ -29,6 +29,8 @@ package classes.GameData.Characters
 			this.version = _latestVersion;
 			this._neverSerialize = false;
 			
+			this.a = "";
+			this.capitalA = "";
 			this.short = "Mirian";
 			this.long = "Captain Mirian Bragga";
 			this.originalRace = "Human";
@@ -46,6 +48,8 @@ package classes.GameData.Characters
 			
 			this.INDEX = "MIRIAN";
 			this.bustT = StaticRenders.MISSING;
+			this.btnTargetText = "Mirian";
+			this.isUniqueInFight = true;
 			
 			this.level = 5;
 			this.physiqueRaw = 18;
@@ -178,11 +182,16 @@ package classes.GameData.Characters
 			if (HP() <= HPMax() * 0.25)
 			{
 				relentless();
+				return;
 			}
+			
+			var target:Creature = selectTarget(otherTeam);
 			
 			var attacks:Array = [rangedAttack, rangedAttack, meleeAttack, meleeAttack, lasPistol, forcePunch];
 			
 			if (shieldsRaw > 0) attacks.push(forceSabre);
+			
+			attacks[rand(attacks.length)](target);
 		}
 		
 		public function lasPistol(target:Creature):void
