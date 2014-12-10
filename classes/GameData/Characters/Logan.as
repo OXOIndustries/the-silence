@@ -39,6 +39,7 @@ package classes.GameData.Characters
 			
 			this.INDEX = "LOGAN";
 			this.bustT = StaticRenders.CREW_LOGAN;
+			this.defaultsToMelee = false;
 			
 			this.level = 5;
 			this.physiqueRaw = 18;

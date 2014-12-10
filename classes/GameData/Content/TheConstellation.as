@@ -5,6 +5,7 @@ package classes.GameData.Content
 	import classes.GameData.Items.Guns.ModifiedPlasmaPistol;
 	import classes.GameData.Items.Melee.GravityAxe;
 	import classes.GameData.CombatManager;
+	import classes.GameData.Items.Protection.EnhancedShield;
 	
 	/**
 	 * ...
@@ -266,9 +267,33 @@ package classes.GameData.Content
 			
 			output("A plate on the door identifies this room as ‘Interior Shield Control’. Common sense says this is where atmospheric and emergency shields are operated from; main combat shields are likely down in Engineering.");
 			
+			output("\n\nThere's a dead <i>Constellation</i>crewman in the corner. Looks like his console overloaded, burned him to a crisp. Poor bastard.");
+			
 			if (flags["CONSTELLATION_INTERNAL_SHIELDS_ON"] == undefined) addButton(0, "Shield Repair", commandDeckShieldRepair);
+			if (flags["CONSTELLATION_TAKEN_SHIELD_UPGRADE"] == undefined) addButton(1, "Shield Mod", commandDeckTakeShieldEmitter, undefined, "Shield Mod", "Looks like that Nova goon had a pretty nice shield belt. Too bad it didn't help him...");
 			
 			return false;
+		}
+		
+		private function commandDeckTakeShieldEmitter():void
+		{
+			flags["CONSTELLATION_TAKEN_SHIELD_UPGRADE"] = 1;
+
+			clearOutput();
+			output("<i>“Hey, check this out!”</i> Pyra says, skipping over to the dead Nova soldier and unceremoniously starting to look his corpse.");
+			
+			output("\n\nTarik scowls, <i>“Have some respect for the dead, little one.”</i>");
+			
+			output("\n\n<i>“Respect my ass! Check it,”</i> the raskvel cheers, yanking the dead man’s belt off and holding it over her head. <i>“New JoyCo Commander model! Got a super powerful energy cell, and a digital uplink module. Unless it broke. But it’s probably fine!”</i>");
+			
+			output("\n\n<i>“If it helps us, take it,”</i> you say. Pyra straps it on with a giddy grin, and she’s quickly enveloped in a visible orange glimmer as the new belt switches on.");
+			
+			output("\n\n<b>Pyra’s Shields have increased. The effectiveness of her Shield Boost ability has improved.</b>");
+
+			pyra.shield = new EnhancedShield();
+
+			clearMenu();
+			addButton(0, "Next", mainGameMenu);
 		}
 		
 		private function commandDeckShieldRepair():void

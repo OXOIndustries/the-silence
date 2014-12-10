@@ -2,6 +2,9 @@ package classes.GameData
 {
 	import classes.Creature;
 	import classes.GameData.Characters.BlackVoidPirate;
+	import classes.GameData.Characters.Logan;
+	import classes.GameData.Characters.MirianBragga;
+	import classes.GameData.Items.Protection.EnhancedShield;
 	import classes.StorageClass;
 	import classes.UIComponents.SideBarComponents.LocationHeader;
 	
@@ -539,6 +542,16 @@ package classes.GameData
 				if (!target.hasStatusEffect("ShotgunReload")) addButton(3, "Shotgun", selectSpecialAttack, [shotgunBlast, target, "Shotgun"], "Shotgun", "Peppers the target with a devestating shotgun blast.");
 				else addButton(3, "ReloadShotty", selectSpecialAttack, [reloadShotgun, target, "Reload"], "Reload Shotgun", "Pyra has to spend a round reloading her shotgun before she can fire it again.");
 			}
+			else if (target is Logan)
+			{
+				if (!target.hasStatusEffect("BurstFireCooldown")) addButton(0, "BurstFire", selectSpecialAttack, [burstFire, target, "BurstFire"], "Burst Fire", "Fire a burst from Logan's handgun.\n\nRequires 2 rounds to cool off after each attack.");
+				else addDisabledButton(0, "BurstFire", "Burst Fire", "Logans handgun barrel is still dangerously hot after the last burst of fire.\n\nCooldown remaining: " + target.statusEffectv1("BurstFireCooldown") + " rounds.");
+				
+				if (!target.hasStatusEffect("LoganTeaseUsed")) addButton(1, "Tease", selectSpecialAttack, [loganTease, target, "Tease"], "Tease", "Logan might not be the most proficient combatant- but she sure knows how to leverage every tool she can.");
+				else addDisabledButton(1, "Tease", "Tease", "Flashing your enemies again would probably be a waste of time- they probably wouldn't fall for the same shenanigans again.");
+				
+				addButton(2, "TailSlap", selectSpecialAttack, [tailSlap, target, "TailSlap"], "Tail Slap", "Make an attempt to knock a target down.");
+			}
 			
 			addButton(14, "Back", showCombatMenu, undefined, "Back", "Added in Specials Menu");
 		}
@@ -618,6 +631,22 @@ package classes.GameData
 				}
 
 				calculateDamage(attacker, target, attacker.rangedWeapon.damage * hits, attacker.rangedWeapon.damageType, "ranged");
+				
+				return;
+			}
+			else if (attacker is Logan)
+			{
+				output("\n\nLogan steadies her machine pistol in both hands, squeezing off a shot"); 
+				
+				if (!calculateMiss(attacker, target, false))
+				{
+					output(" that connects with " + target.a + target.short + ".");
+					calculateDamage(attacker, target, attacker.rangedWeapon.damage, attacker.rangedWeapon.damageType, "ranged");
+				}
+				else
+				{
+					output(" that goes wide, plinking into a bulkhead behind " + target.a + target.short + ".");
+				}
 				
 				return;
 			}
@@ -842,7 +871,7 @@ package classes.GameData
 				var numHits:int = 0;
 				for (var i:int = 0; i < 3; i++)
 				{
-					if (!calculateMiss(attacker, target, false, 3, 0))
+					if (!calculateMiss(attacker, target, false, 3, 1))
 					{
 						numHits++;
 					}
@@ -870,7 +899,10 @@ package classes.GameData
 			
 			for (var i:int = 0; i < _friendlies.length; i++)
 			{
-				var sGain:int = (_friendlies[i] as Creature).shieldsMax() * 0.25;
+				var sMult:Number = 0.25;
+				if (attacker.shield is EnhancedShield) sMult += 0.1;
+				
+				var sGain:int = (_friendlies[i] as Creature).shieldsMax() * sMult;
 				
 				if (sGain > (_friendlies[i] as Creature).shieldsMax() - (_friendlies[i] as Creature).shieldsRaw)
 				{
@@ -896,6 +928,64 @@ package classes.GameData
 		{
 			attacker.removeStatusEffect("ShotgunReload");
 			output("\n\nPyra fumbles with her oversized shotgun, the huge shells compared to her tiny fingers taking every ounce of effort she can muster in order to slide a replacement into the weapons breach.");
+		}
+		
+		private function burstFire(attacker:Creature, target:Creature):void
+		{
+			attacker.createStatusEffect("BurstFireCooldown", 2, 0, 0, 0, true, "", "", true, 0);
+			
+			output("\n\n<i>“Die, you fucks!”</i> Logan screams, flipping her machine pistol to automatic and firing from the hip, spraying lead at " + target.a + target.short + ".");
+			
+			var numHits:int = 0;
+			for (var i:int = 0; i < 3; i++)
+			{
+				if (!calculateMiss(attacker, target, false))
+				{
+					numHits++;
+				}
+			}
+			
+			if (numHits != 0)
+			{
+				var numT:Array = ["One", "Two", "Three"];
+				
+				output(" " + numT[numHits - 1] + " shot");
+				if (numHits > 1) output("s");
+				output(" connect.");
+				
+				output(" <i>“Die, die, die!”</i>");
+				
+				calculateDamage(attacker, target, attacker.rangedWeapon.damage, attacker.rangedWeapon.damageType, "ranged");
+			}
+			else
+			{
+				output(" Her entire burst goes completely wide!");
+			}
+		}
+		
+		private function loganTease(attacker:Creature, target:Creature):void
+		{
+			attacker.createStatusEffect("LoganTeaseUsed", 0, 0, 0, 0, true, "", "", true, 0);
+			
+			output("\n\n<i>“Hey, you!”</i> Logan shouts at " + target.a + target.short + ". As soon as she gets " + target.mfn("his", "her", "its") + " attention, Logan lifts her shirt up. " + target.A + target.short + " is ");
+			
+			if (target.originalRace == "Machine" || target is MirianBragga)
+			{
+				output("clearly unimpressed by the display.");
+			}
+			else
+			{
+				output(" visibly stunned by the display!");
+				target.createStatusEffect("Stunned", 3, 0, 0, 0, true, "", "", true, 0);
+			}
+			
+			// "Hey, you!" Logan shouts at {target}. As soon as she gets {his/her} attention, Logan lifts her shirt up, letting her boobs pop free. She does a little bounce, making her bust jiggle enticingly... before slipped a clawed hand down under her belt and yanking <i>that</i> down, revealing a massive slab of meat hanging between her legs big enough to make a horse jealous. {Target} is {visibly stunned by the display // clearly unimpressed by the display}. 
+			
+		}
+		
+		private function tailSlap(attacker:Creature, target:Creature):void
+		{
+			Logan rushes forward, sliding under {target}'s guard and spinning around, striking {his/her} legs with her big, thick reptilian tail. {Target} {teeters and falls backwards in a heap on the deck // manages to keep {his/her} feet firmly on the deck.}
 		}
 		
 		private function selectSpecialAttack(args:Array):void
