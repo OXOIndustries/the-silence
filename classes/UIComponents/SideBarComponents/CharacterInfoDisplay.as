@@ -35,6 +35,8 @@ package classes.UIComponents.SideBarComponents
 		private var _circleStats:CircularStatBar;
 		private var _statusEffects:Sprite;
 		
+		private var _eContainer:Sprite;
+		
 		private var _defEffect:EffectContainer;
 		private var _offEffect:EffectContainer;
 		private var _accEffect:EffectContainer;
@@ -67,12 +69,22 @@ package classes.UIComponents.SideBarComponents
 			BuildBustContainer();
 			BuildEffectContainers();
 			
+			if (_alignment == "left")
+			{
+				_eContainer.x = 124;
+			}
+			
 			// Default testing data for devwork.
 			ShowDebugInfo();
 		}
 		
 		private function BuildEffectContainers():void
 		{
+			var eContainer:Sprite = new Sprite();
+			addChild(eContainer);
+			
+			_eContainer = eContainer;
+			
 			_defEffect = new DefEffect();
 			_offEffect = new OffEffect();
 			_accEffect = new AccEffect();
@@ -81,13 +93,13 @@ package classes.UIComponents.SideBarComponents
 			_dotEffect = new DoTEffect();
 			_misEffect = new MiscEffect();
 			
-			this.addChild(_defEffect);
-			this.addChild(_offEffect);
-			this.addChild(_accEffect);
+			eContainer.addChild(_defEffect);
+			eContainer.addChild(_offEffect);
+			eContainer.addChild(_accEffect);
 			
-			this.addChild(_impEffect);
-			this.addChild(_dotEffect);
-			this.addChild(_misEffect);
+			eContainer.addChild(_impEffect);
+			eContainer.addChild(_dotEffect);
+			eContainer.addChild(_misEffect);
 			
 			_defEffect.x = 2;
 			_defEffect.y = _nameHeaderUnderline.y + _nameHeaderUnderline.height + 9;
@@ -160,7 +172,7 @@ package classes.UIComponents.SideBarComponents
 			_bustImage = new Sprite();
 			this.addChild(_bustImage);
 			
-			_bustImage.x = 136;
+			_bustImage.x = (_alignment == "right") ? 136 : 62;
 			_bustImage.y = 85;
 			
 			bustBackground.x = _bustImage.x;
@@ -182,7 +194,7 @@ package classes.UIComponents.SideBarComponents
 			_circleStats = new CircularStatBar();
 			this.addChild(_circleStats);
 			
-			_circleStats.x = 136;
+			_circleStats.x = (_alignment == "right") ? 136 : 62;
 			_circleStats.y = 85;
 		}
 		
