@@ -79,6 +79,7 @@ package classes.GameData.Content
 			CombatManager.victoryScene(pirateBreachVictory);
 			CombatManager.lossCondition(CombatManager.ENTIRE_PARTY_DEFEATED);
 			CombatManager.lossScene(pirateBreachLoss);
+			CombatManager.entryScene(breachPirateHoldoutFight);
 			CombatManager.beginCombat();
 		}
 
