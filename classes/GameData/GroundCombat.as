@@ -550,7 +550,8 @@ package classes.GameData
 				if (!target.hasStatusEffect("LoganTeaseUsed")) addButton(1, "Tease", selectSpecialAttack, [loganTease, target, "Tease"], "Tease", "Logan might not be the most proficient combatant- but she sure knows how to leverage every tool she can.");
 				else addDisabledButton(1, "Tease", "Tease", "Flashing your enemies again would probably be a waste of time- they probably wouldn't fall for the same shenanigans again.");
 				
-				addButton(2, "TailSlap", selectSpecialAttack, [tailSlap, target, "TailSlap"], "Tail Slap", "Make an attempt to knock a target down.");
+				if (!target.hasStatusEffect("TailSlapCooldown")) addButton(2, "TailSlap", selectSpecialAttack, [tailSlap, target, "TailSlap"], "Tail Slap", "Make an attempt to knock a target down. 2 round cooldown.");
+				else addDisabledButton(2, "TailSlap", "Tail Slap", "Logan needs a moment to recover!\n\nCooldown remaining: " + target.statusEffectv1("TailSlapCooldown") + " rounds.");
 			}
 			
 			addButton(14, "Back", showCombatMenu, undefined, "Back", "Added in Specials Menu");
@@ -967,7 +968,7 @@ package classes.GameData
 		{
 			attacker.createStatusEffect("LoganTeaseUsed", 0, 0, 0, 0, true, "", "", true, 0);
 			
-			output("\n\n<i>“Hey, you!”</i> Logan shouts at " + target.a + target.short + ". As soon as she gets " + target.mfn("his", "her", "its") + " attention, Logan lifts her shirt up. " + target.A + target.short + " is ");
+			output("\n\n<i>“Hey, you!”</i> Logan shouts at " + target.a + target.short + ". As soon as she gets " + target.mfn("his", "her", "its") + " attention, Logan lifts her shirt up. " + target.capitalA + target.short + " is ");
 			
 			if (target.originalRace == "Machine" || target is MirianBragga)
 			{
@@ -985,7 +986,21 @@ package classes.GameData
 		
 		private function tailSlap(attacker:Creature, target:Creature):void
 		{
-			Logan rushes forward, sliding under {target}'s guard and spinning around, striking {his/her} legs with her big, thick reptilian tail. {Target} {teeters and falls backwards in a heap on the deck // manages to keep {his/her} feet firmly on the deck.}
+			attacker.createStatusEffect("TailSlapCooldown", 2, 0, 0, 0, true, "", "", true, 0);
+			
+			output("\n\nLogan rushes forward, sliding under " + target.a + target.short + "’s guard and spinning around, striking " + target.mfn("his", "her", "its") + " legs with her big, thick reptilian tail.");
+			
+			if (rand(3) <= 1)
+			{
+				target.createStatusEffect("Stunned", 1, 0, 0, 0, true, "", "", true, 0);
+				output(" " + target.capitalA + target.short + " teeters and falls backwards in a heap on the deck.");
+				
+				calculateDamage(attacker, target, 5, GLOBAL.KINETIC, "melee");
+			}
+			else
+			{
+				output(" " + target.capitalA + target.short + " manages to keep " + target.mfn("his", "her", "its") + " feet firmly on the deck.");
+			}
 		}
 		
 		private function selectSpecialAttack(args:Array):void
