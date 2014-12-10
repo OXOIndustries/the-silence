@@ -36,7 +36,7 @@ package classes.GameData.Map.EnemyEncounters
 				if (f["PIRATES_STEPS"] == undefined) f["PIRATES_STEPS"] = 0;
 				f["PIRATES_STEPS"]++;
 				
-				if (f["PIRATES_STEPS"] < 2) return false;
+				if (f["PIRATES_STEPS"] < 3) return false;
 				
 				var num:int = rand(5);
 				if (num <= f["PIRATES_STEPS"])

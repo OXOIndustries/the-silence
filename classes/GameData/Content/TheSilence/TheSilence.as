@@ -29,7 +29,7 @@ package classes.GameData.Content.TheSilence
 				output("There’s not much of your airlock hatch left. It’s been torn to shreds in the impact, riddled with holes and floating debris in the low-grav gap between the ships. Where the hatch should be, there’s now a great big slab of black that’s been lasered open, creating a passage into the enemy ship. You steel yourself before preparing to step over the threshold...");
 
 				clearMenu();
-				addButton(0, "Enter Breach", MapIndex.Move, theSilence.airlockConnectsTo);
+				addButton(0, "Enter Breach", MapIndex.Move, theSilence.airlockConnectsTo());
 				return true;
 			}
 			
@@ -372,6 +372,8 @@ package classes.GameData.Content.TheSilence
 
 			logan.currentLocation = "";
 			pyra.currentLocation = "";
+			
+			theSilence.moveToShip(theBlackRose);
 
 			CombatManager.GenericLoss();
 			CombatManager.postCombat();
