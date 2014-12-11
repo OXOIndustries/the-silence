@@ -173,6 +173,7 @@ package classes.GameData
 		{
 			if (playerVictoryCondition())
 			{
+				showCombatUI();
 				clearMenu();
 				addButton(0, "Victory", _victoryFunction);
 				return true;
@@ -184,6 +185,7 @@ package classes.GameData
 		{
 			if (playerLossCondition())
 			{
+				showCombatUI();
 				clearMenu();
 				addButton(0, "Defeat", _lossFunction);
 				return true;
@@ -1323,6 +1325,15 @@ package classes.GameData
 		{
 			if (target.isDefeated()) return;
 			
+			if (target.hasStatusEffect("Targeting Shot"))
+			{
+				target.addStatusValue("Targeting Shot", 1, -1);
+				if (target.statusEffectv1("Targeting Shot") < 0)
+				{
+					target.removeStatusEffect("Targeting Shot");
+				}
+			}
+			
 			if (target.hasStatusEffect("Plasma Burn"))
 			{
 				output("\n\nFirey green plasma continues to wear down " + ((target is PlayerCharacter) ? "your" : target.a + possessive(target.short)) + " defenses");
@@ -1350,6 +1361,10 @@ package classes.GameData
 			if (target.hasStatusEffect("Damage Reduction"))
 			{
 				target.addStatusValue("Damage Reduction", 1, -1);
+				if (target.statusEffectv1("Damage Reduction") < 0)
+				{
+					target.removeStatusEffect("Damage Reduction");
+				}
 			}
 			if (target.hasStatusEffect("Focus Fire"))
 			{
@@ -1373,7 +1388,7 @@ package classes.GameData
 			if (target.hasStatusEffect("Aim Reduction"))
 			{
 				target.addStatusValue("Aim Reduction", 1, -1)
-				if (target.statusEffectv1("Aim Reduction") <= 0)
+				if (target.statusEffectv1("Aim Reduction") < 0)
 				{
 					output("\n\nThe blinding flash that was disorienting ");
 					if (target is PlayerCharacter) output("you");
