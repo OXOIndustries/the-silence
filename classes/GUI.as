@@ -11,6 +11,7 @@
 	import classes.UIComponents.ContentModules.GameTextModule;
 	import classes.UIComponents.ContentModules.MainMenuModule;
 	import classes.UIComponents.ContentModules.OptionsModule;
+	import classes.UIComponents.ContentModules.RotateMinigameModule;
 	import classes.UIComponents.LeftSideBar;
 	import classes.UIComponents.MainButton;
 	import classes.UIComponents.RightSideBar;
@@ -143,6 +144,7 @@
 			this.ConfigureSecondaryOutput();
 			this.ConfigureCodex();
 			this.ConfigureOptions();
+			this.ConfigureMinigame();
 			
 			this.setupRightSidebar();
 			this.setupLeftSidebar();
@@ -398,6 +400,18 @@
 			pOptions.visible = false;
 		}
 		
+		private function ConfigureMinigame():void
+		{
+			var pMinigame:RotateMinigameModule = new RotateMinigameModule();
+			titsClassPtr.addChild(pMinigame);
+			_availableModules[pMinigame.moduleName] = pMinigame;
+			
+			pMinigame.x = 200;
+			pMinigame.y = 0;
+			
+			pMinigame.visible = false;
+		}
+		
 		/**
 		 * Attempt to display a target module
 		 * @param	module
@@ -508,6 +522,11 @@
 			}
 			
 			this.clearGhostMenu();
+		}
+		
+		public function showMinigame(board:Array):void
+		{
+			if (_currentModule.moduleName != "
 		}
 		
 		private function showTargetOutput(v:String):void
