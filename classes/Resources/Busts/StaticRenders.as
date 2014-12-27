@@ -24,6 +24,15 @@ package classes.Resources.Busts
 		
 		[Embed(source = "../../../assets/models/Mob_Bot/secdroid_gameres.png", mimeType = "image/png")]
 		public static const MOB_BOT:Class;
+		
+		[Embed(source = "../../../assets/models/pyra/pyra_gamesize_res.png", mimeType = "image/png")]
+		public static const CREW_PYRA:Class;
+		
+		[Embed(source = "../../../assets/models/connie/connie_gamesize_res.png", mimeType = "image/png")]
+		public static const CREW_CONNIE:Class;
+		
+		[Embed(source = "../../../assets/models/mirian/mirian_gamesize_res.png", mimeType = "image/png")]
+		public static const MOB_MIRIAN:Class;
 	}
 
 }

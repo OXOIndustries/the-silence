@@ -3,6 +3,8 @@ package classes.UIComponents.ContentModules
 	import classes.UIComponents.ContentModule;
 	import classes.UIComponents.ContentModuleComponents.RotateGameElement;
 	import flash.events.Event;
+	import classes.UIComponents.ContentModuleComponents.RGMK;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -10,20 +12,6 @@ package classes.UIComponents.ContentModules
 	public class RotateMinigameModule extends ContentModule
 	{	
 		// Keys to configure/poll the game board.
-		public static const NODE_GOAL:uint 		= 1 << 0;
-		public static const NODE_INTERACT:uint 	= 1 << 1;
-		public static const NODE_LOCKED:uint	= 1 << 2;
-		
-		public static const CON_NORTH:uint 		= 1 << 3;
-		public static const CON_EAST:uint 		= 1 << 4;
-		public static const CON_SOUTH:uint 		= 1 << 5;
-		public static const CON_WEST:uint 		= 1 << 6;
-		
-		public static const ROT_000:uint		= 1 << 0;
-		public static const ROT_090:uint		= 1 << 1;
-		public static const ROT_180:uint		= 1 << 2;
-		public static const ROT_270:uint		= 1 << 3;
-		
 		private var _pieces:Array;
 		private var _width:int;
 		private var _height:int;
@@ -51,7 +39,7 @@ package classes.UIComponents.ContentModules
 			
 		}
 	
-		public function setPuzzleState(sizeX, sizeY, board:Array):void
+		public function setPuzzleState(sizeX:int, sizeY:int, board:Array):void
 		{
 			if (sizeX * sizeY > board.length) throw new Error("Too many board settings for the defined board size!");
 		}
@@ -73,7 +61,7 @@ package classes.UIComponents.ContentModules
 				iX = i % width;
 				iY = int(i / width);
 				
-				if (dir & CON_NORTH && iY > 0)
+				if (dir & RGMK.CON_NORTH && iY > 0)
 				{
 					iY--;
 				}
@@ -82,7 +70,7 @@ package classes.UIComponents.ContentModules
 					return null;
 				}
 				
-				if (dir & CON_SOUTH && iY < height)
+				if (dir & RGMK.CON_SOUTH && iY < height)
 				{
 					iY++;
 				}
@@ -91,7 +79,7 @@ package classes.UIComponents.ContentModules
 					return null;
 				}
 				
-				if (dir & CON_EAST && iX < width)
+				if (dir & RGMK.CON_EAST && iX < width)
 				{
 					iX++;
 				}
@@ -100,7 +88,7 @@ package classes.UIComponents.ContentModules
 					return null;
 				}
 				
-				if (dir & CON_WEST && iX > 0)
+				if (dir & RGMK.CON_WEST && iX > 0)
 				{
 					iX--;
 				}
@@ -123,25 +111,25 @@ package classes.UIComponents.ContentModules
 			
 			if (t)
 			{
-				if (dir & CON_NORTH && t.South)
+				if (dir & RGMK.CON_NORTH && t.South)
 				{
 					source.conNorth = true;
-					t.powerFrom(CON_SOUTH);
+					t.powerFrom(RGMK.CON_SOUTH);
 				}
-				if (dir & CON_EAST && t.West)
+				if (dir & RGMK.CON_EAST && t.West)
 				{
 					source.conEast = true;
-					t.powerFrom(CON_WEST);
+					t.powerFrom(RGMK.CON_WEST);
 				}
-				else if (dir & CON_SOUTH && t.North)
+				else if (dir & RGMK.CON_SOUTH && t.North)
 				{
 					source.conSouth = true;
-					t.powerFrom(CON_NORTH);
+					t.powerFrom(RGMK.CON_NORTH);
 				}
-				else if (dir & CON_WEST && t.East)
+				else if (dir & RGMK.CON_WEST && t.East)
 				{
 					source.conWest = true;
-					t.powerFrom(CON_WEST);
+					t.powerFrom(RGMK.CON_WEST);
 				}
 			}
 		}

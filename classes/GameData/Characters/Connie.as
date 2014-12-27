@@ -38,7 +38,7 @@ package classes.GameData.Characters
 			this.shield = new DecentShield();
 			
 			this.INDEX = "CONNIE";
-			this.bustT = StaticRenders.MISSING;
+			this.bustT = StaticRenders.CREW_CONNIE;
 			this.entersCombat = false;
 			
 			this.level = 5;

@@ -16,6 +16,7 @@
 	import classes.UIComponents.MainButton;
 	import classes.UIComponents.RightSideBar;
 	import classes.UIComponents.SquareButton;
+	import fl.transitions.Rotate;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;
@@ -524,9 +525,22 @@
 			this.clearGhostMenu();
 		}
 		
-		public function showMinigame(board:Array):void
+		public function showMinigame():void
 		{
-			if (_currentModule.moduleName != "
+			if (_currentModule.moduleName != "RotateMinigame")
+			{
+				this.showTargetOutput("RotateMinigame");
+			}
+		}
+		
+		public function getMinigameModule():RotateMinigameModule
+		{
+			if (_currentModule.moduleName != "RotateMinigame")
+			{
+				throw new Error("The currently displayed module is not the minigame module.");
+			}
+			
+			return this._currentModule as RotateMinigameModule;
 		}
 		
 		private function showTargetOutput(v:String):void

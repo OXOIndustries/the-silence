@@ -3,6 +3,7 @@ package classes.UIComponents.ContentModuleComponents
 	import flash.display.Sprite;
 	import classes.UIComponents.UIStyleSettings;
 	import classes.UIComponents.ContentModules.RotateMinigameModule;
+	import classes.UIComponents.ContentModuleComponents.RGMK;
 	
 	/**
 	 * ...
@@ -27,20 +28,36 @@ package classes.UIComponents.ContentModuleComponents
 		{
 			return _north;
 		}
+		public function set North(v:Boolean):void
+		{
+			_north = v;
+		}
 		public function get East():Boolean
 		{
 			return _east;
+		}
+		public function set East(v:Boolean):void
+		{
+			_east = v;
 		}
 		public function get South():Boolean
 		{
 			return _south;
 		}
+		public function set South(v:Boolean):void
+		{
+			_south = v;
+		}
 		public function get West():Boolean
 		{
 			return _west;
 		}
+		public function set West(v:Boolean):void
+		{
+			_west = v;
+		}
 		
-		private var _rotState:uint = RotateMinigameModule.ROT_000;
+		private var _rotState:uint = RGMK.ROT_000;
 		private var _poweredDirection:uint = 0;
 		
 		public function get isPowered():Boolean
@@ -51,11 +68,11 @@ package classes.UIComponents.ContentModuleComponents
 		{
 			_poweredDirection = 0;
 			
-			if (v == 0) _connectorMid = false;
+			if (v == 0) _connectorMid.visible = false;
 			else _connectorMid.visible = true;
 		}
 		
-		public function set powerFrom(dir:uint):void
+		public function powerFrom(dir:uint):void
 		{
 			if (dir == 0)
 			{
@@ -69,37 +86,37 @@ package classes.UIComponents.ContentModuleComponents
 				_poweredDirection = dir;
 			}
 			
-			var pNorth:Boolean = dir & RotateMinigameModule.CON_NORTH;
-			var pEast:Boolean = dir & RotateMinigameModule.CON_EAST;
-			var pSouth:Boolean = dir & RotateMinigameModule.CON_SOUTH;
-			var pWest:Boolean = dir & RotateMinigameModule.CON_WEST;
+			var pNorth:Boolean = dir & RGMK.CON_NORTH;
+			var pEast:Boolean = dir & RGMK.CON_EAST;
+			var pSouth:Boolean = dir & RGMK.CON_SOUTH;
+			var pWest:Boolean = dir & RGMK.CON_WEST;
 			
 			if (pNorth)
 			{
-				if (East) game.tryConnect(this, RotateMinigameModule.CON_EAST);
-				if (South) game.tryConnect(this, RotateMinigameModule.CON_SOUTH);
-				if (West) game.tryConnect(this, RotateMinigameModule.CON_WEST);
+				if (East) game.tryConnect(this, RGMK.CON_EAST);
+				if (South) game.tryConnect(this, RGMK.CON_SOUTH);
+				if (West) game.tryConnect(this, RGMK.CON_WEST);
 			}
 			
 			if (pEast)
 			{
-				if (North) game.tryConnect(this, RotateMinigameModule.CON_NORTH);
-				if (South) game.tryConnect(this, RotateMinigameModule.CON_SOUTH);
-				if (West) game.tryConnect(this, RotateMinigameModule.CON_WEST);
+				if (North) game.tryConnect(this, RGMK.CON_NORTH);
+				if (South) game.tryConnect(this, RGMK.CON_SOUTH);
+				if (West) game.tryConnect(this, RGMK.CON_WEST);
 			}
 			
 			if (pSouth)
 			{
-				if (North) game.tryConnect(this, RotateMinigameModule.CON_NORTH);
-				if (East) game.tryConnect(this, RotateMinigameModule.CON_EAST);
-				if (West) game.tryConnect(this, RotateMinigameModule.CON_WEST);
+				if (North) game.tryConnect(this, RGMK.CON_NORTH);
+				if (East) game.tryConnect(this, RGMK.CON_EAST);
+				if (West) game.tryConnect(this, RGMK.CON_WEST);
 			}
 			
 			if (pWest)
 			{
-				if (North) game.tryConnect(this, RotateMinigameModule.CON_NORTH);
-				if (East) game.tryConnect(this, RotateMinigameModule.CON_EAST);
-				if (South) game.tryConnect(this, RotateMinigameModule.CON_SOUTH);
+				if (North) game.tryConnect(this, RGMK.CON_NORTH);
+				if (East) game.tryConnect(this, RGMK.CON_EAST);
+				if (South) game.tryConnect(this, RGMK.CON_SOUTH);
 			}
 		}
 		
@@ -201,23 +218,23 @@ package classes.UIComponents.ContentModuleComponents
 		{
 			var exits:Array =
 			[
-				state & RotateMinigameModule.CON_NORTH,
-				state & RotateMinigameModule.CON_EAST,
-				state & RotateMinigameModule.CON_SOUTH,
-				state & RotateMinigameModule.CON_WEST
+				state & RGMK.CON_NORTH,
+				state & RGMK.CON_EAST,
+				state & RGMK.CON_SOUTH,
+				state & RGMK.CON_WEST
 			];
 			
 			var shift:int = 0;
-			if (_rotState & RotateMinigameModule.ROT_090) shift += 1;
-			if (_rotState & RotateMinigameModule.ROT_180) shift += 2;
-			if (_rotState & RotateMinigameModule.ROT_270) shift += 3;
+			if (_rotState & RGMK.ROT_090) shift += 1;
+			if (_rotState & RGMK.ROT_180) shift += 2;
+			if (_rotState & RGMK.ROT_270) shift += 3;
 			
 			for (var s:int = 0; s < shift; s++)
 			{
 				exits.push(exits.shift());
 			}
 			
-			var mask:Sprite = _oRing.mask;
+			var mask:Sprite = _oRing.mask as Sprite;
 			
 			if (mask == null) mask = new Sprite();
 			

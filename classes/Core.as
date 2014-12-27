@@ -2,6 +2,7 @@
 {
 	import classes.GameData.ContentIndex;
 	import classes.TiTS_Settings;
+	import classes.UIComponents.ContentModules.RotateMinigameModule;
 	import classes.UIComponents.MainButton;
 	import fl.transitions.Tween;
 	import flash.display.DisplayObject;
@@ -57,6 +58,7 @@
 
 	// Manager child classes for ease of use
 	import classes.UIComponents.StatBar;
+	import classes.UIComponents.ContentModuleComponents.RGMK;
 	
 	//Build the bottom drawer
 	public class Core extends MovieClip
@@ -138,6 +140,21 @@
 			this.configureCodex();
 			this.userInterface.showMainMenu();
 			buildWTF();
+			
+			addGhostButton(0, "Test Minigame", doMinigameTest);
+		}
+		
+		private function doMinigameTest():void
+		{
+			this.userInterface.showMinigame();
+			var g:RotateMinigameModule = this.userInterface.getMinigameModule();
+			
+			g.setPuzzleState(3, 3,
+			[
+				RGMK.NODE_GOAL | RGMK.CON_SOUTH, 						RGMK.NODE_LOCKED, 									RGMK.NODE_GOAL | RGMK.CON_SOUTH,
+				RGMK.NODE_INTERACT | RGMK.CON_EAST | RGMK.CON_WEST, 	RGMK.NODE_LOCKED, 									RGMK.NODE_INTERACT | RGMK.CON_NORTH | RGMK.CON_SOUTH,
+				RGMK.NODE_INTERACT | RGMK.CON_NORTH | RGMK.CON_EAST, 	RGMK.NODE_INTERACT | RGMK.CON_EAST | RGMK.CON_WEST, RGMK.NODE_INTERACT | RGMK.CON_WEST | RGMK.CON_NORTH
+			]);
 		}
 		
 		private function buildWTF():void

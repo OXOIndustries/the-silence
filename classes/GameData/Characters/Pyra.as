@@ -42,7 +42,7 @@ package classes.GameData.Characters
 			this.shield = new DecentShield();
 			
 			this.INDEX = "PYRA";
-			this.bustT = StaticRenders.MISSING;
+			this.bustT = StaticRenders.CREW_PYRA;
 			this.defaultsToMelee = true;
 			
 			this.level = 5;

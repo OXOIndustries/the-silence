@@ -47,7 +47,7 @@ package classes.GameData.Characters
 			this.shield = new DecentShield();
 			
 			this.INDEX = "MIRIAN";
-			this.bustT = StaticRenders.MISSING;
+			this.bustT = StaticRenders.MOB_MIRIAN;
 			this.btnTargetText = "Mirian";
 			this.isUniqueInFight = true;
 			
