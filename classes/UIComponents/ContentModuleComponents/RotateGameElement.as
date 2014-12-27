@@ -1,9 +1,12 @@
 package classes.UIComponents.ContentModuleComponents 
 {
+	import adobe.utils.CustomActions;
+	import fl.motion.Color;
 	import flash.display.Sprite;
 	import classes.UIComponents.UIStyleSettings;
 	import classes.UIComponents.ContentModules.RotateMinigameModule;
 	import classes.UIComponents.ContentModuleComponents.RGMK;
+	import flash.geom.ColorTransform;
 	
 	/**
 	 * ...
@@ -18,6 +21,21 @@ package classes.UIComponents.ContentModuleComponents
 		public var DefEast:Boolean = false;
 		public var DefSouth:Boolean = false;
 		public var DefWest:Boolean = false;
+		
+		private static var LOCKED:ColorTransform;
+		private static var INTERACT:ColorTransform;
+		private static var GOAL:ColorTransform;
+		
+		{
+			LOCKED = new ColorTransform();
+			LOCKED.color = 0xFF0000;
+			
+			INTERACT = new ColorTransform();
+			INTERACT.color = UIStyleSettings.gHighlightColour;
+			
+			GOAL = new ColorTransform();
+			GOAL.color = 0x00FF00;
+		}
 		
 		private var _north:Boolean;
 		private var _east:Boolean;
@@ -167,6 +185,9 @@ package classes.UIComponents.ContentModuleComponents
 		{
 			game = this.parent as RotateMinigameModule;
 			
+			LOCKED = new ColorTransform();
+			
+			
 			this.Build();
 		}
 		
@@ -174,36 +195,44 @@ package classes.UIComponents.ContentModuleComponents
 		{
 			var backRing:Sprite = new Sprite();
 			backRing.graphics.beginFill(UIStyleSettings.gForegroundColour);
-			backRing.graphics.drawCircle(0, 0, 62);
+			backRing.graphics.drawCircle(0, 0, 31);
 			backRing.graphics.endFill();
 			this.addChild(backRing);
 			
 			_ring = new Sprite();
+			addChild(_ring);
 			
-			var oRing:Sprite = new Sprite();
+			_oRing = new Sprite();
 			_oRing.graphics.beginFill(UIStyleSettings.gHighlightColour);
-			_oRing.graphics.drawCircle(0, 0, 59);
+			//_oRing.graphics.beginFill(0xFF0000);
+			_oRing.graphics.drawCircle(0, 0, 29);
 			_oRing.graphics.endFill();
 			_ring.addChild(_oRing);
 			
+			var ringMid = new Sprite();
+			ringMid.graphics.beginFill(UIStyleSettings.gForegroundColour);
+			ringMid.graphics.drawCircle(0, 0, 22);
+			ringMid.graphics.endFill();
+			_ring.addChild(ringMid);
+			
 			_connectorMid = new Sprite();
 			_connectorMid.graphics.beginFill(UIStyleSettings.gHighlightColour);
-			_connectorMid.graphics.drawCircle(0, 0, 18);
+			_connectorMid.graphics.drawCircle(0, 0, 9);
 			_connectorMid.graphics.endFill();
 			_ring.addChild(_connectorMid);
 			_connectorMid.visible = false;
 			
 			_connectorNorth = new Sprite();
-			buildConnector(_connectorNorth, 10, 80, -5, -80);
+			buildConnector(_connectorNorth, 10, 40, -5, -40);
 			
 			_connectorEast = new Sprite();
-			buildConnector(_connectorEast, 80, 10, 0, -5);
+			buildConnector(_connectorEast, 40, 10, 0, -5);
 			
 			_connectorSouth = new Sprite();
-			buildConnector(_connectorSouth, 10, 80, -5, 0);
+			buildConnector(_connectorSouth, 10, 40, -5, 0);
 			
 			_connectorWest = new Sprite();
-			buildConnector(_connectorWest, 80, 10, -80, -5);
+			buildConnector(_connectorWest, 40, 10, -40, -5);
 		}
 		
 		private function buildConnector(s:Sprite, w:int, h:int, x:int, y:int):void
@@ -212,6 +241,37 @@ package classes.UIComponents.ContentModuleComponents
 			s.graphics.drawRect(x, y, w, h);
 			s.graphics.endFill();
 			this.addChild(s);
+			s.visible = false;
+		}
+		
+		public function setState(state:uint):void
+		{
+			if (
+				!(state & RGMK.ROT_000) &&
+				!(state & RGMK.ROT_090) &&
+				!(state & RGMK.ROT_180) &&
+				!(state & RGMK.ROT_270)
+				)
+			{
+				state |= RGMK.ROT_000;
+			}
+				
+			setMaskState(state);
+			
+			if (state & RGMK.NODE_GOAL)
+			{
+				_oRing.transform.colorTransform = GOAL;
+			}
+			else if (state & RGMK.NODE_INTERACT)
+			{
+				_oRing.transform.colorTransform = INTERACT;
+			}
+			else if (state & RGMK.NODE_LOCKED)
+			{
+				_oRing.transform.colorTransform = LOCKED;
+			}
+			
+			visible = true;
 		}
 		
 		private function setMaskState(state:uint):void
@@ -292,7 +352,7 @@ package classes.UIComponents.ContentModuleComponents
 				West = false;
 			}
 			
-			_oRing.mask = mask;
+			//_oRing.mask = mask;
 		}		
 	}
 }

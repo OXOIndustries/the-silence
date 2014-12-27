@@ -16,6 +16,8 @@ package classes.UIComponents.ContentModules
 		private var _width:int;
 		private var _height:int;
 		
+		private var _defState:Array;
+		
 		public function RotateMinigameModule() 
 		{
 			leftBarEnabled = true;
@@ -36,17 +38,70 @@ package classes.UIComponents.ContentModules
 		
 		private function Build():void
 		{
+			_pieces = [];
 			
+			for (var yy:int = 0; yy < 9; yy++)
+			{
+				for (var xx:int = 0; xx < 9; xx++)
+				{
+					var elem:RotateGameElement = new RotateGameElement();
+					
+					this.addChild(elem);
+					_pieces.push(elem);
+					
+					elem.x = (xx * elem.width) + (elem.width / 2);
+					elem.y = (yy * elem.height) + (elem.height / 2);
+					
+					elem.visible = false;
+				}
+			}
 		}
 	
 		public function setPuzzleState(sizeX:int, sizeY:int, board:Array):void
 		{
 			if (sizeX * sizeY > board.length) throw new Error("Too many board settings for the defined board size!");
+			
+			if (sizeX % 2 != 1 || sizeY % 2 != 1) throw new Error("Boards should always feature odd-sized dimensions (3x3, 3x5 etc)");
+			if (sizeX < 3 || sizeY < 3) throw new Error("Boards should always feature at least 3 rows or columns.");
+			
+			_defState = board;
+			_width = sizeX;
+			_height = sizeY;
+			
+			var sX:int;
+			var sY:int;
+			
+			sX = (sizeX - 1) / 2;
+			sY = (sizeY - 1) / 2;
+			
+			sX = 4 - sX;
+			sY = 4 - sY;
+			
+			var iX:int = 0;
+			var iY:int = 0;
+			
+			for (var i:int = 0; i < board.length; i++)
+			{
+				var elem:uint = board[i];
+				
+				var dElem:RotateGameElement;
+				
+				dElem = _pieces[(sX + iX) + (sY + iY)];
+				dElem.setState(board[i]);
+				
+				iX++;
+				
+				if (iX == sizeX - 1)
+				{
+					iY++;
+					iX = 0;
+				}
+			}
 		}
 		
 		public function resetPuzzle():void
 		{
-			
+			setPuzzleState(_width, _height, _defState);
 		}
 		
 		public function getNearby(s:RotateGameElement, dir:uint):RotateGameElement
