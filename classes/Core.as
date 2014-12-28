@@ -147,31 +147,32 @@
 		private function doMinigameTest():void
 		{
 			this.userInterface.showMinigame();
-			var g:RotateMinigameModule = this.userInterface.getMinigameModule();
+			var gm:RotateMinigameModule = this.userInterface.getMinigameModule();
 			
-			/*
-			g.setPuzzleState(3, 3,
+			
+			gm.setPuzzleState(3, 3,
 			[
 				RGMK.NODE_GOAL | RGMK.CON_SOUTH, 						RGMK.NODE_LOCKED, 									RGMK.NODE_GOAL | RGMK.CON_SOUTH,
 				RGMK.NODE_INTERACT | RGMK.CON_EAST | RGMK.CON_WEST, 	RGMK.NODE_LOCKED, 									RGMK.NODE_INTERACT | RGMK.CON_NORTH | RGMK.CON_SOUTH,
 				RGMK.NODE_INTERACT | RGMK.CON_NORTH | RGMK.CON_EAST, 	RGMK.NODE_INTERACT | RGMK.CON_EAST | RGMK.CON_WEST, RGMK.NODE_INTERACT | RGMK.CON_WEST | RGMK.CON_NORTH
 			]);
-			*/
 			
+			/*
 			var t:uint = RGMK.NODE_INTERACT;
+			var l:uint = RGMK.NODE_LOCKED;
+			var g:uint = RGMK.NODE_GOAL;
 			
-			g.setPuzzleState(9, 9,
+			gm.setPuzzleState(7, 7,
 			[
-				RGMK.NODE_GOAL, t, t, t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t, t, t
+				t, t, t, t, t, t, t,
+				t, t, t, t, t, t, t,
+				t, t, t, t, t, t, t,
+				t, t, t, t, t, t, t,
+				t, t, t, t, t, t, t,
+				t, t, t, t, t, t, t,
+				t, t, t, t, t, t, t
 			]);
+			*/
 		}
 		
 		private function buildWTF():void

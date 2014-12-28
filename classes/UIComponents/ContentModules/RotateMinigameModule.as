@@ -49,8 +49,8 @@ package classes.UIComponents.ContentModules
 					this.addChild(elem);
 					_pieces.push(elem);
 					
-					elem.x = (xx * elem.width) + (elem.width / 2);
-					elem.y = (yy * elem.height) + (elem.height / 2);
+					elem.x = (xx * elem.width) + (elem.width / 2) + 40;
+					elem.y = (yy * elem.height) + (elem.height / 2) + 10;
 					
 					elem.visible = false;
 				}
@@ -60,42 +60,57 @@ package classes.UIComponents.ContentModules
 		public function setPuzzleState(sizeX:int, sizeY:int, board:Array):void
 		{
 			if (sizeX * sizeY > board.length) throw new Error("Too many board settings for the defined board size!");
-			
 			if (sizeX % 2 != 1 || sizeY % 2 != 1) throw new Error("Boards should always feature odd-sized dimensions (3x3, 3x5 etc)");
 			if (sizeX < 3 || sizeY < 3) throw new Error("Boards should always feature at least 3 rows or columns.");
+			if (board.length > _pieces.length) throw new Error("Boards can only contain at most 81 elements.");
 			
-			_defState = board;
+			var paddedArray:Array
+			
+			if (board.length < 9 * 9)
+			{
+				paddedArray = [];
+				var xPad:int = (9 - sizeX) / 2;
+				var yPad:int = (9 - sizeY) / 2;
+				
+				var baseI:int = 0;
+				
+				for (var yy:int = 0; yy < 9; yy++)
+				{
+					for (var xx:int = 0; xx < 9; xx++)
+					{
+						//trace("Working for (" + yy + "," + xx + ")");
+						if (yy < yPad || yy >= 9 - yPad)
+						{
+							//trace(" -> element falls outside of defined board (Y)");
+							paddedArray.push(0);
+						}
+						else if (xx < xPad || xx >= 9 - xPad)
+						{
+							//trace(" -> element falls outside of defined board (X)");
+							paddedArray.push(0);
+						}
+						else
+						{
+							//trace(" -> setting element to board value " + board[baseI]);
+							paddedArray.push(board[baseI]);
+							baseI++;
+						}					
+					}
+				}
+			}
+			else
+			{
+				paddedArray = board;
+			}
+			
+			_defState = paddedArray;
 			_width = sizeX;
 			_height = sizeY;
 			
-			var sX:int;
-			var sY:int;
-			
-			sX = (sizeX - 1) / 2;
-			sY = (sizeY - 1) / 2;
-			
-			sX = 4 - sX;
-			sY = 4 - sY;
-			
-			var iX:int = 0;
-			var iY:int = 0;
-			
-			for (var i:int = 0; i < board.length; i++)
+			for (var i:int = 0; i < paddedArray.length; i++)
 			{
-				var elem:uint = board[i];
-				
-				var dElem:RotateGameElement;
-				
-				dElem = _pieces[(sX + iX) + (sY + iY)];
-				dElem.setState(board[i]);
-				
-				iX++;
-				
-				if (iX == sizeX - 1)
-				{
-					iY++;
-					iX = 0;
-				}
+				var dElem:RotateGameElement = _pieces[i];
+				dElem.setState(paddedArray[i]);
 			}
 		}
 		

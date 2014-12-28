@@ -104,10 +104,10 @@ package classes.UIComponents.ContentModuleComponents
 				_poweredDirection = dir;
 			}
 			
-			var pNorth:Boolean = dir & RGMK.CON_NORTH;
-			var pEast:Boolean = dir & RGMK.CON_EAST;
-			var pSouth:Boolean = dir & RGMK.CON_SOUTH;
-			var pWest:Boolean = dir & RGMK.CON_WEST;
+			var pNorth:Boolean = Boolean(dir & RGMK.CON_NORTH);
+			var pEast:Boolean = Boolean(dir & RGMK.CON_EAST);
+			var pSouth:Boolean = Boolean(dir & RGMK.CON_SOUTH);
+			var pWest:Boolean = Boolean(dir & RGMK.CON_WEST);
 			
 			if (pNorth)
 			{
@@ -183,10 +183,7 @@ package classes.UIComponents.ContentModuleComponents
 		
 		public function RotateGameElement() 
 		{
-			game = this.parent as RotateMinigameModule;
-			
-			LOCKED = new ColorTransform();
-			
+			game = this.parent as RotateMinigameModule;			
 			
 			this.Build();
 		}
@@ -209,7 +206,7 @@ package classes.UIComponents.ContentModuleComponents
 			_oRing.graphics.endFill();
 			_ring.addChild(_oRing);
 			
-			var ringMid = new Sprite();
+			var ringMid:Sprite = new Sprite();
 			ringMid.graphics.beginFill(UIStyleSettings.gForegroundColour);
 			ringMid.graphics.drawCircle(0, 0, 22);
 			ringMid.graphics.endFill();
@@ -246,6 +243,12 @@ package classes.UIComponents.ContentModuleComponents
 		
 		public function setState(state:uint):void
 		{
+			if (state == 0)
+			{
+				visible = false;
+				return;
+			}
+			
 			if (
 				!(state & RGMK.ROT_000) &&
 				!(state & RGMK.ROT_090) &&
@@ -297,6 +300,8 @@ package classes.UIComponents.ContentModuleComponents
 			var mask:Sprite = _oRing.mask as Sprite;
 			
 			if (mask == null) mask = new Sprite();
+			
+			if (mask.parent == null) this._ring.addChild(mask);
 			
 			mask.graphics.clear();
 			
@@ -352,7 +357,7 @@ package classes.UIComponents.ContentModuleComponents
 				West = false;
 			}
 			
-			//_oRing.mask = mask;
+			_oRing.mask = mask;
 		}		
 	}
 }
