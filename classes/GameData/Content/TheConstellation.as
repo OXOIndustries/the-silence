@@ -7,6 +7,8 @@ package classes.GameData.Content
 	import classes.GameData.CombatManager;
 	import classes.GameData.Items.Protection.EnhancedShield;
 	import classes.GameData.ContentIndex;
+	import classes.UIComponents.ContentModules.RotateMinigameModule;
+	import classes.UIComponents.ContentModuleComponents.RGMK;
 	/**
 	 * ...
 	 * @author Gedan
@@ -211,7 +213,7 @@ package classes.GameData.Content
 			{
 				output("\n\nThe plate here reads ‘Officers’ Quarters’. However, the path ahead is sealed by a security bulkhead. ");
 				
-				addButton(0, "Security Override", overrideOfficersQuartersSecurity);
+				addButton(0, "Override", overrideOfficersQuartersSecurity);
 			}
 			
 			return false;
@@ -220,7 +222,46 @@ package classes.GameData.Content
 		public function overrideOfficersQuartersSecurity():void
 		{
 			clearOutput();
-			output("TODO");
+			output("The security bulkhead that’s sealed the Officer’s Quarters has an override panel, complete with keycard reader and fingerprint ID. Of course, they never anticipated a professional thief coming aboard ship... should be easy pickings.");
+
+			output("\n\n<b>Click on the orange circles to rotate them, and create a path connecting all of the green circular nodes.</b>");
+			
+			clearMenu();
+			addButton(0, "Hack", hackIntoOfficersPlace);
+			addButton(1, "Nah", mainGameMenu);
+		}
+		
+		private function hackIntoOfficersPlace():void
+		{
+			userInterface.showMinigame();
+			var gm:RotateMinigameModule = userInterface.getMinigameModule();
+			
+			var g:uint = RGMK.NODE_GOAL;
+			var i:uint = RGMK.NODE_INTERACT;
+			var l:uint = RGMK.NODE_LOCKED;
+			
+			var n:uint = RGMK.CON_NORTH;
+			var e:uint = RGMK.CON_EAST;
+			var s:uint = RGMK.CON_SOUTH;
+			var w:uint = RGMK.CON_WEST;
+			
+			
+			gm.setPuzzleState(officerHackComplete, 5, 5,
+			[
+				g | e | s, 	i | n | s, 	i | w | s, 	i | n | e, 	g | w,
+				i | e | w, 	l, 			i | s | w, 	i | n | e, 	l,
+				i | n | s, 	l, 			i | n | s, 	l, 			l,
+				i | w | n, 	i | n | e, 	i | n | e, 	i | e | w,	i | n | e,
+				i | s | e,	i | w | s,	i | s | e,	l,			g | n
+			]);
+		}
+		
+		private function officerHackComplete():void
+		{
+			flags["CONSTELLATION_OFFICERS_QUARTERS_UNLOCKED"] = 1;
+			
+			clearOutput();
+			output("The bulkhead shivers, then ascends, allowing you access to the officers’ quarters.");
 			clearMenu();
 			addButton(0, "Next", mainGameMenu);
 		}
@@ -467,12 +508,22 @@ package classes.GameData.Content
 			
 			output("\n\nCrap. Well, it was worth a try. Time to do your hacker thing.");
 
-			// {Security Bypass Minigame here}
-			output("\n\nTODO: Security Minigame");
-
 			clearMenu();
 			addButton(0, "Ignore", mainGameMenu);
-			addButton(1, "Hack", completeAIHack);
+			addButton(1, "Hack", hackForCase);
+		}
+		
+		private function hackForCase():void
+		{
+			userInterface.showMinigame();
+			var gm:RotateMinigameModule = userInterface.getMinigameModule();
+			
+			gm.setPuzzleState(completeAIHack, 3, 3, 
+			[
+				RGMK.NODE_GOAL		| RGMK.CON_SOUTH, 						RGMK.NODE_LOCKED, 										RGMK.NODE_GOAL 		| RGMK.CON_SOUTH,
+				RGMK.NODE_INTERACT 	| RGMK.CON_EAST 	| RGMK.CON_WEST, 	RGMK.NODE_INTERACT | RGMK.CON_NORTH | RGMK.CON_WEST,	RGMK.NODE_INTERACT 	| RGMK.CON_EAST 	| RGMK.CON_WEST,
+				RGMK.NODE_INTERACT 	| RGMK.CON_NORTH 	| RGMK.CON_WEST, 	RGMK.NODE_INTERACT | RGMK.CON_NORTH | RGMK.CON_SOUTH, 	RGMK.NODE_INTERACT 	| RGMK.CON_EAST 	| RGMK.CON_NORTH
+			]);
 		}
 
 		private function completeAIHack():void

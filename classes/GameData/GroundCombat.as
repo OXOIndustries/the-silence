@@ -46,6 +46,25 @@ package classes.GameData
 			_roundCounter = 0;
 			
 			genericVictory = function():void {
+				
+				var healedSome:Boolean = false;
+				
+				for (var i:int = 0; i < _friendlies.length; i++)
+				{
+					var tCreature:Creature = _friendlies[i] as Creature;
+					if (tCreature.HP() / tCreature.HPMax() <= 0.2)
+					{
+						if (!healedSome)
+						{
+							output("\n\n");
+							output("You and your team has to make do with what little first-aid equipment you have to hand, patching yourselves up as best you can.");
+							healedSome = true;
+						}
+						
+						tCreature.HP(tCreature.HPMax() * 0.2);					
+					}
+				}
+				
 				clearMenu();
 				addButton(0, "Next", mainGameMenu);
 			}

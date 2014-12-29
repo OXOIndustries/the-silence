@@ -111,7 +111,7 @@
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
 
-			version = "0.04.01";
+			version = "0.05.00";
 
 			eventQueue = new Array();
 			eventBuffer = "";
@@ -140,39 +140,6 @@
 			this.configureCodex();
 			this.userInterface.showMainMenu();
 			buildWTF();
-			
-			addGhostButton(0, "Test Minigame", doMinigameTest);
-		}
-		
-		private function doMinigameTest():void
-		{
-			this.userInterface.showMinigame();
-			var gm:RotateMinigameModule = this.userInterface.getMinigameModule();
-			
-			
-			gm.setPuzzleState(3, 3,
-			[
-				RGMK.NODE_GOAL | RGMK.CON_SOUTH, 						RGMK.NODE_LOCKED, 									RGMK.NODE_GOAL | RGMK.CON_SOUTH,
-				RGMK.NODE_INTERACT | RGMK.CON_EAST | RGMK.CON_WEST, 	RGMK.NODE_LOCKED, 									RGMK.NODE_INTERACT | RGMK.CON_NORTH | RGMK.CON_SOUTH,
-				RGMK.NODE_INTERACT | RGMK.CON_NORTH | RGMK.CON_EAST, 	RGMK.NODE_INTERACT | RGMK.CON_EAST | RGMK.CON_WEST, RGMK.NODE_INTERACT | RGMK.CON_WEST | RGMK.CON_NORTH
-			]);
-			
-			/*
-			var t:uint = RGMK.NODE_INTERACT;
-			var l:uint = RGMK.NODE_LOCKED;
-			var g:uint = RGMK.NODE_GOAL;
-			
-			gm.setPuzzleState(7, 7,
-			[
-				t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t,
-				t, t, t, t, t, t, t
-			]);
-			*/
 		}
 		
 		private function buildWTF():void

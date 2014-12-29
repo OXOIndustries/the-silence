@@ -223,6 +223,8 @@ package classes.UIComponents.ContentModuleComponents
 		
 		private function clickHandler(e:Event):void
 		{
+			if (game.isComplete) return;
+			
 			if (Type == RGMK.NODE_INTERACT)
 			{
 				if (_rotState == RGMK.ROT_000) _rotState = RGMK.ROT_090;

@@ -5,6 +5,11 @@ package classes.UIComponents.ContentModules
 	import flash.events.Event;
 	import classes.UIComponents.ContentModuleComponents.RGMK;
 	
+	import classes.Engine.Interfaces.clearGhostMenu;
+	import classes.Engine.Interfaces.addGhostButton;
+	import classes.Engine.Interfaces.userInterface;
+	import classes.Engine.mainGameMenu;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -20,6 +25,14 @@ package classes.UIComponents.ContentModules
 		
 		private var _basePower:RotateGameElement;
 		private var _goalNodes:Array;
+		
+		private var _isComplete:Boolean
+		public function get isComplete():Boolean
+		{
+			return _isComplete;
+		}
+		
+		private var _nextOnComplete:Function = null;
 		
 		public function RotateMinigameModule() 
 		{
@@ -62,16 +75,24 @@ package classes.UIComponents.ContentModules
 			}
 		}
 	
-		public function setPuzzleState(sizeX:int, sizeY:int, board:Array):void
+		public function setPuzzleState(onComplete:Function, sizeX:int, sizeY:int, board:Array):void
 		{
 			if (sizeX * sizeY > board.length) throw new Error("Too many board settings for the defined board size!");
 			if (sizeX % 2 != 1 || sizeY % 2 != 1) throw new Error("Boards should always feature odd-sized dimensions (3x3, 3x5 etc)");
 			if (sizeX < 3 || sizeY < 3) throw new Error("Boards should always feature at least 3 rows or columns.");
 			if (board.length > _pieces.length) throw new Error("Boards can only contain at most 81 elements.");
 			
+			_nextOnComplete = onComplete;
+			
+			clearGhostMenu();
+			addGhostButton(4, "Reset", resetPuzzle);
+			addGhostButton(5, "Back", mainGameMenu);
+			
 			var paddedArray:Array
 			_basePower = null;
 			_goalNodes = [];
+			
+			_isComplete = false;
 			
 			if (board.length < 9 * 9)
 			{
@@ -142,7 +163,7 @@ package classes.UIComponents.ContentModules
 		
 		public function resetPuzzle():void
 		{
-			setPuzzleState(_width, _height, _defState);
+			setPuzzleState(_nextOnComplete, _width, _height, _defState);
 		}
 		
 		public function getNearby(s:RotateGameElement, dir:uint):RotateGameElement
@@ -205,6 +226,25 @@ package classes.UIComponents.ContentModules
 			}
 			
 			tryConnect(_basePower);
+			checkVictory();
+		}
+		
+		private function checkVictory():void
+		{
+			var allPowered:Boolean = true;
+			
+			for (var i:int = 0; i < _goalNodes.length; i++)
+			{
+				var tElem:RotateGameElement = _goalNodes[i] as RotateGameElement;
+				if (tElem.isPowered == false) allPowered = false;
+			}
+			
+			if (allPowered)
+			{
+				_isComplete = true;
+				clearGhostMenu();
+				addGhostButton(0, "Success", _nextOnComplete);
+			}
 		}
 		
 		public function tryConnect(source:RotateGameElement):void
@@ -273,7 +313,6 @@ package classes.UIComponents.ContentModules
 					tryConnect(nWest);
 				}
 			}
-
 		}
 		
 		public function clrConnections(source:RotateGameElement):void
