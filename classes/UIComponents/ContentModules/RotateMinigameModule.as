@@ -18,6 +18,9 @@ package classes.UIComponents.ContentModules
 		
 		private var _defState:Array;
 		
+		private var _basePower:RotateGameElement;
+		private var _goalNodes:Array;
+		
 		public function RotateMinigameModule() 
 		{
 			leftBarEnabled = true;
@@ -52,6 +55,8 @@ package classes.UIComponents.ContentModules
 					elem.x = (xx * elem.width) + (elem.width / 2) + 40;
 					elem.y = (yy * elem.height) + (elem.height / 2) + 10;
 					
+					elem.name = "Element " + String(xx) + "-" + String(yy);
+					
 					elem.visible = false;
 				}
 			}
@@ -65,6 +70,8 @@ package classes.UIComponents.ContentModules
 			if (board.length > _pieces.length) throw new Error("Boards can only contain at most 81 elements.");
 			
 			var paddedArray:Array
+			_basePower = null;
+			_goalNodes = [];
 			
 			if (board.length < 9 * 9)
 			{
@@ -111,7 +118,26 @@ package classes.UIComponents.ContentModules
 			{
 				var dElem:RotateGameElement = _pieces[i];
 				dElem.setState(paddedArray[i]);
+				
+				if (paddedArray[i] & RGMK.NODE_GOAL)
+				{
+					_goalNodes.push(dElem);
+					dElem.basePowerNode = false;
+					
+					if (_basePower == null)
+					{
+						_basePower = dElem;
+						_basePower.basePowerNode = true;
+					}
+				}
 			}
+			
+			initForPlay();
+		}
+		
+		private function initForPlay():void
+		{
+			_basePower.isPowered = true;
 		}
 		
 		public function resetPuzzle():void
@@ -128,46 +154,36 @@ package classes.UIComponents.ContentModules
 				var iX:int;
 				var iY:int;
 				
-				iX = i % width;
-				iY = int(i / width);
+				iX = i % 9;
+				iY = int(i / 9);
 				
-				if (dir & RGMK.CON_NORTH && iY > 0)
+				if (dir & RGMK.CON_NORTH)
 				{
-					iY--;
-				}
-				else
-				{
-					return null;
+					if (iY > 0) iY--;
+					else return null;
 				}
 				
-				if (dir & RGMK.CON_SOUTH && iY < height)
+				if (dir & RGMK.CON_SOUTH)
 				{
-					iY++;
-				}
-				else
-				{
-					return null;
+					if (iY < 9) iY++;
+					else return null;
 				}
 				
-				if (dir & RGMK.CON_EAST && iX < width)
+				if (dir & RGMK.CON_EAST)
 				{
-					iX++;
-				}
-				else
-				{
-					return null;
+					if (iX < 9) iX++;
+					else return null;
 				}
 				
-				if (dir & RGMK.CON_WEST && iX > 0)
+				if (dir & RGMK.CON_WEST)
 				{
-					iX--;
-				}
-				else
-				{
-					return null;
+					if (iX > 0) iX--;
+					else return null;
 				}
 				
-				return _pieces[iX + iY];
+				var tElem:RotateGameElement = _pieces[iX + (iY * 9)];
+				if (tElem.Type == 0) return null;
+				return tElem;
 			}
 			else
 			{
@@ -175,33 +191,89 @@ package classes.UIComponents.ContentModules
 			}
 		}
 		
-		public function tryConnect(source:RotateGameElement, dir:uint):void
+		private var visitedElems:Array;
+		
+		public function resolveConnections():void
 		{
-			var t:RotateGameElement = getNearby(source, dir);
+			visitedElems = [];
 			
-			if (t)
+			for (var i:int = 0; i < _pieces.length; i++)
 			{
-				if (dir & RGMK.CON_NORTH && t.South)
+				var tElem:RotateGameElement = _pieces[i] as RotateGameElement;			
+				clrConnections(tElem);
+				if (tElem == _basePower) tElem.isPowered = true;	
+			}
+			
+			tryConnect(_basePower);
+		}
+		
+		public function tryConnect(source:RotateGameElement):void
+		{
+			if (source.isPowered == false) return;
+			
+			if (visitedElems.indexOf(source) != -1)
+			{
+				return;
+			}
+			else
+			{
+				visitedElems.push(source);
+			}
+			
+			var nNorth:RotateGameElement = getNearby(source, RGMK.CON_NORTH);
+			var nEast:RotateGameElement = getNearby(source, RGMK.CON_EAST);
+			var nSouth:RotateGameElement = getNearby(source, RGMK.CON_SOUTH);
+			var nWest:RotateGameElement = getNearby(source, RGMK.CON_WEST);
+			
+			if (nEast && nEast.name == "Element 5-5")
+			{
+				trace("BP");
+			}
+			
+			if (nNorth)
+			{
+				if (source.North && nNorth.South)
 				{
+					nNorth.powerFrom(RGMK.CON_SOUTH);
 					source.conNorth = true;
-					t.powerFrom(RGMK.CON_SOUTH);
-				}
-				if (dir & RGMK.CON_EAST && t.West)
-				{
-					source.conEast = true;
-					t.powerFrom(RGMK.CON_WEST);
-				}
-				else if (dir & RGMK.CON_SOUTH && t.North)
-				{
-					source.conSouth = true;
-					t.powerFrom(RGMK.CON_NORTH);
-				}
-				else if (dir & RGMK.CON_WEST && t.East)
-				{
-					source.conWest = true;
-					t.powerFrom(RGMK.CON_WEST);
+					nNorth.conSouth = true;
+					tryConnect(nNorth);
 				}
 			}
+			
+			if (nEast)
+			{
+				if (source.East && nEast.West)
+				{
+					nEast.powerFrom(RGMK.CON_WEST);
+					source.conEast = true;
+					nEast.conWest = true;
+					tryConnect(nEast);
+				}
+			}
+			
+			if (nSouth)
+			{
+				if (source.South && nSouth.North)
+				{
+					nSouth.powerFrom(RGMK.CON_NORTH);
+					source.conSouth = true;
+					nSouth.conNorth = true;
+					tryConnect(nSouth);
+				}
+			}
+			
+			if (nWest)
+			{
+				if (source.West && nWest.East)
+				{
+					nWest.powerFrom(RGMK.CON_EAST);
+					source.conWest = true;
+					nWest.conEast = true;
+					tryConnect(nWest);
+				}
+			}
+
 		}
 		
 		public function clrConnections(source:RotateGameElement):void

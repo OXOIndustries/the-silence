@@ -19,7 +19,15 @@ package classes.UIComponents.ContentModuleComponents
 	 */
 	public class RotateGameElement extends Sprite
 	{
-		private var game:RotateMinigameModule;
+		private var _game:RotateMinigameModule;
+		private function get game():RotateMinigameModule
+		{
+			if (_game == null)
+			{
+				_game = this.parent as RotateMinigameModule;	
+			}
+			return _game;
+		}
 		
 		public var Type:uint;
 		
@@ -80,8 +88,15 @@ package classes.UIComponents.ContentModuleComponents
 		private var _defState:uint;
 		private var _poweredDirection:uint = 0;
 		
+		private var _isBasePowerNode:Boolean = false;
+		
+		public function set basePowerNode(v:Boolean):void { _isBasePowerNode = v; }
+		public function get basePowerNode():Boolean { return _isBasePowerNode; }
+		
 		public function get isPowered():Boolean
 		{
+			if (_isBasePowerNode == true) return true;
+			
 			return _poweredDirection > 0;
 		}
 		public function set isPowered(v:Boolean):void
@@ -96,47 +111,13 @@ package classes.UIComponents.ContentModuleComponents
 		{
 			if (dir == 0)
 			{
-				_connectorMid.visible = false;
 				game.clrConnections(this);
-				return;
+				_connectorMid.visible = false;
 			}
 			else
 			{
 				_connectorMid.visible = true;
 				_poweredDirection = dir;
-			}
-			
-			var pNorth:Boolean = Boolean(dir & RGMK.CON_NORTH);
-			var pEast:Boolean = Boolean(dir & RGMK.CON_EAST);
-			var pSouth:Boolean = Boolean(dir & RGMK.CON_SOUTH);
-			var pWest:Boolean = Boolean(dir & RGMK.CON_WEST);
-			
-			if (pNorth)
-			{
-				if (East) game.tryConnect(this, RGMK.CON_EAST);
-				if (South) game.tryConnect(this, RGMK.CON_SOUTH);
-				if (West) game.tryConnect(this, RGMK.CON_WEST);
-			}
-			
-			if (pEast)
-			{
-				if (North) game.tryConnect(this, RGMK.CON_NORTH);
-				if (South) game.tryConnect(this, RGMK.CON_SOUTH);
-				if (West) game.tryConnect(this, RGMK.CON_WEST);
-			}
-			
-			if (pSouth)
-			{
-				if (North) game.tryConnect(this, RGMK.CON_NORTH);
-				if (East) game.tryConnect(this, RGMK.CON_EAST);
-				if (West) game.tryConnect(this, RGMK.CON_WEST);
-			}
-			
-			if (pWest)
-			{
-				if (North) game.tryConnect(this, RGMK.CON_NORTH);
-				if (East) game.tryConnect(this, RGMK.CON_EAST);
-				if (South) game.tryConnect(this, RGMK.CON_SOUTH);
 			}
 		}
 		
@@ -151,6 +132,10 @@ package classes.UIComponents.ContentModuleComponents
 		
 		public function set conNorth(v:Boolean):void
 		{
+			if (this.name == "Element 3-4")
+			{
+				trace("BP");
+			}
 			_connectorNorth.visible = v;
 		}
 		public function get conNorth():Boolean
@@ -184,9 +169,7 @@ package classes.UIComponents.ContentModuleComponents
 		
 		
 		public function RotateGameElement() 
-		{
-			game = this.parent as RotateMinigameModule;			
-			
+		{		
 			this.Build();
 		}
 		
@@ -215,11 +198,13 @@ package classes.UIComponents.ContentModuleComponents
 			_ring.addChild(ringMid);
 			
 			_connectorMid = new Sprite();
-			_connectorMid.graphics.beginFill(UIStyleSettings.gHighlightColour);
+			_connectorMid.graphics.beginFill(0x0094FF);
 			_connectorMid.graphics.drawCircle(0, 0, 9);
 			_connectorMid.graphics.endFill();
 			_ring.addChild(_connectorMid);
 			_connectorMid.visible = false;
+			
+			iii = 0;
 			
 			_connectorNorth = new Sprite();
 			buildConnector(_connectorNorth, 10, 40, -5, -40);
@@ -238,7 +223,7 @@ package classes.UIComponents.ContentModuleComponents
 		
 		private function clickHandler(e:Event):void
 		{
-			if (Type != RGMK.NODE_INTERACT)
+			if (Type == RGMK.NODE_INTERACT)
 			{
 				if (_rotState == RGMK.ROT_000) _rotState = RGMK.ROT_090;
 				else if (_rotState == RGMK.ROT_090) _rotState = RGMK.ROT_180;
@@ -246,22 +231,32 @@ package classes.UIComponents.ContentModuleComponents
 				else if (_rotState == RGMK.ROT_270) _rotState = RGMK.ROT_000;
 				
 				setMaskState(_defState);
+				
+				game.resolveConnections();
 			}
 		}
 		
+		private static var iii:int = 0;
+		
 		private function buildConnector(s:Sprite, w:int, h:int, x:int, y:int):void
 		{
-			s.graphics.beginFill(UIStyleSettings.gHighlightColour);
+			//if (iii == 0) s.graphics.beginFill(0xFF0000);
+			//if (iii == 1) s.graphics.beginFill(0x00FF00);
+			//if (iii == 2) s.graphics.beginFill(0x0000FF);
+			//if (iii == 4) s.graphics.beginFill(0xFFFFFF);
+			s.graphics.beginFill(0x0094FF);
 			s.graphics.drawRect(x, y, w, h);
 			s.graphics.endFill();
 			this.addChild(s);
 			s.visible = false;
+			iii++;
 		}
 		
 		public function setState(state:uint):void
 		{
 			if (state == 0)
 			{
+				Type = 0;
 				visible = false;
 				return;
 			}
