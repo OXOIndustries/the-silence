@@ -2,11 +2,16 @@ package classes.UIComponents.ContentModuleComponents
 {
 	import adobe.utils.CustomActions;
 	import fl.motion.Color;
+	import flash.display.Bitmap;
+	import flash.display.BitmapData;
 	import flash.display.Sprite;
 	import classes.UIComponents.UIStyleSettings;
 	import classes.UIComponents.ContentModules.RotateMinigameModule;
 	import classes.UIComponents.ContentModuleComponents.RGMK;
+	import flash.events.Event;
 	import flash.geom.ColorTransform;
+	import flash.display.BlendMode;
+	import flash.events.MouseEvent;
 	
 	/**
 	 * ...
@@ -17,10 +22,6 @@ package classes.UIComponents.ContentModuleComponents
 		private var game:RotateMinigameModule;
 		
 		public var Type:uint;
-		public var DefNorth:Boolean = false;
-		public var DefEast:Boolean = false;
-		public var DefSouth:Boolean = false;
-		public var DefWest:Boolean = false;
 		
 		private static var LOCKED:ColorTransform;
 		private static var INTERACT:ColorTransform;
@@ -76,6 +77,7 @@ package classes.UIComponents.ContentModuleComponents
 		}
 		
 		private var _rotState:uint = RGMK.ROT_000;
+		private var _defState:uint;
 		private var _poweredDirection:uint = 0;
 		
 		public function get isPowered():Boolean
@@ -230,6 +232,21 @@ package classes.UIComponents.ContentModuleComponents
 			
 			_connectorWest = new Sprite();
 			buildConnector(_connectorWest, 40, 10, -40, -5);
+			
+			this.addEventListener(MouseEvent.CLICK, clickHandler);
+		}
+		
+		private function clickHandler(e:Event):void
+		{
+			if (Type != RGMK.NODE_INTERACT)
+			{
+				if (_rotState == RGMK.ROT_000) _rotState = RGMK.ROT_090;
+				else if (_rotState == RGMK.ROT_090) _rotState = RGMK.ROT_180;
+				else if (_rotState == RGMK.ROT_180) _rotState = RGMK.ROT_270;
+				else if (_rotState == RGMK.ROT_270) _rotState = RGMK.ROT_000;
+				
+				setMaskState(_defState);
+			}
 		}
 		
 		private function buildConnector(s:Sprite, w:int, h:int, x:int, y:int):void
@@ -249,29 +266,30 @@ package classes.UIComponents.ContentModuleComponents
 				return;
 			}
 			
-			if (
-				!(state & RGMK.ROT_000) &&
-				!(state & RGMK.ROT_090) &&
-				!(state & RGMK.ROT_180) &&
-				!(state & RGMK.ROT_270)
-				)
-			{
-				state |= RGMK.ROT_000;
-			}
-				
+			if (state & RGMK.ROT_000 || state & RGMK.ROT_090 || state & RGMK.ROT_180 || state & RGMK.ROT_270) throw new Error("Do not set a rotation state in the default state of a node.");
+			
+			_rotState = RGMK.ROT_000;
+			_defState = state;
+			
 			setMaskState(state);
 			
 			if (state & RGMK.NODE_GOAL)
 			{
 				_oRing.transform.colorTransform = GOAL;
+				Type = RGMK.NODE_GOAL;
+				buttonMode = false;
 			}
 			else if (state & RGMK.NODE_INTERACT)
 			{
 				_oRing.transform.colorTransform = INTERACT;
+				Type = RGMK.NODE_INTERACT;
+				buttonMode = true;
 			}
 			else if (state & RGMK.NODE_LOCKED)
 			{
 				_oRing.transform.colorTransform = LOCKED;
+				Type = RGMK.NODE_LOCKED;
+				buttonMode = false;
 			}
 			
 			visible = true;
@@ -297,22 +315,23 @@ package classes.UIComponents.ContentModuleComponents
 				exits.push(exits.shift());
 			}
 			
-			var mask:Sprite = _oRing.mask as Sprite;
+			var mask:Sprite = _oRing.getChildByName("maskLayer") as Sprite;
 			
-			if (mask == null) mask = new Sprite();
-			
-			if (mask.parent == null) this._ring.addChild(mask);
+			if (mask == null)
+			{
+				mask = new Sprite();
+				mask.name = "maskLayer";
+				_oRing.blendMode = BlendMode.LAYER;
+				mask.blendMode = BlendMode.ERASE;
+				_oRing.addChild(mask);
+			}
 			
 			mask.graphics.clear();
 			
-			mask.graphics.beginFill(0xFFFFFF);
-			mask.graphics.drawCircle(0, 0, 54);
-			mask.graphics.endFill();
-			
 			if (exits[0])
 			{
-				mask.graphics.beginFill(0xFFFFFF);
-				mask.graphics.drawRect( -8, 66, 16, 50);
+				mask.graphics.beginFill(0xFF0000);
+				mask.graphics.drawRect( -8, -30, 16, 16);
 				mask.graphics.endFill();
 				North = true;
 			}
@@ -324,7 +343,7 @@ package classes.UIComponents.ContentModuleComponents
 			if (exits[1])
 			{
 				mask.graphics.beginFill(0xFFFFFF);
-				mask.graphics.drawRect(16, -8, 50, 16);
+				mask.graphics.drawRect(16, -8, 16, 16);
 				mask.graphics.endFill();
 				East = true;
 			}
@@ -336,7 +355,7 @@ package classes.UIComponents.ContentModuleComponents
 			if (exits[2])
 			{
 				mask.graphics.beginFill(0xFFFFFF);
-				mask.graphics.drawRect( -8, -16, 16, 50);
+				mask.graphics.drawRect( -8, 15, 16, 16);
 				mask.graphics.endFill();
 				South = true;
 			}
@@ -348,7 +367,7 @@ package classes.UIComponents.ContentModuleComponents
 			if (exits[3])
 			{
 				mask.graphics.beginFill(0xFFFFFF);
-				mask.graphics.drawRect( -66, -8, 50, 16);
+				mask.graphics.drawRect( -35, -8, 16, 16);
 				mask.graphics.endFill();
 				West = true;
 			}
@@ -356,8 +375,6 @@ package classes.UIComponents.ContentModuleComponents
 			{
 				West = false;
 			}
-			
-			_oRing.mask = mask;
 		}		
 	}
 }
