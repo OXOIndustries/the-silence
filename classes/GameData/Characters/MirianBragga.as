@@ -64,7 +64,7 @@ package classes.GameData.Characters
 			this.resistances = [1, 1, 1, 1, 1, 1, 1, 1];
 			this.XPRaw = 0;
 			this.credits = 7875;
-			this.HPMod = 15;
+			this.HPMod = 100;
 			this.HPRaw = this.HPMax();
 			this.shieldsRaw = this.shieldsMax();
 			
@@ -280,8 +280,8 @@ package classes.GameData.Characters
 		{
 			//Self-Healing. Activate every time she reaches 25% or less HP. Resotre 25% HP + 25% shields. 
 			output("\n\n<i>“You'll not get the better of me that easily, captain,”</i> Bragga says with a slight, almost imperceptible smirk. She stands upright, dusting herself off as if she'd barely been harmed.");
-			HP(HPMax() * 0.25);
-			this.shieldsRaw += shieldsMax() * 0.25;
+			HP(HPMax() * 0.5);
+			this.shieldsRaw += shieldsMax() * 0.5;
 		}
 		
 	}
