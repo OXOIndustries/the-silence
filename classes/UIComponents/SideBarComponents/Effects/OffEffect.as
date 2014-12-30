@@ -12,7 +12,9 @@ package classes.UIComponents.SideBarComponents.Effects
 		
 		public function OffEffect() 
 		{
-			
+			headerText = "Offense";
+			bodyText = "Effects manipulating the characters offensive capabilities.";
+			activeEffectsText = "No active effects.";
 		}
 		
 		override public function BuildIcon():void

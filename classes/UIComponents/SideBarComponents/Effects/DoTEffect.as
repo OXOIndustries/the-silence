@@ -13,7 +13,9 @@ package classes.UIComponents.SideBarComponents.Effects
 		
 		public function DoTEffect() 
 		{
-			
+			headerText = "Over Time";
+			bodyText = "Status effects that confer a health chance over time, either damage or healing.";
+			activeEffectsText = "No active effects.";
 		}
 		
 		override public function BuildIcon():void

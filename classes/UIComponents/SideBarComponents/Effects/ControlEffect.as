@@ -12,7 +12,9 @@ package classes.UIComponents.SideBarComponents.Effects
 		
 		public function ControlEffect() 
 		{
-			
+			headerText = "Control";
+			bodyText = "Status effects impairing or boosting the characters control over their own actions and decisions.";
+			activeEffectsText = "No active effects.";
 		}
 		
 		override public function BuildIcon():void

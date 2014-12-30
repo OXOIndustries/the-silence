@@ -48,6 +48,9 @@
 	import classes.Mapper;
 	import classes.GameData.CombatManager;
 	
+	import classes.Engine.Combat.InCombat;
+	import classes.UIComponents.SideBarComponents.CharacterInfoDisplay;
+	
 	// Game classes
 	import classes.GameData.Items.Miscellaneous.NoItem;
 	
@@ -222,6 +225,11 @@
 			if (GameState.characters["PC"] != undefined)
 			{
 				updateUI();
+			}
+			
+			if (!InCombat())
+			{
+				if (CharacterInfoDisplay._tooltipElement.parent != null) CharacterInfoDisplay._tooltipElement.parent.removeChild(CharacterInfoDisplay._tooltipElement);
 			}
 			
 			userInterface.updateTooltip((evt.currentTarget as DisplayObject));

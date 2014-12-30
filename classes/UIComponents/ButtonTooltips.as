@@ -235,7 +235,7 @@ package classes.UIComponents
 			}
 		}
 		
-		private function Reposition(displayObj:DisplayObject):void
+		public function Reposition(displayObj:DisplayObject, mode:uint = 0, alignment:String = "left"):void
 		{
 			var tPt:Point = displayObj.localToGlobal(new Point(0, 0));
 			
@@ -244,14 +244,17 @@ package classes.UIComponents
 			
 			if (tPt.x < 212) tPt.x = 210;
 			else if (tPt.x > 991 - this.width) tPt.x = 991 - this.width;
-			
-			tPt.y = 635 - this.height;
+				
+			if (mode == 0)
+			{
+				tPt.y = 635 - this.height;
+			}
 			
 			this.x = tPt.x;
 			this.y = tPt.y;
 		}
 		
-		private function SetData(tooltipName:String, tooltipText:String, tooltipComparison:String = null):void
+		public function SetData(tooltipName:String, tooltipText:String, tooltipComparison:String = null):void
 		{
 			tooltipName = tooltipName.split(" x")[0];
 			this._headerText.text = tooltipName;

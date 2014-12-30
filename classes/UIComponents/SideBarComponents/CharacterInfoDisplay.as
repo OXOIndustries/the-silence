@@ -2,16 +2,19 @@ package classes.UIComponents.SideBarComponents
 {
 	import classes.Creature;
 	import classes.StorageClass;
+	import classes.UIComponents.ButtonTooltips;
 	import classes.UIComponents.SideBarComponents.Effects.AccEffect;
 	import classes.UIComponents.SideBarComponents.Effects.ControlEffect;
 	import classes.UIComponents.SideBarComponents.Effects.DefEffect;
 	import classes.UIComponents.SideBarComponents.Effects.DoTEffect;
 	import classes.UIComponents.SideBarComponents.Effects.MiscEffect;
 	import classes.UIComponents.SideBarComponents.Effects.OffEffect;
+	import classes.UIComponents.StatusEffectComponents.StatusTooltipElement;
 	import flash.display.Bitmap;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	import flash.events.Event;
+	import flash.events.MouseEvent;
 	import flash.text.TextField;
 	import classes.UIComponents.UIStyleSettings;
 	import flash.text.AntiAliasType;
@@ -45,6 +48,9 @@ package classes.UIComponents.SideBarComponents
 		private var _dotEffect:EffectContainer;
 		private var _misEffect:EffectContainer;
 		
+		private static var _lastActiveElement:EffectContainer;
+		public static var _tooltipElement:ButtonTooltips;
+		
 		public function CharacterInfoDisplay(alignment:String = "left") 
 		{
 			_alignment = alignment;
@@ -55,7 +61,39 @@ package classes.UIComponents.SideBarComponents
 		private function init(e:Event):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+			
+			EffectContainer.overHandlerFunc = overHandler;
+			
+			if (_tooltipElement == null) _tooltipElement = new ButtonTooltips();
+			
 			Build();
+		}
+		
+		private function overHandler(tElem:EffectContainer, e:MouseEvent):void
+		{
+			if (tElem == _lastActiveElement)
+			{
+				HideTooltip();
+				_lastActiveElement = null;
+			}
+			else
+			{
+				_lastActiveElement = tElem;
+				DisplayTooltip(tElem);
+			}
+		}
+		
+		private function HideTooltip():void
+		{
+			if (_tooltipElement.parent != null)
+				_tooltipElement.parent.removeChild(_tooltipElement);
+		}
+		
+		private function DisplayTooltip(tElem:EffectContainer):void
+		{
+			stage.addChild(_tooltipElement);
+			_tooltipElement.SetData(tElem.headerText, tElem.bodyText + "\n\n" + tElem.activeEffectsText);
+			_tooltipElement.Reposition(tElem, 1, _alignment);
 		}
 		
 		private function Build():void
@@ -252,20 +290,20 @@ package classes.UIComponents.SideBarComponents
 			{
 				var ef:StorageClass = effects[i];
 				
-				if (ef.storageName == "Plasma Burn") this._dotEffect.addDebuff();
-				if (ef.storageName == "Flamethrower  Burn") this._dotEffect.addDebuff();
-				if (ef.storageName == "Damage Reduction") this._defEffect.addBuff();
-				if (ef.storageName == "Focus Fire") this._misEffect.addBuff();
+				if (ef.storageName == "Plasma Burn") this._dotEffect.addDebuff("Plasma Burn", ef.value1);
+				if (ef.storageName == "Flamethrower Burn") this._dotEffect.addDebuff("Flamethrower Burn", ef.value1);
+				if (ef.storageName == "Damage Reduction") this._defEffect.addBuff("Damage Reduction", ef.value1);
+				if (ef.storageName == "Focus Fire") this._misEffect.addBuff("Focus Fire", ef.value1);
 				if (ef.storageName == "Paralytic Venom")
 				{
-					this._accEffect.addDebuff();
-					this._offEffect.addDebuff();
+					this._accEffect.addDebuff("Paralytic Venom", ef.value1);
+					this._offEffect.addDebuff("Paralytic Venom", ef.value1);
 				}
-				if (ef.storageName == "Aim Reduction") this._accEffect.addDebuff();
-				if (ef.storageName == "Grappled") this._impEffect.addDebuff();
-				if (ef.storageName == "Stunned") this._impEffect.addDebuff();
-				if (ef.storageName == "Targeting Shot") this._accEffect.addBuff();
-				if (ef.storageName == "Sensor Link") this._accEffect.addBuff();
+				if (ef.storageName == "Aim Reduction") this._accEffect.addDebuff("Aim Reduction", ef.value1);
+				if (ef.storageName == "Grappled") this._impEffect.addDebuff("Grappled", ef.value1);
+				if (ef.storageName == "Stunned") this._impEffect.addDebuff("Stunned", ef.value1);
+				if (ef.storageName == "Targeting Shot") this._accEffect.addBuff("Targeting Shot", ef.value1);
+				if (ef.storageName == "Sensor Link") this._accEffect.addBuff("Sensor Link", ef.value1);
 			}
 		}
 		

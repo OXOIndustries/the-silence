@@ -13,7 +13,9 @@ package classes.UIComponents.SideBarComponents.Effects
 		
 		public function DefEffect() 
 		{
-			
+			headerText = "Defense";
+			bodyText = "Effects relating to the characters ability to withstand incoming fire.";
+			activeEffectsText = "No active effects.";
 		}
 		
 		override public function BuildIcon():void

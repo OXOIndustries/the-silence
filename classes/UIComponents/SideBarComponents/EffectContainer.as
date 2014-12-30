@@ -3,6 +3,7 @@ package classes.UIComponents.SideBarComponents
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import classes.UIComponents.UIStyleSettings;
+	import flash.events.MouseEvent;
 	import flash.geom.ColorTransform;
 	
 	/**
@@ -16,6 +17,40 @@ package classes.UIComponents.SideBarComponents
 		private var _isBuff:Boolean = false
 		private var _isDebuff:Boolean = false;
 		
+		public static var overHandlerFunc:Function = null;
+		
+		public var headerText:String = "Header";
+		public var bodyText:String = "Body";
+		private var _activeEffectsText:String = null;
+		
+		public function get activeEffectsText():String
+		{
+			if (activeEffects.length > 0)
+			{
+				var bFirst:Boolean = true;
+				var tString:String = "";
+				
+				for (var i:int = 0; i < activeEffects.length; i++)
+				{
+					if (!bFirst)
+					{
+						tString += "\n";
+					}
+					tString += activeEffects[i];
+					bFirst = false;
+				}
+				
+				return tString;
+			}
+			return _activeEffectsText;
+		}
+		public function set activeEffectsText(v:String):void
+		{
+			_activeEffectsText = v;
+		}
+		
+		public var activeEffects:Array;
+		
 		public function EffectContainer() 
 		{
 			addEventListener(Event.ADDED_TO_STAGE, init);
@@ -24,7 +59,17 @@ package classes.UIComponents.SideBarComponents
 		private function init(e:Event = null):void
 		{
 			removeEventListener(Event.ADDED_TO_STAGE, init);
+			addEventListener(MouseEvent.ROLL_OVER, overHandler);
+			addEventListener(MouseEvent.ROLL_OUT, overHandler);
+			
+			activeEffects = [];
+			
 			Build();
+		}
+		
+		private function overHandler(e:MouseEvent):void
+		{
+			overHandlerFunc(this, e);
 		}
 		
 		private function Build():void
@@ -54,18 +99,22 @@ package classes.UIComponents.SideBarComponents
 			
 			this.alpha = 0.3;
 			this.mouseEnabled = false;
+			
+			activeEffects = [];
 		}
 		
-		public function addBuff():void
+		public function addBuff(tName:String, duration:Number):void
 		{
 			_isBuff = true;
 			setIconColorState();
+			activeEffects.push("<span class='good'>" + tName + " [" + duration + " rounds]</span>");
 		}
 		
-		public function addDebuff():void
+		public function addDebuff(tName:String, duration:Number):void
 		{
 			_isDebuff = true;
 			setIconColorState();
+			activeEffects.push("<span class='bad'>" + tName + " [" + duration + " rounds]</span>");
 		}
 		
 		private function setIconColorState():void

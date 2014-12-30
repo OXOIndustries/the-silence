@@ -12,7 +12,9 @@ package classes.UIComponents.SideBarComponents.Effects
 		
 		public function AccEffect() 
 		{
-			
+			headerText = "Accuracy";
+			bodyText = "Status effects that influence this characters Accuracy trait, increasing their chance to strike a given target.";
+			activeEffectsText = "No active effects.";
 		}
 		
 		override public function BuildIcon():void

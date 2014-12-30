@@ -13,7 +13,9 @@ package classes.UIComponents.SideBarComponents.Effects
 		
 		public function MiscEffect() 
 		{
-			
+			headerText = "Miscellaneous";
+			bodyText = "General uncategorised effects that fit no specific category.";
+			activeEffectsText = "No active effects.";
 		}
 
 		override public function BuildIcon():void
