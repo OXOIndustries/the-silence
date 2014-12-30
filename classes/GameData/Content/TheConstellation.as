@@ -555,7 +555,7 @@ package classes.GameData.Content
 			if (flags["GOT_THE_BRIEFCASE"] != 2) addButton(2, "Cargo", connieCargo, undefined, "Briefcase", "Ask what's behind the security field.");
 			else addDisabledButton(2, "Cargo", "Briefcase", "Having already pilfered the briefcase, there's no need to talk to Connie about it.");
 			addButton(3, "Crew Status", connieCrewStatus, undefined, "Crew Status", "Ask the V.I. what the status of the <i>Constellation</i>'s crew is");
-			if (flags["INSPECTED_DROID"] == 1) addButton(4, "V.I. Status", connieVIStatus, undefined, "V.I. Status", "Talk to Connie about her own status, and what she is able to do.");
+			if (flags["INSPECTED_DROID"] == 1) addButton(4, "V.I. Status", connieVIStatus, undefined, "V.I. Status", "Talk to Connie about her own status, and what her capabilities are.");
 			else addDisabledButton(4, "V.I. Status", "V.I. Status", "Maybe you should take a look around the secured cargo first.");
 			if (flags["CONNIE_ASKED_STATUS"] == 1) addButton(5, "Download", connieDownload, undefined, "Download Connie", "Save Connie from the ships failing systems.");
 			else addDisabledButton(5, "Download", "Download Connie", "You should get a clear picture of the V.I's current status first.");
@@ -657,7 +657,7 @@ package classes.GameData.Content
 			
 			output("\n\nThe V.I. hesitates at the question, a fraction of a second longer than it would take to compile that data. <i>“I am in imminent danger of shutting down, Captain Volke. Several core databanks are registering as critically damaged, and power reserves are at minimal operating capacity.”</i>");
 			
-			output("\n\nAfter a moment of silence, she adds, <i>“Due to damaged computers, captain, I beleieve that were I to shut down, my data would be irreparably corrupted or lost. I am currently hosting across several networks to sustain minimal operating presence.”</i>");
+			output("\n\nAfter a moment of silence, she adds, <i>“Due to damaged computers, captain, I believe that were I to shut down, my data would be irreparably corrupted or lost. I am currently hosting across several networks to sustain minimal operating presence.”</i>");
 			
 			output("\n\n<i>“The spirit is dying?”</i> Tarik says, slithering closer to Connie. ");
 			

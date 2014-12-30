@@ -25,7 +25,7 @@ package classes.GameData.Characters
 			this.short = "Kara";
 			this.long = "Kara Volke";
 			this.originalRace = "Kaithrit";
-			this.description = "You were born a slave on the world of Kahassin, outside the United Galactic Confederacy's borders. Raised in chains because of a quirk of birth, you escaped thanks to the smuggler Rourke Blackstar. He taught you the tools of the trade, became your lover and, a few months ago, sacrificed himself so you and the crew of the Silence could escape. You've since become captain, and lead this rag-tag band of outlaws in your mentor's stead. The crew is still getting used to your leadership, but they know what Blackstar thought of you, and that's been enough to keep them in line. Whether you intend to live up to Blackstar's legacy or carve your own legend, your story is just beginning!";
+			this.description = "You were born a slave on the world of Tarilia, outside the United Galactic Confederacy's borders. Raised in chains because of a quirk of birth, you escaped thanks to the smuggler Rourke Blackstar. He taught you the tools of the trade, became your lover and, a few months ago, sacrificed himself so you and the crew of the Silence could escape. You've since become captain, and lead this rag-tag band of outlaws in your mentor's stead. The crew is still getting used to your leadership, but they know what Blackstar thought of you, and that's been enough to keep them in line. Whether you intend to live up to Blackstar's legacy or carve your own legend, your story is just beginning!";
 			
 			this.customBlock = "";
 			this.customDodge = "";
