@@ -163,14 +163,10 @@ package classes.GameData
 		
 		private function showCombatMenu():void
 		{
-			clearOutput();
-			clearMenu();
-			
 			removeAllButtonHighlights();
 			
 			if (!doneRoundActions())
 			{
-				_roundCounter++;
 				_attackSelections = new Object();
 				
 				for (var i:int = 0; i < _friendlies.length; i++)
@@ -179,10 +175,13 @@ package classes.GameData
 				}
 			}
 			
-			showCombatUI();
-			
 			if (checkForVictory()) return;
 			if (checkForLoss()) return;
+			
+			clearOutput();
+			clearMenu();
+			
+			showCombatUI();
 			
 			generateCombatMenu();
 			showCombatDescriptions();
