@@ -16,7 +16,7 @@ package classes.GameData.Map.Data.Ships
 		public function BlackRoseInterior() 
 		{
 			LocationIndex = "TheBlackRose";
-			LocationName = "BLACKROSE";
+			LocationName = "BLACK ROSE";
 			
 			var airlock:Room = new Room();
 			airlock.RoomIndex = "Airlock";
