@@ -150,6 +150,11 @@ package classes.UIComponents
 		{
 			_locationHeader.showLocationText();
 		}
+		
+		public function resetBarStates():void
+		{
+			_enemyParty.resetBarStates();
+		}
 	}
 
 }

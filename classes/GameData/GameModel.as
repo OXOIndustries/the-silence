@@ -48,7 +48,7 @@ package classes.GameData
 			
 			flags = new Dictionary();
 			
-			CharacterIndex.configure();
+			CharacterIndex.initIndex();
 			ShipIndex.init();
 			
 			CharacterIndex.PlayerGroup = new Party();

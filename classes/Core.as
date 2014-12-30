@@ -69,23 +69,6 @@
 		
 		include "../includes/CodexEntries.as";
 		include "../includes/ControlBindings.as";
-		
-		/*
-		include "../includes/combat.as";
-		include "../includes/items.as";
-		include "../includes/creation.as";
-		include "../includes/engine.as";
-		include "../includes/game.as";
-		include "../includes/masturbation.as";
-		
-		include "../includes/appearance.as";
-		
-		include "../includes/debug.as";
-
-		
-		include "../includes/travelEvents.as";		
-		include "../includes/lightsOut.as";
-		*/
 
 		// Queued event system
 		public var eventBuffer:String;
@@ -111,7 +94,7 @@
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
 
-			version = "0.05.00";
+			version = "0.05.01";
 
 			eventQueue = new Array();
 			eventBuffer = "";
@@ -127,7 +110,6 @@
 			this.inputManager = new InputManager(stage, false);
 			this.setupInputControls();
 			
-			// set up the user interface: ------------------------------------------------------------
 			this.userInterface = new GUI(this, stage);
 			clearMenu();
 
@@ -196,8 +178,6 @@
 			updateUI();
 			userInterface.showLocation();
 			
-			//Set up all appropriate flags
-			//Display the room description
 			clearOutput();
 			
 			MapIndex.displayRoom(GameState.pc.currentLocation);

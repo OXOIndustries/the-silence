@@ -143,6 +143,8 @@ package classes.GameData
 				
 				_hostiles[i].arrayIdx = i;
 			}
+			
+			userInterface().initHostilePartyBars();
 		}
 		
 		override public function beginCombat():void
@@ -1065,7 +1067,7 @@ package classes.GameData
 			}
 		}
 		
-		private function showCombatUI():void
+		override public function showCombatUI():void
 		{
 			userInterface().showPlayerParty();
 			userInterface().setPlayerPartyData(_friendlies);
@@ -1245,9 +1247,17 @@ package classes.GameData
 					if (_attackSelections[_friendlies[i].INDEX].func != undefined)
 					{
 						var func:Function = _attackSelections[_friendlies[i].INDEX].func;
+						
 						if (_attackSelections[_friendlies[i].INDEX].target != undefined)
 						{
-							func(_friendlies[i], _attackSelections[_friendlies[i].INDEX].target);	
+							var tTarget:Creature = _attackSelections[_friendlies[i].INDEX].target as Creature;
+							
+							if (tTarget.HP() <= 0)
+							{
+								tTarget = randomTarget();
+							}
+							
+							if (tTarget != null) func(_friendlies[i], tTarget);	
 						}
 						else
 						{
@@ -1267,6 +1277,16 @@ package classes.GameData
 					}
 				}
 			}
+		}
+		
+		// Not actually random, bloo bloo!
+		private function randomTarget():Creature
+		{
+			for (var i:int = 0; i < _hostiles.length; i++)
+			{
+				if (!(_hostiles[i] as Creature).HP() <= 0) return _hostiles[i];
+			}
+			return null;
 		}
 		
 		private function generateAIActions():void

@@ -22,6 +22,8 @@
 	import classes.GameData.CharacterIndex;
 	import classes.GameData.GameState;
 	
+	import classes.GameData.CombatManager;
+	
 	/**
 	 * Data Manager to handle the processing of player data files.
 	 * @author Gedan
@@ -458,6 +460,8 @@
 			
 			kGAMECLASS.userInterface.dataButton.Deactivate();
 			kGAMECLASS.userInterface.showPrimaryOutput();
+			
+			CombatManager.abortCombat();			
 			
 			// Trigger an attempt to update display font size
 			kGAMECLASS.refreshFontSize();

@@ -100,12 +100,9 @@ package classes.GameData
 				_lastAttackSelections = _attackSelections;
 				_attackSelections = new Object();
 				_attackSelections.weapons = [];
-				showCombatUI(true);
 			}
-			else
-			{
-				showCombatUI(false);
-			}
+			
+			showCombatUI();
 			
 			if (checkForVictory()) return;
 			if (checkForLoss()) return;
@@ -518,33 +515,28 @@ package classes.GameData
 			_hostiles[0].actualHullHP = 0;
 		}
 		
-		private function showCombatUI(roundInit:Boolean = false):void
+		override public function showCombatUI():void
 		{
-			if (roundInit)
-			{
-				userInterface().showPlayerShip();
-				userInterface().hidePlayerParty();
-				userInterface().setPlayerShipData(playerShip);
-				
-				userInterface().hideMinimap();
-				userInterface().showHostileShip();
-				userInterface().setHostileShipData(hostileShip);
-			}
-			else
-			{
-				var modShield:Number = 0;
-				var modHull:Number = 0;
-				var modReactor:Number = 0;
-				var modCap:Number = 0;
-				
-				modReactor -= getWeaponCost();
-				modReactor -= getOffensivePowerCost();
-				modReactor -= getDefensivePowerCost();
-				modReactor -= getNavigationOrderPowerCost();
-				
-				userInterface().updatePlayerShipData(playerShip, modShield, modHull, modReactor, modCap);
-				userInterface().updateHostileShipData(hostileShip);
-			}
+			userInterface().showPlayerShip();
+			userInterface().hidePlayerParty();
+			userInterface().setPlayerShipData(playerShip);
+			
+			userInterface().hideMinimap();
+			userInterface().showHostileShip();
+			userInterface().setHostileShipData(hostileShip);
+			
+			var modShield:Number = 0;
+			var modHull:Number = 0;
+			var modReactor:Number = 0;
+			var modCap:Number = 0;
+			
+			modReactor -= getWeaponCost();
+			modReactor -= getOffensivePowerCost();
+			modReactor -= getDefensivePowerCost();
+			modReactor -= getNavigationOrderPowerCost();
+			
+			userInterface().updatePlayerShipData(playerShip, modShield, modHull, modReactor, modCap);
+			userInterface().updateHostileShipData(hostileShip);
 		}
 		
 		private function showCombatDescriptions():void

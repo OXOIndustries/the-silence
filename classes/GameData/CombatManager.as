@@ -132,6 +132,16 @@ package classes.GameData
 		{
 			return combatContainer.genericLoss;
 		}
+		
+		public static function abortCombat():void
+		{
+			combatContainer = null;
+		}
+		
+		public static function showCombatUI():void
+		{
+			if (combatContainer) combatContainer.showCombatUI();
+		}
 	}
 
 }

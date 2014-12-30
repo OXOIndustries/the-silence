@@ -62,6 +62,14 @@ package classes.UIComponents.SideBarComponents
 				}
 			}
 		}
+		
+		public function resetBarStates():void
+		{
+			for (var i:int = 0; i < _partyElements.length; i++)
+			{
+				_partyElements[i].skipAnimation();
+			}
+		}
 	}
 
 }

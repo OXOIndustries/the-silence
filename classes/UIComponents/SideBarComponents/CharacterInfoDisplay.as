@@ -268,5 +268,10 @@ package classes.UIComponents.SideBarComponents
 				if (ef.storageName == "Sensor Link") this._accEffect.addBuff();
 			}
 		}
+		
+		public function skipAnimation():void
+		{
+			_circleStats.skipAnimation();
+		}
 	}
 }

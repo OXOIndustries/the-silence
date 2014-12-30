@@ -1,6 +1,7 @@
 package classes.GameData.Content 
 {
 	import classes.GameData.GameState;
+	import classes.GameData.CombatManager;
 	
 	/**
 	 * ...
@@ -13,6 +14,7 @@ package classes.GameData.Content
 		public function StartCreation():void
 		{
 			GameState.newGame();
+			CombatManager.abortCombat();
 			
 			clearOutput();
 			userInterface.setLocation("MORNING AFTER", "SHIP: SILENCE", "SYSTEM: UNKNOWN");

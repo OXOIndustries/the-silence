@@ -92,6 +92,14 @@ package classes.UIComponents.SideBarComponents
 		
 		private function UpdateDisplay(e:Event):void
 		{
+			var tSpeed:Number = _speed;
+			
+			if (_skipAnimation)
+			{
+				tSpeed = 100;
+				_skipAnimation = false;
+			}
+			
 			// The update functions don't cap at 1 -- we're using semicircles, so 100% == 0.5;
 			var newShieldP:Number = (_shieldTarget / _shieldMax) / 2;
 			
@@ -99,9 +107,9 @@ package classes.UIComponents.SideBarComponents
 			{
 				if (newShieldP < _shieldCurrent) 
 				{
-					if (newShieldP < _shieldCurrent - _speed)
+					if (newShieldP < _shieldCurrent - tSpeed)
 					{
-						_shieldCurrent -= _speed;
+						_shieldCurrent -= tSpeed;
 					}
 					else
 					{
@@ -110,9 +118,9 @@ package classes.UIComponents.SideBarComponents
 				}
 				else 
 				{
-					if (newShieldP > _shieldCurrent + _speed)
+					if (newShieldP > _shieldCurrent + tSpeed)
 					{
-						_shieldCurrent += _speed;
+						_shieldCurrent += tSpeed;
 					}
 					else
 					{
@@ -132,9 +140,9 @@ package classes.UIComponents.SideBarComponents
 				if (newHPP < _hpCurrent)
 				{
 					// If the new number doesn't pass the target
-					if (newHPP < _hpCurrent - _speed)
+					if (newHPP < _hpCurrent - tSpeed)
 					{
-						_hpCurrent -= _speed;
+						_hpCurrent -= tSpeed;
 					}
 					// otherwise set to the target
 					else
@@ -146,9 +154,9 @@ package classes.UIComponents.SideBarComponents
 				else
 				{
 					// If the new number doesn't pass the target
-					if (newHPP > _hpCurrent + _speed)
+					if (newHPP > _hpCurrent + tSpeed)
 					{
-						_hpCurrent += _speed;
+						_hpCurrent += tSpeed;
 					}
 					// otherwise set to the target
 					else
@@ -230,6 +238,12 @@ package classes.UIComponents.SideBarComponents
 			drawPieMask(_hpMask.graphics, percentage, 61, 0, 0, 90 * (Math.PI/180), 8);
 			
 			_hpMask.graphics.endFill();
+		}
+		
+		private var _skipAnimation:Boolean = false;
+		public function skipAnimation():void
+		{
+			_skipAnimation = true;
 		}
 	}
 

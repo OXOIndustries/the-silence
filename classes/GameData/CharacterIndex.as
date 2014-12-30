@@ -5,8 +5,8 @@ package classes.GameData
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.Characters.Pyra;
 	import classes.GameData.Characters.Tarik;
-	
 	import classes.GameData.Characters.Connie;
+	
 	/**
 	 * ...
 	 * @author Gedan
@@ -18,12 +18,17 @@ package classes.GameData
 		public static var PlayerGroup:Party;
 		public static var EnemyGroup:Party;
 		
+		public static function initIndex():void
 		{
 			Chars = new Object();
 			PlayerGroup = new Party(true);
 			EnemyGroup = new Party(false);
 			
-			CharacterIndex.configure(false);
+			configure(false);
+		}
+		
+		{
+			initIndex();
 		}
 		
 		public static function configure(justUpdate:Boolean = false):void 

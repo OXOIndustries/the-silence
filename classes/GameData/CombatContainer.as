@@ -93,5 +93,10 @@ package classes.GameData
 		{
 			throw new Error("OVERRIDE ME");
 		}
+		
+		public function showCombatUI():void
+		{
+			throw new Error("OVERRIDE ME");
+		}
 	}
 }

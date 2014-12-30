@@ -47,6 +47,7 @@
 	import classes.UIComponents.ContentModules.CodexModule;
 	import classes.UIComponents.StatBar;
 	import classes.Engine.Combat.InCombat;
+	import classes.Engine.Combat.ShowCombatUI;
 	import classes.GameData.ContentIndex;
 	import classes.GameData.CharacterIndex;
 	import classes.GameData.GameState;
@@ -242,6 +243,11 @@
 			if (_availableModules["MainMenu"].visible == true)
 			{
 				showPrimaryOutput();
+				
+				if (InCombat())
+				{
+					ShowCombatUI();
+				}
 			}
 			else
 			{
@@ -1052,6 +1058,11 @@
 		public function setEnemyPartyData(party:Array):void
 		{
 			_rightSideBar.setPartyData(party);
+		}
+		
+		public function initHostilePartyBars():void
+		{
+			_rightSideBar.resetBarStates();
 		}
 		
 		public function showPlayerParty():void
