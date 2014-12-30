@@ -1038,7 +1038,7 @@ package classes.UIComponents
 				var good:Object = { 
 					fontFamily: "Lato", 
 					fontSize: 18, 
-					color: "#00CCFF", 
+					color: "#7AC943", 
 					marginRight: 5 
 				};
 				
@@ -1052,7 +1052,7 @@ package classes.UIComponents
 				var indifferent:Object = { 
 					fontFamily: "Lato", 
 					fontSize: 18, 
-					color: "#FFFFFF", 
+					color: "#3FA9F5", 
 					marginRight: 5 
 				};
 				

@@ -37,6 +37,7 @@ package classes.UIComponents.SideBarComponents
 		private var _bustImage:Sprite;
 		private var _circleStats:CircularStatBar;
 		private var _statusEffects:Sprite;
+		private var _char:Creature;
 		
 		private var _eContainer:Sprite;
 		
@@ -114,6 +115,27 @@ package classes.UIComponents.SideBarComponents
 			
 			// Default testing data for devwork.
 			ShowDebugInfo();
+			
+			_circleStats.addEventListener(MouseEvent.ROLL_OVER, imageOverHandler);
+			_circleStats.addEventListener(MouseEvent.ROLL_OUT, imageOverHandler);
+			_bustImage.addEventListener(MouseEvent.ROLL_OVER, imageOverHandler);
+			_bustImage.addEventListener(MouseEvent.ROLL_OUT, imageOverHandler);
+			bustBackground.addEventListener(MouseEvent.ROLL_OVER, imageOverHandler);
+			bustBackground.addEventListener(MouseEvent.ROLL_OUT, imageOverHandler);
+		}
+		
+		private function imageOverHandler(e:MouseEvent):void
+		{
+			if (e.type == MouseEvent.ROLL_OUT)
+			{
+				_tooltipElement.parent.removeChild(_tooltipElement);
+			}
+			else
+			{
+				stage.addChild(_tooltipElement);
+				_tooltipElement.SetData(_char.short, "<span class='indifferent'>Shields: " + _char.shields() + " / " + _char.shieldsMax() + " (" + Math.floor((_char.shields() / _char.shieldsMax()) * 100) + "%)</span>\n<span class='good'>Health: " + _char.HP() + " / " + _char.HPMax() + " (" + Math.floor((_char.HP() / _char.HPMax()) * 100) + "%)</span>");
+				_tooltipElement.Reposition(_defEffect, 1);
+			}
 		}
 		
 		private function BuildEffectContainers():void
@@ -199,9 +221,11 @@ package classes.UIComponents.SideBarComponents
 			this.addChild(_nameHeader);			
 		}
 		
+		private var bustBackground:Sprite;
+		
 		private function BuildBustContainer():void
 		{
-			var bustBackground:Sprite = new Sprite();
+			bustBackground = new Sprite();
 			bustBackground.graphics.beginFill(UIStyleSettings.gForegroundColour);
 			bustBackground.graphics.drawCircle(0, 0, 48);
 			bustBackground.graphics.endFill();
@@ -270,6 +294,8 @@ package classes.UIComponents.SideBarComponents
 		
 		public function showCharacter(tar:Creature):void
 		{
+			_char = tar;
+			
 			ShowBust(tar.bustT);
 			_nameHeader.text = tar.long.toUpperCase();
 			_circleStats.setShield(tar.shields(), tar.shieldsMax());
