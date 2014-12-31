@@ -3387,7 +3387,7 @@
 			
 			for (var i:int = 0; i < otherTeam.length; i++)
 			{
-				if (!otherTeam[i].isDefeated()) 
+				if (otherTeam[i].HP() <= 0) 
 				{
 					posTargets.push(otherTeam[i]);
 					
@@ -3398,7 +3398,14 @@
 				}
 			}
 		
-			if (posTargets.length == 0) return null;
+			if (posTargets.length == 0)
+			{
+				return null;
+			}
+			if (posTargets.length == 1) 
+			{
+				return posTargets[0];
+			}
 			
 			return posTargets[rand(posTargets.length)];
 		}

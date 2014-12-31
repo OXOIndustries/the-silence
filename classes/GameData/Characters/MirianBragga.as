@@ -187,6 +187,8 @@ package classes.GameData.Characters
 			
 			var target:Creature = selectTarget(otherTeam);
 			
+			if (target == null) return;
+			
 			var attacks:Array = [rangedAttack, rangedAttack, meleeAttack, meleeAttack, lasPistol, forcePunch];
 			
 			if (shieldsRaw > 0) attacks.push(forceSabre);
