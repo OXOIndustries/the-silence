@@ -66,9 +66,6 @@ package classes.UIComponents.ContentModules
 			addToggleControl("Toggle debug mode access to game functions.", "Debug Mode", "debugMode");
 			addToggleControl("Toggle easy mode game difficulty.", "Easy Mode", "easyMode");
 			addToggleControl("Toggle silly mode game content.", "Silly Mode", "sillyMode");
-			
-			addBustPreferenceControl();
-			
 			addFontSizeControl();
 		}
 		

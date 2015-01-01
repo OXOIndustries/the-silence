@@ -1623,11 +1623,16 @@
 					// Gedan: I ain't seeing no errors, so I'm gonna Throw on unknown tags to make their presence 120% obvious when turbotesting scenes.
 					//throw new Error("Unmatched tag descriptor: " + desc);
 					trace("ERROR: Unmatched tag descriptor detected: " + desc);
-					return null; // "<b>Error, invalid description. Passed description call: \"" + arg + "\" with argument: \"" + arg2 + "\"</b>";
+					buffer = null; // "<b>Error, invalid description. Passed description call: \"" + arg + "\" with argument: \"" + arg2 + "\"</b>";
 					
 					break;
 			}
 			if (arg.charCodeAt(0) > 64 && arg.charCodeAt(0) < 90) buffer = upperCase(buffer);
+			if (buffer == null)
+			{
+				if (CONFIG::debug) throw new Error("Descriptbuffer is null!");
+				else return "<b>[Warning: Descript buffer is null. Please report this!]</b>";
+			}
 			// trace("BUFFER OUT: " + buffer);
 			return buffer;
 		}
@@ -3387,7 +3392,7 @@
 			
 			for (var i:int = 0; i < otherTeam.length; i++)
 			{
-				if (!otherTeam[i].isDefeated()) 
+				if (otherTeam[i].HP() > 0) 
 				{
 					posTargets.push(otherTeam[i]);
 					
@@ -3399,6 +3404,7 @@
 			}
 		
 			if (posTargets.length == 0) return null;
+			if (posTargets.length == 1) return posTargets[0];
 			
 			return posTargets[rand(posTargets.length)];
 		}

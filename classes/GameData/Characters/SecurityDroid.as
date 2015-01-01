@@ -196,10 +196,6 @@ package classes.GameData.Characters
 				var attacks:Array = [rangedAttack, rangedAttack, rangedAttack, shock, laserBarrage];
 				attacks[rand(attacks.length)](target);
 			}
-			else
-			{
-				output("\n\n" + this.short + " takes no action as it has no valid targets.");
-			}
 		}
 		
 		public function laserBarrage(target:Creature):void

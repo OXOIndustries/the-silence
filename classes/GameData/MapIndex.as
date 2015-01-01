@@ -26,7 +26,7 @@ package classes.GameData
 	public class MapIndex 
 	{
 		public static var sector:SilenceSector;
-		private static var mapper:Mapper;
+		public static var mapper:Mapper;
 		
 		{
 			MapIndex.init();

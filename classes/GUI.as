@@ -2,6 +2,7 @@
 {
 	import classes.GameData.Characters.PlayerCharacter;
 	import classes.GameData.CodexManager;
+	import classes.GameData.MapIndex;
 	import classes.GameData.Party;
 	import classes.GameData.Ships.Ship;
 	import classes.UIComponents.ButtonTooltips;
@@ -51,6 +52,7 @@
 	import classes.GameData.ContentIndex;
 	import classes.GameData.CharacterIndex;
 	import classes.GameData.GameState;
+	import classes.GameData.MapIndex;
 
 	//Build the bottom drawer
 	public class GUI extends MovieClip
@@ -243,6 +245,11 @@
 			if (_availableModules["MainMenu"].visible == true)
 			{
 				showPrimaryOutput();
+				showPlayerParty();
+				showLocation();
+				showMinimap();
+				var map:* = MapIndex.mapper.generateMap(GameState.pc.currentLocation);
+				setMapData(map);
 				
 				if (InCombat())
 				{

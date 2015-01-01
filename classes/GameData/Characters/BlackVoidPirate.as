@@ -193,6 +193,8 @@ package classes.GameData.Characters
 			
 			var target:Creature = selectTarget(otherTeam);
 			
+			if  (target == null) return;
+			
 			var attacks:Array = [rangedAttack, rangedAttack, rangedAttack, threeRoundBurst];
 			
 			if (!hasStatusEffect("Flashbang Used"))

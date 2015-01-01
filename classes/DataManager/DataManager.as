@@ -376,8 +376,8 @@
 			{
 				kGAMECLASS.updateUI();
 				output2("Game loaded from 'TiTs_" + slotNumber + "'!");
-				kGAMECLASS.userInterface.clearGhostMenu();
-				addGhostButton(0, "Next", this.executeGame);
+				kGAMECLASS.userInterface.clearMenu();
+				addButton(0, "Next", this.executeGame); // Switched away from ghost to stop the menu getting fucked up.
 			}
 			else
 			{
