@@ -80,6 +80,8 @@ public function codexHomeFunction():void
 	outputCodex("\n\nOptional module documentation has been provided and loaded into the CODEX™ documentation databases. For more information, please review the optional module documentation at your earliest convenience.");
 	outputCodex("\n\nCODEX-12b ready for user input.");
 
+	outputCodex("\n");
+	
 	userInterface.outputCodex();
 }
 
@@ -90,6 +92,8 @@ public function karaVolkeCodex():void
 	outputCodex(blockHeader("- Kaithrit Master Theif"));
 	
 	outputCodex("You were born a slave on the world of Kahassin, outside the United Galactic Confederacy's borders. Raised in chains because of a quirk of birth, you escaped thanks to the smuggler Rourke Blackstar. He taught you the tools of the trade, became your lover and, a few months ago, sacrificed himself so you and the crew of the Silence could escape. You've since become captain, and lead this rag-tag band of outlaws in your mentor's stead. The crew is still getting used to your leadership, but they know what Blackstar thought of you, and that's been enough to keep them in line. Whether you intend to live up to Blackstar's legacy or carve your own legend, your story is just beginning!");
+	
+	outputCodex("\n");
 	
 	CodexManager.viewedEntry("Kara Volke");
 }
@@ -102,6 +106,8 @@ public function pyraCodex():void
 	
 	outputCodex("Pyra's... different. She came on board without invitation, scrambling up through one of the exhaust ports. When Blackstar caught her, she said she'd come aboard when she saw the Silence's shield generator. Because it was broken, and needed fixing. Sure enough, if you'd tried to leave atmos, it would have been crispy catgirl and crew for sure. Raskvel -- that's her species -- have a weird obsession with broken tech, and Pyra's the best damn mechanic you could ask for on a budget of the occasional roll in the hay and a few protein cubes. She's a little abrasive, but ever since your last engineer, Irish, got pinched on New Texas, she's kept the ship running like new. Or as new as the Silence ever was.");
 	
+	outputCodex("\n");
+	
 	CodexManager.viewedEntry("Pyra");
 }
 
@@ -112,6 +118,8 @@ public function loganCodex():void
 	outputCodex(blockHeader("- Human Mod Addict"));
 	
 	outputCodex("Logan's the best pilot you've ever seen. She was also the best starfighter ace the Coalition fleet had, until they busted her for mod abuse and theft. She's an addict, hooked on Throbb and reptilian genetic modifications, but you've never seen it get in the way of her job... so long as you keep the cash coming in so she can keep getting at her needles. Logan is your closest friend on the Silence's crew, and frequent lover. She's a bit twitchy, and can be downright ruthless at times... and you'd never call her <i>reliable</i>... but Logan's proved a capable executive officer during your command, and continues to get you out of even the most desperate scrapes in one piece.");
+	
+	outputCodex("\n");
 	
 	CodexManager.viewedEntry("Logan");
 }
@@ -124,6 +132,8 @@ public function tarikCodex():void
 	
 	outputCodex("Tarik's the newest addition to the crew. A few weeks ago, you knocked over a freighter convoy heading to Tavros, and lo and behold, found a cargo full of exotic xeno slaves. You freed them -- you of all people know what it's like to live in a collar, after all. You didn't come away from the job with a profit, thanks to that, but you did get Tarik: a slave meant for the gladiator rings of Thallisus. When you rescued him, the big bastard swore some kind of oath of service to you. What's the difference between that and slavery? Still, it doesn't hurt to have a huge bruiser with an axe on the crew, especially when he can rip most folk in half with his bare hands. At least, that's what he says he can do... and you don't doubt him.");
 	
+	outputCodex("\n");
+	
 	CodexManager.viewedEntry("Tarik");
 }
 
@@ -134,6 +144,8 @@ public function mirianCodex():void
 	outputCodex(blockHeader("- Human Pirate Lord"));
 	
 	outputCodex("Miri Bragga. The Corsair. Reaver of the Ardent Rings. This bitch is seriously bad news, one of the most famous pirates in the galaxy. Worse, she's the vanguard for the Black Void, the biggest crime syndicate in Confederate space. To put it lightly: you don't want to get on her bad side. Bragga commands the Black Rose, a heavy frigate that could give an ausar cruiser a run for its money in sheer speed and firepower. It tore the Nova Security convoy to pieces all by itself, six against one. Beating her will be damn near impossible. Escape? Unlikely. But it's the best shot you've got.");
+	
+	outputCodex("\n");
 	
 	CodexManager.viewedEntry("Captain Mirian Bragga");
 }
@@ -148,6 +160,8 @@ public function rourkeCodex():void
 
 	outputCodex("\n\nAnd now he's gone.");
 	
+	outputCodex("\n");
+	
 	CodexManager.viewedEntry("Rourke Blackstar");
 }
 
@@ -157,6 +171,8 @@ public function blackVoidCodex():void
 	outputCodex(header("The Black Void"));
 	outputCodex("The Black Void pirates are the nastiest, biggest group of rogues on the frontier -- and the core, for that matter. They've sunk their talons into damn near everything, from gambling and prostitution on high-wealth Confederate worlds to outright space lane piracy out on the rush worlds. You've dealt with them before -- smugglers and pirates have a natural sort of codependance -- though you'd never work for them again if you could help it. The Void is ruthless, and they hold a grudge across all the stars. They usually hunt in wolf packs of small ships, corvettes and re-purposed heavy freighters, to take down cargo craft. Lone ships attacking an armed convoy? What the hell is going on?");
 	
+	outputCodex("\n");
+	
 	CodexManager.viewedEntry("Black Void Pirates");
 }
 
@@ -165,6 +181,8 @@ public function securityDroidsCodex():void
 	clearOutputCodex();
 	outputCodex(header("Security Droids"));
 	outputCodex("Basic security droids are ubiquitous across Confederate space. Loaded with the most rudimentary Friend/Foe ID system, small arms controls, and basic tactical movement routines money can buy in bulk, security droids provide area defense and can repel boarders on ships without having to pay living, breathing security personnel. Most security droids are cheap, effective enough at stopping open attackers, and are completely expendable. You've dealt with dozens of them over the course of your career, and they're pretty damn easy to bypass if you're stealthy, or one-shot takedown if you're in a pinch. Overall, only a threat in bulk. Lucky for you, Nova's got the budget to buy them by the container-full.");
+	
+	outputCodex("\n");
 	
 	CodexManager.viewedEntry("Security Droids");
 }
@@ -176,13 +194,16 @@ public function theSilenceCodex():void
 	
 	outputCodex("The Silence. Your home. She's a sleek light freighter stroke pleasure yacht owned by the famous outlaw Rourke Blackstar, converted for a high cargo capacity, heavy shielding, and speed like you wouldn't believe. The Silence was the first taste of the greater galaxy you ever got as a mere breeder slave on your homeworld, and it whisked you away to the stars. She's the best ship in the 'verse as far as you're concerned.");
 	
+	outputCodex("\n\n");
 	outputCodex(blockHeader("Armaments & Equipment"));
 	outputCodex("2x Reaper Industries Twin-linked Forward Firing Laser Cannons");
 	outputCodex("\n2x Reaper Industries Light Laser Turrets");
 	outputCodex("\n1x Steele Tech Vanguard-XXVII Missile System");
-	outputCodex("\n\nKihaCorp <i>Excelsior-class</i> Light Drive Engine");
+	outputCodex("\nKihaCorp <i>Excelsior-class</i> Light Drive Engine");
 	outputCodex("\nJoyCo Milspec Crusader Shield Generator");
 	outputCodex("\nStalwart Defense Co. Light Armor Plating");
+	
+	outputCodex("\n");
 	
 	CodexManager.viewedEntry("The Silence");
 }
@@ -193,6 +214,8 @@ public function novaSecuritiesCodex():void
 	outputCodex(header("Nova Securities"));
 	
 	outputCodex("Nova securities is THE ubiquitous private security organization of the galactic frontier. Large, well-funded, and blessed with minimal Confederate oversight, Nova has grown from backwater planetary bodyguards to a massive paramilitary with ships and manpower to rival some planets' standing armies. Nova Securities operate as mercenaries for frontier worlds, guards for wealthy Mega Corporations and bodyguards for billionaire playboys. Most Nova operators are ex-military, especially their officers, and many have battle experience. Moreover, their equipment is state of the art, both for ground personnel and aboard their ships. Overall, they're a dangerous opponent that you've gotten on the bad side of more than once, and every time they've given you a run for your money.");
+	
+	outputCodex("\n");
 	
 	CodexManager.viewedEntry("Nova Securities");
 }
