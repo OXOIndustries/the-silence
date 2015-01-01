@@ -159,6 +159,7 @@ package classes.UIComponents.ContentModules
 		private function initForPlay():void
 		{
 			_basePower.isPowered = true;
+			resolveConnections();
 		}
 		
 		public function resetPuzzle():void
