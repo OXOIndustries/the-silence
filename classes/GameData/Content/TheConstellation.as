@@ -309,7 +309,7 @@ package classes.GameData.Content
 			
 			output("A plate on the door identifies this room as ‘Interior Shield Control’. Common sense says this is where atmospheric and emergency shields are operated from; main combat shields are likely down in Engineering.");
 			
-			output("\n\nThere's a dead <i>Constellation</i>crewman in the corner. Looks like his console overloaded, burned him to a crisp. Poor bastard.");
+			output("\n\nThere's a dead <i>Constellation</i> crewman in the corner. Looks like his console overloaded, burned him to a crisp. Poor bastard.");
 			
 			if (flags["CONSTELLATION_INTERNAL_SHIELDS_ON"] == undefined) addButton(0, "Shield Repair", commandDeckShieldRepair);
 			if (flags["CONSTELLATION_TAKEN_SHIELD_UPGRADE"] == undefined) addButton(1, "Shield Mod", commandDeckTakeShieldEmitter, undefined, "Shield Mod", "Looks like that Nova goon had a pretty nice shield belt. Too bad it didn't help him...");
