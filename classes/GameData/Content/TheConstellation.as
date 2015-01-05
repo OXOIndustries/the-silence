@@ -320,7 +320,7 @@ package classes.GameData.Content
 			
 			output("A plate on the door identifies this room as ‘Interior Shield Control’. Common sense says this is where atmospheric and emergency shields are operated from; main combat shields are likely down in Engineering.");
 			
-			output("\n\nThere's a dead <i>Constellation</i>crewman in the corner. Looks like his console overloaded, burned him to a crisp. Poor bastard.");
+			output("\n\nThere's a dead <i>Constellation</i> crewman in the corner. Looks like his console overloaded, burned him to a crisp. Poor bastard.");
 			
 			if (flags["CONSTELLATION_INTERNAL_SHIELDS_ON"] == undefined) addButton(0, "Shield Repair", commandDeckShieldRepair);
 			if (flags["CONSTELLATION_TAKEN_SHIELD_UPGRADE"] == undefined) addButton(1, "Shield Mod", commandDeckTakeShieldEmitter, undefined, "Shield Mod", "Looks like that Nova goon had a pretty nice shield belt. Too bad it didn't help him...");
@@ -622,7 +622,9 @@ package classes.GameData.Content
 		private function connieCargo():void
 		{
 			clearOutput();
-			output("<i>“So, what’re we carrying here?”</i> you ask, nodding toward the secure cargo bay{, now noticeably missing its security field}.");
+			output("<i>“So, what’re we carrying here?”</i> you ask, nodding toward the secure cargo bay");
+			if (flags["GOT_THE_BRIEFCASE"] != undefined) output(", now noticeably missing its security field");
+			output(".");
 			
 			output("\n\n<i>“Accessing cargo manifest... vital cargo currently includes a KihaCorp Mk.VII Gravity Axe, several high-capacity canisters of silicone, one JoyCo companion droid chassis, and one sealed case of platinum bars. All cargo is slated as maximum priority, to be delivered to New Texas care of Governor Tee.”</i>");
 			

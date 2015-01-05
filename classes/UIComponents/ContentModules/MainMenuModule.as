@@ -75,8 +75,8 @@ package classes.UIComponents.ContentModules
 		{
 			_titsLogo = new MainMenuModule.Tits_Logo();
 			_titsLogo.smoothing = true;
-			_titsLogo.x = 168;
-			_titsLogo.y = 42;
+			_titsLogo.x = 106;
+			_titsLogo.y = 20;
 			this.addChild(_titsLogo);
 			
 			_warningBackground = new MainMenuModule.Warning_BG();
