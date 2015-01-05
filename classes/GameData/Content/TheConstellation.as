@@ -200,6 +200,17 @@ package classes.GameData.Content
 			output("\n\n<i>“Captain! Enemy vessel closing. I’ve got armored troop carriers deploying. You’re about to have company on the deck.”</i> ");
 			
 			output("\n\nShit. Shitshitshit. You draw your plasma caster as you run. <i>“Understood. We’re on our way, Logan!”</i>");
+			
+			if (PlayerParty.isInParty(connie))
+			{
+				output("\n\nAs you're getting ready to move, Connie speaks up: <i>“If I may make a suggestion, Captain Volke: enough emergency power remains to activate defense systems for a short while .”</i>");
+
+				output("\n\n<i>“Is that so?”</i>");
+
+				output("\n\n<i>“Aye, captain. Secondary fire control is located at the front of the ship. Combat shields can be reactivated from engineering, on the forward port side.”</i>");
+			}
+			
+			
 			flags["CONSTELLATION_PIRATES_ARRIVED"] = 1;
 			doNext(mainGameMenu);
 		}
@@ -322,7 +333,7 @@ package classes.GameData.Content
 			flags["CONSTELLATION_TAKEN_SHIELD_UPGRADE"] = 1;
 
 			clearOutput();
-			output("<i>“Hey, check this out!”</i> Pyra says, skipping over to the dead Nova soldier and unceremoniously starting to look his corpse.");
+			output("<i>“Hey, check this out!”</i> Pyra says, skipping over to the dead Nova soldier and unceremoniously starting to loot his corpse.");
 			
 			output("\n\nTarik scowls, <i>“Have some respect for the dead, little one.”</i>");
 			
@@ -346,7 +357,7 @@ package classes.GameData.Content
 			
 			output("<i>“Bring the emergency shields up, Pyra.”</i>");
 
-			output("\n\nThe little raskvel nods and scrambles up onto the console to work. <i>“Roger, boss. Should juuuust take a second.”</i>");
+			output("\n\nThe little raskvel nods and scrambles up onto the console to work. <i>“Roger, boss. Should take juuuust a second!”</i>");
 
 			output("\n\nShe goes to work, fiddling with buttons, sticks, and displays. After a minute, Pyra grunts with frustration, mumbling about the control console's fat motherboards and inability to breed and whatever other insults she can come up with. Finally, Pyra grabs the wrench off of her belt and gives the whole console a great big WHACK.");
 
@@ -567,7 +578,7 @@ package classes.GameData.Content
 			clearOutput();
 			output("<i>“What’s the ship’s status, Connie?”</i>");
 			
-			output("\n\nThe A.I. cocks her head to the side, the code streams on her accelerating considerably as she pulls in data. <i>“I am detecting critical battle damage across all decks. The <i>Constellation</i> is suffering from massive power loss and loss of atmosphere. Main guns are currently ");
+			output("\n\nThe A.I. cocks her head to the side, the code streams on her accelerating considerably as she pulls in data. <i>“I am detecting critical battle damage across all decks. The <i>Constellation</i> is suffering from massive power loss and atmosphere leak. Main guns are currently ");
 			if (flags["CONSTELLATION_GUNS_ACTIVE"] == 1) output("active");
 			else output("inactive");
 			output(". Combat shields are ");

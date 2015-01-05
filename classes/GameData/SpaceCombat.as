@@ -198,7 +198,7 @@ package classes.GameData
 			addButton(2, "S.Strikes", selOffensiveOrder, "surgicalstrike", "Surgical Strikes", "Engage manual fire control of your ships weapons systems, and make each shot count. Increases critical shot chance by 10%, but increases power cost by 100%.\n\nActivation Cost: 60 Power");
 			else addDisabledButton(2, "S.Strikes", "Surgical Strikes", "Engage manual fire control of your ships weapons systems, and make each shot count. Increases critical shot chance by 10%, but increases power cost by 100%.\n\nActivation Cost: 60 Power\n\nYou do not have enough power!");
 			
-			addButton(3, "C.Bursts", selOffensiveOrder, "controlledbursts", "Aim for peak optimisation of your ships weapons systems, reducing power cost by 25% but decreasing damage by 10%.\n\nActivation Cost: 0 Power");
+			addButton(3, "C.Bursts", selOffensiveOrder, "controlledbursts", "Controlled Bursts", "Aim for peak optimisation of your ships weapons systems, reducing power cost by 25% but decreasing damage by 10%.\n\nActivation Cost: 0 Power");
 			
 			if (_attackSelections.offensiveOrder != undefined)
 			{
