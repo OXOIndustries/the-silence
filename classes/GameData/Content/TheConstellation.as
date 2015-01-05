@@ -611,7 +611,9 @@ package classes.GameData.Content
 		private function connieCargo():void
 		{
 			clearOutput();
-			output("<i>“So, what’re we carrying here?”</i> you ask, nodding toward the secure cargo bay{, now noticeably missing its security field}.");
+			output("<i>“So, what’re we carrying here?”</i> you ask, nodding toward the secure cargo bay");
+			if (flags["GOT_THE_BRIEFCASE"] != undefined) output(", now noticeably missing its security field");
+			output(".");
 			
 			output("\n\n<i>“Accessing cargo manifest... vital cargo currently includes a KihaCorp Mk.VII Gravity Axe, several high-capacity canisters of silicone, one JoyCo companion droid chassis, and one sealed case of platinum bars. All cargo is slated as maximum priority, to be delivered to New Texas care of Governor Tee.”</i>");
 			
