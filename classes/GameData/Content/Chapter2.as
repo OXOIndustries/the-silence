@@ -14,6 +14,7 @@ package classes.GameData.Content
 			setLocation("MISSION BRIEFING");
 
 			flags["CREW_BRIEFED"] = 1;
+			flags["CONFROOM_SHOW_NPC_FLAG"] = 0;
 
 			output("<i>“Alright, everyone,”</i> you say, clapping your hands to get the crew’s attention. Your three subordinates lay their gaze on you, and fall silent. Expectant. <i>“I just finished talking to Chow. He’s got an urgent job, and we’re the only ship in range to do it. And believe me, the payout is going to be worth it.”</i>");
 			

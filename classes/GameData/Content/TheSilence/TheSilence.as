@@ -198,6 +198,7 @@ package classes.GameData.Content.TheSilence
 				output("\n\n<i>“Looks like everyone’s here, Captain,”</i> Logan says, flopping down on the couch.");
 				PlayerParty.removeFromParty(logan);
 				logan.currentLocation = "TheSilence.ConferenceRoom";
+				flags["CONFROOM_SHOW_NPC_FLAG"] = 1;
 			}
 			
 			return false;

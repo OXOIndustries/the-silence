@@ -2,6 +2,7 @@ package classes.GameData.Map
 {
 	import classes.GameData.Content.BaseContent;
 	import flash.geom.Vector3D;
+	import classes.GameData.GameState;
 	
 	/**
 	 * ...
@@ -55,6 +56,8 @@ package classes.GameData.Map
 		
 		public var EnemyEncounterContainers:Array = [];
 		
+		public var VariableFlags:Array = [];
+		
 		public function HasActiveEnemies():Boolean
 		{
 			for (var i:int = 0; i < EnemyEncounterContainers.length; i++)
@@ -67,6 +70,14 @@ package classes.GameData.Map
 		public function HasFlag(arg:int):Boolean
 		{
 			if (RoomFlags.indexOf(arg) != -1) return true;
+			if (VariableFlags.length > 0)
+			{
+				for (var i:int = 0; i < VariableFlags.length; i++)
+				{
+					var obj:Object = VariableFlags[i];
+					if (obj.TarFlag == arg && GameState.flags[obj.StrFlag] == 1) return true;
+				}
+			}
 			return false;
 		}
 		
@@ -85,6 +96,16 @@ package classes.GameData.Map
 			{
 				RoomFlags.splice(idx, 1);
 			}
+		}
+		
+		public function AddVariableFlag(flag:int, sFlag:String):void
+		{
+			var obj:Object = new Object();
+			
+			obj.TarFlag = flag;
+			obj.StrFlag = sFlag;
+			
+			VariableFlags.push(obj);
 		}
 	}
 

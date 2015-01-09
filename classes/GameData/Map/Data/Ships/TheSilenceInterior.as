@@ -145,6 +145,7 @@ package classes.GameData.Map.Data.Ships
 			conferenceRoom.EastExit = "CrewDeckElevator";
 			conferenceRoom.EnemyEncounterContainers.push(pFites);
 			conferenceRoom.AddFlag(GLOBAL.INDOOR);
+			conferenceRoom.AddVariableFlag(GLOBAL.NPC, "CONFROOM_SHOW_NPC_FLAG");
 			AddRoom(conferenceRoom);
 
 			var crewDeckElevator:Room = new Room();
