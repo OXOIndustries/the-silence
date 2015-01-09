@@ -41,6 +41,12 @@ package classes.Resources.Busts
 		//[Embed(source = "../../../assets/models/mirian/mirian_gamesize_res.png", mimeType = "image/png")]
 		[Embed(source = "../../../assets/models/mirian/mirian_3d_gamesize.png", mimeType = "image/png")]
 		public static const MOB_MIRIAN:Class;
+		
+		[Embed(source = "../../../assets/models/blackrose/blackrose_gameres.png", mimeType = "image/png")]
+		public static const SHIP_BLACKROSE:Class;
+		
+		[Embed(source = "../../../assets/models/silence/silence_gameres.png", mimeType = "image/png")]
+		public static const SHIP_SILENCE:Class;
 	}
 
 }

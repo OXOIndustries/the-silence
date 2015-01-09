@@ -122,6 +122,7 @@ package classes.UIComponents.SideBarComponents
 		public function showShip(ship:Ship):void
 		{
 			_nameHeader.text = ship.longName.toUpperCase();
+			ShowBust(ship.bustT);
 			
 			_healthStatus.setShield(ship.actualShieldHP, ship.maxShieldHP());
 			_healthStatus.setHP(ship.actualHullHP, ship.maxHullHP());

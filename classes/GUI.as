@@ -306,8 +306,7 @@
 			(buttons[2] as MainMenuButton).buttonName = "Options";
 			(buttons[2] as MainMenuButton).func = showOptions;
 						
-			(buttons[5] as MainMenuButton).buttonName = "Credits";
-			(buttons[5] as MainMenuButton).func = creditsHandler;
+			(buttons[5] as MainMenuButton).visible = false;
 			
 			(buttons[3] as MainMenuButton).buttonName = "Yes";
 			(buttons[3] as MainMenuButton).visible = false;

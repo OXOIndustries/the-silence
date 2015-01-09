@@ -97,7 +97,7 @@
 			dataManager = new DataManager();
 			gameOptions = new GameOptions();
 
-			version = "0.06.04";
+			version = "0.06.05";
 
 			eventQueue = new Array();
 			eventBuffer = "";

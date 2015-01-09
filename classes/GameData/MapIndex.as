@@ -217,13 +217,16 @@ package classes.GameData
 			if (exploded.length == 2)
 			{
 				var ship:classes.GameData.Map.Ship = sector.GetShip(exploded[0]);
+				if (ship == null) return null;
 				room = ship.GetRoom(exploded[1]);
 			}
 			// Otherwise should be some a room nested within a system
 			else
 			{
 				var system:System = sector.GetSystem(exploded[0]);
+				if (system == null) return null;
 				var location:BaseLocation = system.GetLocation(exploded[1]);
+				if (location == null) return null;
 				room = location.GetRoom(exploded[2]);
 			}
 			

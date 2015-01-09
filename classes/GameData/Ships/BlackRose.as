@@ -12,6 +12,7 @@ package classes.GameData.Ships
 	import classes.GameData.Items.ShipModules.Reactor.VWFNIR90Reactor;
 	import classes.GameData.Items.ShipModules.Shields.VWInverseHarmonicShield;
 	import classes.GameData.Items.ShipModules.Offensive.Projectile.GoblinAutocannon;
+	import classes.Resources.Busts.StaticRenders;
 	/**
 	 * ...
 	 * @author Gedan
@@ -24,6 +25,7 @@ package classes.GameData.Ships
 			this.version = 1;
 			this._latestVersion = 1;
 			
+			bustT = StaticRenders.SHIP_BLACKROSE;
 			INDEX = "BLACKROSE";
 			shortName = "black rose";
 			longName = "the Black Rose";

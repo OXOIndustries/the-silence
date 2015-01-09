@@ -406,7 +406,7 @@
 			var i:int;
 			
 			// Watch this magic
-			if (GameState.gameStarted)
+			if (GameState.gameStarted && CharacterIndex.pc.currentLocation.length > 0)
 			{
 				this.saveBaseData(curGameObj); // Current game state backed up! Shocking!
 			}

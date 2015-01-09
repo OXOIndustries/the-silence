@@ -10,6 +10,7 @@ package classes.GameData.Ships
 	import classes.GameData.Items.ShipModules.Reactor.IEFusionReactorMKIII;
 	import classes.GameData.Items.ShipModules.Shields.JoyCoCrusaderShieldGenMILSPEC;
 	import classes.GameData.Items.ShipModules.Capacitor.IECapbankXVI;
+	import classes.Resources.Busts.StaticRenders;
 	/**
 	 * ...
 	 * @author Gedan
@@ -21,6 +22,7 @@ package classes.GameData.Ships
 			this.version = 1;
 			this._latestVersion = 1;
 			
+			bustT = StaticRenders.SHIP_SILENCE;
 			INDEX = "SILENCE";
 			shortName = "silence";
 			longName = "the Silence";
