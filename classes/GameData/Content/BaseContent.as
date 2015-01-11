@@ -201,24 +201,35 @@ package classes.GameData.Content
 		 * "kind", "misc" or "hard".
 		 * @param	tarFunction
 		 */
-		protected function doTalkTree(tarFunction:Function):void
+		protected function doTalkTree(tarFunction:Function, kindTT:String = null, miscTT:String = null, hardTT:String = null):void
 		{
+			var kindT:String = null;
+			var miscT:String = null;
+			var hardT:String = null;
+			
+			if (kindTT != null && miscTT != null && hardTT != null)
+			{
+				kindT = "Kind Response";
+				miscT = "Mischievous Response";
+				hardT = "Hard Response";
+			}
+			
 			clearMenu();
 			addButton(0, "Kind", function(arg:String):void 
 			{ 
 				pc.kindOptions++; 
 				tarFunction(arg); 
-			}, "kind");
+			}, "kind", kindT, kindTT);
 			addButton(1, "Mischievous", function(arg:String):void 
 			{ 
 				pc.miscOptions++; 
 				tarFunction(arg); 
-			}, "misc");
+			}, "misc", miscT, miscTT);
 			addButton(2, "Hard", function(arg:String):void
 			{ 
 				pc.hardOptions++; 
 				tarFunction(arg); 
-			}, "hard");
+			}, "hard", hardT, hardTT);
 		}
 		
 		protected function doNext(tarFunction:Function = null):void

@@ -71,7 +71,7 @@ public function codexHomeFunction():void
 	outputCodex("\n\t<span class='locked'>\\\[Missing Entries\\\]</span> are red.");
 	outputCodex("\n\t<span class='active'>\\\[Active Entries\\\]</span> are blue.");
 
-	outputCodex("\n\nSteele Industries® would like to thank [pc.name] for additionally equipping this CODEX™ device with the the following optional modules:");
+	outputCodex("\n\nSteele Industries® would like to thank you for additionally equipping this CODEX™ device with the the following optional modules:");
 	outputCodex("\n\tSteele Industries® Resource Acquisition System™ (RAS™)");
 	outputCodex("\n\tSteele Industries® Automated Fringe Classifier™ (ScanNow™)");
 	outputCodex("\n\tSteele Industries® Biosign Monitor Alerting™ (MedSign™)");

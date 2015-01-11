@@ -523,7 +523,7 @@ package classes.GameData
 				
 				if (!target.hasStatusEffect("StimBoostCooldown")) addButton(2, "StimBoost", selectSpecialAttack, [stimulantBoost, target, "StimBoost"], "Stimulant Boost", "Release a localised cloud of emergency doctor nanomachines, healing you and your companions. Can only be used once per combat encounter.");
 				else addDisabledButton(2, "StimBoost", "Stimulant Boost", "You've already used the only container of nanomachines you had to hand!");
-				if (!target.hasStatusEffect("ForceEdgeCooldown")) addButton(3, "Force Edge", selectSpecialAttack, [forceEdge, target, "Force Edge"], "Force Edge", "Make a devestating melee attack with your hard-light force edge.");
+				if (!target.hasStatusEffect("ForceEdgeCooldown")) addButton(3, "Force Edge", selectSpecialAttack, [forceEdge, target, "Force Edge"], "Force Edge", "Make a devastating melee attack with your hard-light force edge.");
 				else addDisabledButton(3, "Force Edge", "Force Edge", "Your hard-light blade requires 3 rounds to recharge after use.\n\nCooldown remaining: " + target.statusEffectv1("ForceEdgeCooldown") + " rounds.");
 			}
 			else if (target is Tarik)
@@ -548,7 +548,7 @@ package classes.GameData
 			}
 			else if (target is Pyra)
 			{
-				if (!target.hasStatusEffect("F.ThrowerCooldown")) addButton(0, "F.Thrower", selectSpecialAttack, [flamethrower, target, "F.Thrower"], "Flamethrower", "Single-target fire damage, inflicting a burning damage over time effect to it's target. Requires 3 rounds to cool off after each attack.");
+				if (!target.hasStatusEffect("F.ThrowerCooldown")) addButton(0, "F.Thrower", selectSpecialAttack, [flamethrower, target, "F.Thrower"], "Flamethrower", "Single-target fire damage, inflicting a burning damage over time effect to its target. Requires 3 rounds to cool off after each attack.");
 				else addDisabledButton(0, "F.Thrower", "Flamethrower", "Pyras flamethrower is still cooling down from the last attack.\n\nCooldown remaining: " + target.statusEffectv1("F.ThrowerCooldown") + " rounds.");
 				
 				if (!target.hasStatusEffect("ParaDartsCooldown")) addButton(1, "ParaDarts", selectSpecialAttack, [paralyticDarts, target, "ParaDarts"], "Paralytic Darts", "Venom-tipped darts that reduces the targets combat capabilities. Has no effect on mechanical targets. 3 round cooldown to reset a new set of venom-tipped darts.");
@@ -557,7 +557,7 @@ package classes.GameData
 				if (!target.hasStatusEffect("ShieldBoostCooldown")) addButton(2, "S.Boost", selectSpecialAttack, [shieldBoost, target, "S.Boost"], "Shield Boost", "Boosts the parties shield generators, restoring shields in the process. Can only be used once per combat encounter.");
 				else addDisabledButton(2, "S.Boost", "Shield Boost", "Attempting to overcharge the parties shield generators again so soon only risks burning them out!");
 				
-				if (!target.hasStatusEffect("ShotgunReload")) addButton(3, "Shotgun", selectSpecialAttack, [shotgunBlast, target, "Shotgun"], "Shotgun", "Peppers the target with a devestating shotgun blast.");
+				if (!target.hasStatusEffect("ShotgunReload")) addButton(3, "Shotgun", selectSpecialAttack, [shotgunBlast, target, "Shotgun"], "Shotgun", "Peppers the target with a devastating shotgun blast.");
 				else addButton(3, "ReloadShotty", selectSpecialAttack, [reloadShotgun, target, "Reload"], "Reload Shotgun", "Pyra has to spend a round reloading her shotgun before she can fire it again.");
 			}
 			else if (target is Logan)

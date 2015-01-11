@@ -103,7 +103,7 @@ package classes.GameData.Content
 
 			logan.currentLocation = "TheSilence.Bridge";
 			
-			output("\n\nTarik grunts and starts slithering toward the fore of the ship. <i>“Must we go into the Coldness again? The suit you gave me is very... discomforting.”</i>");
+			output("\n\nTarik grunts and starts slithering toward the fore of the ship. <i>“Must we go into the Blackness again? The suit you gave me is very... discomforting.”</i>");
 
 			if (response == "kind")
 			{

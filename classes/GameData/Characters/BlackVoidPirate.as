@@ -290,9 +290,9 @@ package classes.GameData.Characters
 				if (target is PlayerCharacter) output(" you");
 				else output(" " + target.mf("him", "her"));
 				output(" to the ground with incredible weight, preventing all but the slightest movements.");
-				if (target is PlayerCharacter) output(" You");
-				else output(" " + target.capitalA + target.short);
-				output(" is grappled!");
+				if (target is PlayerCharacter) output(" You’re");
+				else output(" " + target.capitalA + target.short + " is");
+				output(" grappled!");
 				
 				target.createStatusEffect("Grappled", 3, 0, 0, 0, false, "Grapple", "Grappled", true, 0);
 			}

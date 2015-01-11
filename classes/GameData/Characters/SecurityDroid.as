@@ -250,8 +250,8 @@ package classes.GameData.Characters
 				if (rand(3) == 0)
 				{
 					if (target is PlayerCharacter) output("\nYou're");
-					else output("\n" + target.a + target.short);
-					output(" is stunned!")
+					else output("\n" + target.a + target.short + " is");
+					output(" stunned!")
 					target.createStatusEffect("Stunned", 2, this.arrayIdx, 0, 0, false, "Stun", "Stunned", true, 0);
 				}
 				else

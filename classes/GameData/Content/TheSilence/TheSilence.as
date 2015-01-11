@@ -452,7 +452,7 @@ package classes.GameData.Content.TheSilence
 		public function engineeringDeck1RoomFunction():Boolean
 		{
 			clearOutput();
-			output("The Silence's Engineering deck runs most of the length of the ship -- for good reason. When Blackstar designed her, he insisted on several extra power generators, converters, and secondary engine controls. Thanks to this, the Silence is incredibly fast, and she's shielded harder than just about any ship in her size category.");
+			output("The Silence's Engineering deck runs most of the length of the ship - for good reason. When Blackstar designed her, he insisted on several extra power generators, converters, and secondary engine controls. Thanks to this, the Silence is incredibly fast, and she's shielded harder than just about any ship in her size category.");
 			return false;
 		}
 		

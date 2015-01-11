@@ -120,7 +120,7 @@ package classes.GameData.Content
 			else if (choice == "misc")
 			{
 				pc.miscOptions++;
-				output("<i>“Well, since we’re the only ship around... and I’m guessing that Nova will be coming back in a hurry to get their lost cargo... seems like we’re the only chance of you getting your slimey mitts on that platinum, unless you want to hope in that little speeder of yours and come get it yourself.”</i>");
+				output("<i>“Well, since we’re the only ship around... and I’m guessing that Nova will be coming back in a hurry to get their lost cargo... seems like we’re the only chance of you getting your slimy mitts on that platinum, unless you want to hop in that little speeder of yours and come get it yourself.”</i>");
 				
 				output("\n\nChow scowls. <i>“Watch your tone, girl. I-”</i>");
 				
@@ -159,14 +159,18 @@ package classes.GameData.Content
 			output("\n\n<i>“Looks like,”</i> you answer, walking over to the PA next to your door and keying it.");
 
 			processTime(10);
-			doTalkTree(addressTheCrew);
+			doTalkTree(addressTheCrew, "Please, report to the briefing room...", "Wake up. Get to the briefing room.", "Wake the fuck up, we've got work to do.");
 		}
 		
 		private function addressTheCrew(choice:String):void
 		{
+			clearOutput();
+			
+			output("You cough to yourself and clear your throat as you finger the activation key on the intercom panel....");
+			
 			if (choice == "kind")
 			{
-				output("\n\nAlright, everyone, we’ve got work to do. Wake up, get a drink, wake Tarik </i>back<i> up, and meet in the conference room in 10 minutes. Captain out.”</i>");
+				output("\n\n<i>“Alright, everyone, we’ve got work to do. Wake up, get a drink, wake Tarik </i>back<i> up, and meet in the conference room in 10 minutes. Captain out.”</i>");
 			}
 			else if (choice == "misc")
 			{
