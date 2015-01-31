@@ -17,7 +17,7 @@
 	import classes.UIComponents.MainButton;
 	import classes.UIComponents.RightSideBar;
 	import classes.UIComponents.SquareButton;
-	import fl.transitions.Rotate;
+	//import fl.transitions.Rotate;
 	import flash.display.DisplayObject;
 	import flash.display.MovieClip;
 	import flash.events.Event;

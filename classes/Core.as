@@ -4,7 +4,7 @@
 	import classes.TiTS_Settings;
 	import classes.UIComponents.ContentModules.RotateMinigameModule;
 	import classes.UIComponents.MainButton;
-	import fl.transitions.Tween;
+	//import fl.transitions.Tween;
 	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 
@@ -31,7 +31,7 @@
 	import flash.text.TextFormat;
 	import flash.utils.ByteArray;
 	import flash.utils.Dictionary;
-	import fl.transitions.easing.None;
+	//import fl.transitions.easing.None;
 	
 	// Game content managers
 	import classes.GameData.TooltipManager;
@@ -158,7 +158,7 @@
 				end = 1199;
 			}
 			
-			var tw:Tween = new Tween(whatTheFuck, "x", None.easeNone, start, end, 12, false); 
+			//var tw:Tween = new Tween(whatTheFuck, "x", None.easeNone, start, end, 12, false); 
 		}
 		
 		public function mainGameMenu():void 
